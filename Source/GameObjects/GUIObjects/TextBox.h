@@ -3,6 +3,7 @@
 #include <queue>
 #include <dinput.h>
 
+#include "../../globals.h"
 #include "GUIBox.h"
 #include "../../Engine/BaseGraphics/Sprite.h"
 #include "TextLabel.h"
@@ -50,8 +51,7 @@ private:
 	int textPos = -1;
 	vector<int> newLinePos;
 
-	const float LETTER_DELAY = 0.05;
-	float letterDelay = LETTER_DELAY;
+	float letterDelay = Globals::LETTER_DELAY;
 	float timeSinceLastLetter = 0;
 
 	bool writeNextLetter = true;

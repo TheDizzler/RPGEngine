@@ -64,12 +64,6 @@ void TextBox::update(double deltaTime, BYTE keyboardState[256]) {
 			currentFlashTime = 0;
 		}
 	}
-}
-
-#include <iostream>
-
-
-void TextBox::drawText(SpriteBatch * batch) {
 
 	if (!writingDone && writeNextLetter) {
 		writeNextLetter = false;
@@ -78,8 +72,10 @@ void TextBox::drawText(SpriteBatch * batch) {
 		int checkPos = textPos;
 		char c = text[currentLineStart + checkPos];
 		if (isspace(c)) {
-			
-			while (!isspace(text[currentLineStart + ++checkPos]));
+
+			while (currentLineStart + checkPos < text.length()
+				&& !isspace(text[currentLineStart + ++checkPos]));
+
 			Vector2 measure = font->measureString(text.substr(currentLineStart, checkPos).c_str());
 
 			if (measure.x > maxLineLength) { // insert new line
@@ -90,14 +86,21 @@ void TextBox::drawText(SpriteBatch * batch) {
 				++numLines;
 			}
 
-			if (measure.y*numLines > maxTextHeight) {
-			 // wait for input
-				writingDone = true;
-				letterDelay = LETTER_DELAY;
-			}
-
+		//	if (measure.y*numLines > maxTextHeight) {
+		//	 // wait for input
+		//		writingDone = true;
+		//		letterDelay = Globals::LETTER_DELAY;
+		//	}
 		}
 	}
+}
+
+#include <iostream>
+
+
+void TextBox::drawText(SpriteBatch * batch) {
+
+
 	if (textPos > -1)
 		font->draw(batch, text.substr(0, currentLineStart + textPos).c_str(), currentLabelPos);
 

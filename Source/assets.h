@@ -9,7 +9,7 @@ namespace Assets {
 
 	const static wchar_t* arialFontFile = L"assets/Arial.spritefont";
 	const static wchar_t* battleFontFile = L"assets/Arial.spritefont";
-	
+
 	const static wchar_t* mouseSprite = L"assets/mouse icon.dds";
 	const static wchar_t* buttonUpFile = L"assets/button up (256x64).dds";
 	const static wchar_t* buttonDownFile = L"assets/button down (256x64).dds";
@@ -22,7 +22,9 @@ namespace Assets {
 	const static wchar_t* blueDudeFile = L"assets/bluedude.dds";
 	const static wchar_t* beetleFile = L"assets/baddies/beetle.dds";
 
-	
+
+	const static char* gameTextFile = "assets/text/GameText.xml";
+
 	/*const static Vector2 aSize(121, 98);
 	const static Vector2 aPos(118, 347);
 	const static Vector2 bSize(87, 90);

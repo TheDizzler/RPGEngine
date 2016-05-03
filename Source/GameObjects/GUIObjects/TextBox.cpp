@@ -27,6 +27,9 @@ void TextBox::loadText(wstring txt) {
 	indicatorRot = -XM_PI / 2;
 }
 
+void TextBox::loadQuery() {
+}
+
 void TextBox::update(double deltaTime, BYTE keyboardState[256]) {
 
 	timeSinceLastLetter += deltaTime;
@@ -39,9 +42,11 @@ void TextBox::update(double deltaTime, BYTE keyboardState[256]) {
 	if ((keyboardState[DIK_RETURN] & 0x80) && !lastEnter) {
 		lastEnter = true;
 		if (!writingDone) {
-			letterDelay = .0001;
+
+			letterDelay = Globals::LETTER_DELAY_FAST;
 
 		} else if (text.length() > currentLineStart + textPos) {
+
 			text = text.substr(currentLineStart + textPos);
 			currentLineStart = 0;
 			textPos = 0;
@@ -80,17 +85,17 @@ void TextBox::update(double deltaTime, BYTE keyboardState[256]) {
 
 			if (measure.x > maxLineLength) { // insert new line
 
-				text = text.replace(currentLineStart + textPos, 1, 1, '\n');
-				currentLineStart += textPos - 1;
-				textPos = 0;
-				++numLines;
+				if (measure.y*numLines > maxTextHeight) {
+					// wait for input
+					writingDone = true;
+					letterDelay = Globals::LETTER_DELAY;
+				} else {
+					text = text.replace(currentLineStart + textPos, 1, 1, '\n');
+					currentLineStart += textPos - 1;
+					textPos = 0;
+					++numLines;
+				}
 			}
-
-		//	if (measure.y*numLines > maxTextHeight) {
-		//	 // wait for input
-		//		writingDone = true;
-		//		letterDelay = Globals::LETTER_DELAY;
-		//	}
 		}
 	}
 }

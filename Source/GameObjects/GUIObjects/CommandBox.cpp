@@ -3,11 +3,7 @@
 CommandBox::CommandBox(int top, int left, int right, int bottom, FontSet* fontSet)
 	: ListBox(top, left, right, bottom, fontSet) {
 
-	indicatorOn = true;
-	indicatorPos = firstLabelPos + indicatorOffset;
-	//indicatorPos.x -= 
-	//indicatorPos.y += + indicatorOffset;
-	labelSelected = 0;
+	
 }
 
 CommandBox::~CommandBox() {

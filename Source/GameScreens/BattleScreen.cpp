@@ -49,7 +49,7 @@ bool BattleScreen::initialize(ID3D11Device* device, TextBoxManager* txtBxMng) {
 	TextLabel* label = enemy->setBattleLabel(new TextLabel(
 		Vector2(enemyLabelLocation.x, enemyLabelLocation.y + labelOffset*numAdded++),
 		guiFont.get()));
-	enemyBox->labels.push_back(label);
+	//enemyBox->labels.push_back(label);
 	actors.push_back(enemy);
 
 	enemy = new Enemy("Enemy 2");
@@ -60,7 +60,7 @@ bool BattleScreen::initialize(ID3D11Device* device, TextBoxManager* txtBxMng) {
 	label = enemy->setBattleLabel(new TextLabel(
 		Vector2(enemyLabelLocation.x, enemyLabelLocation.y + labelOffset*numAdded++),
 		guiFont.get()));
-	enemyBox->labels.push_back(label);
+	//enemyBox->labels.push_back(label);
 	actors.push_back(enemy);
 
 	enemy = new Enemy("Enemy 3");
@@ -71,7 +71,7 @@ bool BattleScreen::initialize(ID3D11Device* device, TextBoxManager* txtBxMng) {
 	label = enemy->setBattleLabel(new TextLabel(
 		Vector2(enemyLabelLocation.x, enemyLabelLocation.y + labelOffset*numAdded++),
 		guiFont.get()));
-	enemyBox->labels.push_back(label);
+	//enemyBox->labels.push_back(label);
 	actors.push_back(enemy);
 
 	//numAdded = 0;

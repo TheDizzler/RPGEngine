@@ -1,17 +1,20 @@
 #pragma once
 
-//#include <PrimitiveBatch.h>
-#include <VertexTypes.h>
 
-//#include "../../Engine/BaseGraphics/Sprite.h"
+//#include <libxml/parser.h>
+//#include <libxml/tree.h>
+
+#include "pugixml.hpp"
+
 #include "TextBox.h"
 
 
 using namespace std;
+using namespace pugi;
 
 class TextBoxManager {
 public:
-	TextBoxManager();
+	TextBoxManager(xml_document* xmlDoc);
 	~TextBoxManager();
 
 	bool load(ID3D11Device* device);
@@ -20,10 +23,18 @@ public:
 		(currently 16x16). */
 	void draw(SpriteBatch* batch, TextBox* textBox);
 
+
+	vector<xml_node> getDialogList();
 private:
+
+
+	xml_document* xmlDoc;
+	xml_node rootNode;
 
 	unique_ptr<Sprite> indicator;
 	unique_ptr<Sprite> corner;
 	unique_ptr<Sprite> side;
 	unique_ptr<Sprite> bg;
+
+	
 };

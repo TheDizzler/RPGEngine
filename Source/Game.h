@@ -1,5 +1,9 @@
 #pragma once
 
+#include <stdio.h>
+
+
+
 #include "GameScreens\BattleScreen.h"
 #include "GameObjects\GUIObjects\MenuTest.h"
 #include "Engine\MouseController.h"
@@ -43,6 +47,11 @@ private:
 	unique_ptr<TextBoxManager> textBoxManager;
 	
 
+	//xmlDoc* doc;
+	//xmlNode* gameTextRootNode;
+	pugi::xml_document* doc;
+	pugi::xml_parse_result result;
+	bool parseGameText();
 
 	
 };

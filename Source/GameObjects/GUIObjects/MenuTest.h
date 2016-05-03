@@ -1,5 +1,6 @@
 #pragma once
 
+#include "ListBox.h"
 #include "../../GameScreens/Screen.h"
 #include "../../globals.h"
 
@@ -19,6 +20,8 @@ private:
 	unique_ptr<FontSet> guiFont;
 	TextBoxManager* textBoxManager;
 
-
+	unique_ptr<ListBox> listBox;
 	unique_ptr<TextBox> textBox;
+
+	unique_ptr<TextLabel> testLabel;
 };

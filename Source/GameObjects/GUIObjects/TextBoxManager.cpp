@@ -1,6 +1,12 @@
 #include "TextBoxManager.h"
 
-TextBoxManager::TextBoxManager() {
+TextBoxManager::TextBoxManager(pugi::xml_document* doc) {
+
+	//gameTextRootNode = rootNode;
+	xmlDoc = doc;
+	rootNode = xmlDoc->child("root");
+
+	
 
 }
 
@@ -99,4 +105,32 @@ void TextBoxManager::draw(SpriteBatch* batch, TextBox* textBox) {
 		indicator->setRotation(textBox->indicatorRot);
 		indicator->draw(batch);
 	}
+}
+
+vector<xml_node> TextBoxManager::getDialogList() {
+
+
+	vector<xml_node> list;
+
+	/*for (xml_node child : xmlDoc->children("root")) {
+		xml_node* node = new xml_node();
+		node->set_name(child.name());
+		list.push_back(node);
+
+	}*/
+
+	for (xml_node child = rootNode.child("dialog"); child; child = child.next_sibling("dialog")) {
+		list.push_back(child);
+		//wstring name;
+		//const char_t* ch_name = child.name();
+		//wstringstream wss;
+		//wss << ch_name;
+		//name = wss.str();
+
+		//MessageBox(NULL, name.c_str(), L"Test", MB_OK);
+	}
+
+
+
+	return list;
 }

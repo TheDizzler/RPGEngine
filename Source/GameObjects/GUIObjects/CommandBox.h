@@ -13,9 +13,5 @@ public:
 
 private:
 
-	int labelSelected = -1;
 	
-	
-
-	Vector2 indicatorOffset = Vector2(-12, 12);
 };

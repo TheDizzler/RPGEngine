@@ -8,18 +8,27 @@
 #include "../../Engine/BaseGraphics/Sprite.h"
 #include "TextLabel.h"
 
+
+struct Query {
+
+
+
+};
+
+
 class TextBox : public GUIBox {
 public:
 	TextBox(int top, int left, int right, int bottom, FontSet* fontSet);
 	~TextBox();
 
 	void loadText(wstring text);
+	void loadQuery();
 
 	virtual void update(double deltaTime, BYTE keyboardState[256]) override;
 	virtual void drawText(SpriteBatch* batch) override;
 
 
-	vector<TextLabel*> labels;
+	//vector<TextLabel*> labels;
 
 	Vector2 indicatorPos;
 	bool indicatorOn = false;

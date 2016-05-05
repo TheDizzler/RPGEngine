@@ -12,6 +12,22 @@ TextBox::TextBox(int top, int left, int right, int bottom, FontSet* fnt)
 TextBox::~TextBox() {
 }
 
+void TextBox::loadNode(xml_node nd) {
+
+	node = nd;
+
+	letterDelay = Globals::LETTER_DELAY;
+	writingDone = false;
+	textPos = 0;
+
+	const char_t* ch_dialog = node.text().as_string();
+	wstringstream wss;
+	wss << ch_dialog;
+	loadText(wss.str());
+	//MessageBox(0, wss.str().c_str(), L"huh>", MB_OK);
+}
+
+
 void TextBox::loadText(wstring txt) {
 
 	originalText = txt;
@@ -27,10 +43,8 @@ void TextBox::loadText(wstring txt) {
 	indicatorRot = -XM_PI / 2;
 }
 
-void TextBox::loadQuery() {
-}
 
-void TextBox::update(double deltaTime, BYTE keyboardState[256]) {
+bool TextBox::update(double deltaTime, BYTE keyboardState[256]) {
 
 	timeSinceLastLetter += deltaTime;
 	if (timeSinceLastLetter >= letterDelay) {
@@ -41,17 +55,20 @@ void TextBox::update(double deltaTime, BYTE keyboardState[256]) {
 
 	if ((keyboardState[DIK_RETURN] & 0x80) && !lastEnter) {
 		lastEnter = true;
-		if (!writingDone) {
-
+		if (!writingDone) { // speed through rest of text
 			letterDelay = Globals::LETTER_DELAY_FAST;
 
 		} else if (text.length() > currentLineStart + textPos) {
-
+		// more text to write
 			text = text.substr(currentLineStart + textPos);
 			currentLineStart = 0;
 			textPos = 0;
 			numLines = 0;
 			writingDone = false;
+
+		} else { // All done!
+
+			return true;
 
 		}
 
@@ -98,6 +115,8 @@ void TextBox::update(double deltaTime, BYTE keyboardState[256]) {
 			}
 		}
 	}
+
+	return false;
 }
 
 #include <iostream>
@@ -113,4 +132,12 @@ void TextBox::drawText(SpriteBatch * batch) {
 		writingDone = true;
 
 
+}
+
+xml_node TextBox::getSelectedNode() {
+
+	xml_node nextNode = node.next_sibling();
+	while (nextNode.name() == "dialogReply")
+		nextNode = nextNode.next_sibling();
+	return nextNode;
 }

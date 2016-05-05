@@ -138,7 +138,7 @@ void BattleScreen::draw(SpriteBatch * batch) {
 
 	}
 
-	textBoxManager->draw(batch, enemyBox);
+	/*textBoxManager->draw(batch, enemyBox);
 	textBoxManager->draw(batch, pcBox);
 
 	if (!currentCommandBox) {
@@ -146,7 +146,7 @@ void BattleScreen::draw(SpriteBatch * batch) {
 		commandBoxes.pop_back();
 	}
 	for (CommandBox* commandBox : commandBoxes)
-		textBoxManager->draw(batch, commandBox);
+		textBoxManager->draw(batch, commandBox);*/
 
 			/*for (TextLabel* label : characterLabels)
 				label->draw(batch);*/

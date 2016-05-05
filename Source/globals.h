@@ -14,6 +14,9 @@ namespace Globals {
 	const int LISTBOX_WIDTH = 384; // in pixels
 	const int LISTBOX_HEIGHT = 252; // in pixels
 
+	const int DIALOGBOX_WIDTH = 768; // in pixels
+	const int DIALOGBOX_HEIGHT = 252;
+
 	const float LETTER_DELAY = 0.025;
 	const float LETTER_DELAY_FAST = .000001;
 	inline bool reportError(HRESULT hr) {

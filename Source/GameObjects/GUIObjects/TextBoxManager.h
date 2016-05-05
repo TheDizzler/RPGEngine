@@ -6,11 +6,27 @@
 
 #include "pugixml.hpp"
 
-#include "TextBox.h"
+#include "ListBox.h"
+#include "CommandBox.h"
 
 
 using namespace std;
 using namespace pugi;
+
+static const enum NODES{
+	DIALOG_TEXT, QUERY, DIALOG_REPLY
+};
+static const char_t* nodeTypes[] = {"dialogText", "query", "dialogReply"};
+
+struct get_query_nodes : xml_tree_walker {
+	// Inherited via xml_tree_walker
+	virtual bool for_each(xml_node & node) override {
+
+
+		return true;// continue traversal
+	}
+};
+
 
 class TextBoxManager {
 public:
@@ -19,14 +35,16 @@ public:
 
 	bool load(ID3D11Device* device);
 
+	void update(double deltaTime, BYTE keyboardState[256]);
 	/** RECT should be a multiple of border sprite length/height
 		(currently 16x16). */
-	void draw(SpriteBatch* batch, TextBox* textBox);
+	void draw(SpriteBatch* batch/*, TextBox* textBox*/);
 
+	vector<xml_node> startDialogTest();
 
-	vector<xml_node> getDialogList();
 private:
 
+	unique_ptr<FontSet> guiFont;
 
 	xml_document* xmlDoc;
 	xml_node rootNode;
@@ -36,5 +54,14 @@ private:
 	unique_ptr<Sprite> side;
 	unique_ptr<Sprite> bg;
 
-	
+	TextBox* currentBox;
+	vector<TextBox*> textBoxes;
+
+
+	/** Amount in pixels that one guibox will overlap it's parent box. */
+	const int overlap = 12;
+
+	unique_ptr<TextBox> dialogBox;
+	unique_ptr<CommandBox> commandBox;
+
 };

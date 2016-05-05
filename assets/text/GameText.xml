@@ -1,32 +1,20 @@
 <root>
+
 	<dialog speaker="intro">
-		<dialogText>
-			This will prompt for a 'Yes' or 'No' answer.
-		</dialogText>
+		<dialogText>This will prompt for a 'Yes' or 'No' answer.</dialogText>
 		<query>
-			<answer reply="YES">
-				Yes
-			</answer>
-			<answer reply="NO">
-				No
-			</answer>
+			<answer reply="YES">Yes</answer>
+			<answer reply="NO">No</answer>
 		</query>
-		<YES>
-			You replied yes!
-		</YES>
-		<NO>
-			You replied No!
-		</NO>
-		<dialogText>
-			This concludes this dialog.
-		</dialogText>
+		<dialogReply reply="YES">You replied yes!</dialogReply>
+		<dialogReply reply="NO">You replied No!</dialogReply>
+		<dialogText>This concludes this dialog.</dialogText>
 	</dialog>
 
 
 	<dialog speaker="villagerA">
-		<dialogText>
-			A very basic one line dialog.
-		</dialogText>
+		<dialogText>A very basic one line dialog.</dialogText>
+		<dialogText>A new line of dialog.</dialogText>
 	</dialog>
 
 

@@ -3,17 +3,21 @@
 #include <queue>
 #include <dinput.h>
 
+#include "pugixml.hpp"
+
 #include "../../globals.h"
 #include "GUIBox.h"
 #include "../../Engine/BaseGraphics/Sprite.h"
 #include "TextLabel.h"
 
 
-struct Query {
+using namespace pugi;
 
 
-
-};
+//static enum DialogTypes {
+//	dialog, dialogText, query
+//};
+//
 
 
 class TextBox : public GUIBox {
@@ -21,25 +25,29 @@ public:
 	TextBox(int top, int left, int right, int bottom, FontSet* fontSet);
 	~TextBox();
 
-	void loadText(wstring text);
-	void loadQuery();
+	void loadNode(xml_node node);
 
-	virtual void update(double deltaTime, BYTE keyboardState[256]) override;
+
+	virtual bool update(double deltaTime, BYTE keyboardState[256]) override;
 	virtual void drawText(SpriteBatch* batch) override;
 
+	/** Get next node in dialog chain. */
+	virtual xml_node getSelectedNode();
+	
 
-	//vector<TextLabel*> labels;
 
 	Vector2 indicatorPos;
 	bool indicatorOn = false;
 	float indicatorRot = 0;
+
+
 protected:
 
 	FontSet* font;
 
 	Vector2 firstLabelPos;
 
-
+	
 
 	int marginOffset = 20;
 	int spaceBetweenLines = 25;
@@ -47,17 +55,20 @@ protected:
 	const float indicatorFlashTime = 1;
 	float currentFlashTime = indicatorFlashTime;
 
-	bool lastEnter = false;
+	bool lastEnter = true;
 	//bool lastUp = false;
 
+	xml_node node;
+
 private:
+
 	wstring originalText;
 	wstring text;
-
+	void loadText(wstring text);
 
 	Vector2 currentLabelPos;
 	int currentLineStart;
-	int textPos = -1;
+	int textPos = 0;
 	vector<int> newLinePos;
 
 	float letterDelay = Globals::LETTER_DELAY;
@@ -69,6 +80,8 @@ private:
 	float maxTextHeight;
 	int numLines = 0;
 
+
+	
 	
 
 };

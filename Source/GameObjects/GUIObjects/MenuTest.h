@@ -1,6 +1,6 @@
 #pragma once
 
-#include "ListBox.h"
+#include "CommandBox.h"
 #include "../../GameScreens/Screen.h"
 #include "../../globals.h"
 
@@ -17,11 +17,11 @@ public:
 
 private:
 	Game* game;
-	unique_ptr<FontSet> guiFont;
+	
 	TextBoxManager* textBoxManager;
 
-	unique_ptr<ListBox> listBox;
-	unique_ptr<TextBox> textBox;
+	//unique_ptr<CommandBox> commandBox;
+	//unique_ptr<TextBox> textBox;
 
 	unique_ptr<TextLabel> testLabel;
 };

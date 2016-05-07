@@ -118,6 +118,10 @@ xml_node CommandBox::getSelectedNode() {
 	}
 }
 
+bool CommandBox::isQuery() {
+	return true;
+}
+
 void CommandBox::drawText(SpriteBatch * batch) {
 
 	Vector2 i(0, 0);

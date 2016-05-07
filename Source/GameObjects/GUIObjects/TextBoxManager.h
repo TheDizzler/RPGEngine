@@ -13,19 +13,15 @@
 using namespace std;
 using namespace pugi;
 
-static const enum NODES{
-	DIALOG_TEXT, QUERY, DIALOG_REPLY
-};
-static const char_t* nodeTypes[] = {"dialogText", "query", "dialogReply"};
 
-struct get_query_nodes : xml_tree_walker {
-	// Inherited via xml_tree_walker
-	virtual bool for_each(xml_node & node) override {
-
-
-		return true;// continue traversal
-	}
-};
+//struct get_query_nodes : xml_tree_walker {
+//	// Inherited via xml_tree_walker
+//	virtual bool for_each(xml_node & node) override {
+//
+//
+//		return true;// continue traversal
+//	}
+//};
 
 
 class TextBoxManager {
@@ -55,6 +51,7 @@ private:
 	unique_ptr<Sprite> bg;
 
 	TextBox* currentBox;
+	/** currentBox should always be top box. */
 	vector<TextBox*> textBoxes;
 
 

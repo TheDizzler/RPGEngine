@@ -17,7 +17,7 @@ public:
 	virtual void drawText(SpriteBatch* batch);
 
 	virtual xml_node getSelectedNode() override;
-
+	virtual bool isQuery() override;
 	bool nodeSelected = false;
 
 private:

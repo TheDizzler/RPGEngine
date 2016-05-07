@@ -58,8 +58,12 @@ bool TextBoxManager::load(ID3D11Device* device) {
 
 void TextBoxManager::update(double deltaTime, BYTE keyboardState[256]) {
 
-	if (currentBox->update(deltaTime, keyboardState)) {
+	if (currentBox && currentBox->update(deltaTime, keyboardState)) {
 
+		if (currentBox->isQuery()) { // close box
+
+			textBoxes.pop_back();
+		}
 		xml_node nextNode = currentBox->getSelectedNode();
 
 		//const char_t* type = nextNode.first_child().name();
@@ -72,16 +76,17 @@ void TextBoxManager::update(double deltaTime, BYTE keyboardState[256]) {
 		name = wss.str();
 		MessageBox(0, name.c_str(), L"Hi", MB_OK);*/
 
+		if (!nextNode) {
+			// Dialog done?
+			textBoxes.pop_back();
+			if (!textBoxes.empty())
+				currentBox = textBoxes.back();
+			else
+				currentBox = NULL;
 
-		if (type_s == nodeTypes[DIALOG_TEXT] || type_s == nodeTypes[DIALOG_REPLY]) {
+		} else if (type_s == nodeTypes[DIALOG_TEXT] || type_s == nodeTypes[DIALOG_REPLY]) {
 
-			/*TextBox* newBox = new TextBox(currentBox->rect.top, currentBox->rect.left + overlap,
-				currentBox->rect.right + overlap, currentBox->rect.bottom, guiFont.get());*/
 			dialogBox->loadNode(nextNode);
-			//wstring test = L"This is a string in a text box with a longer String. There is a lot to write here but I don't have a lot to write boohoo hoo hoo hooh ooho ohoho. Testing tester tset ete sd these aren't whole words. More Strings to test. More. Things. Even more Text to fill in here. Wow such text. So long. Wow. Please help me to test this text box.";
-
-			//dialogBox->loadText(test);
-			textBoxes.push_back(dialogBox.get());
 			currentBox = dialogBox.get();
 
 		} else if (nodeTypes[QUERY] == type_s) {
@@ -94,14 +99,6 @@ void TextBoxManager::update(double deltaTime, BYTE keyboardState[256]) {
 			textBoxes.push_back(commandBox.get());
 			currentBox = commandBox.get();
 
-		} else { // Dialog done?
-			/*wstring name;
-			wstringstream wss;
-			wss << type_s.c_str();
-			name = wss.str();
-			MessageBox(0, name.c_str(), L"FUck", MB_OK);*/
-			textBoxes.pop_back();
-			currentBox = textBoxes.back();
 		}
 	}
 

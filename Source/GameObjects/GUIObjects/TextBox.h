@@ -14,10 +14,10 @@
 using namespace pugi;
 
 
-//static enum DialogTypes {
-//	dialog, dialogText, query
-//};
-//
+static const enum NODES {
+	DIALOG_TEXT, QUERY, DIALOG_REPLY
+};
+static const char_t* nodeTypes[] = {"dialogText", "query", "dialogReply"};
 
 
 class TextBox : public GUIBox {
@@ -33,7 +33,7 @@ public:
 
 	/** Get next node in dialog chain. */
 	virtual xml_node getSelectedNode();
-	
+	virtual bool isQuery();
 
 
 	Vector2 indicatorPos;

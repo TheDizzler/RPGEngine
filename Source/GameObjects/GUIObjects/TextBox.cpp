@@ -67,7 +67,7 @@ bool TextBox::update(double deltaTime, BYTE keyboardState[256]) {
 			writingDone = false;
 
 		} else { // All done!
-
+			indicatorOn = true;
 			return true;
 
 		}
@@ -84,6 +84,15 @@ bool TextBox::update(double deltaTime, BYTE keyboardState[256]) {
 		if (currentFlashTime >= indicatorFlashTime) {
 			indicatorOn = !indicatorOn;
 			currentFlashTime = 0;
+		}
+
+		if (!(text.length() > currentLineStart + textPos)
+			&& (string) node.next_sibling().name() == nodeTypes[QUERY]) {
+			// if the next node in this dialog chain is a question, go right to the
+			// question without waiting
+			indicatorOn = true;
+			return true;
+
 		}
 	}
 
@@ -137,7 +146,11 @@ void TextBox::drawText(SpriteBatch * batch) {
 xml_node TextBox::getSelectedNode() {
 
 	xml_node nextNode = node.next_sibling();
-	while (nextNode.name() == "dialogReply")
+	while ((string)nextNode.name() == nodeTypes[DIALOG_REPLY])
 		nextNode = nextNode.next_sibling();
 	return nextNode;
+}
+
+bool TextBox::isQuery() {
+	return false;
 }

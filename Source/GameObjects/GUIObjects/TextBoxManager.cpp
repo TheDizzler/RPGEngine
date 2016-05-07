@@ -66,7 +66,6 @@ void TextBoxManager::update(double deltaTime, BYTE keyboardState[256]) {
 		}
 		xml_node nextNode = currentBox->getSelectedNode();
 
-		//const char_t* type = nextNode.first_child().name();
 		const char_t* type = nextNode.name();
 		string type_s = type;
 		//string node_type_s = nodeTypes[0];
@@ -84,7 +83,7 @@ void TextBoxManager::update(double deltaTime, BYTE keyboardState[256]) {
 			else
 				currentBox = NULL;
 
-		} else if (type_s == nodeTypes[DIALOG_TEXT] || type_s == nodeTypes[DIALOG_REPLY]) {
+		} else if (type_s == nodeTypes[DIALOG_TEXT] /*|| type_s == nodeTypes[DIALOG_REPLY]*/) {
 
 			dialogBox->loadNode(nextNode);
 			currentBox = dialogBox.get();
@@ -196,7 +195,7 @@ vector<xml_node> TextBoxManager::startDialogTest() {
 
 	//box->loadNodes(list);
 
-	dialogBox->loadNode(rootNode.child("dialog").child("dialogText"));
+	dialogBox->loadNode(rootNode.child("dialog").next_sibling().next_sibling().child("dialogText"));
 
 	currentBox = dialogBox.get();
 	textBoxes.push_back(currentBox);

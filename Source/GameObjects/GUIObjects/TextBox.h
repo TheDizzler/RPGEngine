@@ -15,9 +15,16 @@ using namespace pugi;
 
 
 static const enum NODES {
-	DIALOG_TEXT, QUERY, DIALOG_REPLY
+	DIALOG_TEXT, QUERY, /*DIALOG_REPLY*/
 };
-static const char_t* nodeTypes[] = {"dialogText", "query", "dialogReply"};
+static const char_t* nodeTypes[] = {"dialogText", "query"/*, "dialogReply"*/};
+
+
+static const enum ATTRIBUTES {
+	SPEAKER, TO, FROM
+};
+static const char_t* attributeTypes[] = {"speaker", "to", "from"};
+
 
 
 class TextBox : public GUIBox {
@@ -47,7 +54,7 @@ protected:
 
 	Vector2 firstLabelPos;
 
-	
+
 
 	int marginOffset = 20;
 	int spaceBetweenLines = 25;
@@ -81,7 +88,7 @@ private:
 	int numLines = 0;
 
 
-	
-	
+
+
 
 };

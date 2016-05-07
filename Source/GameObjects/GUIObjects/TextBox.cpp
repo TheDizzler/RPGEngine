@@ -90,6 +90,8 @@ bool TextBox::update(double deltaTime, BYTE keyboardState[256]) {
 			&& (string) node.next_sibling().name() == nodeTypes[QUERY]) {
 			// if the next node in this dialog chain is a question, go right to the
 			// question without waiting
+			letterDelay = Globals::LETTER_DELAY;
+			writingDone = false;
 			indicatorOn = true;
 			return true;
 
@@ -145,10 +147,19 @@ void TextBox::drawText(SpriteBatch * batch) {
 
 xml_node TextBox::getSelectedNode() {
 
-	xml_node nextNode = node.next_sibling();
-	while ((string)nextNode.name() == nodeTypes[DIALOG_REPLY])
-		nextNode = nextNode.next_sibling();
-	return nextNode;
+	const char_t* att = node.attribute("to").as_string();
+	/*wstring name;
+	wstringstream wss;
+	wss << att.c_str();
+	name = wss.str();*/
+
+	if (att == "") { // if no "to" attribute continue on to next node
+		//MessageBox(0, L"NOTHNG", L"oh HI", MB_OK);
+		return node.next_sibling();
+	}
+
+	// search for to corresponding "from" attribute
+	return node.parent().find_child_by_attribute(attributeTypes[FROM], att);
 }
 
 bool TextBox::isQuery() {

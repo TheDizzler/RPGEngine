@@ -3,18 +3,30 @@
 	<dialog speaker="intro">
 		<dialogText>This will prompt for a 'Yes' or 'No' answer.</dialogText>
 		<query>
-			<answer reply="YES">Yes</answer>
-			<answer reply="NO">No</answer>
+			<answer to="YES">Yes</answer>
+			<answer to="NO">No</answer>
 		</query>
-		<dialogReply reply="YES">You replied yes!</dialogReply>
-		<dialogReply reply="NO">You replied No!</dialogReply>
-		<dialogText>This concludes this dialog.</dialogText>
+		<dialogText from="YES" to="continue" >You replied yes!</dialogText>
+		<dialogText from="NO" to="continue" >You replied No!</dialogText>
+		<dialogText from="continue">This concludes this dialog.</dialogText>
 	</dialog>
 
 
 	<dialog speaker="villagerA">
 		<dialogText>A very basic one line dialog.</dialogText>
 		<dialogText>A new line of dialog.</dialogText>
+	</dialog>
+
+
+	<dialog speaker="Princess Ed">
+		<dialogText from="repeat">Does thou love me?</dialogText>
+		<query>
+			<answer to="YES">Yes</answer>
+			<answer to="NO">No</answer>
+		</query>
+		<dialogText from="YES" to="finish">I knew it!</dialogText>
+		<dialogText from="NO" to="repeat">But thou must!</dialogText>
+		<dialogText>This should never display.</dialogText>
 	</dialog>
 
 

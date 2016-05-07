@@ -98,6 +98,9 @@ void TextBoxManager::update(double deltaTime, BYTE keyboardState[256]) {
 			textBoxes.push_back(commandBox.get());
 			currentBox = commandBox.get();
 
+		} else if (nodeTypes[ALPHA_INPUT]) {
+
+
 		}
 	}
 
@@ -180,25 +183,12 @@ void TextBoxManager::draw(SpriteBatch* batch) {
 
 
 
-vector<xml_node> TextBoxManager::startDialogTest() {
+void TextBoxManager::startDialogTest() {
 
 
-	vector<xml_node> list;
-
-	/*for (xml_node child = rootNode.child("dialog"); child; child = child.next_sibling("dialog")) {
-		list.push_back(child);
-	}*/
-
-
-	//CommandBox* box = new CommandBox(TEXTBOX_MARGIN, TEXTBOX_MARGIN,
-		//LISTBOX_WIDTH + TEXTBOX_MARGIN, LISTBOX_HEIGHT + TEXTBOX_MARGIN, guiFont.get());
-
-	//box->loadNodes(list);
-
-	dialogBox->loadNode(rootNode.child("dialog").next_sibling().next_sibling().child("dialogText"));
+	dialogBox->loadNode(rootNode.find_child_by_attribute("speaker", "Name Input").child("dialogText"));
 
 	currentBox = dialogBox.get();
 	textBoxes.push_back(currentBox);
-	return list;
 }
 

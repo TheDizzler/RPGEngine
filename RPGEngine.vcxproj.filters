@@ -111,6 +111,9 @@
     <ClCompile Include="Source\GameObjects\GUIObjects\GUIBox.cpp">
       <Filter>Source Files\GUI</Filter>
     </ClCompile>
+    <ClCompile Include="Source\GameObjects\GUIObjects\AlphaInputBox.cpp">
+      <Filter>Source Files\GUI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Game.h">
@@ -195,6 +198,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Source\GameObjects\GUIObjects\GUIBox.h">
+      <Filter>Header Files\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameObjects\GUIObjects\AlphaInputBox.h">
       <Filter>Header Files\GUI</Filter>
     </ClInclude>
   </ItemGroup>

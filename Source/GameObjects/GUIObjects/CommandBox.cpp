@@ -103,22 +103,13 @@ xml_node CommandBox::getSelectedNode() {
 
 	nodeSelected = false;
 	lastEnter = true;
-// read to attribute of selected
-	const char_t* reply = nodeList[itemSelected].attribute("to").as_string();
-	string reply_s = reply;
-	/*wstring name;
-	wstringstream wss;
-	wss << reply_s.c_str();
-	name = wss.str();
-	MessageBox(0, name.c_str(), L"FUck", MB_OK);*/
 
-	//xml_node parent = node.parent();
-	//for (xml_node child = parent.child("dialogText"); child; child = child.next_sibling("dialogText")) {
-	//	string att = child.attribute("from").as_string();
-	//	if (att == reply_s)
-	//		return child;
+	// read to attribute of selected
+	const char_t* reply = nodeList[itemSelected].attribute("to").as_string();
+	//string reply_s = reply;
+
 	return node.parent().find_child_by_attribute(attributeTypes[FROM], reply);
-	//}
+
 }
 
 bool CommandBox::isQuery() {

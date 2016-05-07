@@ -1,27 +1,11 @@
 #pragma once
 
-
-//#include <libxml/parser.h>
-//#include <libxml/tree.h>
-
-#include "pugixml.hpp"
-
 #include "ListBox.h"
 #include "CommandBox.h"
+#include "AlphaInputBox.h"
 
 
 using namespace std;
-using namespace pugi;
-
-
-//struct get_query_nodes : xml_tree_walker {
-//	// Inherited via xml_tree_walker
-//	virtual bool for_each(xml_node & node) override {
-//
-//
-//		return true;// continue traversal
-//	}
-//};
 
 
 class TextBoxManager {
@@ -36,7 +20,7 @@ public:
 		(currently 16x16). */
 	void draw(SpriteBatch* batch/*, TextBox* textBox*/);
 
-	vector<xml_node> startDialogTest();
+	void startDialogTest();
 
 private:
 
@@ -60,5 +44,8 @@ private:
 
 	unique_ptr<TextBox> dialogBox;
 	unique_ptr<CommandBox> commandBox;
+	unique_ptr<AlphaInputBox> alphaBox;
+
+
 
 };

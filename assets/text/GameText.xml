@@ -12,6 +12,20 @@
 	</dialog>
 
 
+	<dialog speaker="Name Input">
+		<dialogText>Greetings, warrior</dialogText>
+		<dialogText from="repeat">What is thine name?</dialogText>
+		<alphaInput saveTo="%n"></alphaInput>
+		<dialogText>Is thine name actually %n?</dialogText>
+		<query>
+			<answer to="YES">Yes</answer>
+			<answer to="NO">No</answer>
+		</query>
+		<dialogText from="YES" to="finish">*snicker*</dialogText>
+		<dialogText from="NO" to="repeat">I am glad.</dialogText>
+	</dialog>
+
+
 	<dialog speaker="villagerA">
 		<dialogText>A very basic one line dialog.</dialogText>
 		<dialogText>A new line of dialog.</dialogText>

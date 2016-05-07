@@ -15,9 +15,9 @@ using namespace pugi;
 
 
 static const enum NODES {
-	DIALOG_TEXT, QUERY, /*DIALOG_REPLY*/
+	DIALOG_TEXT, QUERY, ALPHA_INPUT
 };
-static const char_t* nodeTypes[] = {"dialogText", "query"/*, "dialogReply"*/};
+static const char_t* nodeTypes[] = {"dialogText", "query", "alphaInput"};
 
 
 static const enum ATTRIBUTES {

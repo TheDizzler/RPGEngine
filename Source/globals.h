@@ -17,8 +17,14 @@ namespace Globals {
 	const int DIALOGBOX_WIDTH = 768; // in pixels
 	const int DIALOGBOX_HEIGHT = 252;
 
+	const int ALPHA_INPUT_WIDTH = 480;
+	const int ALPHA_INPUT_HEIGHT = 126;
+
 	const float LETTER_DELAY = 0.025;
 	const float LETTER_DELAY_FAST = .000001;
+
+
+
 	inline bool reportError(HRESULT hr) {
 
 		if (FAILED(hr)) {

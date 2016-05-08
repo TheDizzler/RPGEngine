@@ -15,7 +15,8 @@ public:
 
 	bool load(ID3D11Device* device);
 
-	void update(double deltaTime, BYTE keyboardState[256]);
+	//void update(double deltaTime, BYTE keyboardState[256]);
+	void update(double deltaTime, SimpleKeyboard* keys);
 	/** RECT should be a multiple of border sprite length/height
 		(currently 16x16). */
 	void draw(SpriteBatch* batch/*, TextBox* textBox*/);

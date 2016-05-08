@@ -24,80 +24,146 @@ void CommandBox::loadNodes(xml_node nd, vector<xml_node> nds) {
 }
 
 
-bool CommandBox::update(double deltaTime, BYTE keyboardState[256]) {
+//bool CommandBox::update(double deltaTime, BYTE keyboardState[256]) {
+//
+//		nodeSelected = false;
+//
+//		currentFlashTime += deltaTime;
+//		if (currentFlashTime >= indicatorFlashTime) {
+//			indicatorOn = !indicatorOn;
+//			currentFlashTime = 0;
+//		}
+//
+//		if ((keyboardState[DIK_DOWN] & 0x80) && !lastDown) {
+//
+//			lastDown = true;
+//			lastUp = false;
+//			++itemSelected;
+//			if (itemSelected >= nodeList.size()) {
+//				itemSelected = 0;
+//				indicatorPos = firstLabelPos + indicatorOffset;
+//			} else
+//				indicatorPos.y += spaceBetweenLines;
+//			indicatorOn = true;
+//			currentFlashTime = 0;
+//
+//		} else if ((keyboardState[DIK_UP] & 0x80) && !lastUp) {
+//
+//			lastUp = true;
+//			lastDown = false;
+//			--itemSelected;
+//			if (itemSelected < 0) {
+//				itemSelected = nodeList.size() - 1;
+//				indicatorPos.y = firstLabelPos.y + indicatorOffset.y
+//					+ itemSelected*spaceBetweenLines;
+//			} else
+//				indicatorPos.y -= spaceBetweenLines;
+//			indicatorOn = true;
+//			currentFlashTime = 0;
+//
+//		}
+//
+//		if (!(keyboardState[DIK_DOWN] & 0x80)) {
+//			lastDown = false;
+//		}
+//		if (!(keyboardState[DIK_UP] & 0x80)) {
+//			lastUp = false;
+//		}
+//
+//		if (keyboardState[DIK_RETURN] & 0x80 && !lastEnter) { // perform action for selected node
+//
+//			nodeSelected = true;
+//
+//			/*const char_t* type = nodeList[itemSelected].name();
+//			if (type == "dialog") {
+//				textBox = new TextBox(rect.top, rect.left + overlap,
+//					rect.right + overlap, rect.bottom, font);
+//				textBox->loadNode(nodeList[itemSelected]);
+//
+//			}*/
+//			return true;
+//
+//		}
+//
+//
+//	if (!(keyboardState[DIK_RETURN] & 0x80)) {
+//		lastEnter = false;
+//	}
+//
+//	return false;
+//
+//}
 
-	/*if (nodeSelected) {
-		return false;
-} else */
-	{
-		nodeSelected = false;
+bool CommandBox::update(double deltaTime, SimpleKeyboard * keys) {
 
-		currentFlashTime += deltaTime;
-		if (currentFlashTime >= indicatorFlashTime) {
-			indicatorOn = !indicatorOn;
-			currentFlashTime = 0;
-		}
+	nodeSelected = false;
 
-		if ((keyboardState[DIK_DOWN] & 0x80) && !lastDown) {
+	currentFlashTime += deltaTime;
+	if (currentFlashTime >= indicatorFlashTime) {
+		indicatorOn = !indicatorOn;
+		currentFlashTime = 0;
+	}
 
-			lastDown = true;
-			lastUp = false;
-			++itemSelected;
-			if (itemSelected >= nodeList.size()) {
-				itemSelected = 0;
-				indicatorPos = firstLabelPos + indicatorOffset;
-			} else
-				indicatorPos.y += spaceBetweenLines;
-			indicatorOn = true;
-			currentFlashTime = 0;
+	if (keys->keyDown[DOWN] && !lastDown) {
 
-		} else if ((keyboardState[DIK_UP] & 0x80) && !lastUp) {
+		lastDown = true;
+		lastUp = false;
+		++itemSelected;
+		if (itemSelected >= nodeList.size()) {
+			itemSelected = 0;
+			indicatorPos = firstLabelPos + indicatorOffset;
+		} else
+			indicatorPos.y += spaceBetweenLines;
+		indicatorOn = true;
+		currentFlashTime = 0;
 
-			lastUp = true;
-			lastDown = false;
-			--itemSelected;
-			if (itemSelected < 0) {
-				itemSelected = nodeList.size() - 1;
-				indicatorPos.y = firstLabelPos.y + indicatorOffset.y
-					+ itemSelected*spaceBetweenLines;
-			} else
-				indicatorPos.y -= spaceBetweenLines;
-			indicatorOn = true;
-			currentFlashTime = 0;
+	} else if (keys->keyDown[UP] && !lastUp) {
 
-		}
-
-		if (!(keyboardState[DIK_DOWN] & 0x80)) {
-			lastDown = false;
-		}
-		if (!(keyboardState[DIK_UP] & 0x80)) {
-			lastUp = false;
-		}
-
-		if (keyboardState[DIK_RETURN] & 0x80 && !lastEnter) { // perform action for selected node
-
-			nodeSelected = true;
-
-			/*const char_t* type = nodeList[itemSelected].name();
-			if (type == "dialog") {
-				textBox = new TextBox(rect.top, rect.left + overlap,
-					rect.right + overlap, rect.bottom, font);
-				textBox->loadNode(nodeList[itemSelected]);
-
-			}*/
-			return true;
-
-		}
+		lastUp = true;
+		lastDown = false;
+		--itemSelected;
+		if (itemSelected < 0) {
+			itemSelected = nodeList.size() - 1;
+			indicatorPos.y = firstLabelPos.y + indicatorOffset.y
+				+ itemSelected*spaceBetweenLines;
+		} else
+			indicatorPos.y -= spaceBetweenLines;
+		indicatorOn = true;
+		currentFlashTime = 0;
 
 	}
 
-	if (!(keyboardState[DIK_RETURN] & 0x80)) {
+	if (!keys->keyDown[DOWN]) {
+		lastDown = false;
+	}
+	if (!keys->keyDown[UP]) {
+		lastUp = false;
+	}
+
+	if (keys->keyDown[SELECT] && !lastEnter) { // perform action for selected node
+
+		nodeSelected = true;
+
+		/*const char_t* type = nodeList[itemSelected].name();
+		if (type == "dialog") {
+		textBox = new TextBox(rect.top, rect.left + overlap,
+		rect.right + overlap, rect.bottom, font);
+		textBox->loadNode(nodeList[itemSelected]);
+
+		}*/
+		return true;
+
+	}
+
+
+
+	if (!keys->keyDown[SELECT]) {
 		lastEnter = false;
 	}
 
 	return false;
-
 }
+
 
 xml_node CommandBox::getSelectedNode() {
 
@@ -115,6 +181,7 @@ xml_node CommandBox::getSelectedNode() {
 bool CommandBox::isQuery() {
 	return true;
 }
+
 
 void CommandBox::drawText(SpriteBatch * batch) {
 

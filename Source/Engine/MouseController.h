@@ -1,6 +1,8 @@
 #pragma once
 
-#include <dinput.h>
+//#pragma comment (lib, "dinput8.lib")
+
+//#include <dinput.h>
 #include "BaseGraphics/Sprite.h"
 
 
@@ -11,9 +13,9 @@ public:
 	MouseController();
 	~MouseController();
 
-	DIMOUSESTATE setCurrentState();
+	/*DIMOUSESTATE setCurrentState();
 	DIMOUSESTATE currentState;
-	DIMOUSESTATE lastState;
+	DIMOUSESTATE lastState;*/
 
 private:
 

@@ -110,21 +110,37 @@ void BattleScreen::setGameManager(Game* gm) {
 }
 
 
-void BattleScreen::update(double deltaTime, BYTE keyboardState[256], MouseController * mouse) {
+//void BattleScreen::update(double deltaTime, BYTE keyboardState[256], MouseController * mouse) {
+//
+//	for (BattleSprite* sprite : actors) {
+//		sprite->update(deltaTime);
+//		if (sprite->isReady) {
+//			int leftPos = TEXTBOX_MARGIN + LISTBOX_WIDTH / 2;
+//			int topPos = enemyBox->rect.top - LISTBOX_HEIGHT / 2;
+//			CommandBox * box = new CommandBox(topPos, leftPos,
+//				LISTBOX_WIDTH + leftPos, topPos + LISTBOX_HEIGHT, guiFont.get());
+//			commandBoxes.insert(commandBoxes.begin(), box);
+//		}
+//	}
+//
+//	currentCommandBox->update(deltaTime, keyboardState);
+//
+//}
+
+void BattleScreen::update(double deltaTime, SimpleKeyboard* keys) {
 
 	for (BattleSprite* sprite : actors) {
 		sprite->update(deltaTime);
 		if (sprite->isReady) {
 			int leftPos = TEXTBOX_MARGIN + LISTBOX_WIDTH / 2;
 			int topPos = enemyBox->rect.top - LISTBOX_HEIGHT / 2;
-			CommandBox * box = new CommandBox(topPos, leftPos,
+			CommandBox* box = new CommandBox(topPos, leftPos,
 				LISTBOX_WIDTH + leftPos, topPos + LISTBOX_HEIGHT, guiFont.get());
 			commandBoxes.insert(commandBoxes.begin(), box);
 		}
 	}
 
-	currentCommandBox->update(deltaTime, keyboardState);
-
+	currentCommandBox->update(deltaTime, keys);
 }
 
 void BattleScreen::draw(SpriteBatch * batch) {

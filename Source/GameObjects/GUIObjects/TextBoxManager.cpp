@@ -35,6 +35,8 @@ bool TextBoxManager::load(ID3D11Device* device) {
 	commandBox.reset(new CommandBox(TEXTBOX_MARGIN, WINDOW_WIDTH - (LISTBOX_WIDTH + TEXTBOX_MARGIN),
 		WINDOW_WIDTH - TEXTBOX_MARGIN, LISTBOX_HEIGHT + TEXTBOX_MARGIN, guiFont.get()));
 
+	alphaBox.reset(new AlphaInputBox(TEXTBOX_MARGIN, TEXTBOX_MARGIN, guiFont.get()));
+
 	indicator.reset(new Sprite());
 	if (!indicator->load(device, Assets::indicatorFile))
 		return false;
@@ -56,14 +58,19 @@ bool TextBoxManager::load(ID3D11Device* device) {
 }
 
 
-void TextBoxManager::update(double deltaTime, BYTE keyboardState[256]) {
+void TextBoxManager::update(double deltaTime, SimpleKeyboard* keys) {
 
-	if (currentBox && currentBox->update(deltaTime, keyboardState)) {
+	if (currentBox && currentBox->update(deltaTime, keys)) {
 
-		if (currentBox->isQuery()) { // close box
+		if (currentBox->isQuery()) // close box
+			textBoxes.pop_back();
 
+		if (currentBox->isAlphaInput()) {
+			wstring  userInput = ((AlphaInputBox*) currentBox)->getUserInput();
 			textBoxes.pop_back();
 		}
+
+
 		xml_node nextNode = currentBox->getSelectedNode();
 
 		const char_t* type = nextNode.name();
@@ -100,11 +107,63 @@ void TextBoxManager::update(double deltaTime, BYTE keyboardState[256]) {
 
 		} else if (nodeTypes[ALPHA_INPUT]) {
 
-
+			alphaBox->loadNode(nextNode);
+			textBoxes.push_back(alphaBox.get());
+			currentBox = alphaBox.get();
 		}
 	}
-
 }
+
+
+//void TextBoxManager::update(double deltaTime, BYTE keyboardState[256]) {
+//
+//	if (currentBox && currentBox->update(deltaTime, keyboardState)) {
+//
+//		if (currentBox->isQuery()) { // close box
+//
+//			textBoxes.pop_back();
+//		}
+//		xml_node nextNode = currentBox->getSelectedNode();
+//
+//		const char_t* type = nextNode.name();
+//		string type_s = type;
+//		//string node_type_s = nodeTypes[0];
+//		/*wstring name;
+//		wstringstream wss;
+//		wss << type;
+//		name = wss.str();
+//		MessageBox(0, name.c_str(), L"Hi", MB_OK);*/
+//
+//		if (!nextNode) {
+//			// Dialog done?
+//			textBoxes.pop_back();
+//			if (!textBoxes.empty())
+//				currentBox = textBoxes.back();
+//			else
+//				currentBox = NULL;
+//
+//		} else if (type_s == nodeTypes[DIALOG_TEXT] /*|| type_s == nodeTypes[DIALOG_REPLY]*/) {
+//
+//			dialogBox->loadNode(nextNode);
+//			currentBox = dialogBox.get();
+//
+//		} else if (nodeTypes[QUERY] == type_s) {
+//
+//			vector<xml_node> nodes;
+//			for (xml_node child = nextNode.child("answer"); child; child = child.next_sibling("answer"))
+//				nodes.push_back(child);
+//
+//			commandBox->loadNodes(nextNode, nodes);
+//			textBoxes.push_back(commandBox.get());
+//			currentBox = commandBox.get();
+//
+//		} else if (nodeTypes[ALPHA_INPUT]) {
+//
+//
+//		}
+//	}
+//
+//}
 
 
 void TextBoxManager::draw(SpriteBatch* batch) {

@@ -27,7 +27,8 @@ public:
 	bool initializeGame(ID3D11Device* device, MouseController* mouse);
 
 
-	void update(double deltaTime, BYTE keyboardState[256], MouseController* mouse);
+	//void update(double deltaTime, BYTE keyboardState[256], MouseController* mouse);
+	void update(double deltaTime, SimpleKeyboard* keys);
 	void draw(SpriteBatch* batch);
 
 

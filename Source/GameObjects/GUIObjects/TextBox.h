@@ -35,13 +35,14 @@ public:
 	void loadNode(xml_node node);
 
 
-	virtual bool update(double deltaTime, BYTE keyboardState[256]) override;
+	//virtual bool update(double deltaTime, BYTE keyboardState[256]) override;
+	virtual bool update(double deltaTime, SimpleKeyboard* keys) override;
 	virtual void drawText(SpriteBatch* batch) override;
 
 	/** Get next node in dialog chain. */
 	virtual xml_node getSelectedNode();
 	virtual bool isQuery();
-
+	virtual bool isAlphaInput();
 
 	Vector2 indicatorPos;
 	bool indicatorOn = false;

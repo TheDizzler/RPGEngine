@@ -12,7 +12,8 @@ public:
 	// Inherited via Screen
 	virtual bool initialize(ID3D11Device * device, TextBoxManager* textBoxManager) override;
 	virtual void setGameManager(Game * game) override;
-	virtual void update(double deltaTime, BYTE keyboardState[256], MouseController * mouse) override;
+	//virtual void update(double deltaTime, BYTE keyboardState[256], MouseController * mouse) override;
+	virtual void update(double deltaTime, SimpleKeyboard* keys) override;
 	virtual void draw(SpriteBatch * batch) override;
 
 private:

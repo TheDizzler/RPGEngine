@@ -39,12 +39,17 @@ bool Game::initializeGame(ID3D11Device* dvc, MouseController* ms) {
 
 
 
-void Game::update(double deltaTime, BYTE keyboardState[256],
-	MouseController* mouse) {
+//void Game::update(double deltaTime, BYTE keyboardState[256],
+//	MouseController* mouse) {
+//
+//
+//	currentScreen->update(deltaTime, keyboardState, mouse);
+//
+//}
 
+void Game::update(double deltaTime, SimpleKeyboard* keys) {
 
-	currentScreen->update(deltaTime, keyboardState, mouse);
-
+	currentScreen->update(deltaTime, keys);
 }
 
 
@@ -98,16 +103,6 @@ void Game::exit() {
 
 bool Game::parseGameText() {
 
-	//LIBXML_TEST_VERSION;
-
-
-	//doc = xmlReadFile(Assets::gameTextFile, NULL, 0);
-	/*if (doc == NULL) {
-		MessageBox(0, L"Could not read gameTextFile", L"Error", MB_OK);
-		return false;
-	}*/
-
-	//gameTextRootNode = xmlDocGetRootElement(doc);
 
 	doc = new pugi::xml_document();
 	if (!doc->load_file(Assets::gameTextFile)) {
@@ -115,14 +110,6 @@ bool Game::parseGameText() {
 		return false;
 	}
 
-	/*wstring name;
-	const char_t* ch_name = doc->child("root").child("dialog").name();
-	wstringstream wss;
-	wss << ch_name;
-	name = wss.str();
-
-	MessageBox(NULL, name.c_str(), L"Test", MB_OK);*/
-	
 	return true;
 }
 

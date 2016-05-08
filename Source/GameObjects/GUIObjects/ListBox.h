@@ -13,7 +13,8 @@ public:
 
 	virtual void loadList(vector<TextLabel*> labels);
 
-	virtual bool update(double deltaTime, BYTE keyboardState[256]) override;
+	//virtual bool update(double deltaTime, BYTE keyboardState[256]) override;
+	virtual bool update(double deltaTime, SimpleKeyboard* keys) override;
 	virtual void drawText(SpriteBatch* batch) override;
 
 

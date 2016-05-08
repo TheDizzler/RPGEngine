@@ -6,9 +6,9 @@ MouseController::MouseController() {
 MouseController::~MouseController() {
 }
 
-DIMOUSESTATE MouseController::setCurrentState() {
-	
-	lastState = currentState;
-
-	return currentState;
-}
+//DIMOUSESTATE MouseController::setCurrentState() {
+//	
+//	lastState = currentState;
+//
+//	return currentState;
+//}

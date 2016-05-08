@@ -15,12 +15,17 @@ void ListBox::loadList(vector<TextLabel*> lbls) {
 	labels = lbls;
 }
 
-bool ListBox::update(double deltaTime, BYTE keyboardState[256]) {
+//bool ListBox::update(double deltaTime, BYTE keyboardState[256]) {
+//
+//	
+//
+//
+//
+//	return false;
+//}
 
-	
 
-
-
+bool ListBox::update(double deltaTime, SimpleKeyboard * keys) {
 	return false;
 }
 

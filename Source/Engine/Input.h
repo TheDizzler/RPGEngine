@@ -1,15 +1,16 @@
 #pragma once
 
-#pragma comment (lib, "dinput8.lib")
 
-#include <dinput.h>
-#include <DirectXMath.h>
-#include <GamePad.h>
 
+//#include <dinput.h>
+//#include <DirectXMath.h>
+//#include <GamePad.h>
+
+#include "SimpleKeyboard.h"
 #include "MouseController.h"
 
 
-using namespace DirectX;
+//using namespace DirectX;
 
 
 class Input {
@@ -17,22 +18,29 @@ public:
 	Input();
 	~Input();
 
-	bool initDirectInput(HINSTANCE hInstance, HWND hwnd);
+	bool initRawInput(HINSTANCE hInstance, HWND hwnd);
+	/** DEPRECATED!! */
+	//bool initDirectInput(HINSTANCE hInstance, HWND hwnd);
+	/** DEPRECATED!! */
 	virtual void detectInput(double time) = 0;
 
+	void setRawInput(RAWINPUT* raw);
 
 protected:
-	IDirectInputDevice8* inputKB;
-	IDirectInputDevice8* inputMouse;
+
+	SimpleKeyboard* keys;
+	//RAWKEYBOARD* rawKey;
+	RAWMOUSE* rawMouse;
+
+   /** DEPRECATED!! */
+	//IDirectInputDevice8* inputKB;
+	/** DEPRECATED!! */
+	//IDirectInputDevice8* inputMouse;
 	//IDirectInputDevice8* inputJoystick;
 
-	/*std::unique_ptr<GamePad> gamepad;
-	GamePad::ButtonStateTracker buttons;*/
-
-	//DIMOUSESTATE mouseLastState;
-	LPDIRECTINPUT8 directInput;
-
-
+	/** DEPRECATED!! */
+	//LPDIRECTINPUT8 directInput;
+	/** DEPRECATED!! */
 	std::unique_ptr<MouseController> mouse;
 
 };

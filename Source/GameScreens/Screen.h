@@ -15,7 +15,8 @@ interface Screen {
 public:
 	virtual bool initialize(ID3D11Device* device, TextBoxManager* textBoxManager) = 0;
 	virtual void setGameManager(Game* game) = 0;
-	virtual void update(double deltaTime, BYTE keyboardState[256],
-		MouseController* mouse) = 0;
+	//virtual void update(double deltaTime, BYTE keyboardState[256],
+		//MouseController* mouse) = 0;
+	virtual void update(double deltaTime, SimpleKeyboard* keys) = 0;
 	virtual void draw(SpriteBatch* batch) = 0;
 };

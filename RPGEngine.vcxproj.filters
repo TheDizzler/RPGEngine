@@ -114,6 +114,9 @@
     <ClCompile Include="Source\GameObjects\GUIObjects\AlphaInputBox.cpp">
       <Filter>Source Files\GUI</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Engine\SimpleKeyboard.cpp">
+      <Filter>Source Files\Engine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Game.h">
@@ -202,6 +205,9 @@
     </ClInclude>
     <ClInclude Include="Source\GameObjects\GUIObjects\AlphaInputBox.h">
       <Filter>Header Files\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engine\SimpleKeyboard.h">
+      <Filter>Header Files\Engine</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

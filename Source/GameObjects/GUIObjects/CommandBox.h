@@ -13,7 +13,8 @@ public:
 
 	void loadNodes(xml_node node, vector<xml_node> subNodes);
 
-	virtual bool update(double deltaTime, BYTE keyboardState[256]) override;
+	//virtual bool update(double deltaTime, BYTE keyboardState[256]) override;
+	virtual bool update(double deltaTime, SimpleKeyboard* keys) override;
 	virtual void drawText(SpriteBatch* batch);
 
 	virtual xml_node getSelectedNode() override;

@@ -3,6 +3,7 @@
 
 /* Global variables and includes */
 #include <comdef.h>
+#include "GameObjects\GameVariables.h"
 
 
 namespace Globals {
@@ -23,7 +24,7 @@ namespace Globals {
 	const float LETTER_DELAY = 0.025;
 	const float LETTER_DELAY_FAST = .000001;
 
-
+	
 
 	inline bool reportError(HRESULT hr) {
 

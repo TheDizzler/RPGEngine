@@ -15,8 +15,8 @@
 	<dialog speaker="Name Input">
 		<dialogText>Greetings, warrior:</dialogText>
 		<dialogText from="repeat">What is thine name?</dialogText>
-		<alphaInput saveTo="%n"></alphaInput>
-		<dialogText>Is thine name actually %n?</dialogText>
+		<alphaInput saveTo="hero"></alphaInput>
+		<dialogText>Is thine name actually \hero?</dialogText>
 		<query>
 			<answer to="YES">Yes</answer>
 			<answer to="NO">No</answer>
@@ -27,7 +27,7 @@
 
 
 	<dialog speaker="villagerA">
-		<dialogText>A very basic one line dialog.</dialogText>
+		<dialogText>Hello, my name is \speaker.</dialogText>
 		<dialogText>A new line of dialog.</dialogText>
 	</dialog>
 

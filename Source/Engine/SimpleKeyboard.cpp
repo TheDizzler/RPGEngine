@@ -70,24 +70,25 @@ void SimpleKeyboard::getInput(RAWKEYBOARD* rwky) {
 
 UINT SimpleKeyboard::getAlphaKey() {
 
-	if (rawKey->Message == WM_KEYDOWN) {
+	UINT keyChar = rawKey->VKey;
 
-		UINT keyChar = rawKey->VKey;
-			
-		if (keyChar == VK_SHIFT)
+	if (keyChar == VK_SHIFT) {
+		if (rawKey->Message == WM_KEYDOWN)
 			shiftPressed = true;
 		else
 			shiftPressed = false;
+
+	} else if (rawKey->Message == WM_KEYDOWN) {
 
 		keyChar = MapVirtualKey(rawKey->VKey, MAPVK_VK_TO_CHAR);
 
 		if (keyChar >= 65 && keyChar <= 90 && !shiftPressed)
 			keyChar += 32;
 
-		
+
 		return keyChar;
 
-		//if (keyChar > 32 && keyChar < 126	// all chars between space and ~
+		//if (keyChar >= 32 && keyChar <= 126	// all chars between space and ~
 		//	|| keyChar == 8					// or backspace
 		//	|| keyChar == 13) {				// or enter key
 

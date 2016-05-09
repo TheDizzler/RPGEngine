@@ -156,6 +156,7 @@
     <ClCompile Include="Source\GameObjects\BattleObjects\BattleCharacter.cpp" />
     <ClCompile Include="Source\GameObjects\BattleObjects\BattleSprite.cpp" />
     <ClCompile Include="Source\GameObjects\BattleObjects\Enemies\Enemy.cpp" />
+    <ClCompile Include="Source\GameObjects\GameVariables.cpp" />
     <ClCompile Include="Source\GameObjects\GUIObjects\AlphaInputBox.cpp" />
     <ClCompile Include="Source\GameObjects\GUIObjects\Button.cpp" />
     <ClCompile Include="Source\GameObjects\GUIObjects\CommandBox.cpp" />
@@ -186,6 +187,7 @@
     <ClInclude Include="Source\GameObjects\BattleObjects\BattleCharacter.h" />
     <ClInclude Include="Source\GameObjects\BattleObjects\BattleSprite.h" />
     <ClInclude Include="Source\GameObjects\BattleObjects\Enemies\Enemy.h" />
+    <ClInclude Include="Source\GameObjects\GameVariables.h" />
     <ClInclude Include="Source\GameObjects\GUIObjects\AlphaInputBox.h" />
     <ClInclude Include="Source\GameObjects\GUIObjects\Button.h" />
     <ClInclude Include="Source\GameObjects\GUIObjects\CommandBox.h" />

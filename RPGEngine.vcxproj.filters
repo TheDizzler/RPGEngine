@@ -117,6 +117,9 @@
     <ClCompile Include="Source\Engine\SimpleKeyboard.cpp">
       <Filter>Source Files\Engine</Filter>
     </ClCompile>
+    <ClCompile Include="Source\GameObjects\GameVariables.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Game.h">
@@ -208,6 +211,9 @@
     </ClInclude>
     <ClInclude Include="Source\Engine\SimpleKeyboard.h">
       <Filter>Header Files\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameObjects\GameVariables.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

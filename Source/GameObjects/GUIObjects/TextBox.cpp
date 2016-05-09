@@ -23,15 +23,44 @@ void TextBox::loadNode(xml_node nd) {
 	const char_t* ch_dialog = node.text().as_string();
 	wstringstream wss;
 	wss << ch_dialog;
-	loadText(wss.str());
+	parseText(wss.str());
 	//MessageBox(0, wss.str().c_str(), L"huh>", MB_OK);
 }
 
 
-void TextBox::loadText(wstring txt) {
+void TextBox::parseText(wstring txt) {
 
 	originalText = txt;
 	text = originalText;
+
+	// replace variable escape characters
+	size_t replaceAt = text.find_first_of(L"\\");
+	while (replaceAt != wstring::npos) {
+
+		int i = 1;
+		wchar_t ch = text[replaceAt + i];
+		while (isalpha(ch)) {
+
+			ch = text[replaceAt + (++i)];
+		}
+
+
+		wstring replaceWith;
+		wstring escape = text.substr(replaceAt + 1, i - 1);
+		wstring speaker = L"speaker";
+		if (escape == speaker) {
+			wstringstream wss;
+			wss << node.parent().attribute("speaker").as_string();
+			replaceWith = wss.str();
+		} else {
+			//MessageBox(0, escape.c_str(), L"teset", MB_OK);
+			replaceWith = GameVariables::getStoredVariable(escape);
+		}
+	//MessageBox(0, escape.c_str(), L"teset", MB_OK);
+		text = text.replace(replaceAt, i, replaceWith.c_str());
+		replaceAt = text.find_first_of(L"\\");
+	}
+
 
 	maxLineLength = (rect.right - marginOffset) - (rect.left + marginOffset);
 	maxTextHeight = (rect.bottom - marginOffset) - (rect.top + marginOffset);
@@ -43,92 +72,6 @@ void TextBox::loadText(wstring txt) {
 	indicatorRot = -XM_PI / 2;
 }
 
-
-//bool TextBox::update(double deltaTime, BYTE keyboardState[256]) {
-//
-//	timeSinceLastLetter += deltaTime;
-//	if (timeSinceLastLetter >= letterDelay) {
-//		writeNextLetter = true;
-//		timeSinceLastLetter = 0;
-//	}
-//
-//
-//	if ((keyboardState[DIK_RETURN] & 0x80) && !lastEnter) {
-//		lastEnter = true;
-//		if (!writingDone) { // speed through rest of text
-//			letterDelay = Globals::LETTER_DELAY_FAST;
-//
-//		} else if (text.length() > currentLineStart + textPos) {
-//		// more text to write
-//			text = text.substr(currentLineStart + textPos);
-//			currentLineStart = 0;
-//			textPos = 0;
-//			numLines = 0;
-//			writingDone = false;
-//
-//		} else { // All done!
-//			indicatorOn = true;
-//			return true;
-//
-//		}
-//
-//	}
-//
-//	if (!(keyboardState[DIK_RETURN] & 0x80)) {
-//		lastEnter = false;
-//	}
-//
-//
-//	if (writingDone) {
-//		currentFlashTime += deltaTime;
-//		if (currentFlashTime >= indicatorFlashTime) {
-//			indicatorOn = !indicatorOn;
-//			currentFlashTime = 0;
-//		}
-//
-//		if (!(text.length() > currentLineStart + textPos)
-//			&& (string) node.next_sibling().name() == nodeTypes[QUERY]) {
-//			// if the next node in this dialog chain is a question, go right to the
-//			// question without waiting
-//			letterDelay = Globals::LETTER_DELAY;
-//			writingDone = false;
-//			indicatorOn = true;
-//			return true;
-//
-//		}
-//	}
-//
-//	if (!writingDone && writeNextLetter) {
-//		writeNextLetter = false;
-//		++textPos;
-//
-//		int checkPos = textPos;
-//		char c = text[currentLineStart + checkPos];
-//		if (isspace(c)) {
-//
-//			while (currentLineStart + checkPos < text.length()
-//				&& !isspace(text[currentLineStart + ++checkPos]));
-//
-//			Vector2 measure = font->measureString(text.substr(currentLineStart, checkPos).c_str());
-//
-//			if (measure.x > maxLineLength) { // insert new line
-//
-//				if (measure.y*numLines > maxTextHeight) {
-//					// wait for input
-//					writingDone = true;
-//					letterDelay = Globals::LETTER_DELAY;
-//				} else {
-//					text = text.replace(currentLineStart + textPos, 1, 1, '\n');
-//					currentLineStart += textPos - 1;
-//					textPos = 0;
-//					++numLines;
-//				}
-//			}
-//		}
-//	}
-//
-//	return false;
-//}
 
 
 bool TextBox::update(double deltaTime, SimpleKeyboard* keys) {

@@ -14,7 +14,7 @@
 using namespace pugi;
 
 
-static const enum NODES {
+static const enum Nodes {
 	DIALOG_TEXT, QUERY, ALPHA_INPUT
 };
 static const char_t* nodeTypes[] = {"dialogText", "query", "alphaInput"};
@@ -72,7 +72,7 @@ private:
 
 	wstring originalText;
 	wstring text;
-	void loadText(wstring text);
+	void parseText(wstring text);
 
 	Vector2 currentLabelPos;
 	int currentLineStart;

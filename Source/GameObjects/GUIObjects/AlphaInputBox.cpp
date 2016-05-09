@@ -41,9 +41,17 @@ bool AlphaInputBox::update(double deltaTime, SimpleKeyboard* keys) {
 
 	if (keyChar == VK_RETURN && !lastEnter) {
 		lastEnter = true;
-		if (userInput.length() > 0)
-			return true;
-		return false;
+		if (userInput.length() <= 0)
+			return false;
+
+		// get saveTo escape
+		string saveTo = node.attribute("saveTo").as_string();
+		wstringstream wss;
+		wss << saveTo.c_str();
+		//MessageBox(0, wss.str().c_str(), userInput.c_str(), MB_OK);
+		GameVariables::storeVariable(wss.str(), userInput);
+
+		return true;
 	}
 
 	if (keyChar == 8 && !lastBackspace) {	// backspace

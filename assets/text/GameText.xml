@@ -13,7 +13,7 @@
 
 
 	<dialog speaker="Name Input">
-		<dialogText>Greetings, warrior</dialogText>
+		<dialogText>Greetings, warrior:</dialogText>
 		<dialogText from="repeat">What is thine name?</dialogText>
 		<alphaInput saveTo="%n"></alphaInput>
 		<dialogText>Is thine name actually %n?</dialogText>

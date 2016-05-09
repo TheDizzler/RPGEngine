@@ -18,7 +18,7 @@ public:
 	Input();
 	~Input();
 
-	bool initRawInput(HINSTANCE hInstance, HWND hwnd);
+	bool initRawInput(HWND hwnd);
 	/** DEPRECATED!! */
 	//bool initDirectInput(HINSTANCE hInstance, HWND hwnd);
 	/** DEPRECATED!! */

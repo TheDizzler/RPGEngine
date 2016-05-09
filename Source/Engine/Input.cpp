@@ -13,13 +13,13 @@ Input::~Input() {
 	//directInput->Release();
 }
 
-bool Input::initRawInput(HINSTANCE hInstance, HWND hwnd) {
+bool Input::initRawInput(HWND hwnd) {
 
 	RAWINPUTDEVICE rid[1];
 	rid[0].usUsagePage = 1;
 	rid[0].usUsage = 6; // keyboard
 	rid[0].dwFlags = RIDEV_NOLEGACY; // adds HID keyboard and ignores legacy mouse msgs
-	rid[0].hwndTarget = 0; // 0??
+	rid[0].hwndTarget = hwnd; // 0??
 
 	//rid[1].usUsagePage = 1;
 	//rid[1].usUsage = 2; // mouse

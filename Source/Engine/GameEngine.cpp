@@ -26,7 +26,7 @@ bool GameEngine::initEngine(HWND hw, HINSTANCE hInstance) {
 		return false;
 	}*/
 
-	if (!initRawInput(hInstance, hwnd)) {
+	if (!initRawInput(hwnd)) {
 		MessageBox(0, L"Raw Input Init failed", L"Error", MB_OK);
 		return false;
 	}

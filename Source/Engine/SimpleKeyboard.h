@@ -24,6 +24,8 @@ public:
 
 private:
 	RAWKEYBOARD* rawKey;
+
+	bool shiftPressed = false;
 	
 
 };

@@ -76,11 +76,9 @@ void TextBoxManager::update(double deltaTime, SimpleKeyboard* keys) {
 		const char_t* type = nextNode.name();
 		string type_s = type;
 		//string node_type_s = nodeTypes[0];
-		/*wstring name;
-		wstringstream wss;
+		/*wstringstream wss;
 		wss << type;
-		name = wss.str();
-		MessageBox(0, name.c_str(), L"Hi", MB_OK);*/
+		MessageBox(0,  wss.str().c_str(), L"Hi", MB_OK);*/
 
 		if (!nextNode) {
 			// Dialog done?

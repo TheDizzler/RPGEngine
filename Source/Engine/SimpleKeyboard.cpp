@@ -72,7 +72,20 @@ UINT SimpleKeyboard::getAlphaKey() {
 
 	if (rawKey->Message == WM_KEYDOWN) {
 
-		return rawKey->VKey;
+		UINT keyChar = rawKey->VKey;
+			
+		if (keyChar == VK_SHIFT)
+			shiftPressed = true;
+		else
+			shiftPressed = false;
+
+		keyChar = MapVirtualKey(rawKey->VKey, MAPVK_VK_TO_CHAR);
+
+		if (keyChar >= 65 && keyChar <= 90 && !shiftPressed)
+			keyChar += 32;
+
+		
+		return keyChar;
 
 		//if (keyChar > 32 && keyChar < 126	// all chars between space and ~
 		//	|| keyChar == 8					// or backspace

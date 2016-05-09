@@ -19,7 +19,7 @@ public:
 private:
 
 	static const int MAX_CHARACTERS = 10;
-	const char nextChar = '_';
+	wstring carat = L"_";
 
 	bool lastChar = true;
 	bool lastBackspace = true;

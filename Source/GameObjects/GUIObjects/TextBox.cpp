@@ -28,6 +28,8 @@ void TextBox::loadNode(xml_node nd) {
 }
 
 
+#include "../../Game.h";
+
 void TextBox::parseText(wstring txt) {
 
 	originalText = txt;
@@ -54,7 +56,7 @@ void TextBox::parseText(wstring txt) {
 			replaceWith = wss.str();
 		} else {
 			//MessageBox(0, escape.c_str(), L"teset", MB_OK);
-			replaceWith = GameVariables::getStoredVariable(escape);
+			replaceWith = Game::getStoredVariable(escape);
 		}
 	//MessageBox(0, escape.c_str(), L"teset", MB_OK);
 		text = text.replace(replaceAt, i, replaceWith.c_str());

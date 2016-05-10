@@ -10,7 +10,7 @@ AlphaInputBox::AlphaInputBox(int top, int left, FontSet* fontSet)
 AlphaInputBox::~AlphaInputBox() {
 }
 
-
+#include "../../Game.h"
 bool AlphaInputBox::update(double deltaTime, SimpleKeyboard* keys) {
 
 
@@ -30,9 +30,12 @@ bool AlphaInputBox::update(double deltaTime, SimpleKeyboard* keys) {
 
 	if (keyChar >= 32 && keyChar <= 126 && !lastChar) {	// all chars between space and ~
 
-		/*wstringstream wss;
-		wss << keyChar;
-		MessageBox(0, wss.str().c_str(), L"Test", MB_OK);*/
+		if (userInput.length() >= Globals::MAX_CHARACTERS)
+			return false;
+
+				/*wstringstream wss;
+				wss << keyChar;
+				MessageBox(0, wss.str().c_str(), L"Test", MB_OK);*/
 
 		lastChar = true;
 		userInput += wchar_t(keyChar);
@@ -49,7 +52,7 @@ bool AlphaInputBox::update(double deltaTime, SimpleKeyboard* keys) {
 		wstringstream wss;
 		wss << saveTo.c_str();
 		//MessageBox(0, wss.str().c_str(), userInput.c_str(), MB_OK);
-		GameVariables::storeVariable(wss.str(), userInput);
+		Game::storeVariable(wss.str(), &userInput);
 
 		return true;
 	}
@@ -68,7 +71,7 @@ bool AlphaInputBox::update(double deltaTime, SimpleKeyboard* keys) {
 void AlphaInputBox::drawText(SpriteBatch * batch) {
 
 	wstring print = userInput;
-	if (nextCharIndicatorOn)
+	if (nextCharIndicatorOn && userInput.length() < Globals::MAX_CHARACTERS)
 		print += carat;
 	font->draw(batch, print.c_str(), firstLabelPos);
 }

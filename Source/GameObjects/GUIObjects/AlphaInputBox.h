@@ -18,7 +18,7 @@ public:
 	
 private:
 
-	static const int MAX_CHARACTERS = 10;
+	
 	wstring carat = L"_";
 
 	bool lastChar = true;

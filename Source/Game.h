@@ -1,7 +1,7 @@
 #pragma once
 
 #include <stdio.h>
-
+#include <map>
 
 
 #include "GameScreens\BattleScreen.h"
@@ -12,6 +12,13 @@
 enum GameState {
 	menu, paused, playing
 };
+
+static const enum EscapeStrings {
+	hero, temp1, temp2
+};
+
+static const wstring escapeStrings[3] = {L"hero", L"temp1", L"temp2"};
+
 
 
 class GameEngine;
@@ -36,6 +43,9 @@ public:
 	void loadMainMenu();
 	void exit();
 
+	
+	static void storeVariable(wstring escape, wstring* store);
+	static wstring getStoredVariable(wstring escape);
 private:
 
 	Screen* currentScreen;
@@ -46,7 +56,7 @@ private:
 	ID3D11Device* device;
 
 	unique_ptr<TextBoxManager> textBoxManager;
-	
+
 
 	//xmlDoc* doc;
 	//xmlNode* gameTextRootNode;
@@ -54,5 +64,14 @@ private:
 	pugi::xml_parse_result result;
 	bool parseGameText();
 
-	
+
+	static map<wstring, wstring> storedVariables;
+	//static const wchar_t* storedVariables[3] = {heroStoredName, L"0123456789", L"0123456789"};
+
+
+	/*wstring tempA = L"Temp 1!";
+	wstring tempB = L"Temp 2!";*/
+
+
+
 };

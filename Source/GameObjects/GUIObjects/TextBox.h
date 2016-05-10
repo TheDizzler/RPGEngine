@@ -9,10 +9,12 @@
 #include "GUIBox.h"
 #include "../../Engine/BaseGraphics/Sprite.h"
 #include "TextLabel.h"
+//#include "../GameVariables.h"
 
 
 using namespace pugi;
 
+class Game;
 
 static const enum Nodes {
 	DIALOG_TEXT, QUERY, ALPHA_INPUT

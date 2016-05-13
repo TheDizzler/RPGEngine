@@ -22,6 +22,7 @@ namespace Assets {
 	const static wchar_t* blueDudeFile = L"assets/bluedude.dds";
 	const static wchar_t* beetleFile = L"assets/baddies/beetle.dds";
 
+	const static wchar_t* grassFile = L"assets/terrain/grass.dds";
 
 	const static char* gameTextFile = "assets/text/GameText.xml";
 

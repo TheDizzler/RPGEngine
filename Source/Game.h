@@ -60,8 +60,10 @@ private:
 
 	//xmlDoc* doc;
 	//xmlNode* gameTextRootNode;
-	pugi::xml_document* doc;
-	pugi::xml_parse_result result;
+	pugi::xml_document* docDialogText;
+	//pugi::xml_document* docMapText;
+
+	//pugi::xml_parse_result result;
 	bool parseGameText();
 
 

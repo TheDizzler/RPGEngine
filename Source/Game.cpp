@@ -9,7 +9,7 @@ Game::~Game() {
 
 	//xmlFreeDoc(doc);
 	//xmlCleanupParser();
-	delete doc;
+	delete docDialogText;
 }
 
 bool Game::initializeGame(ID3D11Device* dvc, MouseController* ms) {
@@ -23,7 +23,7 @@ bool Game::initializeGame(ID3D11Device* dvc, MouseController* ms) {
 	}
 
 
-	textBoxManager.reset(new TextBoxManager(doc));
+	textBoxManager.reset(new TextBoxManager(docDialogText));
 	if (!textBoxManager->load(device))
 		return false;
 
@@ -105,16 +105,16 @@ map<wstring, wstring> Game::storedVariables;
 
 void Game::storeVariable(wstring escape, wstring * store) {
 
-	//MessageBox(0, store->c_str(), escape.c_str(), MB_OK);
-	if (escape == escapeStrings[hero])
-		storedVariables[escape] = *store;
+	//if (escape == escapeStrings[hero])
+
+	storedVariables[escape] = *store;
 
 
-	/*storedVariables[escapeStrings[temp1]] = L"Temp 1!";
-	storedVariables[escapeStrings[temp2]] = L"Temp 2!";
-	MessageBox(0, storedVariables[escapeStrings[hero]].c_str(), escapeStrings[hero].c_str(), MB_OK);
-	MessageBox(0, storedVariables[escapeStrings[temp1]].c_str(), escapeStrings[temp1].c_str(), MB_OK);
-	MessageBox(0, storedVariables[escapeStrings[temp2]].c_str(), escapeStrings[temp2].c_str(), MB_OK);*/
+/*storedVariables[escapeStrings[temp1]] = L"Temp 1!";
+storedVariables[escapeStrings[temp2]] = L"Temp 2!";
+MessageBox(0, storedVariables[escapeStrings[hero]].c_str(), escapeStrings[hero].c_str(), MB_OK);
+MessageBox(0, storedVariables[escapeStrings[temp1]].c_str(), escapeStrings[temp1].c_str(), MB_OK);
+MessageBox(0, storedVariables[escapeStrings[temp2]].c_str(), escapeStrings[temp2].c_str(), MB_OK);*/
 }
 
 wstring Game::getStoredVariable(wstring escape) {
@@ -123,17 +123,18 @@ wstring Game::getStoredVariable(wstring escape) {
 	MessageBox(0, storedVariables[escapeStrings[temp1]].c_str(), escapeStrings[temp1].c_str(), MB_OK);
 	MessageBox(0, storedVariables[escapeStrings[temp2]].c_str(), escapeStrings[temp2].c_str(), MB_OK);*/
 
-	if (escape == escapeStrings[hero])
-		return storedVariables[escape];
+	//if (escape == escapeStrings[hero])
+	if (storedVariables.find(escape) == storedVariables.end())
+		return L"NOTHING FOUND!";
 
-	return L"NOTHING FOUND!";
+	return storedVariables[escape];
 }
 
 bool Game::parseGameText() {
 
 
-	doc = new pugi::xml_document();
-	if (!doc->load_file(Assets::gameTextFile)) {
+	docDialogText = new pugi::xml_document();
+	if (!docDialogText->load_file(Assets::gameTextFile)) {
 		MessageBox(0, L"Could not read gameTextFile", L"Error", MB_OK);
 		return false;
 	}

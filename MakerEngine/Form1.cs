@@ -104,17 +104,9 @@ namespace MakerEngine {
 		}
 
 		private void treeView_Dialog_MouseDoubleClick(Object sender, MouseEventArgs e) {
+
 			TreeXMLNode selected = (TreeXMLNode)treeView_Dialog.SelectedNode;
 			XmlNode selectedNode = selected.node;
-
-			//for (int i = accordion_Dialog.Count - 1; i >= 0; --i) {
-			//	if (accordion_Dialog.Controls[i] != null) {
-			//		Control c = accordion_Dialog.Controls[i];
-			//		accordion_Dialog.Controls.Remove(c);
-			//		c.Dispose();
-			//	}
-			//}
-			//accordion_Dialog.Dispose();
 
 			panel1.Controls.Remove(accordion_Dialog);
 			accordion_Dialog.Dispose();
@@ -128,17 +120,32 @@ namespace MakerEngine {
 
 				foreach (XmlNode child in selectedNode.ChildNodes) {
 
+					switch (child.Name) {
+						case "dialogText":
+							RichTextBox textBox = new RichTextBox { Dock = DockStyle.Fill, Multiline = true, BackColor = Color.White };
+							textBox.Text = child.InnerText;
 
-					RichTextBox textBox = new RichTextBox { Dock = DockStyle.Fill, Multiline = true, BackColor = Color.White };
-					textBox.Text = child.InnerText;
+							CheckBox ckboxDialog = accordion_Dialog.Add(textBox, child.Name, "Additional Client Info", 1, true, contentBackColor: Color.Transparent);
+							break;
 
-					CheckBox ck = accordion_Dialog.Add(textBox, child.Name, "Additional Client Info", 1, true, contentBackColor: Color.Transparent);
+						case "query":
+							TableLayoutPanel tlp = new TableLayoutPanel { Dock = DockStyle.Fill, Padding = new Padding(5) };
+							tlp.TabStop = true;
+							int i = child.ChildNodes.Count - 1;
+							foreach (XmlNode answer in child.ChildNodes) {
+								tlp.Controls.Add(new Label { Text = "Option " + i, TextAlign = ContentAlignment.BottomLeft }, 0, 0);
+								TextBox answerBox = new TextBox();
+								answerBox.Text = answer.InnerText;
+								tlp.Controls.Add(answerBox, 1, 0);
+								i++;
+							}
+							CheckBox ckboxQuery = accordion_Dialog.Add(tlp, child.Name, "Additional Client Info", 1, true, contentBackColor: Color.Transparent);
+							break;
 
-					//TableLayoutPanel tlp = new TableLayoutPanel { Dock = DockStyle.Fill, Padding = new Padding(5) };
-					//tlp.TabStop = true;
-					//tlp.Controls.Add(new Label { Text = "First Name", TextAlign = ContentAlignment.BottomLeft }, 0, 0);
-					//tlp.Controls.Add(new TextBox(), 1, 0);
+						case "alphaInput":
 
+							break;
+					}
 				}
 
 			}

@@ -33,14 +33,17 @@
 			this.tabControl_Main = new System.Windows.Forms.TabControl();
 			this.Main = new System.Windows.Forms.TabPage();
 			this.tabPage_Dialog = new System.Windows.Forms.TabPage();
+			this.richTextBox_EscapeCharacters = new System.Windows.Forms.RichTextBox();
 			this.label_Speaker = new System.Windows.Forms.Label();
 			this.textBox_Speaker = new System.Windows.Forms.TextBox();
-			this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+			this.rich_DialogText = new System.Windows.Forms.RichTextBox();
 			this.treeView_Dialog = new System.Windows.Forms.TreeView();
-			this.richTextBox_EscapeCharacters = new System.Windows.Forms.RichTextBox();
+			this.panel1 = new System.Windows.Forms.Panel();
+			this.accordion_Dialog = new Opulos.Core.UI.Accordion();
 			this.menuStrip1.SuspendLayout();
 			this.tabControl_Main.SuspendLayout();
 			this.tabPage_Dialog.SuspendLayout();
+			this.panel1.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// menuStrip1
@@ -119,10 +122,11 @@
 			// 
 			// tabPage_Dialog
 			// 
+			this.tabPage_Dialog.Controls.Add(this.panel1);
 			this.tabPage_Dialog.Controls.Add(this.richTextBox_EscapeCharacters);
 			this.tabPage_Dialog.Controls.Add(this.label_Speaker);
 			this.tabPage_Dialog.Controls.Add(this.textBox_Speaker);
-			this.tabPage_Dialog.Controls.Add(this.richTextBox1);
+			this.tabPage_Dialog.Controls.Add(this.rich_DialogText);
 			this.tabPage_Dialog.Controls.Add(this.treeView_Dialog);
 			this.tabPage_Dialog.Location = new System.Drawing.Point(4, 22);
 			this.tabPage_Dialog.Name = "tabPage_Dialog";
@@ -131,6 +135,17 @@
 			this.tabPage_Dialog.TabIndex = 1;
 			this.tabPage_Dialog.Text = "Dialog Text";
 			this.tabPage_Dialog.UseVisualStyleBackColor = true;
+			// 
+			// richTextBox_EscapeCharacters
+			// 
+			this.richTextBox_EscapeCharacters.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+			this.richTextBox_EscapeCharacters.Location = new System.Drawing.Point(706, 6);
+			this.richTextBox_EscapeCharacters.Name = "richTextBox_EscapeCharacters";
+			this.richTextBox_EscapeCharacters.ReadOnly = true;
+			this.richTextBox_EscapeCharacters.Size = new System.Drawing.Size(162, 80);
+			this.richTextBox_EscapeCharacters.TabIndex = 4;
+			this.richTextBox_EscapeCharacters.TabStop = false;
+			this.richTextBox_EscapeCharacters.Text = "Special Characters:\n\\hero for player\'s name";
 			// 
 			// label_Speaker
 			// 
@@ -148,13 +163,13 @@
 			this.textBox_Speaker.Size = new System.Drawing.Size(144, 20);
 			this.textBox_Speaker.TabIndex = 2;
 			// 
-			// richTextBox1
+			// rich_DialogText
 			// 
-			this.richTextBox1.Location = new System.Drawing.Point(266, 92);
-			this.richTextBox1.Name = "richTextBox1";
-			this.richTextBox1.Size = new System.Drawing.Size(602, 112);
-			this.richTextBox1.TabIndex = 1;
-			this.richTextBox1.Text = "";
+			this.rich_DialogText.Location = new System.Drawing.Point(266, 92);
+			this.rich_DialogText.Name = "rich_DialogText";
+			this.rich_DialogText.Size = new System.Drawing.Size(602, 112);
+			this.rich_DialogText.TabIndex = 1;
+			this.rich_DialogText.Text = "";
 			// 
 			// treeView_Dialog
 			// 
@@ -162,17 +177,78 @@
 			this.treeView_Dialog.Name = "treeView_Dialog";
 			this.treeView_Dialog.Size = new System.Drawing.Size(253, 463);
 			this.treeView_Dialog.TabIndex = 0;
+			this.treeView_Dialog.MouseClick += new System.Windows.Forms.MouseEventHandler(this.treeView_Dialog_MouseClick);
+			this.treeView_Dialog.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.treeView_Dialog_MouseDoubleClick);
 			// 
-			// richTextBox_EscapeCharacters
+			// panel1
 			// 
-			this.richTextBox_EscapeCharacters.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
-			this.richTextBox_EscapeCharacters.Location = new System.Drawing.Point(706, 6);
-			this.richTextBox_EscapeCharacters.Name = "richTextBox_EscapeCharacters";
-			this.richTextBox_EscapeCharacters.ReadOnly = true;
-			this.richTextBox_EscapeCharacters.Size = new System.Drawing.Size(162, 80);
-			this.richTextBox_EscapeCharacters.TabIndex = 4;
-			this.richTextBox_EscapeCharacters.TabStop = false;
-			this.richTextBox_EscapeCharacters.Text = "Special Characters:\n\\hero for player\'s name";
+			this.panel1.Controls.Add(this.accordion_Dialog);
+			this.panel1.Location = new System.Drawing.Point(266, 217);
+			this.panel1.Name = "panel1";
+			this.panel1.Size = new System.Drawing.Size(606, 253);
+			this.panel1.TabIndex = 6;
+			// 
+			// accordion_Dialog
+			// 
+			this.accordion_Dialog.AddResizeBars = true;
+			this.accordion_Dialog.AllowMouseResize = true;
+			this.accordion_Dialog.AnimateCloseEffect = ((Opulos.Core.UI.AnimateWindowFlags)(((Opulos.Core.UI.AnimateWindowFlags.VerticalNegative | Opulos.Core.UI.AnimateWindowFlags.Hide) 
+            | Opulos.Core.UI.AnimateWindowFlags.Slide)));
+			this.accordion_Dialog.AnimateCloseMillis = 300;
+			this.accordion_Dialog.AnimateOpenEffect = ((Opulos.Core.UI.AnimateWindowFlags)(((Opulos.Core.UI.AnimateWindowFlags.VerticalPositive | Opulos.Core.UI.AnimateWindowFlags.Show) 
+            | Opulos.Core.UI.AnimateWindowFlags.Slide)));
+			this.accordion_Dialog.AnimateOpenMillis = 300;
+			this.accordion_Dialog.AutoFixDockStyle = true;
+			this.accordion_Dialog.AutoScroll = true;
+			this.accordion_Dialog.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+			this.accordion_Dialog.CheckBoxFactory = null;
+			this.accordion_Dialog.CheckBoxMargin = new System.Windows.Forms.Padding(0);
+			this.accordion_Dialog.ContentBackColor = null;
+			this.accordion_Dialog.ContentMargin = null;
+			this.accordion_Dialog.ContentPadding = new System.Windows.Forms.Padding(5);
+			this.accordion_Dialog.ControlBackColor = null;
+			this.accordion_Dialog.ControlMinimumHeightIsItsPreferredHeight = true;
+			this.accordion_Dialog.ControlMinimumWidthIsItsPreferredWidth = true;
+			this.accordion_Dialog.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.accordion_Dialog.DownArrow = null;
+			this.accordion_Dialog.FillHeight = true;
+			this.accordion_Dialog.FillLastOpened = false;
+			this.accordion_Dialog.FillModeGrowOnly = false;
+			this.accordion_Dialog.FillResetOnCollapse = false;
+			this.accordion_Dialog.FillWidth = true;
+			this.accordion_Dialog.GrabCursor = System.Windows.Forms.Cursors.SizeNS;
+			this.accordion_Dialog.GrabRequiresPositiveFillWeight = true;
+			this.accordion_Dialog.GrabWidth = 6;
+			this.accordion_Dialog.GrowAndShrink = true;
+			this.accordion_Dialog.Insets = new System.Windows.Forms.Padding(0);
+			this.accordion_Dialog.Location = new System.Drawing.Point(0, 0);
+			this.accordion_Dialog.Name = "accordion_Dialog";
+			this.accordion_Dialog.OpenOnAdd = false;
+			this.accordion_Dialog.OpenOneOnly = false;
+			this.accordion_Dialog.ResizeBarFactory = null;
+			this.accordion_Dialog.ResizeBarsAlign = 0.5D;
+			this.accordion_Dialog.ResizeBarsArrowKeyDelta = 10;
+			this.accordion_Dialog.ResizeBarsFadeInMillis = 800;
+			this.accordion_Dialog.ResizeBarsFadeOutMillis = 800;
+			this.accordion_Dialog.ResizeBarsFadeProximity = 24;
+			this.accordion_Dialog.ResizeBarsFill = 1D;
+			this.accordion_Dialog.ResizeBarsKeepFocusAfterMouseDrag = false;
+			this.accordion_Dialog.ResizeBarsKeepFocusIfControlOutOfView = true;
+			this.accordion_Dialog.ResizeBarsKeepFocusOnClick = true;
+			this.accordion_Dialog.ResizeBarsMargin = null;
+			this.accordion_Dialog.ResizeBarsMinimumLength = 50;
+			this.accordion_Dialog.ResizeBarsStayInViewOnArrowKey = true;
+			this.accordion_Dialog.ResizeBarsStayInViewOnMouseDrag = true;
+			this.accordion_Dialog.ResizeBarsStayVisibleIfFocused = true;
+			this.accordion_Dialog.ResizeBarsTabStop = true;
+			this.accordion_Dialog.ShowPartiallyVisibleResizeBars = false;
+			this.accordion_Dialog.ShowToolMenu = true;
+			this.accordion_Dialog.ShowToolMenuOnHoverWhenClosed = false;
+			this.accordion_Dialog.ShowToolMenuOnRightClick = true;
+			this.accordion_Dialog.ShowToolMenuRequiresPositiveFillWeight = false;
+			this.accordion_Dialog.Size = new System.Drawing.Size(606, 253);
+			this.accordion_Dialog.TabIndex = 0;
+			this.accordion_Dialog.UpArrow = null;
 			// 
 			// MakerEngineForm
 			// 
@@ -189,6 +265,7 @@
 			this.tabControl_Main.ResumeLayout(false);
 			this.tabPage_Dialog.ResumeLayout(false);
 			this.tabPage_Dialog.PerformLayout();
+			this.panel1.ResumeLayout(false);
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -209,8 +286,10 @@
 		private System.Windows.Forms.TreeView treeView_Dialog;
 		private System.Windows.Forms.Label label_Speaker;
 		private System.Windows.Forms.TextBox textBox_Speaker;
-		private System.Windows.Forms.RichTextBox richTextBox1;
+		private System.Windows.Forms.RichTextBox rich_DialogText;
 		private System.Windows.Forms.RichTextBox richTextBox_EscapeCharacters;
+		private System.Windows.Forms.Panel panel1;
+		private Opulos.Core.UI.Accordion accordion_Dialog;
 	}
 }
 

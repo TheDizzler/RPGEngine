@@ -14,7 +14,7 @@
 
 
 		<dialog speaker="Name Input">
-			<dialogText>Greetings, warrior:</dialogText>
+			<dialogText>Greetings, warrior!</dialogText>
 			<dialogText from="repeat">What is thine name?</dialogText>
 			<alphaInput saveTo="hero"></alphaInput>
 			<dialogText>Is thine name actually \hero?</dialogText>

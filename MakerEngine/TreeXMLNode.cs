@@ -16,12 +16,20 @@ namespace MakerEngine {
 
 			node = nd;
 
-			this.Text = node.Attributes["speaker"].InnerText;
+			if (node.Attributes["speaker"] != null)
+				this.Text = node.Attributes["speaker"].InnerText;
+			else if (node.Attributes["location"] != null)
+				this.Text = node.Attributes["location"].InnerText;
 		}
 
-		public TreeXMLNode(XmlNode nd, TreeXMLNode[] children) : base(nd.Attributes["type"].InnerText, children) {
+		public TreeXMLNode(XmlNode nd, TreeXMLNode[] children) : base("", children) {
 
 			node = nd;
+
+			if (nd.Attributes["type"] != null)
+				this.Text = nd.Attributes["type"].InnerText;
+			else if (nd.Attributes["location"] != null)
+				this.Text = nd.Attributes["location"].InnerText;
 		}
 	}
 }

@@ -16,7 +16,7 @@
 		<dialog speaker="Name Input">
 			<dialogText>Greetings, warrior!</dialogText>
 			<dialogText from="repeat">What is thine name?</dialogText>
-			<alphaInput saveTo="hero"></alphaInput>
+			<alphaInput saveTo="hero" default="PhartyBolz"></alphaInput>
 			<dialogText>Is thine name actually \hero?</dialogText>
 			<query>
 				<answer to="YES">Yes</answer>
@@ -29,27 +29,28 @@
 
 
 	<event type="Triggered">
-	
+
 	</event>
 
 
-	<event type="Zone NPC Text"  location="Test Village">
-		<dialog speaker="villagerA">
-			<dialogText>Hello, my name is \speaker.</dialogText>
-			<dialogText>A new line of dialog.</dialogText>
-		</dialog>
+	<event type="Zone Text">
+		<zone location="Test Village">
+			<dialog speaker="villagerA">
+				<dialogText>Hello, my name is \speaker.</dialogText>
+				<dialogText>A new line of dialog.</dialogText>
+			</dialog>
 
 
-		<dialog speaker="Princess Ed">
-			<dialogText from="repeat">Does thou love me?</dialogText>
-			<query>
-				<answer to="YES">Yes</answer>
-				<answer to="NO">No</answer>
-			</query>
-			<dialogText from="YES" to="finish">I knew it!</dialogText>
-			<dialogText from="NO" to="repeat">But thou must!</dialogText>
-			<dialogText>This should never display.</dialogText>
-		</dialog>
-
+			<dialog speaker="Princess Ed">
+				<dialogText from="repeat">Does thou love me?</dialogText>
+				<query>
+					<answer to="YES">Yes</answer>
+					<answer to="NO">No</answer>
+				</query>
+				<dialogText from="YES" to="finish">I knew it!</dialogText>
+				<dialogText from="NO" to="repeat">But thou must!</dialogText>
+				<dialogText>This should never display.</dialogText>
+			</dialog>
+		</zone>
 	</event>
 </root>

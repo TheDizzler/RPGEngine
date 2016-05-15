@@ -50,6 +50,18 @@
     <Compile Include="Accordion.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="AccordionDialogTextControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="AccordionDialogTextControl.Designer.cs">
+      <DependentUpon>AccordionDialogTextControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AccordionQueryControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="AccordionQueryControl.Designer.cs">
+      <DependentUpon>AccordionQueryControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -63,6 +75,12 @@
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="TreeXMLNode.cs" />
+    <EmbeddedResource Include="AccordionDialogTextControl.resx">
+      <DependentUpon>AccordionDialogTextControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AccordionQueryControl.resx">
+      <DependentUpon>AccordionQueryControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>

@@ -33,6 +33,7 @@ namespace MakerEngine {
 			richTextBox_dialogText.Text = node.InnerText;
 		}
 
+
 		public String getLabel() {
 
 			String label = node.Name;

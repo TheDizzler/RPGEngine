@@ -114,14 +114,14 @@ namespace Opulos.Core.UI {
 				var r = control.Bounds;
 				var r2 = r;
 				r.Location = Point.Empty;
-				bmpBack = CreateScreenCapture(control.Parent, r2);
+				//bmpBack = CreateScreenCapture(control.Parent, r2); // moving command here seemed to stop crashing
 				bmpFore = new Bitmap(r.Width, r.Height);
 				control.DrawToBitmap(bmpFore, r);
 
 				if (control.Visible)
 					control.Visible = false;
 
-				
+				bmpBack = CreateScreenCapture(control.Parent, r2); // original location
 				pbox.Size = r.Size;
 				control.Controls.Add(pbox);
 				control.Controls.SetChildIndex(pbox, 0);

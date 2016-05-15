@@ -45,7 +45,7 @@
 			// 
 			// textBox_from
 			// 
-			this.textBox_from.Location = new System.Drawing.Point(124, 122);
+			this.textBox_from.Location = new System.Drawing.Point(75, 122);
 			this.textBox_from.MaxLength = 32;
 			this.textBox_from.Name = "textBox_from";
 			this.textBox_from.Size = new System.Drawing.Size(144, 20);
@@ -56,6 +56,7 @@
 			// textBox_jumpTo
 			// 
 			this.textBox_jumpTo.Location = new System.Drawing.Point(266, 150);
+			this.textBox_jumpTo.MaxLength = 32;
 			this.textBox_jumpTo.Name = "textBox_jumpTo";
 			this.textBox_jumpTo.Size = new System.Drawing.Size(156, 20);
 			this.textBox_jumpTo.TabIndex = 2;
@@ -67,19 +68,19 @@
 			this.label1.AutoSize = true;
 			this.label1.Location = new System.Drawing.Point(4, 125);
 			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(114, 13);
+			this.label1.Size = new System.Drawing.Size(65, 13);
 			this.label1.TabIndex = 3;
-			this.label1.Text = "Previous Block Pointer";
+			this.label1.Text = "Block Name";
 			this.toolTip_NextBlockLabel.SetToolTip(this.label1, "Came from");
 			// 
 			// label2
 			// 
 			this.label2.AutoSize = true;
-			this.label2.Location = new System.Drawing.Point(165, 153);
+			this.label2.Location = new System.Drawing.Point(174, 153);
 			this.label2.Name = "label2";
-			this.label2.Size = new System.Drawing.Size(95, 13);
+			this.label2.Size = new System.Drawing.Size(86, 13);
 			this.label2.TabIndex = 4;
-			this.label2.Text = "Next Block Pointer";
+			this.label2.Text = "Block to Jump to";
 			this.toolTip_NextBlockLabel.SetToolTip(this.label2, "Jump to");
 			// 
 			// AccordionDialogTextControl

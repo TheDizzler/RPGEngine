@@ -52,9 +52,9 @@
 			this.label2.AutoSize = true;
 			this.label2.Location = new System.Drawing.Point(4, 85);
 			this.label2.Name = "label2";
-			this.label2.Size = new System.Drawing.Size(112, 13);
+			this.label2.Size = new System.Drawing.Size(86, 13);
 			this.label2.TabIndex = 3;
-			this.label2.Text = "Pointer to Reply Block";
+			this.label2.Text = "Block to Jump to";
 			// 
 			// button_JumpTo
 			// 
@@ -83,7 +83,7 @@
 			// 
 			this.textBox_JumpTo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.textBox_JumpTo.Location = new System.Drawing.Point(116, 82);
+			this.textBox_JumpTo.Location = new System.Drawing.Point(96, 82);
 			this.textBox_JumpTo.MaxLength = 32;
 			this.textBox_JumpTo.Name = "textBox_JumpTo";
 			this.textBox_JumpTo.Size = new System.Drawing.Size(234, 20);

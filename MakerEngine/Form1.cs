@@ -107,15 +107,14 @@ namespace MakerEngine {
 
 				foreach (XmlNode child in selectedNode.ChildNodes) {
 
-					//TableLayoutPanel tlp = new TableLayoutPanel { Dock = DockStyle.Fill, Padding = new Padding(5) };
-					//tlp.TabStop = true;
 					switch (child.Name) {
 
 						case "dialogText":
 
 							AccordionDialogTextControl adt = new AccordionDialogTextControl(child);
 
-							CheckBox ckboxDialog = accordion_Dialog.Add(adt, adt.getLabel(), "A text block", 1, false, contentBackColor: Color.Transparent);
+							CheckBox ckboxDialog = accordion_Dialog.Add(adt, adt.getLabel(),
+								"A text block", 1, true, contentBackColor: Color.Transparent);
 							break;
 
 						case "query":
@@ -126,26 +125,36 @@ namespace MakerEngine {
 							foreach (XmlNode answer in child.ChildNodes) {
 
 								AccordionQueryControl aqc = new AccordionQueryControl(answer);
-								queryAcc.Add(aqc, "Option " + i, "Configure Player Choice", 1, true, contentBackColor: Color.Transparent);
+								queryAcc.Add(aqc, "Option " + i, "Configure Player Choice", 1,
+									true, contentBackColor: Color.Transparent);
 
 								i++;
 							}
-							CheckBox ckboxQuery = accordion_Dialog.Add(queryAcc, child.Name, "Player text choices", 1, false, contentBackColor: Color.Transparent);
+							CheckBox ckboxQuery = accordion_Dialog.Add(queryAcc, child.Name,
+								"Player text choices", 1, false, contentBackColor: Color.Transparent);
 							break;
 
 						case "alphaInput":
 
+							TableLayoutPanel tlp = new TableLayoutPanel {
+								Dock = DockStyle.Fill,
+								//Padding = new Padding(5)
+							};
+
 							Label label = new Label();
 							label.Text = "Default Input";
 							label.TextAlign = ContentAlignment.MiddleCenter;
-							//tlp.Controls.Add(label, 0, 0);
+							tlp.Controls.Add(label);
+
 
 							TextBox tb = new TextBox();
-							//tlp.Controls.Add(tb, 1, 0);
+							tb.MaxLength = 10;
+							tb.Text = child.Attributes["default"].InnerText;
+							tlp.Controls.Add(tb);
 
 
 
-							//accordion_Dialog.Add(tlp, child.Name, "Player keyboard input", 1, false, contentBackColor: Color.Transparent);
+							accordion_Dialog.Add(tlp, child.Name, "Player keyboard input", 1, false, contentBackColor: Color.Transparent);
 							break;
 					}
 				}

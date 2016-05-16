@@ -8,16 +8,18 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
+using System.IO;
 
 namespace MakerEngine {
 	public partial class AccordionDialogTextControl : UserControl {
 
 		XmlNode node;
+		MakerEngineForm mainForm;
 
-		public AccordionDialogTextControl(XmlNode dialogTextNode) {
+		public AccordionDialogTextControl(MakerEngineForm main, XmlNode dialogTextNode) {
 			InitializeComponent();
 
-
+			mainForm = main;
 			node = dialogTextNode;
 
 			if (node.Attributes["from"] != null)
@@ -44,6 +46,38 @@ namespace MakerEngine {
 				label += "    TO: " + node.Attributes["to"].InnerText;
 
 			return label;
+		}
+
+
+		private void button_CreateNewBlock_Click(Object sender, EventArgs e) {
+
+			using (NewBlockDialog dialog = new NewBlockDialog()) {
+
+				DialogResult result = dialog.ShowDialog();
+				
+				switch (dialog.blockDialogResult) {
+
+					case NewBlockDialog.NewBlockDialogResult.Cancel:
+						//dialog.Close();
+						break;
+
+					case NewBlockDialog.NewBlockDialogResult.DialogText:
+						
+						mainForm.createNewDialogText(node, textBox_jumpTo.Text);
+						//dialog.Close();
+						break;
+					case NewBlockDialog.NewBlockDialogResult.Query:
+
+						break;
+					case NewBlockDialog.NewBlockDialogResult.AlphaInput:
+
+						break;
+
+				}
+
+			}
+
+
 		}
 	}
 }

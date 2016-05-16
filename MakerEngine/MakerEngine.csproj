@@ -62,11 +62,17 @@
     <Compile Include="AccordionQueryControl.Designer.cs">
       <DependentUpon>AccordionQueryControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Form1.cs">
+    <Compile Include="MakerEngineForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="MakerEngineForm.Designer.cs">
+      <DependentUpon>MakerEngineForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="NewBlockDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NewBlockDialog.Designer.cs">
+      <DependentUpon>NewBlockDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="OpacityEx.cs" />
     <Compile Include="Program.cs" />
@@ -81,8 +87,11 @@
     <EmbeddedResource Include="AccordionQueryControl.resx">
       <DependentUpon>AccordionQueryControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="MakerEngineForm.resx">
+      <DependentUpon>MakerEngineForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NewBlockDialog.resx">
+      <DependentUpon>NewBlockDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

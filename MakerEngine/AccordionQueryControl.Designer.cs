@@ -24,10 +24,10 @@
 		/// </summary>
 		private void InitializeComponent() {
 			this.panel_ControlHolder = new System.Windows.Forms.Panel();
+			this.textBox_JumpTo = new System.Windows.Forms.TextBox();
 			this.label2 = new System.Windows.Forms.Label();
 			this.button_JumpTo = new System.Windows.Forms.Button();
-			this.richTextBox_Choice = new System.Windows.Forms.RichTextBox();
-			this.textBox_JumpTo = new System.Windows.Forms.TextBox();
+			this.richTextBox_Choice = new System.Windows.Forms.TextBox();
 			this.panel_ControlHolder.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -44,6 +44,17 @@
 			this.panel_ControlHolder.Name = "panel_ControlHolder";
 			this.panel_ControlHolder.Size = new System.Drawing.Size(476, 112);
 			this.panel_ControlHolder.TabIndex = 0;
+			// 
+			// textBox_JumpTo
+			// 
+			this.textBox_JumpTo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.textBox_JumpTo.Location = new System.Drawing.Point(96, 82);
+			this.textBox_JumpTo.MaxLength = 32;
+			this.textBox_JumpTo.Name = "textBox_JumpTo";
+			this.textBox_JumpTo.Size = new System.Drawing.Size(234, 20);
+			this.textBox_JumpTo.TabIndex = 4;
+			this.textBox_JumpTo.Text = "answer.Attributes[\"to\"].InnerText";
 			// 
 			// label2
 			// 
@@ -69,26 +80,13 @@
 			// 
 			// richTextBox_Choice
 			// 
-			this.richTextBox_Choice.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.richTextBox_Choice.AutoWordSelection = true;
-			this.richTextBox_Choice.Location = new System.Drawing.Point(7, 4);
+			this.richTextBox_Choice.Dock = System.Windows.Forms.DockStyle.Top;
+			this.richTextBox_Choice.Location = new System.Drawing.Point(0, 0);
 			this.richTextBox_Choice.MaxLength = 1500;
 			this.richTextBox_Choice.Name = "richTextBox_Choice";
-			this.richTextBox_Choice.Size = new System.Drawing.Size(462, 75);
+			this.richTextBox_Choice.Size = new System.Drawing.Size(476, 75);
 			this.richTextBox_Choice.TabIndex = 1;
 			this.richTextBox_Choice.Text = "answer.InnerText";
-			// 
-			// textBox_JumpTo
-			// 
-			this.textBox_JumpTo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.textBox_JumpTo.Location = new System.Drawing.Point(96, 82);
-			this.textBox_JumpTo.MaxLength = 32;
-			this.textBox_JumpTo.Name = "textBox_JumpTo";
-			this.textBox_JumpTo.Size = new System.Drawing.Size(234, 20);
-			this.textBox_JumpTo.TabIndex = 4;
-			this.textBox_JumpTo.Text = "answer.Attributes[\"to\"].InnerText";
 			// 
 			// AccordionQueryControl
 			// 
@@ -111,7 +109,7 @@
 
 		private System.Windows.Forms.Panel panel_ControlHolder;
 		private System.Windows.Forms.Button button_JumpTo;
-		private System.Windows.Forms.RichTextBox richTextBox_Choice;
+		private System.Windows.Forms.TextBox richTextBox_Choice;
 		private System.Windows.Forms.Label label2;
 		private System.Windows.Forms.TextBox textBox_JumpTo;
 	}

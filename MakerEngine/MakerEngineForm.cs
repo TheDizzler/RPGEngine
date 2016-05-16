@@ -33,27 +33,17 @@ namespace MakerEngine {
 			accordion_Dialog.ControlBackColor = Color.White;
 			accordion_Dialog.ContentBackColor = Color.CadetBlue;
 
-			//TableLayoutPanel tlp = new TableLayoutPanel { Dock = DockStyle.Fill, Padding = new Padding(5) };
-			//tlp.TabStop = true;
-			//tlp.Controls.Add(new Label { Text = "First Name", TextAlign = ContentAlignment.BottomLeft }, 0, 0);
-			//tlp.Controls.Add(new TextBox(), 1, 0);
-			//tlp.Controls.Add(new Label { Text = "Last Name", TextAlign = ContentAlignment.BottomLeft }, 0, 1);
-			//tlp.Controls.Add(new TextBox(), 1, 1);
-
-			//accordion_Dialog.Add(tlp, "Contact Info", "Enter the client's information.", 0, true);
-			//accordion_Dialog.Add(new TextBox { Dock = DockStyle.Fill, Multiline = true, BackColor = Color.White }, "Memo", "Additional Client Info", 1, true, contentBackColor: Color.Transparent);
-			//accordion_Dialog.Add(new Control(), "Other Info", "Miscellaneous information.");
 			loadGameXmlFiles();
 
 		}
 
-
+		
 
 		private void loadGameXmlFiles() {
 
 			docDialogText = new XmlDocument();
 			docDialogText.Load(gameDirectory + dialogText);
-			XmlNode root = docDialogText.FirstChild;
+			XmlNode root = docDialogText.GetElementsByTagName("root")[0];
 
 			this.Text = "Maker Engine - " + root.Attributes["game"].InnerText;
 
@@ -88,6 +78,33 @@ namespace MakerEngine {
 		}
 
 
+		public void createNewDialogText(XmlNode prevNode, String fromAttribute) {
+
+			String dt = "<dialogText from=\"" + fromAttribute + "\"></dialogText>";
+			XmlDocument newXml = new XmlDocument();
+			newXml.Load(new StringReader(dt));
+
+			XmlNode newNode = newXml.DocumentElement;
+			newNode.InnerText = "Testing";
+			XmlNode importNode = docDialogText.ImportNode(newNode, true);
+			//XmlNodeList nodeList = docDialogText.GetElementsByTagName(prevNode.Name);
+			prevNode.ParentNode.AppendChild(importNode);
+
+			XmlWriter writer = XmlWriter.Create(gameDirectory + dialogText);
+			docDialogText.Save(writer);
+
+
+			createDialogTextControl(importNode);
+		}
+
+		private void createDialogTextControl(XmlNode node) {
+
+			AccordionDialogTextControl adt = new AccordionDialogTextControl(this, node);
+
+			CheckBox ckboxDialog = accordion_Dialog.Add(adt, adt.getLabel(),
+				"A text block", 1, false, contentBackColor: Color.Transparent);
+		}
+
 		private void treeView_Dialog_MouseDoubleClick(Object sender, MouseEventArgs e) {
 
 			TreeXMLNode selected = (TreeXMLNode)treeView_Dialog.SelectedNode;
@@ -111,10 +128,7 @@ namespace MakerEngine {
 
 						case "dialogText":
 
-							AccordionDialogTextControl adt = new AccordionDialogTextControl(child);
-
-							CheckBox ckboxDialog = accordion_Dialog.Add(adt, adt.getLabel(),
-								"A text block", 1, true, contentBackColor: Color.Transparent);
+							createDialogTextControl(child);
 							break;
 
 						case "query":
@@ -153,8 +167,9 @@ namespace MakerEngine {
 							tlp.Controls.Add(tb);
 
 
+							accordion_Dialog.Add(tlp, child.Name, 
+								"Player keyboard input", 1, false, contentBackColor: Color.Transparent);
 
-							accordion_Dialog.Add(tlp, child.Name, "Player keyboard input", 1, false, contentBackColor: Color.Transparent);
 							break;
 					}
 				}

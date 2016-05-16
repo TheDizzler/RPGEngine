@@ -35,11 +35,12 @@
 			this.tabPage_Dialog = new System.Windows.Forms.TabPage();
 			this.label1 = new System.Windows.Forms.Label();
 			this.groupBox_AccordionHolder = new System.Windows.Forms.GroupBox();
-			this.accordion_Dialog = new Opulos.Core.UI.Accordion();
 			this.richTextBox_EscapeCharacters = new System.Windows.Forms.RichTextBox();
 			this.label_Speaker = new System.Windows.Forms.Label();
 			this.textBox_Speaker = new System.Windows.Forms.TextBox();
 			this.treeView_Dialog = new System.Windows.Forms.TreeView();
+			this.button1 = new System.Windows.Forms.Button();
+			this.accordion_Dialog = new Opulos.Core.UI.Accordion();
 			this.menuStrip1.SuspendLayout();
 			this.tabControl_Main.SuspendLayout();
 			this.tabPage_Dialog.SuspendLayout();
@@ -151,6 +152,7 @@
 			this.groupBox_AccordionHolder.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+			this.groupBox_AccordionHolder.Controls.Add(this.button1);
 			this.groupBox_AccordionHolder.Controls.Add(this.accordion_Dialog);
 			this.groupBox_AccordionHolder.Location = new System.Drawing.Point(270, 32);
 			this.groupBox_AccordionHolder.Name = "groupBox_AccordionHolder";
@@ -158,6 +160,54 @@
 			this.groupBox_AccordionHolder.TabIndex = 7;
 			this.groupBox_AccordionHolder.TabStop = false;
 			this.groupBox_AccordionHolder.Text = "Dialog Flow";
+			// 
+			// richTextBox_EscapeCharacters
+			// 
+			this.richTextBox_EscapeCharacters.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.richTextBox_EscapeCharacters.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+			this.richTextBox_EscapeCharacters.Location = new System.Drawing.Point(98, 415);
+			this.richTextBox_EscapeCharacters.Name = "richTextBox_EscapeCharacters";
+			this.richTextBox_EscapeCharacters.ReadOnly = true;
+			this.richTextBox_EscapeCharacters.Size = new System.Drawing.Size(162, 65);
+			this.richTextBox_EscapeCharacters.TabIndex = 4;
+			this.richTextBox_EscapeCharacters.TabStop = false;
+			this.richTextBox_EscapeCharacters.Text = "Special Characters:\n\\hero for player\'s name\n\\speaker for speakers name";
+			// 
+			// label_Speaker
+			// 
+			this.label_Speaker.AutoSize = true;
+			this.label_Speaker.Location = new System.Drawing.Point(267, 12);
+			this.label_Speaker.Name = "label_Speaker";
+			this.label_Speaker.Size = new System.Drawing.Size(47, 13);
+			this.label_Speaker.TabIndex = 3;
+			this.label_Speaker.Text = "Speaker";
+			// 
+			// textBox_Speaker
+			// 
+			this.textBox_Speaker.Location = new System.Drawing.Point(320, 6);
+			this.textBox_Speaker.Name = "textBox_Speaker";
+			this.textBox_Speaker.Size = new System.Drawing.Size(144, 20);
+			this.textBox_Speaker.TabIndex = 2;
+			// 
+			// treeView_Dialog
+			// 
+			this.treeView_Dialog.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+			this.treeView_Dialog.Location = new System.Drawing.Point(7, 27);
+			this.treeView_Dialog.Name = "treeView_Dialog";
+			this.treeView_Dialog.Size = new System.Drawing.Size(253, 382);
+			this.treeView_Dialog.TabIndex = 0;
+			this.treeView_Dialog.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.treeView_Dialog_MouseDoubleClick);
+			// 
+			// button1
+			// 
+			this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.button1.Location = new System.Drawing.Point(7, 422);
+			this.button1.Name = "button1";
+			this.button1.Size = new System.Drawing.Size(104, 23);
+			this.button1.TabIndex = 1;
+			this.button1.Text = "New Dialog Block";
+			this.button1.UseVisualStyleBackColor = true;
 			// 
 			// accordion_Dialog
 			// 
@@ -221,44 +271,6 @@
 			this.accordion_Dialog.TabIndex = 0;
 			this.accordion_Dialog.UpArrow = null;
 			// 
-			// richTextBox_EscapeCharacters
-			// 
-			this.richTextBox_EscapeCharacters.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.richTextBox_EscapeCharacters.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
-			this.richTextBox_EscapeCharacters.Location = new System.Drawing.Point(98, 415);
-			this.richTextBox_EscapeCharacters.Name = "richTextBox_EscapeCharacters";
-			this.richTextBox_EscapeCharacters.ReadOnly = true;
-			this.richTextBox_EscapeCharacters.Size = new System.Drawing.Size(162, 65);
-			this.richTextBox_EscapeCharacters.TabIndex = 4;
-			this.richTextBox_EscapeCharacters.TabStop = false;
-			this.richTextBox_EscapeCharacters.Text = "Special Characters:\n\\hero for player\'s name\n\\speaker for speakers name";
-			// 
-			// label_Speaker
-			// 
-			this.label_Speaker.AutoSize = true;
-			this.label_Speaker.Location = new System.Drawing.Point(267, 12);
-			this.label_Speaker.Name = "label_Speaker";
-			this.label_Speaker.Size = new System.Drawing.Size(47, 13);
-			this.label_Speaker.TabIndex = 3;
-			this.label_Speaker.Text = "Speaker";
-			// 
-			// textBox_Speaker
-			// 
-			this.textBox_Speaker.Location = new System.Drawing.Point(320, 6);
-			this.textBox_Speaker.Name = "textBox_Speaker";
-			this.textBox_Speaker.Size = new System.Drawing.Size(144, 20);
-			this.textBox_Speaker.TabIndex = 2;
-			// 
-			// treeView_Dialog
-			// 
-			this.treeView_Dialog.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-			this.treeView_Dialog.Location = new System.Drawing.Point(7, 27);
-			this.treeView_Dialog.Name = "treeView_Dialog";
-			this.treeView_Dialog.Size = new System.Drawing.Size(253, 382);
-			this.treeView_Dialog.TabIndex = 0;
-			this.treeView_Dialog.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.treeView_Dialog_MouseDoubleClick);
-			// 
 			// MakerEngineForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -300,6 +312,7 @@
 		private Opulos.Core.UI.Accordion accordion_Dialog;
 		private System.Windows.Forms.GroupBox groupBox_AccordionHolder;
 		private System.Windows.Forms.Label label1;
+		private System.Windows.Forms.Button button1;
 	}
 }
 

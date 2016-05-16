@@ -16,6 +16,9 @@ namespace MakerEngine {
 		XmlNode node;
 		MakerEngineForm mainForm;
 
+		public bool changed = false;
+
+
 		public AccordionDialogTextControl(MakerEngineForm main, XmlNode dialogTextNode) {
 			InitializeComponent();
 
@@ -28,9 +31,9 @@ namespace MakerEngine {
 				textBox_from.Text = "";
 
 			if (node.Attributes["to"] != null)
-				textBox_jumpTo.Text = node.Attributes["to"].InnerText;
+				textBox_JumpTo.Text = node.Attributes["to"].InnerText;
 			else
-				textBox_jumpTo.Text = "";
+				textBox_JumpTo.Text = "";
 
 			richTextBox_dialogText.Text = node.InnerText;
 		}
@@ -63,7 +66,7 @@ namespace MakerEngine {
 
 					case NewBlockDialog.NewBlockDialogResult.DialogText:
 						
-						mainForm.createNewDialogText(node, textBox_jumpTo.Text);
+						mainForm.createNewDialogText(node, textBox_JumpTo.Text);
 						//dialog.Close();
 						break;
 					case NewBlockDialog.NewBlockDialogResult.Query:
@@ -78,6 +81,11 @@ namespace MakerEngine {
 			}
 
 
+		}
+
+		private void textChanged(Object sender, EventArgs e) {
+
+			changed = true;
 		}
 	}
 }

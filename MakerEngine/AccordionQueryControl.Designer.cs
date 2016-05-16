@@ -55,6 +55,7 @@
 			this.textBox_JumpTo.Size = new System.Drawing.Size(234, 20);
 			this.textBox_JumpTo.TabIndex = 4;
 			this.textBox_JumpTo.Text = "answer.Attributes[\"to\"].InnerText";
+			this.textBox_JumpTo.TextChanged += new System.EventHandler(this.textChanged);
 			// 
 			// label2
 			// 
@@ -71,22 +72,25 @@
 			// 
 			this.button_JumpTo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.button_JumpTo.Location = new System.Drawing.Point(357, 80);
+			this.button_JumpTo.Location = new System.Drawing.Point(336, 80);
 			this.button_JumpTo.Name = "button_JumpTo";
-			this.button_JumpTo.Size = new System.Drawing.Size(111, 23);
+			this.button_JumpTo.Size = new System.Drawing.Size(132, 23);
 			this.button_JumpTo.TabIndex = 2;
-			this.button_JumpTo.Text = "Jump To Block";
+			this.button_JumpTo.Text = "Create Answer Block";
 			this.button_JumpTo.UseVisualStyleBackColor = true;
+			this.button_JumpTo.Click += new System.EventHandler(this.button_JumpTo_Click);
 			// 
 			// richTextBox_Choice
 			// 
 			this.richTextBox_Choice.Dock = System.Windows.Forms.DockStyle.Top;
 			this.richTextBox_Choice.Location = new System.Drawing.Point(0, 0);
 			this.richTextBox_Choice.MaxLength = 1500;
+			this.richTextBox_Choice.Multiline = true;
 			this.richTextBox_Choice.Name = "richTextBox_Choice";
 			this.richTextBox_Choice.Size = new System.Drawing.Size(476, 75);
 			this.richTextBox_Choice.TabIndex = 1;
 			this.richTextBox_Choice.Text = "answer.InnerText";
+			this.richTextBox_Choice.TextChanged += new System.EventHandler(this.textChanged);
 			// 
 			// AccordionQueryControl
 			// 

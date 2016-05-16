@@ -77,6 +77,13 @@ namespace MakerEngine {
 
 		}
 
+		private void save() {
+
+			XmlWriter writer = XmlWriter.Create(gameDirectory + dialogText);
+			docDialogText.Save(writer);
+
+		}
+
 
 		public void createNewDialogText(XmlNode prevNode, String fromAttribute) {
 
@@ -90,12 +97,11 @@ namespace MakerEngine {
 			//XmlNodeList nodeList = docDialogText.GetElementsByTagName(prevNode.Name);
 			prevNode.ParentNode.AppendChild(importNode);
 
-			XmlWriter writer = XmlWriter.Create(gameDirectory + dialogText);
-			docDialogText.Save(writer);
-
+			save();
 
 			createDialogTextControl(importNode);
 		}
+
 
 		private void createDialogTextControl(XmlNode node) {
 
@@ -104,6 +110,14 @@ namespace MakerEngine {
 			CheckBox ckboxDialog = accordion_Dialog.Add(adt, adt.getLabel(),
 				"A text block", 1, false, contentBackColor: Color.Transparent);
 		}
+
+		private void createQueryTextControl(XmlNode node, Accordion queryAcc, int num) {
+
+			AccordionQueryControl aqc = new AccordionQueryControl(this, node);
+			queryAcc.Add(aqc, "Option " + num, "Configure Player Choice", 1,
+				true, contentBackColor: Color.Transparent);
+		}
+
 
 		private void treeView_Dialog_MouseDoubleClick(Object sender, MouseEventArgs e) {
 
@@ -138,11 +152,8 @@ namespace MakerEngine {
 							int i = child.ChildNodes.Count - 1;
 							foreach (XmlNode answer in child.ChildNodes) {
 
-								AccordionQueryControl aqc = new AccordionQueryControl(answer);
-								queryAcc.Add(aqc, "Option " + i, "Configure Player Choice", 1,
-									true, contentBackColor: Color.Transparent);
+								createQueryTextControl(answer, queryAcc, i++);
 
-								i++;
 							}
 							CheckBox ckboxQuery = accordion_Dialog.Add(queryAcc, child.Name,
 								"Player text choices", 1, false, contentBackColor: Color.Transparent);

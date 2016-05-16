@@ -26,7 +26,7 @@
 			this.components = new System.ComponentModel.Container();
 			this.richTextBox_dialogText = new System.Windows.Forms.TextBox();
 			this.textBox_from = new System.Windows.Forms.TextBox();
-			this.textBox_jumpTo = new System.Windows.Forms.TextBox();
+			this.textBox_JumpTo = new System.Windows.Forms.TextBox();
 			this.label1 = new System.Windows.Forms.Label();
 			this.label2 = new System.Windows.Forms.Label();
 			this.toolTip_PreviousBlockLabel = new System.Windows.Forms.ToolTip(this.components);
@@ -45,6 +45,7 @@
 			this.richTextBox_dialogText.Size = new System.Drawing.Size(476, 115);
 			this.richTextBox_dialogText.TabIndex = 0;
 			this.richTextBox_dialogText.Text = "node.InnerText";
+			this.richTextBox_dialogText.TextChanged += new System.EventHandler(this.textChanged);
 			// 
 			// textBox_from
 			// 
@@ -55,16 +56,18 @@
 			this.textBox_from.TabIndex = 1;
 			this.textBox_from.Text = "node.Attributes[\"from\"].InnerText";
 			this.toolTip_NextBlockLabel.SetToolTip(this.textBox_from, "Leave blank to cascade to next dialog box");
+			this.textBox_from.TextChanged += new System.EventHandler(this.textChanged);
 			// 
-			// textBox_jumpTo
+			// textBox_JumpTo
 			// 
-			this.textBox_jumpTo.Location = new System.Drawing.Point(99, 146);
-			this.textBox_jumpTo.MaxLength = 32;
-			this.textBox_jumpTo.Name = "textBox_jumpTo";
-			this.textBox_jumpTo.Size = new System.Drawing.Size(156, 20);
-			this.textBox_jumpTo.TabIndex = 2;
-			this.textBox_jumpTo.Text = "node.Attributes[\"to\"].InnerText";
-			this.toolTip_NextBlockLabel.SetToolTip(this.textBox_jumpTo, "Leave blank to cascade to next dialog box");
+			this.textBox_JumpTo.Location = new System.Drawing.Point(99, 146);
+			this.textBox_JumpTo.MaxLength = 32;
+			this.textBox_JumpTo.Name = "textBox_JumpTo";
+			this.textBox_JumpTo.Size = new System.Drawing.Size(156, 20);
+			this.textBox_JumpTo.TabIndex = 2;
+			this.textBox_JumpTo.Text = "node.Attributes[\"to\"].InnerText";
+			this.toolTip_NextBlockLabel.SetToolTip(this.textBox_JumpTo, "Leave blank to cascade to next dialog box");
+			this.textBox_JumpTo.TextChanged += new System.EventHandler(this.textChanged);
 			// 
 			// label1
 			// 
@@ -93,7 +96,7 @@
 			this.panel_ControlHolder.Controls.Add(this.button_CreateNewBlock);
 			this.panel_ControlHolder.Controls.Add(this.richTextBox_dialogText);
 			this.panel_ControlHolder.Controls.Add(this.textBox_from);
-			this.panel_ControlHolder.Controls.Add(this.textBox_jumpTo);
+			this.panel_ControlHolder.Controls.Add(this.textBox_JumpTo);
 			this.panel_ControlHolder.Controls.Add(this.label1);
 			this.panel_ControlHolder.Controls.Add(this.label2);
 			this.panel_ControlHolder.Location = new System.Drawing.Point(3, 3);
@@ -132,7 +135,7 @@
 
 		private System.Windows.Forms.TextBox richTextBox_dialogText;
 		private System.Windows.Forms.TextBox textBox_from;
-		private System.Windows.Forms.TextBox textBox_jumpTo;
+		private System.Windows.Forms.TextBox textBox_JumpTo;
 		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.Label label2;
 		private System.Windows.Forms.ToolTip toolTip_PreviousBlockLabel;

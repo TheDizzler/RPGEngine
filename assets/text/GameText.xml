@@ -30,7 +30,6 @@
 			<dialog speaker="villagerA">
 				<dialogText>Hello, my name is \speaker.</dialogText>
 				<dialogText>A new line of dialog.</dialogText>
-				<dialogText from="GoHere">Testing</dialogText>
 			</dialog>
 			<dialog speaker="Princess Ed">
 				<dialogText from="repeat">Does thou love me?</dialogText>

@@ -23,9 +23,9 @@ static const char_t* nodeTypes[] = {"dialogText", "query", "alphaInput"};
 
 
 static const enum ATTRIBUTES {
-	SPEAKER, TO, FROM
+	SPEAKER, TO, FROM, DEFAULT
 };
-static const char_t* attributeTypes[] = {"speaker", "to", "from"};
+static const char_t* attributeTypes[] = {"speaker", "to", "from", "default"};
 
 
 
@@ -34,7 +34,7 @@ public:
 	TextBox(int top, int left, int right, int bottom, FontSet* fontSet);
 	~TextBox();
 
-	void loadNode(xml_node node);
+	virtual void loadNode(xml_node node);
 
 
 	//virtual bool update(double deltaTime, BYTE keyboardState[256]) override;

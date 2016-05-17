@@ -10,6 +10,20 @@ AlphaInputBox::AlphaInputBox(int top, int left, FontSet* fontSet)
 AlphaInputBox::~AlphaInputBox() {
 }
 
+void AlphaInputBox::loadNode(xml_node node) {
+
+	TextBox::loadNode(node);
+
+	if (node.attribute("default") != NULL) {
+
+		string def = node.attribute("default").as_string();
+		wstringstream wss;
+		wss << def.c_str();
+		userInput = wss.str();
+
+	}
+}
+
 #include "../../Game.h"
 bool AlphaInputBox::update(double deltaTime, SimpleKeyboard* keys) {
 

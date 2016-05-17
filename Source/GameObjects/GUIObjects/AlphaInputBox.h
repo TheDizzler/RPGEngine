@@ -10,7 +10,8 @@ public:
 	AlphaInputBox(int top, int left, FontSet* fontSet);
 	~AlphaInputBox();
 
-	//virtual bool update(double deltaTime, BYTE keyboardState[256]) override;
+	virtual void loadNode(xml_node node);
+
 	virtual bool update(double deltaTime, SimpleKeyboard* keys) override;
 	virtual void drawText(SpriteBatch* batch) override;
 	virtual bool isAlphaInput() override;

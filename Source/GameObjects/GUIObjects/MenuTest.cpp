@@ -22,11 +22,7 @@ void MenuTest::setGameManager(Game* gm) {
 	game = gm;
 }
 
-//void MenuTest::update(double deltaTime, BYTE keyboardState[256], MouseController * mouse) {
-//
-//	textBoxManager->update(deltaTime, keyboardState);
-//
-//}
+
 
 void MenuTest::update(double deltaTime, SimpleKeyboard* keys) {
 	textBoxManager->update(deltaTime, keys);
@@ -35,6 +31,5 @@ void MenuTest::update(double deltaTime, SimpleKeyboard* keys) {
 void MenuTest::draw(SpriteBatch * batch) {
 
 	textBoxManager->draw(batch);
-	//testLabel->draw(batch);
 }
 

@@ -39,14 +39,6 @@ bool Game::initializeGame(ID3D11Device* dvc, MouseController* ms) {
 
 
 
-//void Game::update(double deltaTime, BYTE keyboardState[256],
-//	MouseController* mouse) {
-//
-//
-//	currentScreen->update(deltaTime, keyboardState, mouse);
-//
-//}
-
 void Game::update(double deltaTime, SimpleKeyboard* keys) {
 
 	currentScreen->update(deltaTime, keys);

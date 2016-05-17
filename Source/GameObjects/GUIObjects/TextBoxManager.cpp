@@ -4,7 +4,6 @@ using namespace Globals;
 
 TextBoxManager::TextBoxManager(pugi::xml_document* doc) {
 
-	//gameTextRootNode = rootNode;
 	xmlDoc = doc;
 	rootNode = xmlDoc->child("root");
 
@@ -193,7 +192,7 @@ void TextBoxManager::draw(SpriteBatch* batch) {
 void TextBoxManager::startDialogTest() {
 
 
-	dialogBox->loadNode(rootNode.find_child_by_attribute("speaker", "Name Input").child("dialogText"));
+	dialogBox->loadNode(rootNode.first_child().find_child_by_attribute("speaker", "Name Input").child("dialogText"));
 
 	currentBox = dialogBox.get();
 	textBoxes.push_back(currentBox);

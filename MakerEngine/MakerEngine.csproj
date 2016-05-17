@@ -50,11 +50,18 @@
     <Compile Include="Accordion.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="AccordionControl.cs" />
     <Compile Include="AccordionDialogTextControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="AccordionDialogTextControl.Designer.cs">
       <DependentUpon>AccordionDialogTextControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AccordionInputControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="AccordionInputControl.Designer.cs">
+      <DependentUpon>AccordionInputControl.cs</DependentUpon>
     </Compile>
     <Compile Include="AccordionQueryControl.cs">
       <SubType>UserControl</SubType>
@@ -84,6 +91,9 @@
     <EmbeddedResource Include="AccordionDialogTextControl.resx">
       <DependentUpon>AccordionDialogTextControl.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="AccordionInputControl.resx">
+      <DependentUpon>AccordionInputControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="AccordionQueryControl.resx">
       <DependentUpon>AccordionQueryControl.cs</DependentUpon>
     </EmbeddedResource>
@@ -101,6 +111,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -114,6 +125,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="assets\Green.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="assets\Red.bmp" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

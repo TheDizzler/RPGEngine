@@ -37,7 +37,7 @@ namespace MakerEngine {
 
 		}
 
-		
+
 
 		private void loadGameXmlFiles() {
 
@@ -77,6 +77,8 @@ namespace MakerEngine {
 
 		}
 
+
+
 		private void save() {
 
 			XmlWriter writer = XmlWriter.Create(gameDirectory + dialogText);
@@ -84,6 +86,16 @@ namespace MakerEngine {
 
 		}
 
+		internal void needSave(Boolean changesMade) {
+
+			if (changesMade) {
+				pictureBox_NeedSave.Image = Properties.Resources.Red;
+				label_ChangesMade.Text = "Changes made";
+			} else {
+				pictureBox_NeedSave.Image = Properties.Resources.Green;
+				label_ChangesMade.Text = "Changes made";
+			}
+		}
 
 		public void createNewDialogText(XmlNode prevNode, String fromAttribute) {
 
@@ -92,7 +104,6 @@ namespace MakerEngine {
 			newXml.Load(new StringReader(dt));
 
 			XmlNode newNode = newXml.DocumentElement;
-			newNode.InnerText = "Testing";
 			XmlNode importNode = docDialogText.ImportNode(newNode, true);
 			//XmlNodeList nodeList = docDialogText.GetElementsByTagName(prevNode.Name);
 			prevNode.ParentNode.AppendChild(importNode);
@@ -102,6 +113,21 @@ namespace MakerEngine {
 			createDialogTextControl(importNode);
 		}
 
+		public void createNewInputText(XmlNode prevNode) {
+
+			String dt = "<alphaInput saveTo=\"\" default=\"\" ></alphaInput>";
+			XmlDocument newXml = new XmlDocument();
+			newXml.Load(new StringReader(dt));
+
+			XmlNode newNode = newXml.DocumentElement;
+			XmlNode importNode = docDialogText.ImportNode(newNode, true);
+			prevNode.ParentNode.AppendChild(importNode);
+
+			save();
+
+			createInputControl(importNode);
+
+		}
 
 		private void createDialogTextControl(XmlNode node) {
 
@@ -118,12 +144,23 @@ namespace MakerEngine {
 				true, contentBackColor: Color.Transparent);
 		}
 
+		private void createInputControl(XmlNode node) {
+			AccordionInputControl aic = new AccordionInputControl(this, node);
+			accordion_Dialog.Add(aic, node.Name,
+									"Player keyboard input", 1, false, contentBackColor: Color.Transparent);
+		}
+
 
 		private void treeView_Dialog_MouseDoubleClick(Object sender, MouseEventArgs e) {
 
 			TreeXMLNode selected = (TreeXMLNode)treeView_Dialog.SelectedNode;
 			if (selected == null)
 				return;
+
+			if (changesMade()) {
+				// ask to save before changing nodes
+				return;
+			}
 
 			XmlNode selectedNode = selected.node;
 
@@ -155,31 +192,16 @@ namespace MakerEngine {
 								createQueryTextControl(answer, queryAcc, i++);
 
 							}
-							CheckBox ckboxQuery = accordion_Dialog.Add(queryAcc, child.Name,
+							accordion_Dialog.Add(queryAcc, child.Name,
 								"Player text choices", 1, false, contentBackColor: Color.Transparent);
 							break;
 
 						case "alphaInput":
 
-							TableLayoutPanel tlp = new TableLayoutPanel {
-								Dock = DockStyle.Fill,
-								//Padding = new Padding(5)
-							};
-
-							Label label = new Label();
-							label.Text = "Default Input";
-							label.TextAlign = ContentAlignment.MiddleCenter;
-							tlp.Controls.Add(label);
-
-
-							TextBox tb = new TextBox();
-							tb.MaxLength = 10;
-							tb.Text = child.Attributes["default"].InnerText;
-							tlp.Controls.Add(tb);
-
-
-							accordion_Dialog.Add(tlp, child.Name, 
-								"Player keyboard input", 1, false, contentBackColor: Color.Transparent);
+							createInputControl(child);
+							//AccordionInputControl aic = new AccordionInputControl(this, child);
+							//accordion_Dialog.Add(aic, child.Name,
+							//	"Player keyboard input", 1, false, contentBackColor: Color.Transparent);
 
 							break;
 					}
@@ -188,7 +210,10 @@ namespace MakerEngine {
 			}
 		}
 
+		private Boolean changesMade() {
 
+			return false;
+		}
 
 		private void loadToolStripMenuItem_Click(Object sender, EventArgs e) {
 
@@ -364,5 +389,30 @@ namespace MakerEngine {
 			return acc;
 		}
 
+		private void addNewDialogToolStripMenuItem_Click(Object sender, EventArgs e) {
+
+			TreeXMLNode selected = (TreeXMLNode)treeView_Dialog.SelectedNode;
+
+			if (selected.node == null || selected.node.Name != "event") {
+				MessageBox.Show("A dialog must be nested in an event");
+				return;
+			}
+		}
+
+
+		private void mouseUp_EventsTreeView(Object sender, MouseEventArgs e) {
+
+
+			if (e.Button == MouseButtons.Right) {
+
+
+				//contextMenuStrip_DataTree.Items.
+
+				contextMenuStrip_DataTree.Show(PointToScreen(e.Location));
+
+
+
+			}
+		}
 	}
 }

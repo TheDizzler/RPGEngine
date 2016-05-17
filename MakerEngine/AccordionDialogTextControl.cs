@@ -11,12 +11,13 @@ using System.Xml;
 using System.IO;
 
 namespace MakerEngine {
-	public partial class AccordionDialogTextControl : UserControl {
+	public partial class AccordionDialogTextControl : UserControl, AccordionControl {
 
 		XmlNode node;
 		MakerEngineForm mainForm;
 
-		public bool changed = false;
+		private bool changed = false;
+		private bool loading = true;
 
 
 		public AccordionDialogTextControl(MakerEngineForm main, XmlNode dialogTextNode) {
@@ -36,6 +37,8 @@ namespace MakerEngine {
 				textBox_JumpTo.Text = "";
 
 			richTextBox_dialogText.Text = node.InnerText;
+
+			loading = false;
 		}
 
 
@@ -57,7 +60,7 @@ namespace MakerEngine {
 			using (NewBlockDialog dialog = new NewBlockDialog()) {
 
 				DialogResult result = dialog.ShowDialog();
-				
+
 				switch (dialog.blockDialogResult) {
 
 					case NewBlockDialog.NewBlockDialogResult.Cancel:
@@ -65,15 +68,17 @@ namespace MakerEngine {
 						break;
 
 					case NewBlockDialog.NewBlockDialogResult.DialogText:
-						
+
 						mainForm.createNewDialogText(node, textBox_JumpTo.Text);
-						//dialog.Close();
+
 						break;
 					case NewBlockDialog.NewBlockDialogResult.Query:
 
+						
 						break;
 					case NewBlockDialog.NewBlockDialogResult.AlphaInput:
 
+						mainForm.createNewInputText(node);
 						break;
 
 				}
@@ -85,7 +90,15 @@ namespace MakerEngine {
 
 		private void textChanged(Object sender, EventArgs e) {
 
-			changed = true;
+			if (!loading) {
+				changed = true;
+				mainForm.needSave(true);
+			}
+		}
+
+		public Boolean changesMade() {
+
+			return changed;
 		}
 	}
 }

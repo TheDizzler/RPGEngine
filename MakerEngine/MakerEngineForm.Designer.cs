@@ -23,6 +23,7 @@
 		/// the contents of this method with the code editor.
 		/// </summary>
 		private void InitializeComponent() {
+			this.components = new System.ComponentModel.Container();
 			this.menuStrip1 = new System.Windows.Forms.MenuStrip();
 			this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -35,16 +36,27 @@
 			this.tabPage_Dialog = new System.Windows.Forms.TabPage();
 			this.label1 = new System.Windows.Forms.Label();
 			this.groupBox_AccordionHolder = new System.Windows.Forms.GroupBox();
+			this.button1 = new System.Windows.Forms.Button();
 			this.richTextBox_EscapeCharacters = new System.Windows.Forms.RichTextBox();
 			this.label_Speaker = new System.Windows.Forms.Label();
 			this.textBox_Speaker = new System.Windows.Forms.TextBox();
 			this.treeView_Dialog = new System.Windows.Forms.TreeView();
-			this.button1 = new System.Windows.Forms.Button();
+			this.contextMenuStrip_DataTree = new System.Windows.Forms.ContextMenuStrip(this.components);
+			this.addNewEventToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.deleteEventToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.triggeredToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.zoneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.addNewDialogToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.addNewLocationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.pictureBox_NeedSave = new System.Windows.Forms.PictureBox();
+			this.label_ChangesMade = new System.Windows.Forms.Label();
 			this.accordion_Dialog = new Opulos.Core.UI.Accordion();
 			this.menuStrip1.SuspendLayout();
 			this.tabControl_Main.SuspendLayout();
 			this.tabPage_Dialog.SuspendLayout();
 			this.groupBox_AccordionHolder.SuspendLayout();
+			this.contextMenuStrip_DataTree.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBox_NeedSave)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// menuStrip1
@@ -124,6 +136,8 @@
 			// 
 			// tabPage_Dialog
 			// 
+			this.tabPage_Dialog.Controls.Add(this.label_ChangesMade);
+			this.tabPage_Dialog.Controls.Add(this.pictureBox_NeedSave);
 			this.tabPage_Dialog.Controls.Add(this.label1);
 			this.tabPage_Dialog.Controls.Add(this.groupBox_AccordionHolder);
 			this.tabPage_Dialog.Controls.Add(this.richTextBox_EscapeCharacters);
@@ -160,6 +174,16 @@
 			this.groupBox_AccordionHolder.TabIndex = 7;
 			this.groupBox_AccordionHolder.TabStop = false;
 			this.groupBox_AccordionHolder.Text = "Dialog Flow";
+			// 
+			// button1
+			// 
+			this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.button1.Location = new System.Drawing.Point(7, 422);
+			this.button1.Name = "button1";
+			this.button1.Size = new System.Drawing.Size(104, 23);
+			this.button1.TabIndex = 1;
+			this.button1.Text = "New Dialog Block";
+			this.button1.UseVisualStyleBackColor = true;
 			// 
 			// richTextBox_EscapeCharacters
 			// 
@@ -198,16 +222,76 @@
 			this.treeView_Dialog.Size = new System.Drawing.Size(253, 382);
 			this.treeView_Dialog.TabIndex = 0;
 			this.treeView_Dialog.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.treeView_Dialog_MouseDoubleClick);
+			this.treeView_Dialog.MouseUp += new System.Windows.Forms.MouseEventHandler(this.mouseUp_EventsTreeView);
 			// 
-			// button1
+			// contextMenuStrip_DataTree
 			// 
-			this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.button1.Location = new System.Drawing.Point(7, 422);
-			this.button1.Name = "button1";
-			this.button1.Size = new System.Drawing.Size(104, 23);
-			this.button1.TabIndex = 1;
-			this.button1.Text = "New Dialog Block";
-			this.button1.UseVisualStyleBackColor = true;
+			this.contextMenuStrip_DataTree.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.addNewEventToolStripMenuItem,
+            this.addNewDialogToolStripMenuItem,
+            this.addNewLocationToolStripMenuItem,
+            this.deleteEventToolStripMenuItem});
+			this.contextMenuStrip_DataTree.Name = "contextMenuStrip_DataTree";
+			this.contextMenuStrip_DataTree.Size = new System.Drawing.Size(173, 92);
+			// 
+			// addNewEventToolStripMenuItem
+			// 
+			this.addNewEventToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.triggeredToolStripMenuItem,
+            this.zoneToolStripMenuItem});
+			this.addNewEventToolStripMenuItem.Name = "addNewEventToolStripMenuItem";
+			this.addNewEventToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
+			this.addNewEventToolStripMenuItem.Text = "Add New Event";
+			// 
+			// deleteEventToolStripMenuItem
+			// 
+			this.deleteEventToolStripMenuItem.Name = "deleteEventToolStripMenuItem";
+			this.deleteEventToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
+			this.deleteEventToolStripMenuItem.Text = "Delete Event";
+			// 
+			// triggeredToolStripMenuItem
+			// 
+			this.triggeredToolStripMenuItem.Name = "triggeredToolStripMenuItem";
+			this.triggeredToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+			this.triggeredToolStripMenuItem.Text = "Triggered";
+			// 
+			// zoneToolStripMenuItem
+			// 
+			this.zoneToolStripMenuItem.Name = "zoneToolStripMenuItem";
+			this.zoneToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+			this.zoneToolStripMenuItem.Text = "Zone";
+			// 
+			// addNewDialogToolStripMenuItem
+			// 
+			this.addNewDialogToolStripMenuItem.Name = "addNewDialogToolStripMenuItem";
+			this.addNewDialogToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
+			this.addNewDialogToolStripMenuItem.Text = "Add New Dialog";
+			this.addNewDialogToolStripMenuItem.Click += new System.EventHandler(this.addNewDialogToolStripMenuItem_Click);
+			// 
+			// addNewLocationToolStripMenuItem
+			// 
+			this.addNewLocationToolStripMenuItem.Name = "addNewLocationToolStripMenuItem";
+			this.addNewLocationToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
+			this.addNewLocationToolStripMenuItem.Text = "Add New Location";
+			// 
+			// pictureBox_NeedSave
+			// 
+			this.pictureBox_NeedSave.Image = global::MakerEngine.Properties.Resources.Green;
+			this.pictureBox_NeedSave.Location = new System.Drawing.Point(874, 9);
+			this.pictureBox_NeedSave.Name = "pictureBox_NeedSave";
+			this.pictureBox_NeedSave.Size = new System.Drawing.Size(16, 16);
+			this.pictureBox_NeedSave.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+			this.pictureBox_NeedSave.TabIndex = 9;
+			this.pictureBox_NeedSave.TabStop = false;
+			// 
+			// label_ChangesMade
+			// 
+			this.label_ChangesMade.AutoSize = true;
+			this.label_ChangesMade.Location = new System.Drawing.Point(783, 9);
+			this.label_ChangesMade.Name = "label_ChangesMade";
+			this.label_ChangesMade.Size = new System.Drawing.Size(65, 13);
+			this.label_ChangesMade.TabIndex = 10;
+			this.label_ChangesMade.Text = "No changes";
 			// 
 			// accordion_Dialog
 			// 
@@ -287,6 +371,8 @@
 			this.tabPage_Dialog.ResumeLayout(false);
 			this.tabPage_Dialog.PerformLayout();
 			this.groupBox_AccordionHolder.ResumeLayout(false);
+			this.contextMenuStrip_DataTree.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.pictureBox_NeedSave)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -313,6 +399,15 @@
 		private System.Windows.Forms.GroupBox groupBox_AccordionHolder;
 		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.Button button1;
+		private System.Windows.Forms.ContextMenuStrip contextMenuStrip_DataTree;
+		private System.Windows.Forms.ToolStripMenuItem addNewEventToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem deleteEventToolStripMenuItem;
+		private System.Windows.Forms.PictureBox pictureBox_NeedSave;
+		private System.Windows.Forms.ToolStripMenuItem triggeredToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem zoneToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem addNewDialogToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem addNewLocationToolStripMenuItem;
+		private System.Windows.Forms.Label label_ChangesMade;
 	}
 }
 

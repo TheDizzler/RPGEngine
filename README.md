@@ -16,7 +16,7 @@ The creation tool edits XML files that are parsed by the RPG engine.
 
 ## To Do Next:
 > RPG Engine
->- update parser to read changes made to xml structure
+>- ~~update parser to read changes made to xml structure~~
 >- parse and display maps
 >
 > Story Creator

@@ -22,6 +22,10 @@ namespace MakerEngine {
 
 		XmlDocument docDialogText;
 
+		List<AccordionControl> accordionControls = new List<AccordionControl>();
+
+		private bool changesNeedSaving = false;
+
 
 		public MakerEngineForm() {
 			InitializeComponent();
@@ -81,19 +85,32 @@ namespace MakerEngine {
 
 		private void save() {
 
+			foreach (AccordionControl control in accordionControls) {
+
+				control.saveChanges();
+
+			}
+
+
+
+
 			XmlWriter writer = XmlWriter.Create(gameDirectory + dialogText);
 			docDialogText.Save(writer);
 
+			needSave(false);
+
 		}
 
-		internal void needSave(Boolean changesMade) {
+		public void needSave(Boolean changesMade) {
 
 			if (changesMade) {
 				pictureBox_NeedSave.Image = Properties.Resources.Red;
 				label_ChangesMade.Text = "Changes made";
+				changesNeedSaving = true;
 			} else {
 				pictureBox_NeedSave.Image = Properties.Resources.Green;
-				label_ChangesMade.Text = "Changes made";
+				label_ChangesMade.Text = "No Changes";
+				changesNeedSaving = false;
 			}
 		}
 
@@ -108,7 +125,7 @@ namespace MakerEngine {
 			//XmlNodeList nodeList = docDialogText.GetElementsByTagName(prevNode.Name);
 			prevNode.ParentNode.AppendChild(importNode);
 
-			save();
+			//save();
 
 			createDialogTextControl(importNode);
 		}
@@ -123,7 +140,7 @@ namespace MakerEngine {
 			XmlNode importNode = docDialogText.ImportNode(newNode, true);
 			prevNode.ParentNode.AppendChild(importNode);
 
-			save();
+			//save();
 
 			createInputControl(importNode);
 
@@ -132,40 +149,53 @@ namespace MakerEngine {
 		private void createDialogTextControl(XmlNode node) {
 
 			AccordionDialogTextControl adt = new AccordionDialogTextControl(this, node);
+			accordionControls.Add(adt);
 
-			CheckBox ckboxDialog = accordion_Dialog.Add(adt, adt.getLabel(),
+			accordion_Dialog.Add(adt, adt.getLabel(),
 				"A text block", 1, false, contentBackColor: Color.Transparent);
 		}
 
 		private void createQueryTextControl(XmlNode node, Accordion queryAcc, int num) {
 
-			AccordionQueryControl aqc = new AccordionQueryControl(this, node);
+			AccordionAnswerControl aqc = new AccordionAnswerControl(this, node);
+			accordionControls.Add(aqc);
+
 			queryAcc.Add(aqc, "Option " + num, "Configure Player Choice", 1,
 				true, contentBackColor: Color.Transparent);
 		}
 
 		private void createInputControl(XmlNode node) {
 			AccordionInputControl aic = new AccordionInputControl(this, node);
-			accordion_Dialog.Add(aic, node.Name,
-									"Player keyboard input", 1, false, contentBackColor: Color.Transparent);
+			accordionControls.Add(aic);
+
+			accordion_Dialog.Add(
+				aic, node.Name, "Player keyboard input", 1, false,
+				contentBackColor: Color.Transparent);
 		}
 
 
 		private void treeView_Dialog_MouseDoubleClick(Object sender, MouseEventArgs e) {
 
-			TreeXMLNode selected = (TreeXMLNode)treeView_Dialog.SelectedNode;
-			if (selected == null)
+
+			if (treeView_Dialog.SelectedNode == null)
 				return;
 
-			if (changesMade()) {
+			if (changesNeedSaving) {
 				// ask to save before changing nodes
-				return;
+				DialogResult result = MessageBox.Show(this, "If you don't all changes will perish!", "Save changes first?", MessageBoxButtons.YesNoCancel);
+				if (result == DialogResult.Cancel)
+					return;
+				if (result == DialogResult.Yes)
+					save();
+
 			}
 
+			TreeXMLNode selected = (TreeXMLNode)treeView_Dialog.SelectedNode;
 			XmlNode selectedNode = selected.node;
 
 			groupBox_AccordionHolder.Controls.Remove(accordion_Dialog);
 			accordion_Dialog.Dispose();
+			accordionControls.Clear();
 
 			rebuildAccordion();
 
@@ -210,10 +240,6 @@ namespace MakerEngine {
 			}
 		}
 
-		private Boolean changesMade() {
-
-			return false;
-		}
 
 		private void loadToolStripMenuItem_Click(Object sender, EventArgs e) {
 
@@ -234,7 +260,7 @@ namespace MakerEngine {
 		}
 
 		private void saveToolStripMenuItem_Click(Object sender, EventArgs e) {
-
+			save();
 		}
 
 

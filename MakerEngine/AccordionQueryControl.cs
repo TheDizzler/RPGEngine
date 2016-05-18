@@ -15,50 +15,24 @@ namespace MakerEngine {
 		XmlNode node;
 		MakerEngineForm mainForm;
 
-		private bool changed = false;
-		private bool loading = true;
 
-
-		public AccordionQueryControl(MakerEngineForm main, XmlNode answerNode) {
+		public AccordionQueryControl(MakerEngineForm main, XmlNode queryNode) {
 			InitializeComponent();
 
 			mainForm = main;
-			node = answerNode;
+			node = queryNode;
 
-			richTextBox_Choice.Text = node.InnerText;
-			textBox_JumpTo.Text = node.Attributes["to"].InnerText;
-
-			loading = false;
-
-		}
-
-
-		
-
-		private void button_JumpTo_Click(Object sender, EventArgs e) {
-
-			if (textBox_JumpTo.TextLength <= 0) {
-				textBox_JumpTo.BackColor = Color.Red;
-				return;
-
-			}
-			textBox_JumpTo.BackColor = Color.White;
-			mainForm.createNewDialogText(node, textBox_JumpTo.Text);
-
-
-		}
-
-
-		private void textChanged(Object sender, EventArgs e) {
-			if (!loading) {
-				changed = true;
-				mainForm.needSave(true);
-			}
+			if (node.Attributes["from"] != null)
+				textBox_From.Text = node.Attributes["from"].InnerText;
 		}
 
 		public Boolean changesMade() {
+			throw new NotImplementedException();
+		}
 
-			return changed;
+		public void saveChanges() {
+
+			node.Attributes["from"].InnerText = textBox_From.Text;
 		}
 	}
 }

@@ -74,7 +74,7 @@ namespace MakerEngine {
 						break;
 					case NewBlockDialog.NewBlockDialogResult.Query:
 
-						
+
 						break;
 					case NewBlockDialog.NewBlockDialogResult.AlphaInput:
 
@@ -99,6 +99,16 @@ namespace MakerEngine {
 		public Boolean changesMade() {
 
 			return changed;
+		}
+
+
+		public void saveChanges() {
+
+
+			node.Attributes["from"].InnerText = textBox_from.Text;
+			node.Attributes["to"].InnerText = textBox_JumpTo.Text;
+			node.InnerText = richTextBox_dialogText.Text;
+
 		}
 	}
 }

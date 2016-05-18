@@ -24,97 +24,67 @@
 		/// </summary>
 		private void InitializeComponent() {
 			this.panel_ControlHolder = new System.Windows.Forms.Panel();
-			this.textBox_JumpTo = new System.Windows.Forms.TextBox();
-			this.label2 = new System.Windows.Forms.Label();
-			this.button_JumpTo = new System.Windows.Forms.Button();
-			this.richTextBox_Choice = new System.Windows.Forms.TextBox();
+			this.button_NewChoice = new System.Windows.Forms.Button();
+			this.textBox_From = new System.Windows.Forms.TextBox();
+			this.label1 = new System.Windows.Forms.Label();
 			this.panel_ControlHolder.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// panel_ControlHolder
 			// 
-			this.panel_ControlHolder.AutoSize = true;
-			this.panel_ControlHolder.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			this.panel_ControlHolder.Controls.Add(this.textBox_JumpTo);
-			this.panel_ControlHolder.Controls.Add(this.label2);
-			this.panel_ControlHolder.Controls.Add(this.button_JumpTo);
-			this.panel_ControlHolder.Controls.Add(this.richTextBox_Choice);
+			this.panel_ControlHolder.Controls.Add(this.label1);
+			this.panel_ControlHolder.Controls.Add(this.textBox_From);
+			this.panel_ControlHolder.Controls.Add(this.button_NewChoice);
 			this.panel_ControlHolder.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.panel_ControlHolder.Location = new System.Drawing.Point(0, 0);
 			this.panel_ControlHolder.Name = "panel_ControlHolder";
-			this.panel_ControlHolder.Size = new System.Drawing.Size(476, 112);
+			this.panel_ControlHolder.Size = new System.Drawing.Size(476, 175);
 			this.panel_ControlHolder.TabIndex = 0;
 			// 
-			// textBox_JumpTo
+			// button_NewChoice
 			// 
-			this.textBox_JumpTo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.textBox_JumpTo.Location = new System.Drawing.Point(96, 82);
-			this.textBox_JumpTo.MaxLength = 32;
-			this.textBox_JumpTo.Name = "textBox_JumpTo";
-			this.textBox_JumpTo.Size = new System.Drawing.Size(234, 20);
-			this.textBox_JumpTo.TabIndex = 4;
-			this.textBox_JumpTo.Text = "answer.Attributes[\"to\"].InnerText";
-			this.textBox_JumpTo.TextChanged += new System.EventHandler(this.textChanged);
+			this.button_NewChoice.Location = new System.Drawing.Point(3, 38);
+			this.button_NewChoice.Name = "button_NewChoice";
+			this.button_NewChoice.Size = new System.Drawing.Size(112, 23);
+			this.button_NewChoice.TabIndex = 0;
+			this.button_NewChoice.Text = "New Choice";
+			this.button_NewChoice.UseVisualStyleBackColor = true;
 			// 
-			// label2
+			// textBox_From
 			// 
-			this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.label2.AutoSize = true;
-			this.label2.Location = new System.Drawing.Point(4, 85);
-			this.label2.Name = "label2";
-			this.label2.Size = new System.Drawing.Size(86, 13);
-			this.label2.TabIndex = 3;
-			this.label2.Text = "Block to Jump to";
+			this.textBox_From.Location = new System.Drawing.Point(75, 6);
+			this.textBox_From.MaxLength = 32;
+			this.textBox_From.Name = "textBox_From";
+			this.textBox_From.Size = new System.Drawing.Size(185, 20);
+			this.textBox_From.TabIndex = 1;
 			// 
-			// button_JumpTo
+			// label1
 			// 
-			this.button_JumpTo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.button_JumpTo.Location = new System.Drawing.Point(336, 80);
-			this.button_JumpTo.Name = "button_JumpTo";
-			this.button_JumpTo.Size = new System.Drawing.Size(132, 23);
-			this.button_JumpTo.TabIndex = 2;
-			this.button_JumpTo.Text = "Create Answer Block";
-			this.button_JumpTo.UseVisualStyleBackColor = true;
-			this.button_JumpTo.Click += new System.EventHandler(this.button_JumpTo_Click);
-			// 
-			// richTextBox_Choice
-			// 
-			this.richTextBox_Choice.Dock = System.Windows.Forms.DockStyle.Top;
-			this.richTextBox_Choice.Location = new System.Drawing.Point(0, 0);
-			this.richTextBox_Choice.MaxLength = 1500;
-			this.richTextBox_Choice.Multiline = true;
-			this.richTextBox_Choice.Name = "richTextBox_Choice";
-			this.richTextBox_Choice.Size = new System.Drawing.Size(476, 75);
-			this.richTextBox_Choice.TabIndex = 1;
-			this.richTextBox_Choice.Text = "answer.InnerText";
-			this.richTextBox_Choice.TextChanged += new System.EventHandler(this.textChanged);
+			this.label1.AutoSize = true;
+			this.label1.Location = new System.Drawing.Point(4, 9);
+			this.label1.Name = "label1";
+			this.label1.Size = new System.Drawing.Size(65, 13);
+			this.label1.TabIndex = 2;
+			this.label1.Text = "Block Name";
 			// 
 			// AccordionQueryControl
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.AutoScroll = true;
-			this.AutoSize = true;
-			this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
 			this.Controls.Add(this.panel_ControlHolder);
 			this.Name = "AccordionQueryControl";
-			this.Size = new System.Drawing.Size(476, 112);
+			this.Size = new System.Drawing.Size(476, 175);
 			this.panel_ControlHolder.ResumeLayout(false);
 			this.panel_ControlHolder.PerformLayout();
 			this.ResumeLayout(false);
-			this.PerformLayout();
 
 		}
 
 		#endregion
 
 		private System.Windows.Forms.Panel panel_ControlHolder;
-		private System.Windows.Forms.Button button_JumpTo;
-		private System.Windows.Forms.TextBox richTextBox_Choice;
-		private System.Windows.Forms.Label label2;
-		private System.Windows.Forms.TextBox textBox_JumpTo;
+		private System.Windows.Forms.Label label1;
+		private System.Windows.Forms.TextBox textBox_From;
+		private System.Windows.Forms.Button button_NewChoice;
 	}
 }

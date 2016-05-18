@@ -43,5 +43,11 @@ namespace MakerEngine {
 				mainForm.needSave(true);
 			}
 		}
+
+		public void saveChanges() {
+
+			node.Attributes["saveTo"].InnerText = textBox_saveTo.Text;
+			node.Attributes["default"].InnerText = textBox_DefaultInput.Text;
+		}
 	}
 }

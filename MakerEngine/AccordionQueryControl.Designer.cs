@@ -32,23 +32,24 @@
 			// 
 			// panel_ControlHolder
 			// 
+			this.panel_ControlHolder.AutoSize = true;
 			this.panel_ControlHolder.Controls.Add(this.label1);
 			this.panel_ControlHolder.Controls.Add(this.textBox_From);
 			this.panel_ControlHolder.Controls.Add(this.button_NewChoice);
-			this.panel_ControlHolder.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.panel_ControlHolder.Location = new System.Drawing.Point(0, 0);
+			this.panel_ControlHolder.Location = new System.Drawing.Point(4, 4);
 			this.panel_ControlHolder.Name = "panel_ControlHolder";
-			this.panel_ControlHolder.Size = new System.Drawing.Size(476, 175);
+			this.panel_ControlHolder.Size = new System.Drawing.Size(476, 34);
 			this.panel_ControlHolder.TabIndex = 0;
 			// 
 			// button_NewChoice
 			// 
-			this.button_NewChoice.Location = new System.Drawing.Point(3, 38);
+			this.button_NewChoice.Location = new System.Drawing.Point(266, 3);
 			this.button_NewChoice.Name = "button_NewChoice";
 			this.button_NewChoice.Size = new System.Drawing.Size(112, 23);
 			this.button_NewChoice.TabIndex = 0;
 			this.button_NewChoice.Text = "New Choice";
 			this.button_NewChoice.UseVisualStyleBackColor = true;
+			this.button_NewChoice.Click += new System.EventHandler(this.button_NewChoice_Click);
 			// 
 			// textBox_From
 			// 
@@ -71,12 +72,15 @@
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			this.AutoSize = true;
+			this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
 			this.Controls.Add(this.panel_ControlHolder);
 			this.Name = "AccordionQueryControl";
-			this.Size = new System.Drawing.Size(476, 175);
+			this.Size = new System.Drawing.Size(483, 41);
 			this.panel_ControlHolder.ResumeLayout(false);
 			this.panel_ControlHolder.PerformLayout();
 			this.ResumeLayout(false);
+			this.PerformLayout();
 
 		}
 

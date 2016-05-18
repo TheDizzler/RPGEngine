@@ -22,7 +22,7 @@ namespace MakerEngine {
 
 		XmlDocument docDialogText;
 
-		List<AccordionControl> accordionControls = new List<AccordionControl>();
+		List<AccordionControl> accordionControlsList = new List<AccordionControl>();
 
 		private bool changesNeedSaving = false;
 
@@ -85,7 +85,7 @@ namespace MakerEngine {
 
 		private void save() {
 
-			foreach (AccordionControl control in accordionControls) {
+			foreach (AccordionControl control in accordionControlsList) {
 
 				control.saveChanges();
 
@@ -149,7 +149,7 @@ namespace MakerEngine {
 		private void createDialogTextControl(XmlNode node) {
 
 			AccordionDialogTextControl adt = new AccordionDialogTextControl(this, node);
-			accordionControls.Add(adt);
+			accordionControlsList.Add(adt);
 
 			accordion_Dialog.Add(adt, adt.getLabel(),
 				"A text block", 1, false, contentBackColor: Color.Transparent);
@@ -158,7 +158,7 @@ namespace MakerEngine {
 		private void createQueryTextControl(XmlNode node, Accordion queryAcc, int num) {
 
 			AccordionAnswerControl aqc = new AccordionAnswerControl(this, node);
-			accordionControls.Add(aqc);
+			accordionControlsList.Add(aqc);
 
 			queryAcc.Add(aqc, "Option " + num, "Configure Player Choice", 1,
 				true, contentBackColor: Color.Transparent);
@@ -166,7 +166,7 @@ namespace MakerEngine {
 
 		private void createInputControl(XmlNode node) {
 			AccordionInputControl aic = new AccordionInputControl(this, node);
-			accordionControls.Add(aic);
+			accordionControlsList.Add(aic);
 
 			accordion_Dialog.Add(
 				aic, node.Name, "Player keyboard input", 1, false,
@@ -195,7 +195,7 @@ namespace MakerEngine {
 
 			groupBox_AccordionHolder.Controls.Remove(accordion_Dialog);
 			accordion_Dialog.Dispose();
-			accordionControls.Clear();
+			accordionControlsList.Clear();
 
 			rebuildAccordion();
 
@@ -214,7 +214,16 @@ namespace MakerEngine {
 
 						case "query":
 
+							TableLayoutPanel flp = new TableLayoutPanel();
+							flp.Dock = DockStyle.Fill;
+							flp.AutoScroll = true;
+							flp.AutoSize = true;
+							flp.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+
+							AccordionQueryControl aqc = new AccordionQueryControl(this, child);
+							flp.Controls.Add(aqc);
 							Accordion queryAcc = createAccordion();
+							flp.Controls.Add(queryAcc);
 
 							int i = child.ChildNodes.Count - 1;
 							foreach (XmlNode answer in child.ChildNodes) {
@@ -222,16 +231,13 @@ namespace MakerEngine {
 								createQueryTextControl(answer, queryAcc, i++);
 
 							}
-							accordion_Dialog.Add(queryAcc, child.Name,
+							accordion_Dialog.Add(flp, aqc.getLabel(),
 								"Player text choices", 1, false, contentBackColor: Color.Transparent);
 							break;
 
 						case "alphaInput":
 
 							createInputControl(child);
-							//AccordionInputControl aic = new AccordionInputControl(this, child);
-							//accordion_Dialog.Add(aic, child.Name,
-							//	"Player keyboard input", 1, false, contentBackColor: Color.Transparent);
 
 							break;
 					}
@@ -354,6 +360,7 @@ namespace MakerEngine {
 			acc.AnimateOpenMillis = 150;
 			acc.AutoFixDockStyle = true;
 			acc.AutoScroll = true;
+			acc.AutoSize = true;
 			acc.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
 			acc.CheckBoxFactory = null;
 			acc.CheckBoxMargin = new System.Windows.Forms.Padding(0);

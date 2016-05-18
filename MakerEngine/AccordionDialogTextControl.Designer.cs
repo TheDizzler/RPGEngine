@@ -38,6 +38,7 @@
 			// 
 			// richTextBox_dialogText
 			// 
+			this.richTextBox_dialogText.AcceptsReturn = true;
 			this.richTextBox_dialogText.Dock = System.Windows.Forms.DockStyle.Top;
 			this.richTextBox_dialogText.Location = new System.Drawing.Point(0, 0);
 			this.richTextBox_dialogText.Multiline = true;

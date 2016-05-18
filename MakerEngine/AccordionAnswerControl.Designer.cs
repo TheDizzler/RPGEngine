@@ -1,5 +1,5 @@
 ﻿namespace MakerEngine {
-	partial class AccordionQueryControl {
+	partial class AccordionAnswerControl {
 		/// <summary> 
 		/// Required designer variable.
 		/// </summary>
@@ -39,20 +39,19 @@
 			this.panel_ControlHolder.Controls.Add(this.label2);
 			this.panel_ControlHolder.Controls.Add(this.button_JumpTo);
 			this.panel_ControlHolder.Controls.Add(this.richTextBox_Choice);
-			this.panel_ControlHolder.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.panel_ControlHolder.Location = new System.Drawing.Point(0, 0);
 			this.panel_ControlHolder.Name = "panel_ControlHolder";
-			this.panel_ControlHolder.Size = new System.Drawing.Size(476, 112);
+			this.panel_ControlHolder.Size = new System.Drawing.Size(479, 90);
 			this.panel_ControlHolder.TabIndex = 0;
 			// 
 			// textBox_JumpTo
 			// 
 			this.textBox_JumpTo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.textBox_JumpTo.Location = new System.Drawing.Point(96, 82);
+			this.textBox_JumpTo.Location = new System.Drawing.Point(101, 57);
 			this.textBox_JumpTo.MaxLength = 32;
 			this.textBox_JumpTo.Name = "textBox_JumpTo";
-			this.textBox_JumpTo.Size = new System.Drawing.Size(234, 20);
+			this.textBox_JumpTo.Size = new System.Drawing.Size(237, 20);
 			this.textBox_JumpTo.TabIndex = 4;
 			this.textBox_JumpTo.Text = "answer.Attributes[\"to\"].InnerText";
 			this.textBox_JumpTo.TextChanged += new System.EventHandler(this.textChanged);
@@ -62,7 +61,7 @@
 			this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.label2.AutoSize = true;
-			this.label2.Location = new System.Drawing.Point(4, 85);
+			this.label2.Location = new System.Drawing.Point(9, 60);
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(86, 13);
 			this.label2.TabIndex = 3;
@@ -72,9 +71,9 @@
 			// 
 			this.button_JumpTo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.button_JumpTo.Location = new System.Drawing.Point(336, 80);
+			this.button_JumpTo.Location = new System.Drawing.Point(341, 55);
 			this.button_JumpTo.Name = "button_JumpTo";
-			this.button_JumpTo.Size = new System.Drawing.Size(132, 23);
+			this.button_JumpTo.Size = new System.Drawing.Size(135, 23);
 			this.button_JumpTo.TabIndex = 2;
 			this.button_JumpTo.Text = "Create Answer Block";
 			this.button_JumpTo.UseVisualStyleBackColor = true;
@@ -82,17 +81,18 @@
 			// 
 			// richTextBox_Choice
 			// 
+			this.richTextBox_Choice.AcceptsReturn = true;
 			this.richTextBox_Choice.Dock = System.Windows.Forms.DockStyle.Top;
 			this.richTextBox_Choice.Location = new System.Drawing.Point(0, 0);
 			this.richTextBox_Choice.MaxLength = 1500;
 			this.richTextBox_Choice.Multiline = true;
 			this.richTextBox_Choice.Name = "richTextBox_Choice";
-			this.richTextBox_Choice.Size = new System.Drawing.Size(476, 75);
+			this.richTextBox_Choice.Size = new System.Drawing.Size(479, 49);
 			this.richTextBox_Choice.TabIndex = 1;
 			this.richTextBox_Choice.Text = "answer.InnerText";
 			this.richTextBox_Choice.TextChanged += new System.EventHandler(this.textChanged);
 			// 
-			// AccordionQueryControl
+			// AccordionAnswerControl
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -100,8 +100,8 @@
 			this.AutoSize = true;
 			this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
 			this.Controls.Add(this.panel_ControlHolder);
-			this.Name = "AccordionQueryControl";
-			this.Size = new System.Drawing.Size(476, 112);
+			this.Name = "AccordionAnswerControl";
+			this.Size = new System.Drawing.Size(482, 90);
 			this.panel_ControlHolder.ResumeLayout(false);
 			this.panel_ControlHolder.PerformLayout();
 			this.ResumeLayout(false);

@@ -10,7 +10,7 @@ using System.Windows.Forms;
 using System.Xml;
 
 namespace MakerEngine {
-	public partial class AccordionQueryControl : UserControl, AccordionControl {
+	public partial class AccordionAnswerControl : UserControl, AccordionControl {
 
 		XmlNode node;
 		MakerEngineForm mainForm;
@@ -19,7 +19,7 @@ namespace MakerEngine {
 		private bool loading = true;
 
 
-		public AccordionQueryControl(MakerEngineForm main, XmlNode answerNode) {
+		public AccordionAnswerControl(MakerEngineForm main, XmlNode answerNode) {
 			InitializeComponent();
 
 			mainForm = main;

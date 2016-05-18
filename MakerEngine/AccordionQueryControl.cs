@@ -34,5 +34,18 @@ namespace MakerEngine {
 
 			node.Attributes["from"].InnerText = textBox_From.Text;
 		}
+
+		private void button_NewChoice_Click(Object sender, EventArgs e) {
+
+		}
+
+		internal String getLabel() {
+
+			String label = node.Name;
+			if (node.Attributes["from"] != null)
+				label += "    FROM: " + node.Attributes["from"].InnerText;
+
+			return label;
+		}
 	}
 }

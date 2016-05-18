@@ -37,7 +37,7 @@ namespace MakerEngine {
 				textBox_JumpTo.Text = "";
 
 			richTextBox_dialogText.Text = node.InnerText;
-
+			richTextBox_dialogText.ScrollBars = ScrollBars.Vertical;
 			loading = false;
 		}
 
@@ -104,11 +104,22 @@ namespace MakerEngine {
 
 		public void saveChanges() {
 
+			if (textBox_from.Text.Length > 0) {
+				if (node.Attributes["from"] == null)
+					node.Attributes.SetNamedItem(node.OwnerDocument.CreateAttribute("from"));
+				node.Attributes["from"].InnerText = textBox_from.Text;
+			}
 
-			node.Attributes["from"].InnerText = textBox_from.Text;
+			if (textBox_JumpTo.Text.Length > 0) {
+			if (node.Attributes["to"] == null)
+				node.Attributes.SetNamedItem(node.OwnerDocument.CreateAttribute("to"));
+
 			node.Attributes["to"].InnerText = textBox_JumpTo.Text;
-			node.InnerText = richTextBox_dialogText.Text;
+		}
+
+
+		node.InnerText = richTextBox_dialogText.Text;
 
 		}
-	}
+}
 }

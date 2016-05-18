@@ -63,6 +63,12 @@
     <Compile Include="AccordionInputControl.Designer.cs">
       <DependentUpon>AccordionInputControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="AccordionAnswerControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="AccordionAnswerControl.Designer.cs">
+      <DependentUpon>AccordionAnswerControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="AccordionQueryControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -93,6 +99,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="AccordionInputControl.resx">
       <DependentUpon>AccordionInputControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AccordionAnswerControl.resx">
+      <DependentUpon>AccordionAnswerControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="AccordionQueryControl.resx">
       <DependentUpon>AccordionQueryControl.cs</DependentUpon>

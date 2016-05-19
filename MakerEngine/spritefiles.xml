@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root game="First RPG" xml="Sprite Files">
+	<gui>
+		<sprite file="" name=""></sprite>
+	</gui>
+
+	<map>
+		<sprite file="" name=""></sprite>
+	</map>
+
+</root>

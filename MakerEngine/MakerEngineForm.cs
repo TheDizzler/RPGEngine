@@ -19,10 +19,15 @@ namespace MakerEngine {
 
 		public String gameDirectory = "D:/github projects/RPGEngine/";
 		public String dialogText = "assets/text/GameText.xml";
+		public String spriteText = "assets/text/SpriteFiles.xml";
 
 		XmlDocument docDialogText;
-		XmlNode selectedNode;
-		TreeXMLNode selectedTreeNode;
+		XmlNode selectedTextNode;
+		TreeXMLNode selectedTextTreeNode;
+
+		XmlDocument docSpriteFiles;
+		XmlNode selectedSpriteNode;
+
 
 		List<AccordionControl> accordionControlsList = new List<AccordionControl>();
 
@@ -124,8 +129,8 @@ namespace MakerEngine {
 
 					newNode.Attributes["location"].InnerText = nld.textBox_NewLocation.Text;
 					XmlNode importNode = docDialogText.ImportNode(newNode, true);
-					selectedTreeNode.node.AppendChild(importNode);
-					selectedTreeNode.Nodes.Add(new TreeXMLNode(newNode, new TreeXMLNode[0]));
+					selectedTextTreeNode.node.AppendChild(importNode);
+					selectedTextTreeNode.Nodes.Add(new TreeXMLNode(newNode, new TreeXMLNode[0]));
 
 					loading = false;
 					textChanged(null, null);
@@ -138,13 +143,13 @@ namespace MakerEngine {
 
 		private void save() {
 
-			if (selectedNode != null) {
-				if (selectedNode.Attributes["speaker"] == null) {
+			if (selectedTextNode != null) {
+				if (selectedTextNode.Attributes["speaker"] == null) {
 
 					MessageBox.Show("Speaker must not be null");
 
 				} else {
-					selectedNode.Attributes["speaker"].InnerText = textBox_Speaker.Text;
+					selectedTextNode.Attributes["speaker"].InnerText = textBox_Speaker.Text;
 					foreach (AccordionControl control in accordionControlsList) {
 
 						control.saveChanges();
@@ -251,7 +256,7 @@ namespace MakerEngine {
 			}
 
 			TreeXMLNode selected = (TreeXMLNode)treeView_Dialog.SelectedNode;
-			selectedNode = selected.node;
+			selectedTextNode = selected.node;
 
 			groupBox_AccordionHolder.Controls.Remove(accordion_Dialog);
 			accordion_Dialog.Dispose();
@@ -259,11 +264,11 @@ namespace MakerEngine {
 
 			rebuildAccordion();
 
-			if (selectedNode.Attributes["speaker"] != null) {
+			if (selectedTextNode.Attributes["speaker"] != null) {
 
 				textBox_Speaker.Text = selected.Text;
 
-				foreach (XmlNode child in selectedNode.ChildNodes) {
+				foreach (XmlNode child in selectedTextNode.ChildNodes) {
 
 					switch (child.Name) {
 
@@ -499,12 +504,12 @@ namespace MakerEngine {
 
 			if (e.Button == MouseButtons.Right) {
 
-				selectedTreeNode = (TreeXMLNode)treeView_Dialog.GetNodeAt(e.Location);
+				selectedTextTreeNode = (TreeXMLNode)treeView_Dialog.GetNodeAt(e.Location);
 				
-				if (selectedTreeNode == null)
+				if (selectedTextTreeNode == null)
 					return;
 
-				switch (selectedTreeNode.Text) {
+				switch (selectedTextTreeNode.Text) {
 					case "Zone Text":
 						contextMenuStrip_ZoneText.Show(PointToScreen(e.Location));
 						break;
@@ -522,6 +527,30 @@ namespace MakerEngine {
 			}
 		}
 
-		
+		private void button_LoadSprite_Click(Object sender, EventArgs e) {
+
+
+			if (openFileDialog_Sprite.ShowDialog() == DialogResult.OK) {
+
+				String ddsFile = openFileDialog_Sprite.FileName;
+				S16.Drawing.DDSImage ddsImage = new S16.Drawing.DDSImage(File.ReadAllBytes(ddsFile));
+				pictureBox_SpriteView.Image = ddsImage.BitmapImage;
+				textBox_Dimensions.Text = ddsImage.BitmapImage.Height + ", " + ddsImage.BitmapImage.Width;
+			}
+		}
+
+		private void pictureBox_SpriteView_Click(Object sender, EventArgs e) {
+
+
+			using (ColorDialog dialog = new ColorDialog()) {
+
+				if (dialog.ShowDialog() == DialogResult.OK) {
+
+					pictureBox_SpriteView.BackColor = dialog.Color;
+
+				}
+
+			}
+		}
 	}
 }

@@ -21,10 +21,13 @@ namespace MakerEngine {
 		public String dialogText = "assets/text/GameText.xml";
 
 		XmlDocument docDialogText;
+		XmlNode selectedNode;
+		TreeXMLNode selectedTreeNode;
 
 		List<AccordionControl> accordionControlsList = new List<AccordionControl>();
 
 		private bool changesNeedSaving = false;
+		private bool loading = true;
 
 
 		public MakerEngineForm() {
@@ -51,13 +54,13 @@ namespace MakerEngine {
 
 			this.Text = "Maker Engine - " + root.Attributes["game"].InnerText;
 
-			//build tree view from dialog text
+			// build tree view from dialog text
 			List<TreeXMLNode> treeNodeList;
 
 			foreach (XmlNode node in root.ChildNodes) {
-				//string eventType = node.Attributes["type"].InnerText;
 
 				treeNodeList = new List<TreeXMLNode>();
+
 
 				foreach (XmlNode child in node.ChildNodes) {
 
@@ -77,22 +80,78 @@ namespace MakerEngine {
 				treeView_Dialog.Nodes.Add(new TreeXMLNode(node, treeNodeList.ToArray()));
 			}
 
-
-
 		}
 
 
+		private void button_NewEvent_Click(Object sender, EventArgs e) {
 
-		private void save() {
+			using (NewEventDialog dialog = new NewEventDialog()) {
 
-			foreach (AccordionControl control in accordionControlsList) {
+				DialogResult dResult = dialog.ShowDialog();
 
-				control.saveChanges();
+				if (dResult == DialogResult.OK) {
+
+					String eventTag = "<event type=\"\" ></event>";
+					XmlDocument newXml = new XmlDocument();
+					newXml.Load(new StringReader(eventTag));
+
+					XmlNode newNode = newXml.DocumentElement;
+
+					RadioButton type = dialog.radioButtons_EventSelect
+						.Controls.OfType<RadioButton>().FirstOrDefault(r => r.Checked);
+					newNode.Attributes["type"].InnerText = type.Text;
+					XmlNode importNode = docDialogText.ImportNode(newNode, true);
+					docDialogText.GetElementsByTagName("root")[0].AppendChild(importNode);
+					treeView_Dialog.Nodes.Add(new TreeXMLNode(newNode, new TreeXMLNode[0]));
+
+					loading = false;
+					textChanged(null, null);
+				}
+			}
+		}
+
+
+		private void newLocationToolStripMenuItem_Click(Object sender, EventArgs e) {
+
+			using (NewLocationDialog nld = new NewLocationDialog()) {
+				if (nld.ShowDialog() == DialogResult.OK) {
+
+					String eventTag = "<zone location=\"\" ></zone>";
+					XmlDocument newXml = new XmlDocument();
+					newXml.Load(new StringReader(eventTag));
+
+					XmlNode newNode = newXml.DocumentElement;
+
+					newNode.Attributes["location"].InnerText = nld.textBox_NewLocation.Text;
+					XmlNode importNode = docDialogText.ImportNode(newNode, true);
+					selectedTreeNode.node.AppendChild(importNode);
+					selectedTreeNode.Nodes.Add(new TreeXMLNode(newNode, new TreeXMLNode[0]));
+
+					loading = false;
+					textChanged(null, null);
+
+				}
 
 			}
 
+		}
 
+		private void save() {
 
+			if (selectedNode != null) {
+				if (selectedNode.Attributes["speaker"] == null) {
+
+					MessageBox.Show("Speaker must not be null");
+
+				} else {
+					selectedNode.Attributes["speaker"].InnerText = textBox_Speaker.Text;
+					foreach (AccordionControl control in accordionControlsList) {
+
+						control.saveChanges();
+
+					}
+				}
+			}
 
 			XmlWriter writer = XmlWriter.Create(gameDirectory + dialogText);
 			docDialogText.Save(writer);
@@ -176,6 +235,7 @@ namespace MakerEngine {
 
 		private void treeView_Dialog_MouseDoubleClick(Object sender, MouseEventArgs e) {
 
+			loading = true;
 
 			if (treeView_Dialog.SelectedNode == null)
 				return;
@@ -191,7 +251,7 @@ namespace MakerEngine {
 			}
 
 			TreeXMLNode selected = (TreeXMLNode)treeView_Dialog.SelectedNode;
-			XmlNode selectedNode = selected.node;
+			selectedNode = selected.node;
 
 			groupBox_AccordionHolder.Controls.Remove(accordion_Dialog);
 			accordion_Dialog.Dispose();
@@ -238,12 +298,13 @@ namespace MakerEngine {
 						case "alphaInput":
 
 							createInputControl(child);
-
 							break;
 					}
 				}
 
 			}
+
+			loading = false;
 		}
 
 
@@ -438,14 +499,29 @@ namespace MakerEngine {
 
 			if (e.Button == MouseButtons.Right) {
 
+				selectedTreeNode = (TreeXMLNode)treeView_Dialog.GetNodeAt(e.Location);
+				
+				if (selectedTreeNode == null)
+					return;
 
-				//contextMenuStrip_DataTree.Items.
-
-				contextMenuStrip_DataTree.Show(PointToScreen(e.Location));
+				switch (selectedTreeNode.Text) {
+					case "Zone Text":
+						contextMenuStrip_ZoneText.Show(PointToScreen(e.Location));
+						break;
+				}
 
 
 
 			}
 		}
+
+		private void textChanged(Object sender, EventArgs e) {
+
+			if (!loading) {
+				needSave(true);
+			}
+		}
+
+		
 	}
 }

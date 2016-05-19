@@ -111,15 +111,14 @@ namespace MakerEngine {
 			}
 
 			if (textBox_JumpTo.Text.Length > 0) {
-			if (node.Attributes["to"] == null)
-				node.Attributes.SetNamedItem(node.OwnerDocument.CreateAttribute("to"));
+				if (node.Attributes["to"] == null)
+					node.Attributes.SetNamedItem(node.OwnerDocument.CreateAttribute("to"));
+				node.Attributes["to"].InnerText = textBox_JumpTo.Text;
+			}
 
-			node.Attributes["to"].InnerText = textBox_JumpTo.Text;
+
+			node.InnerText = richTextBox_dialogText.Text;
+
 		}
-
-
-		node.InnerText = richTextBox_dialogText.Text;
-
-		}
-}
+	}
 }

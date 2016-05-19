@@ -87,6 +87,18 @@
     <Compile Include="NewBlockDialog.Designer.cs">
       <DependentUpon>NewBlockDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="NewEventDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NewEventDialog.Designer.cs">
+      <DependentUpon>NewEventDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="NewLocationDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NewLocationDialog.Designer.cs">
+      <DependentUpon>NewLocationDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="OpacityEx.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -111,6 +123,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="NewBlockDialog.resx">
       <DependentUpon>NewBlockDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NewEventDialog.resx">
+      <DependentUpon>NewEventDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NewLocationDialog.resx">
+      <DependentUpon>NewLocationDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

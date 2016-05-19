@@ -23,11 +23,13 @@
 		/// the contents of this method with the code editor.
 		/// </summary>
 		private void InitializeComponent() {
+			this.components = new System.ComponentModel.Container();
 			this.panel_ControlHolder = new System.Windows.Forms.Panel();
 			this.textBox_JumpTo = new System.Windows.Forms.TextBox();
 			this.label2 = new System.Windows.Forms.Label();
 			this.button_JumpTo = new System.Windows.Forms.Button();
 			this.richTextBox_Choice = new System.Windows.Forms.TextBox();
+			this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
 			this.panel_ControlHolder.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -54,6 +56,7 @@
 			this.textBox_JumpTo.Size = new System.Drawing.Size(237, 20);
 			this.textBox_JumpTo.TabIndex = 4;
 			this.textBox_JumpTo.Text = "answer.Attributes[\"to\"].InnerText";
+			this.toolTip1.SetToolTip(this.textBox_JumpTo, "Enter name of dialog box that this answer flows to or \'finish\' to end dialog");
 			this.textBox_JumpTo.TextChanged += new System.EventHandler(this.textChanged);
 			// 
 			// label2
@@ -101,7 +104,7 @@
 			this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
 			this.Controls.Add(this.panel_ControlHolder);
 			this.Name = "AccordionAnswerControl";
-			this.Size = new System.Drawing.Size(482, 90);
+			this.Size = new System.Drawing.Size(482, 93);
 			this.panel_ControlHolder.ResumeLayout(false);
 			this.panel_ControlHolder.PerformLayout();
 			this.ResumeLayout(false);
@@ -116,5 +119,6 @@
 		private System.Windows.Forms.TextBox richTextBox_Choice;
 		private System.Windows.Forms.Label label2;
 		private System.Windows.Forms.TextBox textBox_JumpTo;
+		private System.Windows.Forms.ToolTip toolTip1;
 	}
 }

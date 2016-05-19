@@ -67,7 +67,7 @@
 			this.textBox_JumpTo.Size = new System.Drawing.Size(156, 20);
 			this.textBox_JumpTo.TabIndex = 2;
 			this.textBox_JumpTo.Text = "node.Attributes[\"to\"].InnerText";
-			this.toolTip_NextBlockLabel.SetToolTip(this.textBox_JumpTo, "Leave blank to cascade to next dialog box");
+			this.toolTip_NextBlockLabel.SetToolTip(this.textBox_JumpTo, "Leave blank to cascade to next dialog box or \'finish\' to end dialog");
 			this.textBox_JumpTo.TextChanged += new System.EventHandler(this.textChanged);
 			// 
 			// label1

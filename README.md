@@ -13,24 +13,26 @@ and Winform Accordion Control (https://sourceforge.net/projects/accordion/).
 >- Prompt player with a pop-up question box and dialog flows to proper reply
 >- Prompt player for alphanumeric input (name input) and save input
 >
-> Story Creator
+> Maker Engine
 >- Parse and display game text
 >- Create new dialog "blocks" and save to XML file
 
 ## To Do Next:
 > RPG Engine
 >- ~~update parser to read changes made to xml structure~~
+>- change dds gfx asset loading from compiled file to parsed xml
 >- parse and display maps
 >
-> Story Creator
+> Maker Engine
 >- Create, edit and save full dialog flow
->- Map creation and linking to game text (npc chatting, triggered events, etc)
+>- Load dds gfx assets and save xml for engine
+>- Map creation and linking to game text (npc chatting, triggered events, gfx)
 
 
 ## To Do later:
 > RPG Engine
->- map/town screen and transitions
->- battle screen
+>- map/town system
+>- battle system
 >
-> Story Creator
+> Maker Engine
 >- User testing

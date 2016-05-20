@@ -4,8 +4,12 @@ A custom RPG engine using DirectXTK in C++ and story creation tool (MakerEngine)
 This repo contains two projects: An RPG engine (root directory) in C++ and a story creation tool (/MakerEngine) in C#.
 The creation tool edits XML files that are parsed by the RPG engine.
 
-MakerEngines use DDSImageParser (https://gist.github.com/soeminnminn/e9c4c99867743a717f5b#file-ddsimageparser-cs)
-and Winform Accordion Control (https://sourceforge.net/projects/accordion/).
+3rd party libraries used:
+1. RPGEngine
+	- pugixml (http://pugixml.org/)
+2. MakerEngines 
+	- DDSImageParser (https://gist.github.com/soeminnminn/e9c4c99867743a717f5b#file-ddsimageparser-cs)
+	- Winform Accordion Control (https://sourceforge.net/projects/accordion/).
 
 ## Done:
 > RPG Engine

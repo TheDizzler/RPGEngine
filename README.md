@@ -7,7 +7,7 @@ The creation tool edits XML files that are parsed by the RPG engine.
 3rd party libraries used:
 1. RPGEngine
 	- pugixml (http://pugixml.org/)
-2. MakerEngines 
+	- 2. MakerEngines 
 	- DDSImageParser (https://gist.github.com/soeminnminn/e9c4c99867743a717f5b#file-ddsimageparser-cs)
 	- Winform Accordion Control (https://sourceforge.net/projects/accordion/).
 

@@ -31,5 +31,25 @@ namespace MakerEngine {
 			else if (nd.Attributes["location"] != null)
 				this.Text = nd.Attributes["location"].InnerText;
 		}
+
+		/// <summary>
+		/// Constructor for Sprite TreeView.
+		/// </summary>
+		/// <param name="name"></param>
+		/// <param name="nd"></param>
+		public TreeXMLNode(String name, XmlNode nd){
+
+			node = nd;
+			this.Text = name;
+		}
+
+
+		/// <summary>
+		/// Constructor for Sprite TreeView with children.
+		/// </summary>
+		public TreeXMLNode(String name, TreeXMLNode[] children) : base("", children) {
+
+			this.Text = name;
+		}
 	}
 }

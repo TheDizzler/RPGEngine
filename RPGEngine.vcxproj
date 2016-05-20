@@ -212,6 +212,7 @@
     <Xml Include="assets\text\GameText.xml">
       <SubType>Designer</SubType>
     </Xml>
+    <Xml Include="assets\text\SpriteFiles.xml" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

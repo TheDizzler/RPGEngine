@@ -21,12 +21,15 @@ namespace MakerEngine {
 		public String dialogText = "assets/text/GameText.xml";
 		public String spriteText = "assets/text/SpriteFiles.xml";
 
+		public String spriteDir = "assets/gfx/";
+
 		XmlDocument docDialogText;
 		XmlNode selectedTextNode;
 		TreeXMLNode selectedTextTreeNode;
 
 		XmlDocument docSpriteFiles;
 		XmlNode selectedSpriteNode;
+		TreeXMLNode selectedSpriteTreeNode;
 
 
 		List<AccordionControl> accordionControlsList = new List<AccordionControl>();
@@ -45,13 +48,50 @@ namespace MakerEngine {
 			accordion_Dialog.ControlBackColor = Color.White;
 			accordion_Dialog.ContentBackColor = Color.CadetBlue;
 
-			loadGameXmlFiles();
+			loadSpriteFilesXml();
+			loadGameTextXml();
 
 		}
 
 
+		private void loadSpriteFilesXml() {
 
-		private void loadGameXmlFiles() {
+			docSpriteFiles = new XmlDocument();
+			docSpriteFiles.Load(gameDirectory + spriteText);
+			XmlNode root = docSpriteFiles.GetElementsByTagName("root")[0];
+
+			List<TreeXMLNode> treeNodeList;
+
+			foreach (XmlNode node in root.ChildNodes) {
+
+				treeNodeList = new List<TreeXMLNode>();
+				List<TreeXMLNode> subNodeList = new List<TreeXMLNode>();
+
+				switch (node.Name) {
+					case "gui":
+						foreach (XmlNode guiNode in node.ChildNodes)
+							subNodeList.Add(new TreeXMLNode(guiNode.Attributes["name"].InnerText, guiNode));
+						treeView_Sprites.Nodes.Add(new TreeXMLNode("GUI Sprites", subNodeList.ToArray()));
+						break;
+
+					case "map":
+
+						foreach (XmlNode mapNode in node.ChildNodes)
+							subNodeList.Add(new TreeXMLNode(mapNode.Attributes["name"].InnerText, mapNode));
+						treeView_Sprites.Nodes.Add(new TreeXMLNode("Map Sprites", subNodeList.ToArray()));
+						break;
+
+					case "actors":
+
+						foreach (XmlNode actorNode in node.ChildNodes)
+							subNodeList.Add(new TreeXMLNode(actorNode.Attributes["name"].InnerText, actorNode));
+						treeView_Sprites.Nodes.Add(new TreeXMLNode("Actor Sprites", subNodeList.ToArray()));
+						break;
+				}
+			}
+		}
+
+		private void loadGameTextXml() {
 
 			docDialogText = new XmlDocument();
 			docDialogText.Load(gameDirectory + dialogText);
@@ -247,7 +287,9 @@ namespace MakerEngine {
 
 			if (changesNeedSaving) {
 				// ask to save before changing nodes
-				DialogResult result = MessageBox.Show(this, "If you don't all changes will perish!", "Save changes first?", MessageBoxButtons.YesNoCancel);
+				DialogResult result = MessageBox.Show(this,
+					"If you don't save all changes will perish!",
+					"Save changes first?", MessageBoxButtons.YesNoCancel);
 				if (result == DialogResult.Cancel)
 					return;
 				if (result == DialogResult.Yes)
@@ -269,7 +311,6 @@ namespace MakerEngine {
 				textBox_Speaker.Text = selected.Text;
 
 				foreach (XmlNode child in selectedTextNode.ChildNodes) {
-
 					switch (child.Name) {
 
 						case "dialogText":
@@ -334,7 +375,6 @@ namespace MakerEngine {
 		private void saveToolStripMenuItem_Click(Object sender, EventArgs e) {
 			save();
 		}
-
 
 
 		private void rebuildAccordion() {
@@ -498,14 +538,14 @@ namespace MakerEngine {
 			}
 		}
 
-
+		/** Display context menu on Dialog Event tree view. */
 		private void mouseUp_EventsTreeView(Object sender, MouseEventArgs e) {
 
 
 			if (e.Button == MouseButtons.Right) {
 
 				selectedTextTreeNode = (TreeXMLNode)treeView_Dialog.GetNodeAt(e.Location);
-				
+
 				if (selectedTextTreeNode == null)
 					return;
 
@@ -514,9 +554,6 @@ namespace MakerEngine {
 						contextMenuStrip_ZoneText.Show(PointToScreen(e.Location));
 						break;
 				}
-
-
-
 			}
 		}
 
@@ -535,7 +572,8 @@ namespace MakerEngine {
 				String ddsFile = openFileDialog_Sprite.FileName;
 				S16.Drawing.DDSImage ddsImage = new S16.Drawing.DDSImage(File.ReadAllBytes(ddsFile));
 				pictureBox_SpriteView.Image = ddsImage.BitmapImage;
-				textBox_Dimensions.Text = ddsImage.BitmapImage.Height + ", " + ddsImage.BitmapImage.Width;
+				textBox_Dimensions.Text = ddsImage.BitmapImage.Width + ", " + ddsImage.BitmapImage.Height;
+				textBox_SpriteFilePath.Text = ddsFile;
 			}
 		}
 
@@ -551,6 +589,49 @@ namespace MakerEngine {
 				}
 
 			}
+		}
+
+		private void button2_Click(Object sender, EventArgs e) {
+
+		}
+
+		private void button_Zoom_Click(Object sender, EventArgs e) {
+
+
+			//Size newSize = new Size((int)(originalBitmap.Width * zoomFactor), (int)(originalBitmap.Height * zoomFactor));
+			//Bitmap bmp = new Bitmap(originalBitmap, newSize);
+		}
+
+		private void treeView_Sprites_MouseClick(Object sender, MouseEventArgs e) {
+
+			treeView_Sprites.SelectedNode = (TreeXMLNode)treeView_Dialog.GetNodeAt(e.Location);
+			//selectedSpriteTreeNode = (TreeXMLNode)treeView_Sprites.SelectedNode;
+			//if (selectedSpriteTreeNode == null)
+			//	return;
+			//selectedSpriteNode = selectedSpriteTreeNode.node;
+			//if (selectedSpriteNode.Name != "sprite")
+			//	return;
+			//String ddsFile = gameDirectory + selectedSpriteNode.Attributes["file"].InnerText;
+			//S16.Drawing.DDSImage ddsImage = new S16.Drawing.DDSImage(File.ReadAllBytes(ddsFile));
+			//pictureBox_SpriteView.Image = ddsImage.BitmapImage;
+			//textBox_Dimensions.Text = ddsImage.BitmapImage.Width + ", " + ddsImage.BitmapImage.Height;
+			//textBox_SpriteFilePath.Text = ddsFile;
+
+		}
+
+		private void treeView_Sprites_MouseDoubleClick(Object sender, MouseEventArgs e) {
+
+			selectedSpriteTreeNode = (TreeXMLNode)treeView_Sprites.SelectedNode;
+			//if (selectedSpriteTreeNode == null)
+			//	return;
+			selectedSpriteNode = selectedSpriteTreeNode.node;
+			if (selectedSpriteNode.Name != "sprite")
+				return;
+			String ddsFile = gameDirectory + selectedSpriteNode.Attributes["file"].InnerText;
+			S16.Drawing.DDSImage ddsImage = new S16.Drawing.DDSImage(File.ReadAllBytes(ddsFile));
+			pictureBox_SpriteView.Image = ddsImage.BitmapImage;
+			textBox_Dimensions.Text = ddsImage.BitmapImage.Width + ", " + ddsImage.BitmapImage.Height;
+			textBox_SpriteFilePath.Text = ddsFile;
 		}
 	}
 }

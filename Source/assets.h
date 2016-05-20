@@ -7,22 +7,22 @@
 
 namespace Assets {
 
-	const static wchar_t* arialFontFile = L"assets/Arial.spritefont";
-	const static wchar_t* battleFontFile = L"assets/Arial.spritefont";
+	const static wchar_t* arialFontFile = L"assets/gfx/Arial.spritefont";
+	const static wchar_t* battleFontFile = L"assets/gfx/Arial.spritefont";
 
-	const static wchar_t* mouseSprite = L"assets/mouse icon.dds";
-	const static wchar_t* buttonUpFile = L"assets/button up (256x64).dds";
-	const static wchar_t* buttonDownFile = L"assets/button down (256x64).dds";
+	const static wchar_t* mouseSprite = L"assets/gfx/mouse icon.dds";
+	const static wchar_t* buttonUpFile = L"assets/gfx/button up (256x64).dds";
+	const static wchar_t* buttonDownFile = L"assets/gfx/button down (256x64).dds";
 
-	const static wchar_t* indicatorFile = L"assets/gui/indicator.dds";
-	const static wchar_t* borderCornerFile = L"assets/gui/border corner (16x16).dds";
-	const static wchar_t* borderSideFile = L"assets/gui/border side (16x16).dds";
-	const static wchar_t* blackFile = L"assets/gui/black (16x16).dds";
+	const static wchar_t* indicatorFile = L"assets/gfx/gui/indicator.dds";
+	const static wchar_t* borderCornerFile = L"assets/gfx/gui/border corner (16x16).dds";
+	const static wchar_t* borderSideFile = L"assets/gfx/gui/border side (16x16).dds";
+	const static wchar_t* blackFile = L"assets/gfx/gui/black (16x16).dds";
 
-	const static wchar_t* blueDudeFile = L"assets/bluedude.dds";
-	const static wchar_t* beetleFile = L"assets/baddies/beetle.dds";
+	const static wchar_t* blueDudeFile = L"assets/gfx/bluedude.dds";
+	const static wchar_t* beetleFile = L"assets/gfx/baddies/beetle.dds";
 
-	const static wchar_t* grassFile = L"assets/terrain/grass.dds";
+	const static wchar_t* grassFile = L"assets/gfx/terrain/grass.dds";
 
 	const static char* gameTextFile = "assets/text/GameText.xml";
 

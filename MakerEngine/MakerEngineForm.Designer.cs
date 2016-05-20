@@ -33,7 +33,6 @@
             treeNode2,
             treeNode3,
             treeNode4});
-			System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("Map Sprites");
 			this.menuStrip1 = new System.Windows.Forms.MenuStrip();
 			this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -55,6 +54,10 @@
 			this.treeView_Dialog = new System.Windows.Forms.TreeView();
 			this.tabPage_Map = new System.Windows.Forms.TabPage();
 			this.tabPage_SpriteLoader = new System.Windows.Forms.TabPage();
+			this.button1 = new System.Windows.Forms.Button();
+			this.button2 = new System.Windows.Forms.Button();
+			this.button_Zoom = new System.Windows.Forms.Button();
+			this.textBox_SpriteFilePath = new System.Windows.Forms.TextBox();
 			this.button_LoadSprite = new System.Windows.Forms.Button();
 			this.textBox_Dimensions = new System.Windows.Forms.TextBox();
 			this.label5 = new System.Windows.Forms.Label();
@@ -62,13 +65,15 @@
 			this.textBox1 = new System.Windows.Forms.TextBox();
 			this.label3 = new System.Windows.Forms.Label();
 			this.label2 = new System.Windows.Forms.Label();
-			this.treeView1 = new System.Windows.Forms.TreeView();
+			this.treeView_Sprites = new System.Windows.Forms.TreeView();
 			this.pictureBox_SpriteView = new System.Windows.Forms.PictureBox();
 			this.contextMenuStrip_ZoneText = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.newLocationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.deleteLocationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.spriteList = new System.Windows.Forms.ImageList(this.components);
 			this.openFileDialog_Sprite = new System.Windows.Forms.OpenFileDialog();
+			this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+			this.button3 = new System.Windows.Forms.Button();
 			this.accordion_Dialog = new Opulos.Core.UI.Accordion();
 			this.menuStrip1.SuspendLayout();
 			this.tabControl.SuspendLayout();
@@ -278,6 +283,11 @@
 			// 
 			// tabPage_SpriteLoader
 			// 
+			this.tabPage_SpriteLoader.Controls.Add(this.button3);
+			this.tabPage_SpriteLoader.Controls.Add(this.button1);
+			this.tabPage_SpriteLoader.Controls.Add(this.button2);
+			this.tabPage_SpriteLoader.Controls.Add(this.button_Zoom);
+			this.tabPage_SpriteLoader.Controls.Add(this.textBox_SpriteFilePath);
 			this.tabPage_SpriteLoader.Controls.Add(this.button_LoadSprite);
 			this.tabPage_SpriteLoader.Controls.Add(this.textBox_Dimensions);
 			this.tabPage_SpriteLoader.Controls.Add(this.label5);
@@ -285,7 +295,7 @@
 			this.tabPage_SpriteLoader.Controls.Add(this.textBox1);
 			this.tabPage_SpriteLoader.Controls.Add(this.label3);
 			this.tabPage_SpriteLoader.Controls.Add(this.label2);
-			this.tabPage_SpriteLoader.Controls.Add(this.treeView1);
+			this.tabPage_SpriteLoader.Controls.Add(this.treeView_Sprites);
 			this.tabPage_SpriteLoader.Controls.Add(this.pictureBox_SpriteView);
 			this.tabPage_SpriteLoader.Location = new System.Drawing.Point(4, 22);
 			this.tabPage_SpriteLoader.Name = "tabPage_SpriteLoader";
@@ -295,10 +305,47 @@
 			this.tabPage_SpriteLoader.Text = "Sprite Loader";
 			this.tabPage_SpriteLoader.UseVisualStyleBackColor = true;
 			// 
+			// button1
+			// 
+			this.button1.Location = new System.Drawing.Point(868, 52);
+			this.button1.Name = "button1";
+			this.button1.Size = new System.Drawing.Size(24, 23);
+			this.button1.TabIndex = 12;
+			this.button1.Text = "O";
+			this.button1.UseVisualStyleBackColor = true;
+			// 
+			// button2
+			// 
+			this.button2.Location = new System.Drawing.Point(868, 84);
+			this.button2.Name = "button2";
+			this.button2.Size = new System.Drawing.Size(24, 23);
+			this.button2.TabIndex = 11;
+			this.button2.Text = "-";
+			this.button2.UseVisualStyleBackColor = true;
+			this.button2.Click += new System.EventHandler(this.button2_Click);
+			// 
+			// button_Zoom
+			// 
+			this.button_Zoom.Location = new System.Drawing.Point(868, 23);
+			this.button_Zoom.Name = "button_Zoom";
+			this.button_Zoom.Size = new System.Drawing.Size(24, 23);
+			this.button_Zoom.TabIndex = 10;
+			this.button_Zoom.Text = "+";
+			this.button_Zoom.UseVisualStyleBackColor = true;
+			this.button_Zoom.Click += new System.EventHandler(this.button_Zoom_Click);
+			// 
+			// textBox_SpriteFilePath
+			// 
+			this.textBox_SpriteFilePath.Location = new System.Drawing.Point(405, 460);
+			this.textBox_SpriteFilePath.Name = "textBox_SpriteFilePath";
+			this.textBox_SpriteFilePath.ReadOnly = true;
+			this.textBox_SpriteFilePath.Size = new System.Drawing.Size(485, 20);
+			this.textBox_SpriteFilePath.TabIndex = 9;
+			// 
 			// button_LoadSprite
 			// 
 			this.button_LoadSprite.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.button_LoadSprite.Location = new System.Drawing.Point(9, 460);
+			this.button_LoadSprite.Location = new System.Drawing.Point(787, 403);
 			this.button_LoadSprite.Name = "button_LoadSprite";
 			this.button_LoadSprite.Size = new System.Drawing.Size(75, 23);
 			this.button_LoadSprite.TabIndex = 8;
@@ -308,26 +355,26 @@
 			// 
 			// textBox_Dimensions
 			// 
-			this.textBox_Dimensions.Location = new System.Drawing.Point(408, 43);
+			this.textBox_Dimensions.Location = new System.Drawing.Point(405, 427);
 			this.textBox_Dimensions.Name = "textBox_Dimensions";
 			this.textBox_Dimensions.ReadOnly = true;
-			this.textBox_Dimensions.Size = new System.Drawing.Size(100, 20);
+			this.textBox_Dimensions.Size = new System.Drawing.Size(72, 20);
 			this.textBox_Dimensions.TabIndex = 7;
 			this.textBox_Dimensions.Text = "0 , 0";
 			// 
 			// label5
 			// 
 			this.label5.AutoSize = true;
-			this.label5.Location = new System.Drawing.Point(313, 84);
+			this.label5.Location = new System.Drawing.Point(307, 467);
 			this.label5.Name = "label5";
-			this.label5.Size = new System.Drawing.Size(35, 13);
+			this.label5.Size = new System.Drawing.Size(48, 13);
 			this.label5.TabIndex = 6;
-			this.label5.Text = "label5";
+			this.label5.Text = "File Path";
 			// 
 			// label4
 			// 
 			this.label4.AutoSize = true;
-			this.label4.Location = new System.Drawing.Point(310, 51);
+			this.label4.Location = new System.Drawing.Point(307, 435);
 			this.label4.Name = "label4";
 			this.label4.Size = new System.Drawing.Size(91, 13);
 			this.label4.TabIndex = 5;
@@ -335,7 +382,7 @@
 			// 
 			// textBox1
 			// 
-			this.textBox1.Location = new System.Drawing.Point(379, 7);
+			this.textBox1.Location = new System.Drawing.Point(405, 401);
 			this.textBox1.MaxLength = 64;
 			this.textBox1.Name = "textBox1";
 			this.textBox1.Size = new System.Drawing.Size(244, 20);
@@ -344,7 +391,7 @@
 			// label3
 			// 
 			this.label3.AutoSize = true;
-			this.label3.Location = new System.Drawing.Point(307, 7);
+			this.label3.Location = new System.Drawing.Point(307, 403);
 			this.label3.Name = "label3";
 			this.label3.Size = new System.Drawing.Size(65, 13);
 			this.label3.TabIndex = 3;
@@ -359,10 +406,10 @@
 			this.label2.TabIndex = 2;
 			this.label2.Text = "Loaded Sprites";
 			// 
-			// treeView1
+			// treeView_Sprites
 			// 
-			this.treeView1.Location = new System.Drawing.Point(9, 23);
-			this.treeView1.Name = "treeView1";
+			this.treeView_Sprites.Location = new System.Drawing.Point(9, 23);
+			this.treeView_Sprites.Name = "treeView_Sprites";
 			treeNode1.Name = "border size (16x16)";
 			treeNode1.Text = "Textbox side (16x16)";
 			treeNode2.Name = "border corner (16x16)";
@@ -373,24 +420,22 @@
 			treeNode4.Text = "Textbox Caret";
 			treeNode5.Name = "GUI";
 			treeNode5.Text = "GUI Sprites";
-			treeNode6.Name = "Map";
-			treeNode6.Text = "Map Sprites";
-			this.treeView1.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode5,
-            treeNode6});
-			this.treeView1.Size = new System.Drawing.Size(291, 425);
-			this.treeView1.TabIndex = 1;
+			this.treeView_Sprites.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
+            treeNode5});
+			this.treeView_Sprites.Size = new System.Drawing.Size(291, 425);
+			this.treeView_Sprites.TabIndex = 1;
+			this.treeView_Sprites.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.treeView_Sprites_MouseDoubleClick);
 			// 
 			// pictureBox_SpriteView
 			// 
-			this.pictureBox_SpriteView.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.pictureBox_SpriteView.BackColor = System.Drawing.Color.LavenderBlush;
-			this.pictureBox_SpriteView.Location = new System.Drawing.Point(626, 43);
+			this.pictureBox_SpriteView.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+			this.pictureBox_SpriteView.Location = new System.Drawing.Point(310, 23);
 			this.pictureBox_SpriteView.Name = "pictureBox_SpriteView";
-			this.pictureBox_SpriteView.Size = new System.Drawing.Size(266, 293);
-			this.pictureBox_SpriteView.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+			this.pictureBox_SpriteView.Size = new System.Drawing.Size(552, 372);
 			this.pictureBox_SpriteView.TabIndex = 0;
 			this.pictureBox_SpriteView.TabStop = false;
+			this.toolTip1.SetToolTip(this.pictureBox_SpriteView, "Click image to change background color");
 			this.pictureBox_SpriteView.Click += new System.EventHandler(this.pictureBox_SpriteView_Click);
 			// 
 			// contextMenuStrip_ZoneText
@@ -425,6 +470,15 @@
 			// 
 			this.openFileDialog_Sprite.FileName = "openFileDialog_Sprite";
 			this.openFileDialog_Sprite.Filter = "DDS files | *.dds";
+			// 
+			// button3
+			// 
+			this.button3.Location = new System.Drawing.Point(225, 458);
+			this.button3.Name = "button3";
+			this.button3.Size = new System.Drawing.Size(75, 23);
+			this.button3.TabIndex = 13;
+			this.button3.Text = "Save Sprite";
+			this.button3.UseVisualStyleBackColor = true;
 			// 
 			// accordion_Dialog
 			// 
@@ -549,10 +603,16 @@
 		private System.Windows.Forms.TextBox textBox1;
 		private System.Windows.Forms.Label label3;
 		private System.Windows.Forms.Label label2;
-		private System.Windows.Forms.TreeView treeView1;
+		private System.Windows.Forms.TreeView treeView_Sprites;
 		private System.Windows.Forms.PictureBox pictureBox_SpriteView;
 		private System.Windows.Forms.ImageList spriteList;
 		private System.Windows.Forms.OpenFileDialog openFileDialog_Sprite;
+		private System.Windows.Forms.TextBox textBox_SpriteFilePath;
+		private System.Windows.Forms.ToolTip toolTip1;
+		private System.Windows.Forms.Button button2;
+		private System.Windows.Forms.Button button_Zoom;
+		private System.Windows.Forms.Button button1;
+		private System.Windows.Forms.Button button3;
 	}
 }
 

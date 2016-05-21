@@ -7,8 +7,8 @@
 
 namespace Assets {
 
-	const static wchar_t* arialFontFile = L"assets/gfx/Arial.spritefont";
-	const static wchar_t* battleFontFile = L"assets/gfx/Arial.spritefont";
+	const static wchar_t* arialFontFile = L"assets/fonts/Arial.spritefont";
+	const static wchar_t* battleFontFile = L"assets/fonts/Arial.spritefont";
 
 	const static wchar_t* mouseSprite = L"assets/gfx/mouse icon.dds";
 	const static wchar_t* buttonUpFile = L"assets/gfx/button up (256x64).dds";

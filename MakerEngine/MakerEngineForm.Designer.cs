@@ -24,15 +24,6 @@
 		/// </summary>
 		private void InitializeComponent() {
 			this.components = new System.ComponentModel.Container();
-			System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Textbox side (16x16)");
-			System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Textbox corner (16x16)");
-			System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Textbox bg (16x16)");
-			System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("Textbox Caret");
-			System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("GUI Sprites", new System.Windows.Forms.TreeNode[] {
-            treeNode1,
-            treeNode2,
-            treeNode3,
-            treeNode4});
 			this.menuStrip1 = new System.Windows.Forms.MenuStrip();
 			this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -75,6 +66,7 @@
 			this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
 			this.button3 = new System.Windows.Forms.Button();
 			this.accordion_Dialog = new Opulos.Core.UI.Accordion();
+			this.button_CreateSpriteFont = new System.Windows.Forms.Button();
 			this.menuStrip1.SuspendLayout();
 			this.tabControl.SuspendLayout();
 			this.tabPage_Dialog.SuspendLayout();
@@ -283,6 +275,7 @@
 			// 
 			// tabPage_SpriteLoader
 			// 
+			this.tabPage_SpriteLoader.Controls.Add(this.button_CreateSpriteFont);
 			this.tabPage_SpriteLoader.Controls.Add(this.button3);
 			this.tabPage_SpriteLoader.Controls.Add(this.button1);
 			this.tabPage_SpriteLoader.Controls.Add(this.button2);
@@ -410,18 +403,6 @@
 			// 
 			this.treeView_Sprites.Location = new System.Drawing.Point(9, 23);
 			this.treeView_Sprites.Name = "treeView_Sprites";
-			treeNode1.Name = "border size (16x16)";
-			treeNode1.Text = "Textbox side (16x16)";
-			treeNode2.Name = "border corner (16x16)";
-			treeNode2.Text = "Textbox corner (16x16)";
-			treeNode3.Name = "black (16x16)";
-			treeNode3.Text = "Textbox bg (16x16)";
-			treeNode4.Name = "indicator";
-			treeNode4.Text = "Textbox Caret";
-			treeNode5.Name = "GUI";
-			treeNode5.Text = "GUI Sprites";
-			this.treeView_Sprites.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode5});
 			this.treeView_Sprites.Size = new System.Drawing.Size(291, 425);
 			this.treeView_Sprites.TabIndex = 1;
 			this.treeView_Sprites.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.treeView_Sprites_MouseDoubleClick);
@@ -542,6 +523,16 @@
 			this.accordion_Dialog.TabIndex = 0;
 			this.accordion_Dialog.UpArrow = null;
 			// 
+			// button_CreateSpriteFont
+			// 
+			this.button_CreateSpriteFont.Location = new System.Drawing.Point(9, 457);
+			this.button_CreateSpriteFont.Name = "button_CreateSpriteFont";
+			this.button_CreateSpriteFont.Size = new System.Drawing.Size(133, 23);
+			this.button_CreateSpriteFont.TabIndex = 14;
+			this.button_CreateSpriteFont.Text = "Create SpriteFont";
+			this.button_CreateSpriteFont.UseVisualStyleBackColor = true;
+			this.button_CreateSpriteFont.Click += new System.EventHandler(this.button_CreateSpriteFont_Click);
+			// 
 			// MakerEngineForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -613,6 +604,7 @@
 		private System.Windows.Forms.Button button_Zoom;
 		private System.Windows.Forms.Button button1;
 		private System.Windows.Forms.Button button3;
+		private System.Windows.Forms.Button button_CreateSpriteFont;
 	}
 }
 

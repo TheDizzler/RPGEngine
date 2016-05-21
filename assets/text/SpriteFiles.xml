@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <root game="First RPG" xml="Sprite Files">
+	<spriteFonts>
+		<font name="Arial Font" file="assets/gfx/Arial.spritefont" />
+	</spriteFonts>
 	<gui>
-		<spriteFont name="Arial Font" file="assets/gfx/Arial.spritefont" />
+
 		<sprite name="Textbox side" file="assets/gfx/gui/border side (16x16).dds" />
 		<sprite name="Textbox corner" file="assets/gfx/gui/border corner (16x16).dds" />
 		<sprite name="Textbox bg" file="assets/gfx/gui/black (16x16).dds" />

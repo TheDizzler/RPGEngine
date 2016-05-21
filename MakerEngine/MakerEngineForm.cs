@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -17,11 +18,15 @@ namespace MakerEngine {
 		public DirectoryInfo workingDirectory;
 
 
-		public String gameDirectory = "D:/github projects/RPGEngine/";
+		//public String gameDirectory = "D:/github projects/RPGEngine/";
+		public String gameDirectory = AppDomain.CurrentDomain.BaseDirectory + "../../../";
+
+		public String fontDir = "assets/fonts/";
+		public String spriteDir = "assets/gfx/";
+
 		public String dialogText = "assets/text/GameText.xml";
 		public String spriteText = "assets/text/SpriteFiles.xml";
 
-		public String spriteDir = "assets/gfx/";
 
 		XmlDocument docDialogText;
 		XmlNode selectedTextNode;
@@ -68,6 +73,12 @@ namespace MakerEngine {
 				List<TreeXMLNode> subNodeList = new List<TreeXMLNode>();
 
 				switch (node.Name) {
+					case "spriteFonts":
+						foreach (XmlNode guiNode in node.ChildNodes)
+							subNodeList.Add(new TreeXMLNode(guiNode.Attributes["name"].InnerText, guiNode));
+						treeView_Sprites.Nodes.Add(new TreeXMLNode("Sprite Fonts", subNodeList.ToArray()));
+						break;
+
 					case "gui":
 						foreach (XmlNode guiNode in node.ChildNodes)
 							subNodeList.Add(new TreeXMLNode(guiNode.Attributes["name"].InnerText, guiNode));
@@ -605,25 +616,14 @@ namespace MakerEngine {
 		private void treeView_Sprites_MouseClick(Object sender, MouseEventArgs e) {
 
 			treeView_Sprites.SelectedNode = (TreeXMLNode)treeView_Dialog.GetNodeAt(e.Location);
-			//selectedSpriteTreeNode = (TreeXMLNode)treeView_Sprites.SelectedNode;
-			//if (selectedSpriteTreeNode == null)
-			//	return;
-			//selectedSpriteNode = selectedSpriteTreeNode.node;
-			//if (selectedSpriteNode.Name != "sprite")
-			//	return;
-			//String ddsFile = gameDirectory + selectedSpriteNode.Attributes["file"].InnerText;
-			//S16.Drawing.DDSImage ddsImage = new S16.Drawing.DDSImage(File.ReadAllBytes(ddsFile));
-			//pictureBox_SpriteView.Image = ddsImage.BitmapImage;
-			//textBox_Dimensions.Text = ddsImage.BitmapImage.Width + ", " + ddsImage.BitmapImage.Height;
-			//textBox_SpriteFilePath.Text = ddsFile;
 
 		}
 
 		private void treeView_Sprites_MouseDoubleClick(Object sender, MouseEventArgs e) {
 
 			selectedSpriteTreeNode = (TreeXMLNode)treeView_Sprites.SelectedNode;
-			//if (selectedSpriteTreeNode == null)
-			//	return;
+			if (selectedSpriteTreeNode == null)
+				return;
 			selectedSpriteNode = selectedSpriteTreeNode.node;
 			if (selectedSpriteNode.Name != "sprite")
 				return;
@@ -632,6 +632,35 @@ namespace MakerEngine {
 			pictureBox_SpriteView.Image = ddsImage.BitmapImage;
 			textBox_Dimensions.Text = ddsImage.BitmapImage.Width + ", " + ddsImage.BitmapImage.Height;
 			textBox_SpriteFilePath.Text = ddsFile;
+		}
+
+
+		private void button_CreateSpriteFont_Click(Object sender, EventArgs e) {
+
+			using (SelectFontDialog dialog = new SelectFontDialog()) {
+
+				if (dialog.ShowDialog() == DialogResult.OK) {
+
+
+					ProcessStartInfo start = new ProcessStartInfo();
+					String font = ((Font)dialog.listBox_FontList.SelectedItem).Name;
+					String fontName = dialog.textBox_FontName.Text;
+					start.FileName = "\"" + gameDirectory + fontDir + "MakeSpriteFont\"";
+					start.Arguments = "\"" + font + "\" \"" + gameDirectory + fontDir + fontName + ".spritefont\" /FontSize:16";
+					start.WindowStyle = ProcessWindowStyle.Normal;
+					start.CreateNoWindow = false;
+					start.ErrorDialog = true;
+
+					using (Process proc = Process.Start(start)) {
+
+						proc.WaitForExit();
+
+
+					}
+
+				}
+
+			}
 		}
 	}
 }

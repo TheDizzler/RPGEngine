@@ -205,13 +205,13 @@
     <ClInclude Include="Source\globals.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="assets\maps\testvillage.map" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Xml Include="assets\text\GameText.xml">
       <SubType>Designer</SubType>
     </Xml>
+    <Xml Include="assets\text\MapLegend.xml" />
     <Xml Include="assets\text\SpriteFiles.xml" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

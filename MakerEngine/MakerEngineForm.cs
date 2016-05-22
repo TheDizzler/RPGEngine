@@ -26,6 +26,7 @@ namespace MakerEngine {
 
 		public String dialogText = "assets/text/GameText.xml";
 		public String spriteText = "assets/text/SpriteFiles.xml";
+		public String mapsText = "assets/text/MapLegend.xml";
 
 
 		XmlDocument docDialogText;
@@ -35,6 +36,9 @@ namespace MakerEngine {
 		XmlDocument docSpriteFiles;
 		XmlNode selectedSpriteNode;
 		TreeXMLNode selectedSpriteTreeNode;
+
+		XmlDocument docMapLegend;
+		XmlNode selectedMapNode;
 
 
 		List<AccordionControl> accordionControlsList = new List<AccordionControl>();
@@ -54,7 +58,28 @@ namespace MakerEngine {
 			accordion_Dialog.ContentBackColor = Color.CadetBlue;
 
 			loadSpriteFilesXml();
+			loadMapFiles();
 			loadGameTextXml();
+
+		}
+
+
+		private void loadMapFiles() {
+
+			docMapLegend = new XmlDocument();
+			docMapLegend.Load(gameDirectory + mapsText);
+			XmlNode root = docMapLegend.GetElementsByTagName("root")[0];
+
+			List<TreeXMLNode> treeNodeList;
+
+			foreach (XmlNode node in root.ChildNodes) {
+
+				treeNodeList = new List<TreeXMLNode>();
+				treeView_MapLegend.Nodes.Add(
+					new TreeXMLNode(node.Attributes["name"].InnerText, node));
+			}
+
+			//new TreeXMLNode(treeNodeList.ToArray()));
 
 		}
 
@@ -212,7 +237,7 @@ namespace MakerEngine {
 		 *	Dialog Text Tab Methods. 
 		 *	*************************/
 
-		
+
 		private void button_NewEvent_Click(Object sender, EventArgs e) {
 
 			using (NewEventDialog dialog = new NewEventDialog()) {
@@ -582,7 +607,7 @@ namespace MakerEngine {
 			}
 		}
 
-		
+
 		/** ************************
 		 *	Sprite Loader Tab Methods.
 		 *	************************ */
@@ -634,7 +659,7 @@ namespace MakerEngine {
 			if (selectedSpriteTreeNode == null)
 				return;
 			selectedSpriteNode = selectedSpriteTreeNode.node;
-			if (selectedSpriteNode.Name != "sprite")
+			if (selectedSpriteNode == null || selectedSpriteNode.Name != "sprite")
 				return;
 			String ddsFile = gameDirectory + selectedSpriteNode.Attributes["file"].InnerText;
 			S16.Drawing.DDSImage ddsImage = new S16.Drawing.DDSImage(File.ReadAllBytes(ddsFile));

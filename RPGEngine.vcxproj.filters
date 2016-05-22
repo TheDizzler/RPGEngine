@@ -218,10 +218,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="assets\maps\testvillage.map" />
   </ItemGroup>
   <ItemGroup>
     <Xml Include="assets\text\GameText.xml" />
     <Xml Include="assets\text\SpriteFiles.xml" />
+    <Xml Include="assets\text\MapLegend.xml" />
   </ItemGroup>
 </Project>

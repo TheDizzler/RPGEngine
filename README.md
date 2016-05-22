@@ -24,17 +24,20 @@ The creation tool edits XML files that are parsed by the RPG engine.
 ## To Do Next:
 > RPG Engine
 >- ~~update parser to read changes made to xml structure~~
+>- add speakers name to top of text box
 >- change dds gfx asset loading from compiled file to parsed xml
 >- parse and display maps
 >
 > Maker Engine
->- Create, edit and save full dialog flow
+>- Create, edit and save full dialog flow (mostly done: changes likely needed when linking to game objects)
 >- Load dds gfx assets and save xml for engine
 >- Map creation and linking to game text (npc chatting, triggered events, gfx)
+>- preview loaded spritefonts (possible??)
 
 
 ## To Do later:
 > RPG Engine
+>- allow dynamic font changing
 >- map/town system
 >- battle system
 >

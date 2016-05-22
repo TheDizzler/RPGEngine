@@ -138,7 +138,81 @@ namespace MakerEngine {
 
 		}
 
+		private void save() {
 
+			if (selectedTextNode != null) {
+				if (selectedTextNode.Attributes["speaker"] == null) {
+
+					MessageBox.Show("Speaker must not be null");
+
+				} else {
+					selectedTextNode.Attributes["speaker"].InnerText = textBox_Speaker.Text;
+					foreach (AccordionControl control in accordionControlsList) {
+
+						control.saveChanges();
+
+					}
+				}
+			}
+
+			XmlWriter writer = XmlWriter.Create(gameDirectory + dialogText);
+			docDialogText.Save(writer);
+
+			writer = XmlWriter.Create(gameDirectory + spriteText);
+			docSpriteFiles.Save(writer);
+
+			needSave(false);
+
+		}
+
+		public void needSave(Boolean changesMade) {
+
+			if (changesMade) {
+				pictureBox_NeedSave.Image = Properties.Resources.Red;
+				label_ChangesMade.Text = "Changes made";
+				changesNeedSaving = true;
+			} else {
+				pictureBox_NeedSave.Image = Properties.Resources.Green;
+				label_ChangesMade.Text = "No Changes";
+				changesNeedSaving = false;
+			}
+		}
+
+		private void textChanged(Object sender, EventArgs e) {
+
+			if (!loading) {
+				needSave(true);
+			}
+		}
+
+		private void loadToolStripMenuItem_Click(Object sender, EventArgs e) {
+
+		}
+
+		private void newGameToolStripMenuItem_Click(Object sender, EventArgs e) {
+
+			if (newGameFileDialog.ShowDialog() == DialogResult.OK) {
+
+			}
+		}
+
+		private void newGameFileDialog_FileOk(Object sender, CancelEventArgs e) {
+
+			String path = newGameFileDialog.InitialDirectory + newGameFileDialog.FileName;
+			workingDirectory = Directory.CreateDirectory(path);
+
+		}
+
+		private void saveToolStripMenuItem_Click(Object sender, EventArgs e) {
+			save();
+		}
+
+
+		/** *************************
+		 *	Dialog Text Tab Methods. 
+		 *	*************************/
+
+		
 		private void button_NewEvent_Click(Object sender, EventArgs e) {
 
 			using (NewEventDialog dialog = new NewEventDialog()) {
@@ -190,46 +264,6 @@ namespace MakerEngine {
 
 			}
 
-		}
-
-		private void save() {
-
-			if (selectedTextNode != null) {
-				if (selectedTextNode.Attributes["speaker"] == null) {
-
-					MessageBox.Show("Speaker must not be null");
-
-				} else {
-					selectedTextNode.Attributes["speaker"].InnerText = textBox_Speaker.Text;
-					foreach (AccordionControl control in accordionControlsList) {
-
-						control.saveChanges();
-
-					}
-				}
-			}
-
-			XmlWriter writer = XmlWriter.Create(gameDirectory + dialogText);
-			docDialogText.Save(writer);
-
-			writer = XmlWriter.Create(gameDirectory + spriteText);
-			docSpriteFiles.Save(writer);
-
-			needSave(false);
-
-		}
-
-		public void needSave(Boolean changesMade) {
-
-			if (changesMade) {
-				pictureBox_NeedSave.Image = Properties.Resources.Red;
-				label_ChangesMade.Text = "Changes made";
-				changesNeedSaving = true;
-			} else {
-				pictureBox_NeedSave.Image = Properties.Resources.Green;
-				label_ChangesMade.Text = "No Changes";
-				changesNeedSaving = false;
-			}
 		}
 
 		public void createNewDialogText(XmlNode prevNode, String fromAttribute) {
@@ -363,29 +397,6 @@ namespace MakerEngine {
 			}
 
 			loading = false;
-		}
-
-
-		private void loadToolStripMenuItem_Click(Object sender, EventArgs e) {
-
-		}
-
-		private void newGameToolStripMenuItem_Click(Object sender, EventArgs e) {
-
-			if (newGameFileDialog.ShowDialog() == DialogResult.OK) {
-
-			}
-		}
-
-		private void newGameFileDialog_FileOk(Object sender, CancelEventArgs e) {
-
-			String path = newGameFileDialog.InitialDirectory + newGameFileDialog.FileName;
-			workingDirectory = Directory.CreateDirectory(path);
-
-		}
-
-		private void saveToolStripMenuItem_Click(Object sender, EventArgs e) {
-			save();
 		}
 
 
@@ -550,7 +561,9 @@ namespace MakerEngine {
 			}
 		}
 
-		/** Display context menu on Dialog Event tree view. */
+		/// <summary>
+		/// Display context menu on Dialog Event tree view.
+		/// </summary>
 		private void mouseUp_EventsTreeView(Object sender, MouseEventArgs e) {
 
 
@@ -569,12 +582,10 @@ namespace MakerEngine {
 			}
 		}
 
-		private void textChanged(Object sender, EventArgs e) {
-
-			if (!loading) {
-				needSave(true);
-			}
-		}
+		
+		/** ************************
+		 *	Sprite Loader Tab Methods.
+		 *	************************ */
 
 		private void button_LoadSprite_Click(Object sender, EventArgs e) {
 

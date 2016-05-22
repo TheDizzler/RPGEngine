@@ -53,8 +53,17 @@ namespace MakerEngine {
 
 		private void button_Accept_Click(Object sender, EventArgs e) {
 
-			if (listBox_FontList.SelectedItem != null)
-				DialogResult  = DialogResult.OK;
+			if (listBox_FontList.SelectedItem != null) {
+				if (textBox_FontName.Text.Length <= 0)
+					textBox_FontName.BackColor = Color.Red;
+				else
+					DialogResult = DialogResult.OK;
+			}
+		}
+
+		private void textBox_FontName_TextChanged(Object sender, EventArgs e) {
+
+			textBox_FontName.BackColor = Color.White;
 		}
 	}
 }

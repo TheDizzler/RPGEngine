@@ -7,6 +7,9 @@ using System.Windows.Forms;
 using System.Xml;
 
 namespace MakerEngine {
+	/// <summary>
+	/// Sloppily slapped together. Will (probably) clean up to have only two constructors.
+	/// </summary>
 	class TreeXMLNode : TreeNode {
 
 		public XmlNode node;

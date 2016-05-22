@@ -59,6 +59,7 @@
 			this.textBox_FontName.Name = "textBox_FontName";
 			this.textBox_FontName.Size = new System.Drawing.Size(220, 20);
 			this.textBox_FontName.TabIndex = 6;
+			this.textBox_FontName.TextChanged += new System.EventHandler(this.textBox_FontName_TextChanged);
 			// 
 			// label2
 			// 

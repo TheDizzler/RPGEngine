@@ -36,7 +36,6 @@
 			this.tabPage_Dialog = new System.Windows.Forms.TabPage();
 			this.button_NewEvent = new System.Windows.Forms.Button();
 			this.label_ChangesMade = new System.Windows.Forms.Label();
-			this.pictureBox_NeedSave = new System.Windows.Forms.PictureBox();
 			this.label1 = new System.Windows.Forms.Label();
 			this.groupBox_AccordionHolder = new System.Windows.Forms.GroupBox();
 			this.richTextBox_EscapeCharacters = new System.Windows.Forms.RichTextBox();
@@ -57,7 +56,6 @@
 			this.label3 = new System.Windows.Forms.Label();
 			this.label2 = new System.Windows.Forms.Label();
 			this.treeView_Sprites = new System.Windows.Forms.TreeView();
-			this.pictureBox_SpriteView = new System.Windows.Forms.PictureBox();
 			this.contextMenuStrip_ZoneText = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.newLocationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.deleteLocationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -65,16 +63,18 @@
 			this.openFileDialog_Sprite = new System.Windows.Forms.OpenFileDialog();
 			this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
 			this.button3 = new System.Windows.Forms.Button();
-			this.accordion_Dialog = new Opulos.Core.UI.Accordion();
 			this.button_CreateSpriteFont = new System.Windows.Forms.Button();
+			this.pictureBox_NeedSave = new System.Windows.Forms.PictureBox();
+			this.pictureBox_SpriteView = new System.Windows.Forms.PictureBox();
+			this.accordion_Dialog = new Opulos.Core.UI.Accordion();
 			this.menuStrip1.SuspendLayout();
 			this.tabControl.SuspendLayout();
 			this.tabPage_Dialog.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.pictureBox_NeedSave)).BeginInit();
 			this.groupBox_AccordionHolder.SuspendLayout();
 			this.tabPage_SpriteLoader.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.pictureBox_SpriteView)).BeginInit();
 			this.contextMenuStrip_ZoneText.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBox_NeedSave)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBox_SpriteView)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// menuStrip1
@@ -155,8 +155,6 @@
 			// tabPage_Dialog
 			// 
 			this.tabPage_Dialog.Controls.Add(this.button_NewEvent);
-			this.tabPage_Dialog.Controls.Add(this.label_ChangesMade);
-			this.tabPage_Dialog.Controls.Add(this.pictureBox_NeedSave);
 			this.tabPage_Dialog.Controls.Add(this.label1);
 			this.tabPage_Dialog.Controls.Add(this.groupBox_AccordionHolder);
 			this.tabPage_Dialog.Controls.Add(this.richTextBox_EscapeCharacters);
@@ -185,21 +183,11 @@
 			// label_ChangesMade
 			// 
 			this.label_ChangesMade.AutoSize = true;
-			this.label_ChangesMade.Location = new System.Drawing.Point(783, 9);
+			this.label_ChangesMade.Location = new System.Drawing.Point(787, 8);
 			this.label_ChangesMade.Name = "label_ChangesMade";
 			this.label_ChangesMade.Size = new System.Drawing.Size(65, 13);
 			this.label_ChangesMade.TabIndex = 10;
 			this.label_ChangesMade.Text = "No changes";
-			// 
-			// pictureBox_NeedSave
-			// 
-			this.pictureBox_NeedSave.Image = global::MakerEngine.Properties.Resources.Green;
-			this.pictureBox_NeedSave.Location = new System.Drawing.Point(874, 9);
-			this.pictureBox_NeedSave.Name = "pictureBox_NeedSave";
-			this.pictureBox_NeedSave.Size = new System.Drawing.Size(16, 16);
-			this.pictureBox_NeedSave.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-			this.pictureBox_NeedSave.TabIndex = 9;
-			this.pictureBox_NeedSave.TabStop = false;
 			// 
 			// label1
 			// 
@@ -315,7 +303,6 @@
 			this.button2.TabIndex = 11;
 			this.button2.Text = "-";
 			this.button2.UseVisualStyleBackColor = true;
-			this.button2.Click += new System.EventHandler(this.button2_Click);
 			// 
 			// button_Zoom
 			// 
@@ -407,18 +394,6 @@
 			this.treeView_Sprites.TabIndex = 1;
 			this.treeView_Sprites.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.treeView_Sprites_MouseDoubleClick);
 			// 
-			// pictureBox_SpriteView
-			// 
-			this.pictureBox_SpriteView.BackColor = System.Drawing.Color.LavenderBlush;
-			this.pictureBox_SpriteView.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-			this.pictureBox_SpriteView.Location = new System.Drawing.Point(310, 23);
-			this.pictureBox_SpriteView.Name = "pictureBox_SpriteView";
-			this.pictureBox_SpriteView.Size = new System.Drawing.Size(552, 372);
-			this.pictureBox_SpriteView.TabIndex = 0;
-			this.pictureBox_SpriteView.TabStop = false;
-			this.toolTip1.SetToolTip(this.pictureBox_SpriteView, "Click image to change background color");
-			this.pictureBox_SpriteView.Click += new System.EventHandler(this.pictureBox_SpriteView_Click);
-			// 
 			// contextMenuStrip_ZoneText
 			// 
 			this.contextMenuStrip_ZoneText.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -460,6 +435,38 @@
 			this.button3.TabIndex = 13;
 			this.button3.Text = "Save Sprite";
 			this.button3.UseVisualStyleBackColor = true;
+			// 
+			// button_CreateSpriteFont
+			// 
+			this.button_CreateSpriteFont.Location = new System.Drawing.Point(9, 457);
+			this.button_CreateSpriteFont.Name = "button_CreateSpriteFont";
+			this.button_CreateSpriteFont.Size = new System.Drawing.Size(133, 23);
+			this.button_CreateSpriteFont.TabIndex = 14;
+			this.button_CreateSpriteFont.Text = "Create SpriteFont";
+			this.button_CreateSpriteFont.UseVisualStyleBackColor = true;
+			this.button_CreateSpriteFont.Click += new System.EventHandler(this.button_CreateSpriteFont_Click);
+			// 
+			// pictureBox_NeedSave
+			// 
+			this.pictureBox_NeedSave.Image = global::MakerEngine.Properties.Resources.Green;
+			this.pictureBox_NeedSave.Location = new System.Drawing.Point(880, 5);
+			this.pictureBox_NeedSave.Name = "pictureBox_NeedSave";
+			this.pictureBox_NeedSave.Size = new System.Drawing.Size(16, 16);
+			this.pictureBox_NeedSave.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+			this.pictureBox_NeedSave.TabIndex = 9;
+			this.pictureBox_NeedSave.TabStop = false;
+			// 
+			// pictureBox_SpriteView
+			// 
+			this.pictureBox_SpriteView.BackColor = System.Drawing.Color.LavenderBlush;
+			this.pictureBox_SpriteView.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+			this.pictureBox_SpriteView.Location = new System.Drawing.Point(310, 23);
+			this.pictureBox_SpriteView.Name = "pictureBox_SpriteView";
+			this.pictureBox_SpriteView.Size = new System.Drawing.Size(552, 372);
+			this.pictureBox_SpriteView.TabIndex = 0;
+			this.pictureBox_SpriteView.TabStop = false;
+			this.toolTip1.SetToolTip(this.pictureBox_SpriteView, "Click image to change background color");
+			this.pictureBox_SpriteView.Click += new System.EventHandler(this.pictureBox_SpriteView_Click);
 			// 
 			// accordion_Dialog
 			// 
@@ -523,21 +530,13 @@
 			this.accordion_Dialog.TabIndex = 0;
 			this.accordion_Dialog.UpArrow = null;
 			// 
-			// button_CreateSpriteFont
-			// 
-			this.button_CreateSpriteFont.Location = new System.Drawing.Point(9, 457);
-			this.button_CreateSpriteFont.Name = "button_CreateSpriteFont";
-			this.button_CreateSpriteFont.Size = new System.Drawing.Size(133, 23);
-			this.button_CreateSpriteFont.TabIndex = 14;
-			this.button_CreateSpriteFont.Text = "Create SpriteFont";
-			this.button_CreateSpriteFont.UseVisualStyleBackColor = true;
-			this.button_CreateSpriteFont.Click += new System.EventHandler(this.button_CreateSpriteFont_Click);
-			// 
 			// MakerEngineForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(906, 541);
+			this.Controls.Add(this.label_ChangesMade);
+			this.Controls.Add(this.pictureBox_NeedSave);
 			this.Controls.Add(this.tabControl);
 			this.Controls.Add(this.menuStrip1);
 			this.MainMenuStrip = this.menuStrip1;
@@ -548,12 +547,12 @@
 			this.tabControl.ResumeLayout(false);
 			this.tabPage_Dialog.ResumeLayout(false);
 			this.tabPage_Dialog.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.pictureBox_NeedSave)).EndInit();
 			this.groupBox_AccordionHolder.ResumeLayout(false);
 			this.tabPage_SpriteLoader.ResumeLayout(false);
 			this.tabPage_SpriteLoader.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.pictureBox_SpriteView)).EndInit();
 			this.contextMenuStrip_ZoneText.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.pictureBox_NeedSave)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBox_SpriteView)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 

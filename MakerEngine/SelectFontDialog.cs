@@ -9,6 +9,10 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace MakerEngine {
+	/// <summary>
+	/// Code borrowed (ruthlessly stolen) from
+	/// http://stackoverflow.com/questions/8644007/designing-a-custom-font-dialog-selector-for-c-sharp-that-filters-out-non-true-ty
+	/// </summary>
 	public partial class SelectFontDialog : Form {
 
 

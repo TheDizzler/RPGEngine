@@ -212,6 +212,9 @@ namespace MakerEngine {
 			XmlWriter writer = XmlWriter.Create(gameDirectory + dialogText);
 			docDialogText.Save(writer);
 
+			writer = XmlWriter.Create(gameDirectory + spriteText);
+			docSpriteFiles.Save(writer);
+
 			needSave(false);
 
 		}
@@ -237,10 +240,8 @@ namespace MakerEngine {
 
 			XmlNode newNode = newXml.DocumentElement;
 			XmlNode importNode = docDialogText.ImportNode(newNode, true);
-			//XmlNodeList nodeList = docDialogText.GetElementsByTagName(prevNode.Name);
 			prevNode.ParentNode.AppendChild(importNode);
 
-			//save();
 
 			createDialogTextControl(importNode);
 		}
@@ -602,9 +603,6 @@ namespace MakerEngine {
 			}
 		}
 
-		private void button2_Click(Object sender, EventArgs e) {
-
-		}
 
 		private void button_Zoom_Click(Object sender, EventArgs e) {
 
@@ -641,12 +639,15 @@ namespace MakerEngine {
 
 				if (dialog.ShowDialog() == DialogResult.OK) {
 
-
-					ProcessStartInfo start = new ProcessStartInfo();
 					String font = ((Font)dialog.listBox_FontList.SelectedItem).Name;
 					String fontName = dialog.textBox_FontName.Text;
+					String fontFilePath = fontDir + fontName + ".spritefont";
+					String fontFullFilePath = gameDirectory + fontFilePath;
+					String fontSize = "" + dialog.numericUpDown_FontSize.Value;
+
+					ProcessStartInfo start = new ProcessStartInfo();
 					start.FileName = "\"" + gameDirectory + fontDir + "MakeSpriteFont\"";
-					start.Arguments = "\"" + font + "\" \"" + gameDirectory + fontDir + fontName + ".spritefont\" /FontSize:16";
+					start.Arguments = "\"" + font + "\" \"" + fontFullFilePath + "\" /FontSize:" + fontSize;
 					start.WindowStyle = ProcessWindowStyle.Normal;
 					start.CreateNoWindow = false;
 					start.ErrorDialog = true;
@@ -655,11 +656,40 @@ namespace MakerEngine {
 
 						proc.WaitForExit();
 
+						if (proc.ExitCode != 0) {
+							MessageBox.Show(this, "Could not create Sprite Font!", "Error!",
+								MessageBoxButtons.OK, MessageBoxIcon.Error);
+							return;
+						}
 
+						String dt = "<font name=\"" + fontName + "\" file=\"" + fontFilePath
+							+ "\" fontSize=\"" + fontSize + "\" />";
+						XmlDocument newXml = new XmlDocument();
+						newXml.Load(new StringReader(dt));
+
+						XmlNode newNode = newXml.DocumentElement;
+						XmlNode importNode = docSpriteFiles.ImportNode(newNode, true);
+
+						XmlNode sf = docSpriteFiles.GetElementsByTagName("spriteFonts")[0];
+						XmlNode prevNode = sf.LastChild;
+						prevNode.ParentNode.AppendChild(importNode);
+
+						TreeNode[] sfTreeNodes = treeView_Sprites.Nodes.Find("Sprite Fonts", false);
+						if (sfTreeNodes.Length <= 0) {
+							MessageBox.Show(this, "Could not find Sprite Font child in Tree View! "
+								+ spriteText + " could be corrupted!", "Error!",
+								MessageBoxButtons.OK, MessageBoxIcon.Error);
+							return;
+						}
+
+						TreeXMLNode sfTreeNode = (TreeXMLNode)sfTreeNodes[0];
+						if (sfTreeNode != null) {
+							sfTreeNode.Nodes.Add(new TreeXMLNode(importNode.Attributes["name"].InnerText, importNode));
+							needSave(true);
+
+						}
 					}
-
 				}
-
 			}
 		}
 	}

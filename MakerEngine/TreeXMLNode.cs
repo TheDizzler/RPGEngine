@@ -20,16 +20,21 @@ namespace MakerEngine {
 				this.Text = node.Attributes["speaker"].InnerText;
 			else if (node.Attributes["location"] != null)
 				this.Text = node.Attributes["location"].InnerText;
+
+			this.Name = this.Text;
 		}
 
 		public TreeXMLNode(XmlNode nd, TreeXMLNode[] children) : base("", children) {
 
 			node = nd;
 
-			if (nd.Attributes["type"] != null)
+			if (nd.Attributes["type"] != null) {
 				this.Text = nd.Attributes["type"].InnerText;
-			else if (nd.Attributes["location"] != null)
+			} else if (nd.Attributes["location"] != null) {
 				this.Text = nd.Attributes["location"].InnerText;
+				
+			}
+			this.Name = this.Text;
 		}
 
 		/// <summary>
@@ -37,10 +42,11 @@ namespace MakerEngine {
 		/// </summary>
 		/// <param name="name"></param>
 		/// <param name="nd"></param>
-		public TreeXMLNode(String name, XmlNode nd){
+		public TreeXMLNode(String name, XmlNode nd) {
 
 			node = nd;
 			this.Text = name;
+			this.Name = name;
 		}
 
 
@@ -50,6 +56,7 @@ namespace MakerEngine {
 		public TreeXMLNode(String name, TreeXMLNode[] children) : base("", children) {
 
 			this.Text = name;
+			this.Name = name;
 		}
 	}
 }

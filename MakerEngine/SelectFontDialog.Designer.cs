@@ -24,13 +24,13 @@
 		/// </summary>
 		private void InitializeComponent() {
 			this.panel = new System.Windows.Forms.Panel();
-			this.button_Accept = new System.Windows.Forms.Button();
-			this.button_Cancel = new System.Windows.Forms.Button();
-			this.listBox_FontList = new System.Windows.Forms.ListBox();
-			this.label1 = new System.Windows.Forms.Label();
-			this.numericUpDown_FontSize = new System.Windows.Forms.NumericUpDown();
-			this.label2 = new System.Windows.Forms.Label();
 			this.textBox_FontName = new System.Windows.Forms.TextBox();
+			this.label2 = new System.Windows.Forms.Label();
+			this.numericUpDown_FontSize = new System.Windows.Forms.NumericUpDown();
+			this.label1 = new System.Windows.Forms.Label();
+			this.listBox_FontList = new System.Windows.Forms.ListBox();
+			this.button_Cancel = new System.Windows.Forms.Button();
+			this.button_Accept = new System.Windows.Forms.Button();
 			this.panel.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.numericUpDown_FontSize)).BeginInit();
 			this.SuspendLayout();
@@ -53,44 +53,21 @@
 			this.panel.Size = new System.Drawing.Size(322, 251);
 			this.panel.TabIndex = 0;
 			// 
-			// button_Accept
+			// textBox_FontName
 			// 
-			this.button_Accept.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.button_Accept.Location = new System.Drawing.Point(13, 216);
-			this.button_Accept.Name = "button_Accept";
-			this.button_Accept.Size = new System.Drawing.Size(75, 23);
-			this.button_Accept.TabIndex = 0;
-			this.button_Accept.Text = "Accept";
-			this.button_Accept.UseVisualStyleBackColor = true;
-			this.button_Accept.Click += new System.EventHandler(this.button_Accept_Click);
+			this.textBox_FontName.Location = new System.Drawing.Point(95, 190);
+			this.textBox_FontName.Name = "textBox_FontName";
+			this.textBox_FontName.Size = new System.Drawing.Size(220, 20);
+			this.textBox_FontName.TabIndex = 6;
 			// 
-			// button_Cancel
+			// label2
 			// 
-			this.button_Cancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.button_Cancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-			this.button_Cancel.Location = new System.Drawing.Point(235, 216);
-			this.button_Cancel.Name = "button_Cancel";
-			this.button_Cancel.Size = new System.Drawing.Size(75, 23);
-			this.button_Cancel.TabIndex = 1;
-			this.button_Cancel.Text = "Cancel";
-			this.button_Cancel.UseVisualStyleBackColor = true;
-			// 
-			// listBox_FontList
-			// 
-			this.listBox_FontList.FormattingEnabled = true;
-			this.listBox_FontList.Location = new System.Drawing.Point(13, 13);
-			this.listBox_FontList.Name = "listBox_FontList";
-			this.listBox_FontList.Size = new System.Drawing.Size(302, 160);
-			this.listBox_FontList.TabIndex = 2;
-			// 
-			// label1
-			// 
-			this.label1.AutoSize = true;
-			this.label1.Location = new System.Drawing.Point(12, 174);
-			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(51, 13);
-			this.label1.TabIndex = 3;
-			this.label1.Text = "Font Size";
+			this.label2.AutoSize = true;
+			this.label2.Location = new System.Drawing.Point(92, 174);
+			this.label2.Name = "label2";
+			this.label2.Size = new System.Drawing.Size(59, 13);
+			this.label2.TabIndex = 5;
+			this.label2.Text = "Font Name";
 			// 
 			// numericUpDown_FontSize
 			// 
@@ -104,26 +81,49 @@
 			this.numericUpDown_FontSize.Size = new System.Drawing.Size(64, 20);
 			this.numericUpDown_FontSize.TabIndex = 4;
 			this.numericUpDown_FontSize.Value = new decimal(new int[] {
-            12,
+            16,
             0,
             0,
             0});
 			// 
-			// label2
+			// label1
 			// 
-			this.label2.AutoSize = true;
-			this.label2.Location = new System.Drawing.Point(92, 174);
-			this.label2.Name = "label2";
-			this.label2.Size = new System.Drawing.Size(59, 13);
-			this.label2.TabIndex = 5;
-			this.label2.Text = "Font Name";
+			this.label1.AutoSize = true;
+			this.label1.Location = new System.Drawing.Point(12, 174);
+			this.label1.Name = "label1";
+			this.label1.Size = new System.Drawing.Size(51, 13);
+			this.label1.TabIndex = 3;
+			this.label1.Text = "Font Size";
 			// 
-			// textBox_FontName
+			// listBox_FontList
 			// 
-			this.textBox_FontName.Location = new System.Drawing.Point(95, 190);
-			this.textBox_FontName.Name = "textBox_FontName";
-			this.textBox_FontName.Size = new System.Drawing.Size(220, 20);
-			this.textBox_FontName.TabIndex = 6;
+			this.listBox_FontList.FormattingEnabled = true;
+			this.listBox_FontList.Location = new System.Drawing.Point(13, 13);
+			this.listBox_FontList.Name = "listBox_FontList";
+			this.listBox_FontList.Size = new System.Drawing.Size(302, 160);
+			this.listBox_FontList.TabIndex = 2;
+			// 
+			// button_Cancel
+			// 
+			this.button_Cancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.button_Cancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+			this.button_Cancel.Location = new System.Drawing.Point(235, 216);
+			this.button_Cancel.Name = "button_Cancel";
+			this.button_Cancel.Size = new System.Drawing.Size(75, 23);
+			this.button_Cancel.TabIndex = 1;
+			this.button_Cancel.Text = "Cancel";
+			this.button_Cancel.UseVisualStyleBackColor = true;
+			// 
+			// button_Accept
+			// 
+			this.button_Accept.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.button_Accept.Location = new System.Drawing.Point(13, 216);
+			this.button_Accept.Name = "button_Accept";
+			this.button_Accept.Size = new System.Drawing.Size(75, 23);
+			this.button_Accept.TabIndex = 0;
+			this.button_Accept.Text = "Accept";
+			this.button_Accept.UseVisualStyleBackColor = true;
+			this.button_Accept.Click += new System.EventHandler(this.button_Accept_Click);
 			// 
 			// SelectFontDialog
 			// 
@@ -154,10 +154,10 @@
 		private System.Windows.Forms.Panel panel;
 		private System.Windows.Forms.Button button_Cancel;
 		private System.Windows.Forms.Button button_Accept;
-		private System.Windows.Forms.NumericUpDown numericUpDown_FontSize;
 		private System.Windows.Forms.Label label1;
 		public System.Windows.Forms.ListBox listBox_FontList;
 		private System.Windows.Forms.Label label2;
 		public System.Windows.Forms.TextBox textBox_FontName;
+		public System.Windows.Forms.NumericUpDown numericUpDown_FontSize;
 	}
 }

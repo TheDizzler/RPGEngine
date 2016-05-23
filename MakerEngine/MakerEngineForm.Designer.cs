@@ -48,7 +48,7 @@
 			this.label6 = new System.Windows.Forms.Label();
 			this.treeView_MapLegend = new System.Windows.Forms.TreeView();
 			this.tableLayoutPanel_TMXData = new System.Windows.Forms.TableLayoutPanel();
-			this.textBox2 = new System.Windows.Forms.TextBox();
+			this.textBox_MapName = new System.Windows.Forms.TextBox();
 			this.label7 = new System.Windows.Forms.Label();
 			this.label8 = new System.Windows.Forms.Label();
 			this.label9 = new System.Windows.Forms.Label();
@@ -78,12 +78,15 @@
 			this.contextMenuStrip_ZoneText = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.newLocationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.deleteLocationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.spriteList = new System.Windows.Forms.ImageList(this.components);
+			this.imageTMXList = new System.Windows.Forms.ImageList(this.components);
 			this.openFileDialog_Sprite = new System.Windows.Forms.OpenFileDialog();
 			this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
 			this.pictureBox_NeedSave = new System.Windows.Forms.PictureBox();
-			this.accordion_Dialog = new Opulos.Core.UI.Accordion();
 			this.toolStripButton_HideLeftPanel = new System.Windows.Forms.ToolStripButton();
+			this.toolStripButton_HideSpritePanel = new System.Windows.Forms.ToolStripButton();
+			this.flowLayoutPanel_ImageContainer = new System.Windows.Forms.FlowLayoutPanel();
+			this.pictureBox_Map = new System.Windows.Forms.PictureBox();
+			this.accordion_Dialog = new Opulos.Core.UI.Accordion();
 			this.menuStrip1.SuspendLayout();
 			this.tabControl.SuspendLayout();
 			this.tabPage_Dialog.SuspendLayout();
@@ -91,6 +94,7 @@
 			this.tabPage_Map.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer_Main)).BeginInit();
 			this.splitContainer_Main.Panel1.SuspendLayout();
+			this.splitContainer_Main.Panel2.SuspendLayout();
 			this.splitContainer_Main.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
 			this.splitContainer2.Panel1.SuspendLayout();
@@ -105,6 +109,7 @@
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox_SpriteView)).BeginInit();
 			this.contextMenuStrip_ZoneText.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox_NeedSave)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBox_Map)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// menuStrip1
@@ -301,7 +306,9 @@
 			// splitContainer_Main.Panel2
 			// 
 			this.splitContainer_Main.Panel2.AutoScroll = true;
-			this.splitContainer_Main.Size = new System.Drawing.Size(884, 452);
+			this.splitContainer_Main.Panel2.Controls.Add(this.pictureBox_Map);
+			this.splitContainer_Main.Panel2.Controls.Add(this.flowLayoutPanel_ImageContainer);
+			this.splitContainer_Main.Size = new System.Drawing.Size(884, 427);
 			this.splitContainer_Main.SplitterDistance = 297;
 			this.splitContainer_Main.TabIndex = 5;
 			// 
@@ -324,7 +331,7 @@
 			// 
 			this.splitContainer2.Panel2.AutoScroll = true;
 			this.splitContainer2.Panel2.Controls.Add(this.tableLayoutPanel_TMXData);
-			this.splitContainer2.Size = new System.Drawing.Size(295, 450);
+			this.splitContainer2.Size = new System.Drawing.Size(295, 425);
 			this.splitContainer2.SplitterDistance = 250;
 			this.splitContainer2.TabIndex = 0;
 			// 
@@ -354,7 +361,7 @@
 			this.tableLayoutPanel_TMXData.ColumnCount = 2;
 			this.tableLayoutPanel_TMXData.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
 			this.tableLayoutPanel_TMXData.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-			this.tableLayoutPanel_TMXData.Controls.Add(this.textBox2, 1, 0);
+			this.tableLayoutPanel_TMXData.Controls.Add(this.textBox_MapName, 1, 0);
 			this.tableLayoutPanel_TMXData.Controls.Add(this.label7, 0, 0);
 			this.tableLayoutPanel_TMXData.Controls.Add(this.label8, 0, 1);
 			this.tableLayoutPanel_TMXData.Controls.Add(this.label9, 0, 2);
@@ -371,17 +378,17 @@
 			this.tableLayoutPanel_TMXData.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel_TMXData.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel_TMXData.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-			this.tableLayoutPanel_TMXData.Size = new System.Drawing.Size(291, 192);
+			this.tableLayoutPanel_TMXData.Size = new System.Drawing.Size(291, 167);
 			this.tableLayoutPanel_TMXData.TabIndex = 0;
 			// 
-			// textBox2
+			// textBox_MapName
 			// 
-			this.textBox2.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.textBox2.Location = new System.Drawing.Point(96, 6);
-			this.textBox2.Name = "textBox2";
-			this.textBox2.ReadOnly = true;
-			this.textBox2.Size = new System.Drawing.Size(192, 20);
-			this.textBox2.TabIndex = 3;
+			this.textBox_MapName.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.textBox_MapName.Location = new System.Drawing.Point(96, 6);
+			this.textBox_MapName.Name = "textBox_MapName";
+			this.textBox_MapName.ReadOnly = true;
+			this.textBox_MapName.Size = new System.Drawing.Size(192, 20);
+			this.textBox_MapName.TabIndex = 3;
 			// 
 			// label7
 			// 
@@ -468,10 +475,11 @@
 			// 
 			this.toolStrip1.Dock = System.Windows.Forms.DockStyle.None;
 			this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripButton_HideLeftPanel});
+            this.toolStripButton_HideLeftPanel,
+            this.toolStripButton_HideSpritePanel});
 			this.toolStrip1.Location = new System.Drawing.Point(3, 0);
 			this.toolStrip1.Name = "toolStrip1";
-			this.toolStrip1.Size = new System.Drawing.Size(66, 25);
+			this.toolStrip1.Size = new System.Drawing.Size(58, 25);
 			this.toolStrip1.TabIndex = 0;
 			// 
 			// tabPage_SpriteLoader
@@ -669,11 +677,11 @@
 			this.deleteLocationToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
 			this.deleteLocationToolStripMenuItem.Text = "Delete Zone";
 			// 
-			// spriteList
+			// imageTMXList
 			// 
-			this.spriteList.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
-			this.spriteList.ImageSize = new System.Drawing.Size(16, 16);
-			this.spriteList.TransparentColor = System.Drawing.Color.Transparent;
+			this.imageTMXList.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
+			this.imageTMXList.ImageSize = new System.Drawing.Size(32, 32);
+			this.imageTMXList.TransparentColor = System.Drawing.Color.Transparent;
 			// 
 			// openFileDialog_Sprite
 			// 
@@ -690,6 +698,44 @@
 			this.pictureBox_NeedSave.TabIndex = 9;
 			this.pictureBox_NeedSave.TabStop = false;
 			// 
+			// toolStripButton_HideLeftPanel
+			// 
+			this.toolStripButton_HideLeftPanel.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.toolStripButton_HideLeftPanel.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton_HideLeftPanel.Image")));
+			this.toolStripButton_HideLeftPanel.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.toolStripButton_HideLeftPanel.Name = "toolStripButton_HideLeftPanel";
+			this.toolStripButton_HideLeftPanel.Size = new System.Drawing.Size(23, 22);
+			this.toolStripButton_HideLeftPanel.Text = "Show/Hide Left Panel";
+			this.toolStripButton_HideLeftPanel.Click += new System.EventHandler(this.toolStripButton_HideLeftPanel_Click);
+			// 
+			// toolStripButton_HideSpritePanel
+			// 
+			this.toolStripButton_HideSpritePanel.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.toolStripButton_HideSpritePanel.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton_HideSpritePanel.Image")));
+			this.toolStripButton_HideSpritePanel.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.toolStripButton_HideSpritePanel.Name = "toolStripButton_HideSpritePanel";
+			this.toolStripButton_HideSpritePanel.Size = new System.Drawing.Size(23, 22);
+			this.toolStripButton_HideSpritePanel.Text = "Show/Hide Sprite Panel";
+			// 
+			// flowLayoutPanel_ImageContainer
+			// 
+			this.flowLayoutPanel_ImageContainer.AutoScroll = true;
+			this.flowLayoutPanel_ImageContainer.Dock = System.Windows.Forms.DockStyle.Bottom;
+			this.flowLayoutPanel_ImageContainer.Location = new System.Drawing.Point(0, 346);
+			this.flowLayoutPanel_ImageContainer.Name = "flowLayoutPanel_ImageContainer";
+			this.flowLayoutPanel_ImageContainer.Size = new System.Drawing.Size(581, 79);
+			this.flowLayoutPanel_ImageContainer.TabIndex = 0;
+			// 
+			// pictureBox_Map
+			// 
+			this.pictureBox_Map.Dock = System.Windows.Forms.DockStyle.Top;
+			this.pictureBox_Map.Location = new System.Drawing.Point(0, 0);
+			this.pictureBox_Map.Name = "pictureBox_Map";
+			this.pictureBox_Map.Size = new System.Drawing.Size(581, 334);
+			this.pictureBox_Map.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+			this.pictureBox_Map.TabIndex = 1;
+			this.pictureBox_Map.TabStop = false;
+			// 
 			// accordion_Dialog
 			// 
 			this.accordion_Dialog.AddResizeBars = false;
@@ -703,6 +749,7 @@
 			this.accordion_Dialog.AutoFixDockStyle = true;
 			this.accordion_Dialog.AutoScroll = true;
 			this.accordion_Dialog.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+			this.accordion_Dialog.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.accordion_Dialog.CheckBoxFactory = null;
 			this.accordion_Dialog.CheckBoxMargin = new System.Windows.Forms.Padding(0);
 			this.accordion_Dialog.ContentBackColor = null;
@@ -752,16 +799,6 @@
 			this.accordion_Dialog.TabIndex = 0;
 			this.accordion_Dialog.UpArrow = null;
 			// 
-			// toolStripButton_HideLeftPanel
-			// 
-			this.toolStripButton_HideLeftPanel.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.toolStripButton_HideLeftPanel.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton_HideLeftPanel.Image")));
-			this.toolStripButton_HideLeftPanel.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.toolStripButton_HideLeftPanel.Name = "toolStripButton_HideLeftPanel";
-			this.toolStripButton_HideLeftPanel.Size = new System.Drawing.Size(23, 22);
-			this.toolStripButton_HideLeftPanel.Text = "Hide Left Panel";
-			this.toolStripButton_HideLeftPanel.Click += new System.EventHandler(this.toolStripButton_HideLeftPanel_Click);
-			// 
 			// MakerEngineForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -782,6 +819,8 @@
 			this.groupBox_AccordionHolder.ResumeLayout(false);
 			this.tabPage_Map.ResumeLayout(false);
 			this.splitContainer_Main.Panel1.ResumeLayout(false);
+			this.splitContainer_Main.Panel2.ResumeLayout(false);
+			this.splitContainer_Main.Panel2.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer_Main)).EndInit();
 			this.splitContainer_Main.ResumeLayout(false);
 			this.splitContainer2.Panel1.ResumeLayout(false);
@@ -803,6 +842,7 @@
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox_SpriteView)).EndInit();
 			this.contextMenuStrip_ZoneText.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox_NeedSave)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBox_Map)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -845,7 +885,7 @@
 		private System.Windows.Forms.Label label2;
 		private System.Windows.Forms.TreeView treeView_Sprites;
 		private System.Windows.Forms.PictureBox pictureBox_SpriteView;
-		private System.Windows.Forms.ImageList spriteList;
+		private System.Windows.Forms.ImageList imageTMXList;
 		private System.Windows.Forms.OpenFileDialog openFileDialog_Sprite;
 		private System.Windows.Forms.TextBox textBox_SpriteFilePath;
 		private System.Windows.Forms.ToolTip toolTip1;
@@ -856,7 +896,7 @@
 		private System.Windows.Forms.Button button_CreateSpriteFont;
 		private System.Windows.Forms.Label label6;
 		private System.Windows.Forms.TreeView treeView_MapLegend;
-		private System.Windows.Forms.TextBox textBox2;
+		private System.Windows.Forms.TextBox textBox_MapName;
 		private System.Windows.Forms.Label label7;
 		private System.Windows.Forms.SplitContainer splitContainer_Main;
 		private System.Windows.Forms.SplitContainer splitContainer2;
@@ -870,6 +910,9 @@
 		private System.Windows.Forms.ToolStripContainer toolStripContainer1;
 		private System.Windows.Forms.ToolStrip toolStrip1;
 		private System.Windows.Forms.ToolStripButton toolStripButton_HideLeftPanel;
+		private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel_ImageContainer;
+		private System.Windows.Forms.ToolStripButton toolStripButton_HideSpritePanel;
+		private System.Windows.Forms.PictureBox pictureBox_Map;
 	}
 }
 

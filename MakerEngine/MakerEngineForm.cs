@@ -732,15 +732,27 @@ namespace MakerEngine {
 
 		private void treeView_MapLegend_MouseDoubleClick(Object sender, MouseEventArgs e) {
 
-			selectedMapNode = ((TreeXMLNode) treeView_MapLegend.SelectedNode).node;
+			selectedMapNode = ((TreeXMLNode)treeView_MapLegend.SelectedNode).node;
 
 			// load .tmx file
 			mapTMX = new TMXFile(gameDirectory + selectedMapNode.Attributes["file"].InnerText);
 
-			textBox_MapDimensions.Text = selectedMapNode.Attributes["file"].InnerText;
+			textBox_MapName.Text = selectedMapNode.Attributes["file"].InnerText;
 			textBox_Orientation.Text = mapTMX.orientation;
-			textBox_MapDimensions.Text = mapTMX.width + ", " + mapTMX.height;
-			textBox_Dimensions.Text = mapTMX.tileWidth + ", " + mapTMX.tileHeight;
+			textBox_MapDimensions.Text = mapTMX.mapWidth + ", " + mapTMX.mapHeight;
+			textBox_TileDimensions.Text = mapTMX.tileWidth + ", " + mapTMX.tileHeight;
+
+			foreach (KeyValuePair<int, Image> entry in mapTMX.imageDict) {
+
+				imageTMXList.Images.Add(entry.Value);
+
+				PictureBox pb = new PictureBox();
+				pb.Image = entry.Value;
+				this.toolTip1.SetToolTip(pb, "gid: " + entry.Key);
+				flowLayoutPanel_ImageContainer.Controls.Add(pb);
+			}
+
+			pictureBox_Map.Image = mapTMX.getMap();
 
 		}
 

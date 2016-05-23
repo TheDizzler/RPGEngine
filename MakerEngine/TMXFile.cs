@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using System.Xml;
 
 namespace MakerEngine {
@@ -25,7 +27,7 @@ namespace MakerEngine {
 		public int mapWidth, mapHeight;
 		public int tileWidth, tileHeight;
 
-		private List<Image> tilesets;
+		public List<Image> tilesets;
 		public Dictionary<int, Image> imageDict;
 
 		public List<Layer> layers;
@@ -39,6 +41,7 @@ namespace MakerEngine {
 			loadMapDescription();
 			loadTilesets();
 			loadLayerData();
+			buildMapImages();
 
 		}
 
@@ -109,50 +112,86 @@ namespace MakerEngine {
 			}
 		}
 
-		public Image getMap() {
+		public void buildMapImages() {
 
 
 			int width = mapWidth * tileWidth;
 			int height = mapHeight * tileHeight;
-			Image img = new Bitmap(width, height);
-			Graphics g = Graphics.FromImage(img);
-			g.Clear(SystemColors.AppWorkspace);
+
+
+			String outputFileName;
 
 			foreach (Layer layer in layers) {
+
+
+				Image img = new Bitmap(width, height, PixelFormat.Format32bppPArgb);
+				Graphics g = Graphics.FromImage(img);
+
 				for (int j = 0; j < mapHeight; ++j) {
 					for (int i = 0; i < mapWidth; ++i) {
 
 						int key = layer.csv[j][i];
 						if (key != 0)
 							g.DrawImage(imageDict[key], new Point(i * tileWidth, j * tileHeight));
-						//g.DrawImage(imageDict[1], new Point(tileWidth * i++, tileHeight * j));
-						//g.DrawImage(imageDict[1], new Point(tileWidth * i++, tileHeight * j));
-						//g.DrawImage(imageDict[3], new Point(tileWidth * i++, tileHeight * j));
-						//g.DrawImage(imageDict[2], new Point(tileWidth * i++, tileHeight * j));
-						//i = 0;
-						//++j;
-						//g.DrawImage(imageDict[4], new Point(tileWidth * i++, tileHeight * j));
-						//g.DrawImage(imageDict[4], new Point(tileWidth * i++, tileHeight * j));
 
 					}
 				}
+				outputFileName = @"D:\github projects\" + layer.name + " Layer.png";
+				using (MemoryStream memory = new MemoryStream()) {
+					using (FileStream fs = new FileStream(outputFileName, FileMode.Create, FileAccess.ReadWrite)) {
+						img.Save(memory, ImageFormat.Png);
+						byte[] bytes = memory.ToArray();
+						fs.Write(bytes, 0, bytes.Length);
+					}
+				}
+				layer.image = Image.FromFile(outputFileName);
+				g.Dispose();
+				img.Dispose();
 			}
-			g.Dispose();
-			String outputFileName = @"D:\github projects\test.bmp";
-			//img.Save(final, System.Drawing.Imaging.ImageFormat.Bmp);
-			//img.Dispose();
+
+
+		}
+
+
+		public Image getMapImage(CheckBox[] checkBox) {
+
+
+			int width = mapWidth * tileWidth;
+			int height = mapHeight * tileHeight;
+			Image img = new Bitmap(width, height);
+			Graphics g = Graphics.FromImage(img);
+			//g.Clear(SystemColors.AppWorkspace);
+
+			//if (checkBox != null) {
+
+			for (int i = 0; i < checkBox.Length; ++i) {
+
+				if (checkBox[i].Checked)
+					g.DrawImage(layers[i].image, new Point(0, 0));
+
+			}
+			//} else {
+			//	foreach (Layer layer in layers)
+			//		g.DrawImage(layer.image, new Point(0, 0));
+			//}
+
+			String outputFileName = @"D:\github projects\final.png";
 
 			using (MemoryStream memory = new MemoryStream()) {
 				using (FileStream fs = new FileStream(outputFileName, FileMode.Create, FileAccess.ReadWrite)) {
-					img.Save(memory, System.Drawing.Imaging.ImageFormat.Bmp);
+					img.Save(memory, ImageFormat.Png);
 					byte[] bytes = memory.ToArray();
 					fs.Write(bytes, 0, bytes.Length);
 				}
 			}
+
+			g.Dispose();
 			img.Dispose();
 
 			return Image.FromFile(outputFileName);
+
 		}
+
 	}
 
 
@@ -161,6 +200,8 @@ namespace MakerEngine {
 		public String name;
 		public int width, height;
 		public List<List<int>> csv;
+
+		public Image image;
 
 
 		public Layer(String text) {

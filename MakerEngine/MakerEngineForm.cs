@@ -42,6 +42,9 @@ namespace MakerEngine {
 		TMXFile mapTMX;
 
 
+		ImageViewer imageViewer = new ImageViewer();
+		LayerSelectControl layerSelect;
+
 		List<AccordionControl> accordionControlsList = new List<AccordionControl>();
 
 		private bool changesNeedSaving = false;
@@ -61,6 +64,8 @@ namespace MakerEngine {
 			loadSpriteFilesXml();
 			loadMapFiles();
 			loadGameTextXml();
+
+			layerSelect = new LayerSelectControl(this);
 
 		}
 
@@ -672,6 +677,13 @@ namespace MakerEngine {
 
 		private void button_CreateSpriteFont_Click(Object sender, EventArgs e) {
 
+			//using (FontDialog dialog = new FontDialog()) {
+
+			//	if (dialog.ShowDialog() == DialogResult.OK) { }
+
+			//	//dialog.
+
+			//}
 			using (SelectFontDialog dialog = new SelectFontDialog()) {
 
 				if (dialog.ShowDialog() == DialogResult.OK) {
@@ -737,6 +749,23 @@ namespace MakerEngine {
 			// load .tmx file
 			mapTMX = new TMXFile(gameDirectory + selectedMapNode.Attributes["file"].InnerText);
 
+			layerSelect.tableLayoutPanel_LayersGroupBox.Controls.Clear();
+			layerSelect.tableLayoutPanel_LayersGroupBox.RowCount = mapTMX.layers.Count;
+			int row = 0;
+
+			foreach (Layer layer in mapTMX.layers) {
+
+				CheckBox cb = new CheckBox();
+				
+				cb.Text = layer.name;
+				cb.Checked = true;
+				cb.CheckedChanged += new System.EventHandler(this.checkBoxLayerSelect_CheckedChanged);
+				layerSelect.tableLayoutPanel_LayersGroupBox.Controls.Add(cb, 0, row++);
+				layerSelect.checkBoxes.Add(cb);
+			}
+
+
+
 			textBox_MapName.Text = selectedMapNode.Attributes["file"].InnerText;
 			textBox_Orientation.Text = mapTMX.orientation;
 			textBox_MapDimensions.Text = mapTMX.mapWidth + ", " + mapTMX.mapHeight;
@@ -746,19 +775,40 @@ namespace MakerEngine {
 
 				imageTMXList.Images.Add(entry.Value);
 
-				PictureBox pb = new PictureBox();
-				pb.Image = entry.Value;
-				this.toolTip1.SetToolTip(pb, "gid: " + entry.Key);
-				flowLayoutPanel_ImageContainer.Controls.Add(pb);
+				//PictureBox pb = new PictureBox();
+				//pb.Image = entry.Value;
+				//this.toolTip1.SetToolTip(pb, "gid: " + entry.Key);
+				//imageViewer.flowLayoutPanel_ImageContainer.Controls.Add(pb);
 			}
 
-			pictureBox_Map.Image = mapTMX.getMap();
+			foreach (Image image in mapTMX.tilesets) {
+				PictureBox pb = new PictureBox();
+				pb.SizeMode = PictureBoxSizeMode.AutoSize;
+				pb.Image = image;
+				imageViewer.flowLayoutPanel_ImageContainer.Controls.Add(pb);
+			}
+			layerSelect.Show();
+			imageViewer.Show();
+			pictureBox_Map.Image = mapTMX.getMapImage(layerSelect.checkBoxes.ToArray());
+
+		}
+
+		private void checkBoxLayerSelect_CheckedChanged(Object sender, EventArgs e) {
+
+
+			pictureBox_Map.Image.Dispose();
+			pictureBox_Map.Image = mapTMX.getMapImage(layerSelect.checkBoxes.ToArray());
+
 
 		}
 
 		private void toolStripButton_HideLeftPanel_Click(Object sender, EventArgs e) {
 
 			splitContainer_Main.Panel1Collapsed = !splitContainer_Main.Panel1Collapsed;
+		}
+
+		private void toolStripDropDownButton_Layers_Click(Object sender, EventArgs e) {
+
 		}
 	}
 }

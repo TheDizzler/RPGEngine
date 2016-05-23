@@ -39,6 +39,7 @@ namespace MakerEngine {
 
 		XmlDocument docMapLegend;
 		XmlNode selectedMapNode;
+		TMXFile mapTMX;
 
 
 		List<AccordionControl> accordionControlsList = new List<AccordionControl>();
@@ -727,6 +728,25 @@ namespace MakerEngine {
 					}
 				}
 			}
+		}
+
+		private void treeView_MapLegend_MouseDoubleClick(Object sender, MouseEventArgs e) {
+
+			selectedMapNode = ((TreeXMLNode) treeView_MapLegend.SelectedNode).node;
+
+			// load .tmx file
+			mapTMX = new TMXFile(gameDirectory + selectedMapNode.Attributes["file"].InnerText);
+
+			textBox_MapDimensions.Text = selectedMapNode.Attributes["file"].InnerText;
+			textBox_Orientation.Text = mapTMX.orientation;
+			textBox_MapDimensions.Text = mapTMX.width + ", " + mapTMX.height;
+			textBox_Dimensions.Text = mapTMX.tileWidth + ", " + mapTMX.tileHeight;
+
+		}
+
+		private void toolStripButton_HideLeftPanel_Click(Object sender, EventArgs e) {
+
+			splitContainer_Main.Panel1Collapsed = !splitContainer_Main.Panel1Collapsed;
 		}
 	}
 }

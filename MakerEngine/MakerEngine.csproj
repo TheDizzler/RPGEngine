@@ -113,6 +113,7 @@
     <Compile Include="SelectFontDialog.Designer.cs">
       <DependentUpon>SelectFontDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="TMXFile.cs" />
     <Compile Include="TreeXMLNode.cs" />
     <EmbeddedResource Include="AccordionDialogTextControl.resx">
       <DependentUpon>AccordionDialogTextControl.cs</DependentUpon>

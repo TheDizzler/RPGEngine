@@ -38,16 +38,19 @@
 			this.button_NewEvent = new System.Windows.Forms.Button();
 			this.label1 = new System.Windows.Forms.Label();
 			this.groupBox_AccordionHolder = new System.Windows.Forms.GroupBox();
+			this.accordion_Dialog = new Opulos.Core.UI.Accordion();
 			this.richTextBox_EscapeCharacters = new System.Windows.Forms.RichTextBox();
 			this.label_Speaker = new System.Windows.Forms.Label();
 			this.textBox_Speaker = new System.Windows.Forms.TextBox();
 			this.treeView_Dialog = new System.Windows.Forms.TreeView();
 			this.tabPage_Map = new System.Windows.Forms.TabPage();
 			this.toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
+			this.splitContainer_Base = new System.Windows.Forms.SplitContainer();
 			this.splitContainer_Main = new System.Windows.Forms.SplitContainer();
-			this.splitContainer2 = new System.Windows.Forms.SplitContainer();
-			this.label6 = new System.Windows.Forms.Label();
+			this.splitContainer_MapInfo = new System.Windows.Forms.SplitContainer();
 			this.treeView_MapLegend = new System.Windows.Forms.TreeView();
+			this.label6 = new System.Windows.Forms.Label();
+			this.button_ConvertTMX = new System.Windows.Forms.Button();
 			this.tableLayoutPanel_TMXData = new System.Windows.Forms.TableLayoutPanel();
 			this.textBox_MapName = new System.Windows.Forms.TextBox();
 			this.label7 = new System.Windows.Forms.Label();
@@ -57,12 +60,17 @@
 			this.textBox_Orientation = new System.Windows.Forms.TextBox();
 			this.textBox_MapDimensions = new System.Windows.Forms.TextBox();
 			this.textBox_TileDimensions = new System.Windows.Forms.TextBox();
+			this.panel_PictureBoxHolder = new System.Windows.Forms.Panel();
 			this.pictureBox_Map = new System.Windows.Forms.PictureBox();
+			this.splitContainer_MapTools = new System.Windows.Forms.SplitContainer();
+			this.panel_LayerSelect = new System.Windows.Forms.Panel();
+			this.groupBox_LayersGroupBox = new System.Windows.Forms.GroupBox();
+			this.tableLayoutPanel_LayersGroupBox = new System.Windows.Forms.TableLayoutPanel();
 			this.toolStrip1 = new System.Windows.Forms.ToolStrip();
 			this.toolStripLabel2 = new System.Windows.Forms.ToolStripLabel();
 			this.toolStripButton_HideLeftPanel = new System.Windows.Forms.ToolStripButton();
-			this.toolStripButton_HideSpritePanel = new System.Windows.Forms.ToolStripButton();
-			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+			this.toolStripButton_HideTilesetPanel = new System.Windows.Forms.ToolStripButton();
+			this.toolStripButton_HideLayerSelect = new System.Windows.Forms.ToolStripButton();
 			this.tabPage_SpriteLoader = new System.Windows.Forms.TabPage();
 			this.button_CreateSpriteFont = new System.Windows.Forms.Button();
 			this.button3 = new System.Windows.Forms.Button();
@@ -86,12 +94,11 @@
 			this.imageTMXList = new System.Windows.Forms.ImageList(this.components);
 			this.openFileDialog_Sprite = new System.Windows.Forms.OpenFileDialog();
 			this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-			this.pictureBox_NeedSave = new System.Windows.Forms.PictureBox();
 			this.contextMenuStrip_MapLegend = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.toolStripMenuItem_AddMap = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripMenuItem_RemoveMap = new System.Windows.Forms.ToolStripMenuItem();
-			this.accordion_Dialog = new Opulos.Core.UI.Accordion();
 			this.openFileDialog_TMXFile = new System.Windows.Forms.OpenFileDialog();
+			this.pictureBox_NeedSave = new System.Windows.Forms.PictureBox();
 			this.menuStrip1.SuspendLayout();
 			this.tabControl.SuspendLayout();
 			this.tabPage_Dialog.SuspendLayout();
@@ -100,22 +107,32 @@
 			this.toolStripContainer1.ContentPanel.SuspendLayout();
 			this.toolStripContainer1.TopToolStripPanel.SuspendLayout();
 			this.toolStripContainer1.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.splitContainer_Base)).BeginInit();
+			this.splitContainer_Base.Panel1.SuspendLayout();
+			this.splitContainer_Base.Panel2.SuspendLayout();
+			this.splitContainer_Base.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer_Main)).BeginInit();
 			this.splitContainer_Main.Panel1.SuspendLayout();
 			this.splitContainer_Main.Panel2.SuspendLayout();
 			this.splitContainer_Main.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
-			this.splitContainer2.Panel1.SuspendLayout();
-			this.splitContainer2.Panel2.SuspendLayout();
-			this.splitContainer2.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.splitContainer_MapInfo)).BeginInit();
+			this.splitContainer_MapInfo.Panel1.SuspendLayout();
+			this.splitContainer_MapInfo.Panel2.SuspendLayout();
+			this.splitContainer_MapInfo.SuspendLayout();
 			this.tableLayoutPanel_TMXData.SuspendLayout();
+			this.panel_PictureBoxHolder.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox_Map)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.splitContainer_MapTools)).BeginInit();
+			this.splitContainer_MapTools.Panel1.SuspendLayout();
+			this.splitContainer_MapTools.SuspendLayout();
+			this.panel_LayerSelect.SuspendLayout();
+			this.groupBox_LayersGroupBox.SuspendLayout();
 			this.toolStrip1.SuspendLayout();
 			this.tabPage_SpriteLoader.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox_SpriteView)).BeginInit();
 			this.contextMenuStrip_ZoneText.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.pictureBox_NeedSave)).BeginInit();
 			this.contextMenuStrip_MapLegend.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBox_NeedSave)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// menuStrip1
@@ -125,7 +142,7 @@
             this.runGameToolStripMenuItem});
 			this.menuStrip1.Location = new System.Drawing.Point(0, 0);
 			this.menuStrip1.Name = "menuStrip1";
-			this.menuStrip1.Size = new System.Drawing.Size(906, 24);
+			this.menuStrip1.Size = new System.Drawing.Size(1477, 24);
 			this.menuStrip1.TabIndex = 0;
 			this.menuStrip1.Text = "menuStrip1";
 			// 
@@ -190,7 +207,7 @@
 			this.tabControl.Location = new System.Drawing.Point(0, 24);
 			this.tabControl.Name = "tabControl";
 			this.tabControl.SelectedIndex = 0;
-			this.tabControl.Size = new System.Drawing.Size(906, 517);
+			this.tabControl.Size = new System.Drawing.Size(1477, 645);
 			this.tabControl.TabIndex = 2;
 			// 
 			// tabPage_Dialog
@@ -205,7 +222,7 @@
 			this.tabPage_Dialog.Location = new System.Drawing.Point(4, 22);
 			this.tabPage_Dialog.Name = "tabPage_Dialog";
 			this.tabPage_Dialog.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage_Dialog.Size = new System.Drawing.Size(898, 491);
+			this.tabPage_Dialog.Size = new System.Drawing.Size(1469, 619);
 			this.tabPage_Dialog.TabIndex = 1;
 			this.tabPage_Dialog.Text = "Dialog Text";
 			this.tabPage_Dialog.UseVisualStyleBackColor = true;
@@ -213,7 +230,7 @@
 			// button_NewEvent
 			// 
 			this.button_NewEvent.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.button_NewEvent.Location = new System.Drawing.Point(7, 415);
+			this.button_NewEvent.Location = new System.Drawing.Point(7, 638);
 			this.button_NewEvent.Name = "button_NewEvent";
 			this.button_NewEvent.Size = new System.Drawing.Size(85, 23);
 			this.button_NewEvent.TabIndex = 1;
@@ -238,16 +255,79 @@
 			this.groupBox_AccordionHolder.Controls.Add(this.accordion_Dialog);
 			this.groupBox_AccordionHolder.Location = new System.Drawing.Point(270, 32);
 			this.groupBox_AccordionHolder.Name = "groupBox_AccordionHolder";
-			this.groupBox_AccordionHolder.Size = new System.Drawing.Size(625, 451);
+			this.groupBox_AccordionHolder.Size = new System.Drawing.Size(1191, 587);
 			this.groupBox_AccordionHolder.TabIndex = 7;
 			this.groupBox_AccordionHolder.TabStop = false;
 			this.groupBox_AccordionHolder.Text = "Dialog Flow";
+			// 
+			// accordion_Dialog
+			// 
+			this.accordion_Dialog.AddResizeBars = false;
+			this.accordion_Dialog.AllowMouseResize = false;
+			this.accordion_Dialog.AnimateCloseEffect = ((Opulos.Core.UI.AnimateWindowFlags)(((Opulos.Core.UI.AnimateWindowFlags.VerticalNegative | Opulos.Core.UI.AnimateWindowFlags.Hide) 
+            | Opulos.Core.UI.AnimateWindowFlags.Slide)));
+			this.accordion_Dialog.AnimateCloseMillis = 300;
+			this.accordion_Dialog.AnimateOpenEffect = ((Opulos.Core.UI.AnimateWindowFlags)(((Opulos.Core.UI.AnimateWindowFlags.VerticalPositive | Opulos.Core.UI.AnimateWindowFlags.Show) 
+            | Opulos.Core.UI.AnimateWindowFlags.Slide)));
+			this.accordion_Dialog.AnimateOpenMillis = 300;
+			this.accordion_Dialog.AutoFixDockStyle = true;
+			this.accordion_Dialog.AutoScroll = true;
+			this.accordion_Dialog.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+			this.accordion_Dialog.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.accordion_Dialog.CheckBoxFactory = null;
+			this.accordion_Dialog.CheckBoxMargin = new System.Windows.Forms.Padding(0);
+			this.accordion_Dialog.ContentBackColor = null;
+			this.accordion_Dialog.ContentMargin = null;
+			this.accordion_Dialog.ContentPadding = new System.Windows.Forms.Padding(5);
+			this.accordion_Dialog.ControlBackColor = null;
+			this.accordion_Dialog.ControlMinimumHeightIsItsPreferredHeight = true;
+			this.accordion_Dialog.ControlMinimumWidthIsItsPreferredWidth = true;
+			this.accordion_Dialog.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.accordion_Dialog.DownArrow = null;
+			this.accordion_Dialog.FillHeight = true;
+			this.accordion_Dialog.FillLastOpened = false;
+			this.accordion_Dialog.FillModeGrowOnly = false;
+			this.accordion_Dialog.FillResetOnCollapse = false;
+			this.accordion_Dialog.FillWidth = true;
+			this.accordion_Dialog.GrabCursor = System.Windows.Forms.Cursors.SizeNS;
+			this.accordion_Dialog.GrabRequiresPositiveFillWeight = true;
+			this.accordion_Dialog.GrabWidth = 0;
+			this.accordion_Dialog.GrowAndShrink = true;
+			this.accordion_Dialog.Insets = new System.Windows.Forms.Padding(0);
+			this.accordion_Dialog.Location = new System.Drawing.Point(3, 16);
+			this.accordion_Dialog.Name = "accordion_Dialog";
+			this.accordion_Dialog.OpenOnAdd = false;
+			this.accordion_Dialog.OpenOneOnly = false;
+			this.accordion_Dialog.ResizeBarFactory = null;
+			this.accordion_Dialog.ResizeBarsAlign = 0.5D;
+			this.accordion_Dialog.ResizeBarsArrowKeyDelta = 10;
+			this.accordion_Dialog.ResizeBarsFadeInMillis = 800;
+			this.accordion_Dialog.ResizeBarsFadeOutMillis = 800;
+			this.accordion_Dialog.ResizeBarsFadeProximity = 24;
+			this.accordion_Dialog.ResizeBarsFill = 1D;
+			this.accordion_Dialog.ResizeBarsKeepFocusAfterMouseDrag = false;
+			this.accordion_Dialog.ResizeBarsKeepFocusIfControlOutOfView = true;
+			this.accordion_Dialog.ResizeBarsKeepFocusOnClick = true;
+			this.accordion_Dialog.ResizeBarsMargin = null;
+			this.accordion_Dialog.ResizeBarsMinimumLength = 50;
+			this.accordion_Dialog.ResizeBarsStayInViewOnArrowKey = true;
+			this.accordion_Dialog.ResizeBarsStayInViewOnMouseDrag = true;
+			this.accordion_Dialog.ResizeBarsStayVisibleIfFocused = true;
+			this.accordion_Dialog.ResizeBarsTabStop = true;
+			this.accordion_Dialog.ShowPartiallyVisibleResizeBars = false;
+			this.accordion_Dialog.ShowToolMenu = true;
+			this.accordion_Dialog.ShowToolMenuOnHoverWhenClosed = false;
+			this.accordion_Dialog.ShowToolMenuOnRightClick = true;
+			this.accordion_Dialog.ShowToolMenuRequiresPositiveFillWeight = false;
+			this.accordion_Dialog.Size = new System.Drawing.Size(1185, 568);
+			this.accordion_Dialog.TabIndex = 0;
+			this.accordion_Dialog.UpArrow = null;
 			// 
 			// richTextBox_EscapeCharacters
 			// 
 			this.richTextBox_EscapeCharacters.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.richTextBox_EscapeCharacters.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
-			this.richTextBox_EscapeCharacters.Location = new System.Drawing.Point(98, 415);
+			this.richTextBox_EscapeCharacters.Location = new System.Drawing.Point(98, 638);
 			this.richTextBox_EscapeCharacters.Name = "richTextBox_EscapeCharacters";
 			this.richTextBox_EscapeCharacters.ReadOnly = true;
 			this.richTextBox_EscapeCharacters.Size = new System.Drawing.Size(162, 65);
@@ -278,7 +358,7 @@
             | System.Windows.Forms.AnchorStyles.Left)));
 			this.treeView_Dialog.Location = new System.Drawing.Point(7, 27);
 			this.treeView_Dialog.Name = "treeView_Dialog";
-			this.treeView_Dialog.Size = new System.Drawing.Size(253, 382);
+			this.treeView_Dialog.Size = new System.Drawing.Size(253, 592);
 			this.treeView_Dialog.TabIndex = 0;
 			this.treeView_Dialog.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.treeView_Dialog_MouseDoubleClick);
 			this.treeView_Dialog.MouseUp += new System.Windows.Forms.MouseEventHandler(this.mouseUp_EventsTreeView);
@@ -289,7 +369,7 @@
 			this.tabPage_Map.Location = new System.Drawing.Point(4, 22);
 			this.tabPage_Map.Name = "tabPage_Map";
 			this.tabPage_Map.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage_Map.Size = new System.Drawing.Size(898, 491);
+			this.tabPage_Map.Size = new System.Drawing.Size(1469, 619);
 			this.tabPage_Map.TabIndex = 2;
 			this.tabPage_Map.Text = "Maps";
 			this.tabPage_Map.UseVisualStyleBackColor = true;
@@ -299,12 +379,12 @@
 			// 
 			// toolStripContainer1.ContentPanel
 			// 
-			this.toolStripContainer1.ContentPanel.Controls.Add(this.splitContainer_Main);
-			this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(892, 460);
+			this.toolStripContainer1.ContentPanel.Controls.Add(this.splitContainer_Base);
+			this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(1463, 588);
 			this.toolStripContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.toolStripContainer1.Location = new System.Drawing.Point(3, 3);
 			this.toolStripContainer1.Name = "toolStripContainer1";
-			this.toolStripContainer1.Size = new System.Drawing.Size(892, 485);
+			this.toolStripContainer1.Size = new System.Drawing.Size(1463, 613);
 			this.toolStripContainer1.TabIndex = 6;
 			this.toolStripContainer1.Text = "toolStripContainer1";
 			// 
@@ -312,72 +392,98 @@
 			// 
 			this.toolStripContainer1.TopToolStripPanel.Controls.Add(this.toolStrip1);
 			// 
+			// splitContainer_Base
+			// 
+			this.splitContainer_Base.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.splitContainer_Base.Location = new System.Drawing.Point(0, 0);
+			this.splitContainer_Base.Name = "splitContainer_Base";
+			// 
+			// splitContainer_Base.Panel1
+			// 
+			this.splitContainer_Base.Panel1.Controls.Add(this.splitContainer_Main);
+			// 
+			// splitContainer_Base.Panel2
+			// 
+			this.splitContainer_Base.Panel2.Controls.Add(this.splitContainer_MapTools);
+			this.splitContainer_Base.Size = new System.Drawing.Size(1463, 588);
+			this.splitContainer_Base.SplitterDistance = 1134;
+			this.splitContainer_Base.TabIndex = 12;
+			// 
 			// splitContainer_Main
 			// 
-			this.splitContainer_Main.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
 			this.splitContainer_Main.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.splitContainer_Main.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.splitContainer_Main.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
-			this.splitContainer_Main.Location = new System.Drawing.Point(3, 3);
+			this.splitContainer_Main.Location = new System.Drawing.Point(0, 0);
 			this.splitContainer_Main.Name = "splitContainer_Main";
 			// 
 			// splitContainer_Main.Panel1
 			// 
-			this.splitContainer_Main.Panel1.Controls.Add(this.splitContainer2);
+			this.splitContainer_Main.Panel1.Controls.Add(this.splitContainer_MapInfo);
 			this.splitContainer_Main.Panel1MinSize = 100;
 			// 
 			// splitContainer_Main.Panel2
 			// 
 			this.splitContainer_Main.Panel2.AutoScroll = true;
-			this.splitContainer_Main.Panel2.Controls.Add(this.pictureBox_Map);
-			this.splitContainer_Main.Size = new System.Drawing.Size(884, 427);
+			this.splitContainer_Main.Panel2.Controls.Add(this.panel_PictureBoxHolder);
+			this.splitContainer_Main.Size = new System.Drawing.Size(1134, 588);
 			this.splitContainer_Main.SplitterDistance = 297;
-			this.splitContainer_Main.TabIndex = 5;
+			this.splitContainer_Main.TabIndex = 9;
 			// 
-			// splitContainer2
+			// splitContainer_MapInfo
 			// 
-			this.splitContainer2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-			this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.splitContainer2.Location = new System.Drawing.Point(0, 0);
-			this.splitContainer2.Name = "splitContainer2";
-			this.splitContainer2.Orientation = System.Windows.Forms.Orientation.Horizontal;
+			this.splitContainer_MapInfo.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+			this.splitContainer_MapInfo.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.splitContainer_MapInfo.Location = new System.Drawing.Point(0, 0);
+			this.splitContainer_MapInfo.Name = "splitContainer_MapInfo";
+			this.splitContainer_MapInfo.Orientation = System.Windows.Forms.Orientation.Horizontal;
 			// 
-			// splitContainer2.Panel1
+			// splitContainer_MapInfo.Panel1
 			// 
-			this.splitContainer2.Panel1.AutoScroll = true;
-			this.splitContainer2.Panel1.Controls.Add(this.label6);
-			this.splitContainer2.Panel1.Controls.Add(this.treeView_MapLegend);
-			this.splitContainer2.Panel1MinSize = 250;
+			this.splitContainer_MapInfo.Panel1.AutoScroll = true;
+			this.splitContainer_MapInfo.Panel1.Controls.Add(this.treeView_MapLegend);
+			this.splitContainer_MapInfo.Panel1.Controls.Add(this.label6);
+			this.splitContainer_MapInfo.Panel1.Controls.Add(this.button_ConvertTMX);
+			this.splitContainer_MapInfo.Panel1MinSize = 250;
 			// 
-			// splitContainer2.Panel2
+			// splitContainer_MapInfo.Panel2
 			// 
-			this.splitContainer2.Panel2.AutoScroll = true;
-			this.splitContainer2.Panel2.Controls.Add(this.tableLayoutPanel_TMXData);
-			this.splitContainer2.Size = new System.Drawing.Size(295, 425);
-			this.splitContainer2.SplitterDistance = 250;
-			this.splitContainer2.TabIndex = 0;
+			this.splitContainer_MapInfo.Panel2.AutoScroll = true;
+			this.splitContainer_MapInfo.Panel2.Controls.Add(this.tableLayoutPanel_TMXData);
+			this.splitContainer_MapInfo.Panel2MinSize = 150;
+			this.splitContainer_MapInfo.Size = new System.Drawing.Size(295, 586);
+			this.splitContainer_MapInfo.SplitterDistance = 399;
+			this.splitContainer_MapInfo.TabIndex = 0;
+			// 
+			// treeView_MapLegend
+			// 
+			this.treeView_MapLegend.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.treeView_MapLegend.Location = new System.Drawing.Point(4, 16);
+			this.treeView_MapLegend.Name = "treeView_MapLegend";
+			this.treeView_MapLegend.Size = new System.Drawing.Size(284, 347);
+			this.treeView_MapLegend.TabIndex = 0;
+			this.treeView_MapLegend.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.treeView_MapLegend_MouseDoubleClick);
 			// 
 			// label6
 			// 
 			this.label6.AutoSize = true;
-			this.label6.Location = new System.Drawing.Point(5, 4);
+			this.label6.Location = new System.Drawing.Point(1, 0);
 			this.label6.Name = "label6";
 			this.label6.Size = new System.Drawing.Size(33, 13);
 			this.label6.TabIndex = 1;
 			this.label6.Text = "Maps";
 			// 
-			// treeView_MapLegend
+			// button_ConvertTMX
 			// 
-			this.treeView_MapLegend.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+			this.button_ConvertTMX.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.treeView_MapLegend.Location = new System.Drawing.Point(8, 20);
-			this.treeView_MapLegend.Name = "treeView_MapLegend";
-			this.treeView_MapLegend.Size = new System.Drawing.Size(280, 223);
-			this.treeView_MapLegend.TabIndex = 0;
-			this.treeView_MapLegend.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.treeView_MapLegend_MouseDoubleClick);
-			this.treeView_MapLegend.MouseDown += new System.Windows.Forms.MouseEventHandler(this.treeView_MapLegend_MouseDown);
+			this.button_ConvertTMX.Location = new System.Drawing.Point(4, 369);
+			this.button_ConvertTMX.Name = "button_ConvertTMX";
+			this.button_ConvertTMX.Size = new System.Drawing.Size(284, 23);
+			this.button_ConvertTMX.TabIndex = 10;
+			this.button_ConvertTMX.Text = "Convert Maps and Tilesets To Game Format";
+			this.button_ConvertTMX.UseVisualStyleBackColor = true;
 			// 
 			// tableLayoutPanel_TMXData
 			// 
@@ -402,7 +508,7 @@
 			this.tableLayoutPanel_TMXData.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel_TMXData.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel_TMXData.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-			this.tableLayoutPanel_TMXData.Size = new System.Drawing.Size(291, 167);
+			this.tableLayoutPanel_TMXData.Size = new System.Drawing.Size(291, 179);
 			this.tableLayoutPanel_TMXData.TabIndex = 0;
 			// 
 			// textBox_MapName
@@ -477,15 +583,73 @@
 			this.textBox_TileDimensions.Size = new System.Drawing.Size(192, 20);
 			this.textBox_TileDimensions.TabIndex = 8;
 			// 
+			// panel_PictureBoxHolder
+			// 
+			this.panel_PictureBoxHolder.AutoScroll = true;
+			this.panel_PictureBoxHolder.Controls.Add(this.pictureBox_Map);
+			this.panel_PictureBoxHolder.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.panel_PictureBoxHolder.Location = new System.Drawing.Point(0, 0);
+			this.panel_PictureBoxHolder.Name = "panel_PictureBoxHolder";
+			this.panel_PictureBoxHolder.Size = new System.Drawing.Size(831, 586);
+			this.panel_PictureBoxHolder.TabIndex = 2;
+			// 
 			// pictureBox_Map
 			// 
-			this.pictureBox_Map.Dock = System.Windows.Forms.DockStyle.Top;
 			this.pictureBox_Map.Location = new System.Drawing.Point(0, 0);
 			this.pictureBox_Map.Name = "pictureBox_Map";
-			this.pictureBox_Map.Size = new System.Drawing.Size(581, 334);
-			this.pictureBox_Map.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+			this.pictureBox_Map.Size = new System.Drawing.Size(831, 586);
 			this.pictureBox_Map.TabIndex = 1;
 			this.pictureBox_Map.TabStop = false;
+			// 
+			// splitContainer_MapTools
+			// 
+			this.splitContainer_MapTools.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.splitContainer_MapTools.Location = new System.Drawing.Point(0, 0);
+			this.splitContainer_MapTools.Name = "splitContainer_MapTools";
+			this.splitContainer_MapTools.Orientation = System.Windows.Forms.Orientation.Horizontal;
+			// 
+			// splitContainer_MapTools.Panel1
+			// 
+			this.splitContainer_MapTools.Panel1.Controls.Add(this.panel_LayerSelect);
+			this.splitContainer_MapTools.Size = new System.Drawing.Size(325, 588);
+			this.splitContainer_MapTools.SplitterDistance = 294;
+			this.splitContainer_MapTools.TabIndex = 11;
+			// 
+			// panel_LayerSelect
+			// 
+			this.panel_LayerSelect.AutoSize = true;
+			this.panel_LayerSelect.Controls.Add(this.groupBox_LayersGroupBox);
+			this.panel_LayerSelect.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.panel_LayerSelect.Location = new System.Drawing.Point(0, 0);
+			this.panel_LayerSelect.Name = "panel_LayerSelect";
+			this.panel_LayerSelect.Size = new System.Drawing.Size(325, 294);
+			this.panel_LayerSelect.TabIndex = 4;
+			// 
+			// groupBox_LayersGroupBox
+			// 
+			this.groupBox_LayersGroupBox.AutoSize = true;
+			this.groupBox_LayersGroupBox.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+			this.groupBox_LayersGroupBox.Controls.Add(this.tableLayoutPanel_LayersGroupBox);
+			this.groupBox_LayersGroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.groupBox_LayersGroupBox.Location = new System.Drawing.Point(0, 0);
+			this.groupBox_LayersGroupBox.Name = "groupBox_LayersGroupBox";
+			this.groupBox_LayersGroupBox.Size = new System.Drawing.Size(325, 294);
+			this.groupBox_LayersGroupBox.TabIndex = 0;
+			this.groupBox_LayersGroupBox.TabStop = false;
+			this.groupBox_LayersGroupBox.Text = "Layers";
+			// 
+			// tableLayoutPanel_LayersGroupBox
+			// 
+			this.tableLayoutPanel_LayersGroupBox.AutoScroll = true;
+			this.tableLayoutPanel_LayersGroupBox.AutoSize = true;
+			this.tableLayoutPanel_LayersGroupBox.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+			this.tableLayoutPanel_LayersGroupBox.ColumnCount = 1;
+			this.tableLayoutPanel_LayersGroupBox.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+			this.tableLayoutPanel_LayersGroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.tableLayoutPanel_LayersGroupBox.Location = new System.Drawing.Point(3, 16);
+			this.tableLayoutPanel_LayersGroupBox.Name = "tableLayoutPanel_LayersGroupBox";
+			this.tableLayoutPanel_LayersGroupBox.Size = new System.Drawing.Size(319, 275);
+			this.tableLayoutPanel_LayersGroupBox.TabIndex = 0;
 			// 
 			// toolStrip1
 			// 
@@ -493,11 +657,11 @@
 			this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripLabel2,
             this.toolStripButton_HideLeftPanel,
-            this.toolStripButton_HideSpritePanel,
-            this.toolStripSeparator1});
+            this.toolStripButton_HideTilesetPanel,
+            this.toolStripButton_HideLayerSelect});
 			this.toolStrip1.Location = new System.Drawing.Point(3, 0);
 			this.toolStrip1.Name = "toolStrip1";
-			this.toolStrip1.Size = new System.Drawing.Size(130, 25);
+			this.toolStrip1.Size = new System.Drawing.Size(147, 25);
 			this.toolStrip1.TabIndex = 0;
 			// 
 			// toolStripLabel2
@@ -516,19 +680,26 @@
 			this.toolStripButton_HideLeftPanel.Text = "Show/Hide Left Panel";
 			this.toolStripButton_HideLeftPanel.Click += new System.EventHandler(this.toolStripButton_HideLeftPanel_Click);
 			// 
-			// toolStripButton_HideSpritePanel
+			// toolStripButton_HideTilesetPanel
 			// 
-			this.toolStripButton_HideSpritePanel.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.toolStripButton_HideSpritePanel.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton_HideSpritePanel.Image")));
-			this.toolStripButton_HideSpritePanel.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.toolStripButton_HideSpritePanel.Name = "toolStripButton_HideSpritePanel";
-			this.toolStripButton_HideSpritePanel.Size = new System.Drawing.Size(23, 22);
-			this.toolStripButton_HideSpritePanel.Text = "Show/Hide Sprite Panel";
+			this.toolStripButton_HideTilesetPanel.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.toolStripButton_HideTilesetPanel.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton_HideTilesetPanel.Image")));
+			this.toolStripButton_HideTilesetPanel.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.toolStripButton_HideTilesetPanel.Name = "toolStripButton_HideTilesetPanel";
+			this.toolStripButton_HideTilesetPanel.Size = new System.Drawing.Size(23, 22);
+			this.toolStripButton_HideTilesetPanel.Text = "Show/Hide Tileset Panel";
+			this.toolStripButton_HideTilesetPanel.Click += new System.EventHandler(this.toolStripButton_HideSpritePanel_Click);
 			// 
-			// toolStripSeparator1
+			// toolStripButton_HideLayerSelect
 			// 
-			this.toolStripSeparator1.Name = "toolStripSeparator1";
-			this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+			this.toolStripButton_HideLayerSelect.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.toolStripButton_HideLayerSelect.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton_HideLayerSelect.Image")));
+			this.toolStripButton_HideLayerSelect.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.toolStripButton_HideLayerSelect.Name = "toolStripButton_HideLayerSelect";
+			this.toolStripButton_HideLayerSelect.Size = new System.Drawing.Size(23, 22);
+			this.toolStripButton_HideLayerSelect.Text = "Hide/Show Layer Select Panel";
+			this.toolStripButton_HideLayerSelect.ToolTipText = "Hide/Show Layer Select Panel";
+			this.toolStripButton_HideLayerSelect.Click += new System.EventHandler(this.toolStripButton_HideLayerSelect_Click);
 			// 
 			// tabPage_SpriteLoader
 			// 
@@ -550,7 +721,7 @@
 			this.tabPage_SpriteLoader.Location = new System.Drawing.Point(4, 22);
 			this.tabPage_SpriteLoader.Name = "tabPage_SpriteLoader";
 			this.tabPage_SpriteLoader.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage_SpriteLoader.Size = new System.Drawing.Size(898, 491);
+			this.tabPage_SpriteLoader.Size = new System.Drawing.Size(1469, 619);
 			this.tabPage_SpriteLoader.TabIndex = 3;
 			this.tabPage_SpriteLoader.Text = "Sprite Loader";
 			this.tabPage_SpriteLoader.UseVisualStyleBackColor = true;
@@ -613,7 +784,7 @@
 			// button_LoadSprite
 			// 
 			this.button_LoadSprite.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.button_LoadSprite.Location = new System.Drawing.Point(787, 403);
+			this.button_LoadSprite.Location = new System.Drawing.Point(787, 626);
 			this.button_LoadSprite.Name = "button_LoadSprite";
 			this.button_LoadSprite.Size = new System.Drawing.Size(75, 23);
 			this.button_LoadSprite.TabIndex = 8;
@@ -696,8 +867,9 @@
 			// 
 			// label_ChangesMade
 			// 
+			this.label_ChangesMade.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.label_ChangesMade.AutoSize = true;
-			this.label_ChangesMade.Location = new System.Drawing.Point(787, 8);
+			this.label_ChangesMade.Location = new System.Drawing.Point(1372, 5);
 			this.label_ChangesMade.Name = "label_ChangesMade";
 			this.label_ChangesMade.Size = new System.Drawing.Size(65, 13);
 			this.label_ChangesMade.TabIndex = 10;
@@ -736,16 +908,6 @@
 			this.openFileDialog_Sprite.FileName = "openFileDialog_Sprite";
 			this.openFileDialog_Sprite.Filter = "DDS files | *.dds";
 			// 
-			// pictureBox_NeedSave
-			// 
-			this.pictureBox_NeedSave.Image = global::MakerEngine.Properties.Resources.Green;
-			this.pictureBox_NeedSave.Location = new System.Drawing.Point(880, 5);
-			this.pictureBox_NeedSave.Name = "pictureBox_NeedSave";
-			this.pictureBox_NeedSave.Size = new System.Drawing.Size(16, 16);
-			this.pictureBox_NeedSave.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-			this.pictureBox_NeedSave.TabIndex = 9;
-			this.pictureBox_NeedSave.TabStop = false;
-			// 
 			// contextMenuStrip_MapLegend
 			// 
 			this.contextMenuStrip_MapLegend.AllowMerge = false;
@@ -753,102 +915,52 @@
             this.toolStripMenuItem_AddMap,
             this.toolStripMenuItem_RemoveMap});
 			this.contextMenuStrip_MapLegend.Name = "contextMenuStrip_MapLegend";
-			this.contextMenuStrip_MapLegend.Size = new System.Drawing.Size(150, 48);
+			this.contextMenuStrip_MapLegend.Size = new System.Drawing.Size(164, 48);
 			// 
 			// toolStripMenuItem_AddMap
 			// 
 			this.toolStripMenuItem_AddMap.Name = "toolStripMenuItem_AddMap";
-			this.toolStripMenuItem_AddMap.Size = new System.Drawing.Size(149, 22);
-			this.toolStripMenuItem_AddMap.Text = "Add .tmx Map";
+			this.toolStripMenuItem_AddMap.Size = new System.Drawing.Size(163, 22);
+			this.toolStripMenuItem_AddMap.Text = "Import .tmx Map";
 			this.toolStripMenuItem_AddMap.Click += new System.EventHandler(this.toolStripMenuItem_AddMap_Click);
 			// 
 			// toolStripMenuItem_RemoveMap
 			// 
 			this.toolStripMenuItem_RemoveMap.Name = "toolStripMenuItem_RemoveMap";
-			this.toolStripMenuItem_RemoveMap.Size = new System.Drawing.Size(149, 22);
+			this.toolStripMenuItem_RemoveMap.Size = new System.Drawing.Size(163, 22);
 			this.toolStripMenuItem_RemoveMap.Text = "Remove Map";
 			this.toolStripMenuItem_RemoveMap.Click += new System.EventHandler(this.toolStripMenuItem_RemoveMap_Click);
-			// 
-			// accordion_Dialog
-			// 
-			this.accordion_Dialog.AddResizeBars = false;
-			this.accordion_Dialog.AllowMouseResize = false;
-			this.accordion_Dialog.AnimateCloseEffect = ((Opulos.Core.UI.AnimateWindowFlags)(((Opulos.Core.UI.AnimateWindowFlags.VerticalNegative | Opulos.Core.UI.AnimateWindowFlags.Hide) 
-            | Opulos.Core.UI.AnimateWindowFlags.Slide)));
-			this.accordion_Dialog.AnimateCloseMillis = 300;
-			this.accordion_Dialog.AnimateOpenEffect = ((Opulos.Core.UI.AnimateWindowFlags)(((Opulos.Core.UI.AnimateWindowFlags.VerticalPositive | Opulos.Core.UI.AnimateWindowFlags.Show) 
-            | Opulos.Core.UI.AnimateWindowFlags.Slide)));
-			this.accordion_Dialog.AnimateOpenMillis = 300;
-			this.accordion_Dialog.AutoFixDockStyle = true;
-			this.accordion_Dialog.AutoScroll = true;
-			this.accordion_Dialog.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			this.accordion_Dialog.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.accordion_Dialog.CheckBoxFactory = null;
-			this.accordion_Dialog.CheckBoxMargin = new System.Windows.Forms.Padding(0);
-			this.accordion_Dialog.ContentBackColor = null;
-			this.accordion_Dialog.ContentMargin = null;
-			this.accordion_Dialog.ContentPadding = new System.Windows.Forms.Padding(5);
-			this.accordion_Dialog.ControlBackColor = null;
-			this.accordion_Dialog.ControlMinimumHeightIsItsPreferredHeight = true;
-			this.accordion_Dialog.ControlMinimumWidthIsItsPreferredWidth = true;
-			this.accordion_Dialog.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.accordion_Dialog.DownArrow = null;
-			this.accordion_Dialog.FillHeight = true;
-			this.accordion_Dialog.FillLastOpened = false;
-			this.accordion_Dialog.FillModeGrowOnly = false;
-			this.accordion_Dialog.FillResetOnCollapse = false;
-			this.accordion_Dialog.FillWidth = true;
-			this.accordion_Dialog.GrabCursor = System.Windows.Forms.Cursors.SizeNS;
-			this.accordion_Dialog.GrabRequiresPositiveFillWeight = true;
-			this.accordion_Dialog.GrabWidth = 0;
-			this.accordion_Dialog.GrowAndShrink = true;
-			this.accordion_Dialog.Insets = new System.Windows.Forms.Padding(0);
-			this.accordion_Dialog.Location = new System.Drawing.Point(3, 16);
-			this.accordion_Dialog.Name = "accordion_Dialog";
-			this.accordion_Dialog.OpenOnAdd = false;
-			this.accordion_Dialog.OpenOneOnly = false;
-			this.accordion_Dialog.ResizeBarFactory = null;
-			this.accordion_Dialog.ResizeBarsAlign = 0.5D;
-			this.accordion_Dialog.ResizeBarsArrowKeyDelta = 10;
-			this.accordion_Dialog.ResizeBarsFadeInMillis = 800;
-			this.accordion_Dialog.ResizeBarsFadeOutMillis = 800;
-			this.accordion_Dialog.ResizeBarsFadeProximity = 24;
-			this.accordion_Dialog.ResizeBarsFill = 1D;
-			this.accordion_Dialog.ResizeBarsKeepFocusAfterMouseDrag = false;
-			this.accordion_Dialog.ResizeBarsKeepFocusIfControlOutOfView = true;
-			this.accordion_Dialog.ResizeBarsKeepFocusOnClick = true;
-			this.accordion_Dialog.ResizeBarsMargin = null;
-			this.accordion_Dialog.ResizeBarsMinimumLength = 50;
-			this.accordion_Dialog.ResizeBarsStayInViewOnArrowKey = true;
-			this.accordion_Dialog.ResizeBarsStayInViewOnMouseDrag = true;
-			this.accordion_Dialog.ResizeBarsStayVisibleIfFocused = true;
-			this.accordion_Dialog.ResizeBarsTabStop = true;
-			this.accordion_Dialog.ShowPartiallyVisibleResizeBars = false;
-			this.accordion_Dialog.ShowToolMenu = true;
-			this.accordion_Dialog.ShowToolMenuOnHoverWhenClosed = false;
-			this.accordion_Dialog.ShowToolMenuOnRightClick = true;
-			this.accordion_Dialog.ShowToolMenuRequiresPositiveFillWeight = false;
-			this.accordion_Dialog.Size = new System.Drawing.Size(619, 432);
-			this.accordion_Dialog.TabIndex = 0;
-			this.accordion_Dialog.UpArrow = null;
 			// 
 			// openFileDialog_TMXFile
 			// 
 			this.openFileDialog_TMXFile.FileName = "openFileDialog_TMXFile";
 			this.openFileDialog_TMXFile.Filter = "Tiled | *.tmx";
 			// 
+			// pictureBox_NeedSave
+			// 
+			this.pictureBox_NeedSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.pictureBox_NeedSave.Image = global::MakerEngine.Properties.Resources.Green;
+			this.pictureBox_NeedSave.Location = new System.Drawing.Point(1449, 2);
+			this.pictureBox_NeedSave.Name = "pictureBox_NeedSave";
+			this.pictureBox_NeedSave.Size = new System.Drawing.Size(16, 16);
+			this.pictureBox_NeedSave.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+			this.pictureBox_NeedSave.TabIndex = 9;
+			this.pictureBox_NeedSave.TabStop = false;
+			// 
 			// MakerEngineForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(906, 541);
+			this.ClientSize = new System.Drawing.Size(1477, 669);
 			this.Controls.Add(this.label_ChangesMade);
 			this.Controls.Add(this.pictureBox_NeedSave);
 			this.Controls.Add(this.tabControl);
 			this.Controls.Add(this.menuStrip1);
+			this.IsMdiContainer = true;
 			this.MainMenuStrip = this.menuStrip1;
 			this.Name = "MakerEngineForm";
 			this.Text = "MakerEngine - No Game Loaded";
+			this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
 			this.menuStrip1.ResumeLayout(false);
 			this.menuStrip1.PerformLayout();
 			this.tabControl.ResumeLayout(false);
@@ -861,27 +973,39 @@
 			this.toolStripContainer1.TopToolStripPanel.PerformLayout();
 			this.toolStripContainer1.ResumeLayout(false);
 			this.toolStripContainer1.PerformLayout();
+			this.splitContainer_Base.Panel1.ResumeLayout(false);
+			this.splitContainer_Base.Panel2.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.splitContainer_Base)).EndInit();
+			this.splitContainer_Base.ResumeLayout(false);
 			this.splitContainer_Main.Panel1.ResumeLayout(false);
 			this.splitContainer_Main.Panel2.ResumeLayout(false);
-			this.splitContainer_Main.Panel2.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer_Main)).EndInit();
 			this.splitContainer_Main.ResumeLayout(false);
-			this.splitContainer2.Panel1.ResumeLayout(false);
-			this.splitContainer2.Panel1.PerformLayout();
-			this.splitContainer2.Panel2.ResumeLayout(false);
-			((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
-			this.splitContainer2.ResumeLayout(false);
+			this.splitContainer_MapInfo.Panel1.ResumeLayout(false);
+			this.splitContainer_MapInfo.Panel1.PerformLayout();
+			this.splitContainer_MapInfo.Panel2.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.splitContainer_MapInfo)).EndInit();
+			this.splitContainer_MapInfo.ResumeLayout(false);
 			this.tableLayoutPanel_TMXData.ResumeLayout(false);
 			this.tableLayoutPanel_TMXData.PerformLayout();
+			this.panel_PictureBoxHolder.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox_Map)).EndInit();
+			this.splitContainer_MapTools.Panel1.ResumeLayout(false);
+			this.splitContainer_MapTools.Panel1.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.splitContainer_MapTools)).EndInit();
+			this.splitContainer_MapTools.ResumeLayout(false);
+			this.panel_LayerSelect.ResumeLayout(false);
+			this.panel_LayerSelect.PerformLayout();
+			this.groupBox_LayersGroupBox.ResumeLayout(false);
+			this.groupBox_LayersGroupBox.PerformLayout();
 			this.toolStrip1.ResumeLayout(false);
 			this.toolStrip1.PerformLayout();
 			this.tabPage_SpriteLoader.ResumeLayout(false);
 			this.tabPage_SpriteLoader.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox_SpriteView)).EndInit();
 			this.contextMenuStrip_ZoneText.ResumeLayout(false);
-			((System.ComponentModel.ISupportInitialize)(this.pictureBox_NeedSave)).EndInit();
 			this.contextMenuStrip_MapLegend.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.pictureBox_NeedSave)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -932,30 +1056,37 @@
 		private System.Windows.Forms.Button button1;
 		private System.Windows.Forms.Button button3;
 		private System.Windows.Forms.Button button_CreateSpriteFont;
-		private System.Windows.Forms.Label label6;
-		private System.Windows.Forms.TreeView treeView_MapLegend;
-		private System.Windows.Forms.TextBox textBox_MapName;
-		private System.Windows.Forms.Label label7;
-		private System.Windows.Forms.SplitContainer splitContainer_Main;
-		private System.Windows.Forms.SplitContainer splitContainer2;
-		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel_TMXData;
-		private System.Windows.Forms.Label label8;
-		private System.Windows.Forms.Label label9;
-		private System.Windows.Forms.Label label10;
-		private System.Windows.Forms.TextBox textBox_Orientation;
-		private System.Windows.Forms.TextBox textBox_MapDimensions;
-		private System.Windows.Forms.TextBox textBox_TileDimensions;
 		private System.Windows.Forms.ToolStripContainer toolStripContainer1;
 		private System.Windows.Forms.ToolStrip toolStrip1;
 		private System.Windows.Forms.ToolStripButton toolStripButton_HideLeftPanel;
-		private System.Windows.Forms.ToolStripButton toolStripButton_HideSpritePanel;
-		private System.Windows.Forms.PictureBox pictureBox_Map;
-		private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+		private System.Windows.Forms.ToolStripButton toolStripButton_HideTilesetPanel;
 		private System.Windows.Forms.ToolStripLabel toolStripLabel2;
 		private System.Windows.Forms.ContextMenuStrip contextMenuStrip_MapLegend;
 		private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem_AddMap;
 		private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem_RemoveMap;
 		private System.Windows.Forms.OpenFileDialog openFileDialog_TMXFile;
+		private System.Windows.Forms.ToolStripButton toolStripButton_HideLayerSelect;
+		public System.Windows.Forms.Button button_ConvertTMX;
+		public System.Windows.Forms.SplitContainer splitContainer_Main;
+		public System.Windows.Forms.SplitContainer splitContainer_MapInfo;
+		public System.Windows.Forms.Label label6;
+		public System.Windows.Forms.TreeView treeView_MapLegend;
+		public System.Windows.Forms.TableLayoutPanel tableLayoutPanel_TMXData;
+		public System.Windows.Forms.TextBox textBox_MapName;
+		public System.Windows.Forms.Label label7;
+		public System.Windows.Forms.Label label8;
+		public System.Windows.Forms.Label label9;
+		public System.Windows.Forms.Label label10;
+		public System.Windows.Forms.TextBox textBox_Orientation;
+		public System.Windows.Forms.TextBox textBox_MapDimensions;
+		public System.Windows.Forms.TextBox textBox_TileDimensions;
+		public System.Windows.Forms.PictureBox pictureBox_Map;
+		private System.Windows.Forms.SplitContainer splitContainer_MapTools;
+		private System.Windows.Forms.Panel panel_LayerSelect;
+		private System.Windows.Forms.GroupBox groupBox_LayersGroupBox;
+		public System.Windows.Forms.TableLayoutPanel tableLayoutPanel_LayersGroupBox;
+		private System.Windows.Forms.Panel panel_PictureBoxHolder;
+		private System.Windows.Forms.SplitContainer splitContainer_Base;
 	}
 }
 

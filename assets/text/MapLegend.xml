@@ -1,1 +1,5 @@
-﻿<?xml version="1.0" encoding="utf-8"?><root game="First RPG" xml="Map Legend"><map name="Test Map" file="assets/text/maps/testmap.tmx"></map><map name="map2" file="assets/text/maps/map2.tmx" /></root>
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root game="First RPG" xml="Map Legend">
+	<map name="Test Map" file="assets/text/maps/testmap.tmx"></map>
+	<map name="map2" file="assets/text/maps/map2.tmx" />
+</root>

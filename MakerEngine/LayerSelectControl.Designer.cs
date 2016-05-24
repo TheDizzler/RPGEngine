@@ -74,9 +74,11 @@
 			this.ClientSize = new System.Drawing.Size(284, 261);
 			this.Controls.Add(this.panel_LayerSelect);
 			this.MaximizeBox = false;
+			this.MinimizeBox = false;
 			this.Name = "LayerSelectControl";
 			this.ShowIcon = false;
 			this.Text = "LayerSelectControl";
+			this.TopMost = true;
 			this.panel_LayerSelect.ResumeLayout(false);
 			this.panel_LayerSelect.PerformLayout();
 			this.groupBox_LayersGroupBox.ResumeLayout(false);

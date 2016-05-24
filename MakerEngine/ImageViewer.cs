@@ -13,5 +13,17 @@ namespace MakerEngine {
 		public ImageViewer() {
 			InitializeComponent();
 		}
+
+
+		protected override void OnFormClosing(FormClosingEventArgs e) {
+			base.OnFormClosing(e);
+
+			if (e.CloseReason == CloseReason.WindowsShutDown)
+				return;
+
+			this.Visible = false;
+			e.Cancel = true;
+
+		}
 	}
 }

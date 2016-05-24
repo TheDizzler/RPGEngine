@@ -23,5 +23,16 @@ namespace MakerEngine {
 			checkBoxes = new List<CheckBox>();
 		}
 
+
+		protected override void OnFormClosing(FormClosingEventArgs e) {
+			base.OnFormClosing(e);
+
+			if (e.CloseReason == CloseReason.WindowsShutDown)
+				return;
+
+			this.Visible = false;
+			e.Cancel = true;
+
+		}
 	}
 }

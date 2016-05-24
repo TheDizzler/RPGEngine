@@ -43,10 +43,12 @@
 			this.AutoSize = true;
 			this.ClientSize = new System.Drawing.Size(284, 261);
 			this.Controls.Add(this.flowLayoutPanel_ImageContainer);
+			this.MinimizeBox = false;
 			this.Name = "ImageViewer";
 			this.ShowIcon = false;
 			this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
 			this.Text = "Tilesets Used";
+			this.TopMost = true;
 			this.ResumeLayout(false);
 
 		}

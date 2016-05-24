@@ -43,8 +43,10 @@ namespace MakerEngine {
 		TMXFile mapTMX;
 
 
-		ImageViewer imageViewer = new ImageViewer();
-		LayerSelectControl layerSelect;
+		ImageViewer imageViewer;
+		//LayerSelectControl layerSelect;
+		public List<CheckBox> checkBoxes;
+
 
 		List<AccordionControl> accordionControlsList = new List<AccordionControl>();
 
@@ -62,11 +64,16 @@ namespace MakerEngine {
 			accordion_Dialog.ControlBackColor = Color.White;
 			accordion_Dialog.ContentBackColor = Color.CadetBlue;
 
+
+			imageViewer = new ImageViewer();
+			//layerSelect = new LayerSelectControl(this);
+			checkBoxes = new List<CheckBox>();
+
+
 			loadSpriteFilesXml();
 			loadMapFiles();
 			loadGameTextXml();
 
-			layerSelect = new LayerSelectControl(this);
 
 		}
 
@@ -77,18 +84,15 @@ namespace MakerEngine {
 			docMapLegend.Load(gameDirectory + mapText);
 			XmlNode root = docMapLegend.GetElementsByTagName("root")[0];
 
-			List<TreeXMLNode> treeNodeList;
+			List<TreeMapXMLNode> treeNodeList;
 
 			foreach (XmlNode node in root.ChildNodes) {
 
-				treeNodeList = new List<TreeXMLNode>();
+				treeNodeList = new List<TreeMapXMLNode>();
 				treeView_MapLegend.Nodes.Add(
-					new TreeXMLNode(node.Attributes["name"].InnerText, node));
+					new TreeMapXMLNode(node.Attributes["name"].InnerText, node));
 			}
-
-
 		}
-
 
 		private void loadSpriteFilesXml() {
 
@@ -192,7 +196,6 @@ namespace MakerEngine {
 			using (XmlWriter writer = XmlWriter.Create(gameDirectory + spriteText))
 				docSpriteFiles.Save(writer);
 
-
 			using (XmlWriter writer = XmlWriter.Create(gameDirectory + mapText))
 				docMapLegend.Save(writer);
 
@@ -274,7 +277,6 @@ namespace MakerEngine {
 				}
 			}
 		}
-
 
 		private void newLocationToolStripMenuItem_Click(Object sender, EventArgs e) {
 
@@ -652,7 +654,6 @@ namespace MakerEngine {
 			}
 		}
 
-
 		private void button_Zoom_Click(Object sender, EventArgs e) {
 
 
@@ -680,7 +681,6 @@ namespace MakerEngine {
 			textBox_Dimensions.Text = ddsImage.BitmapImage.Width + ", " + ddsImage.BitmapImage.Height;
 			textBox_SpriteFilePath.Text = ddsFile;
 		}
-
 
 		private void button_CreateSpriteFont_Click(Object sender, EventArgs e) {
 
@@ -743,26 +743,34 @@ namespace MakerEngine {
 		}
 
 
+		/** *********************
+		 *	Map Tab Methods
+		 * ********************** */
+
 		private void treeView_MapLegend_MouseDoubleClick(Object sender, MouseEventArgs e) {
 
+			TreeMapXMLNode tmxl = ((TreeMapXMLNode)treeView_MapLegend.SelectedNode);
+			selectedMapNode = tmxl.node;
 
-			selectedMapNode = ((TreeXMLNode)treeView_MapLegend.SelectedNode).node;
+			if (mapTMX != null && mapTMX == tmxl.tmxFile)
+				return;
+
+			mapTMX = tmxl.tmxFile;
 
 			loadMap(selectedMapNode);
-
-
-
-
+			tmxl.tmxFile = mapTMX;
 
 		}
 
 		private void loadMap(XmlNode mapNode) {
 
-			// load .tmx file
-			mapTMX = new TMXFile(gameDirectory + mapNode.Attributes["file"].InnerText);
+			if (mapTMX == null) // load .tmx file
+				mapTMX = new TMXFile(gameDirectory + mapNode.Attributes["file"].InnerText, mapNode.Attributes["name"].InnerText);
 
-			layerSelect.tableLayoutPanel_LayersGroupBox.Controls.Clear();
-			layerSelect.tableLayoutPanel_LayersGroupBox.RowCount = mapTMX.layers.Count;
+			this.tableLayoutPanel_LayersGroupBox.Controls.Clear();
+			this.checkBoxes.Clear();
+			this.tableLayoutPanel_LayersGroupBox.RowCount = mapTMX.layers.Count;
+
 			int row = 0;
 
 			foreach (Layer layer in mapTMX.layers) {
@@ -772,10 +780,9 @@ namespace MakerEngine {
 				cb.Text = layer.name;
 				cb.Checked = true;
 				cb.CheckedChanged += new System.EventHandler(this.checkBoxLayerSelect_CheckedChanged);
-				layerSelect.tableLayoutPanel_LayersGroupBox.Controls.Add(cb, 0, row++);
-				layerSelect.checkBoxes.Add(cb);
+				this.tableLayoutPanel_LayersGroupBox.Controls.Add(cb, 0, row++);
+				this.checkBoxes.Add(cb);
 			}
-
 
 
 			textBox_MapName.Text = mapNode.Attributes["file"].InnerText;
@@ -787,65 +794,22 @@ namespace MakerEngine {
 
 				imageTMXList.Images.Add(entry.Value);
 
-				//PictureBox pb = new PictureBox();
-				//pb.Image = entry.Value;
-				//this.toolTip1.SetToolTip(pb, "gid: " + entry.Key);
-				//imageViewer.flowLayoutPanel_ImageContainer.Controls.Add(pb);
 			}
 
+			imageViewer.flowLayoutPanel_ImageContainer.Controls.Clear();
 			foreach (Image image in mapTMX.tilesets) {
 				PictureBox pb = new PictureBox();
 				pb.SizeMode = PictureBoxSizeMode.AutoSize;
 				pb.Image = image;
 				imageViewer.flowLayoutPanel_ImageContainer.Controls.Add(pb);
 			}
-			layerSelect.Show();
+			
 			imageViewer.Show();
-			pictureBox_Map.Image = mapTMX.getMapImage(layerSelect.checkBoxes.ToArray());
+			if (pictureBox_Map.Image != null)
+				pictureBox_Map.Image.Dispose();
+			pictureBox_Map.Image = mapTMX.getMapImage(checkBoxes.ToArray());
 		}
 
-		private void checkBoxLayerSelect_CheckedChanged(Object sender, EventArgs e) {
-
-
-			pictureBox_Map.Image.Dispose();
-			pictureBox_Map.Image = mapTMX.getMapImage(layerSelect.checkBoxes.ToArray());
-
-
-		}
-
-		private void toolStripButton_HideLeftPanel_Click(Object sender, EventArgs e) {
-
-			splitContainer_Main.Panel1Collapsed = !splitContainer_Main.Panel1Collapsed;
-		}
-
-		private void toolStripDropDownButton_Layers_Click(Object sender, EventArgs e) {
-
-		}
-
-		private void treeView_MapLegend_MouseDown(Object sender, MouseEventArgs e) {
-
-			if (e.Button == MouseButtons.Right) {
-
-				TreeXMLNode selected = (TreeXMLNode)treeView_MapLegend.GetNodeAt(e.Location);
-
-				if (selected == null) {
-					this.toolStripMenuItem_AddMap.Enabled = true;
-					this.toolStripMenuItem_RemoveMap.Enabled = false;
-				} else {
-					this.toolStripMenuItem_AddMap.Enabled = false;
-					this.toolStripMenuItem_RemoveMap.Enabled = true;
-				}
-
-				Point loc = PointToScreen(e.Location);
-				loc.Y += contextMenuStrip_MapLegend.Size.Height;
-				loc.X += contextMenuStrip_MapLegend.Size.Width / 4;
-				contextMenuStrip_MapLegend.Show(loc);
-			}
-		}
-
-		private void toolStripMenuItem_RemoveMap_Click(Object sender, EventArgs e) {
-
-		}
 
 		private void toolStripMenuItem_AddMap_Click(Object sender, EventArgs e) {
 
@@ -873,14 +837,69 @@ namespace MakerEngine {
 				loading = false;
 				textChanged(null, null);
 
-
-				treeView_MapLegend.Nodes.Add(
-					new TreeXMLNode(importNode.Attributes["name"].InnerText, importNode));
+				TreeMapXMLNode tmxl = new TreeMapXMLNode(importNode.Attributes["name"].InnerText, importNode);
+				treeView_MapLegend.Nodes.Add(tmxl);
 				loadMap(importNode);
+				tmxl.tmxFile = mapTMX;
 
 			}
+		}
 
+		private void toolStripMenuItem_RemoveMap_Click(Object sender, EventArgs e) {
 
 		}
+
+		private void checkBoxLayerSelect_CheckedChanged(Object sender, EventArgs e) {
+
+			pictureBox_Map.Image.Dispose();
+			pictureBox_Map.Image = mapTMX.getMapImage(checkBoxes.ToArray());
+
+		}
+
+		private void toolStripButton_HideLeftPanel_Click(Object sender, EventArgs e) {
+
+			splitContainer_Main.Panel1Collapsed = !splitContainer_Main.Panel1Collapsed;
+		}
+
+		private void toolStripButton_HideSpritePanel_Click(Object sender, EventArgs e) {
+
+			imageViewer.Visible = !imageViewer.Visible;
+		}
+
+		private void toolStripButton_HideLayerSelect_Click(Object sender, EventArgs e) {
+
+			splitContainer_Base.Panel2Collapsed = !splitContainer_Base.Panel2Collapsed;
+		}
+
+		private void toolStripDropDownButton_Layers_Click(Object sender, EventArgs e) {
+
+		}
+
+		private void treeView_MapLegend_MouseDown(Object sender, MouseEventArgs e) {
+
+			if (e.Button == MouseButtons.Right) {
+
+				TreeXMLNode selected = (TreeXMLNode)treeView_MapLegend.GetNodeAt(e.Location);
+
+				if (selected == null) {
+					this.toolStripMenuItem_AddMap.Enabled = true;
+					this.toolStripMenuItem_RemoveMap.Enabled = false;
+				} else {
+					this.toolStripMenuItem_AddMap.Enabled = false;
+					this.toolStripMenuItem_RemoveMap.Enabled = true;
+				}
+
+				Point loc = PointToScreen(e.Location);
+				loc.Y += contextMenuStrip_MapLegend.Size.Height;
+				loc.X += contextMenuStrip_MapLegend.Size.Width / 4;
+				contextMenuStrip_MapLegend.Show(loc);
+			}
+		}
+
+
+
+
+
+		
 	}
 }

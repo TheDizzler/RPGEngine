@@ -19,7 +19,7 @@ namespace MakerEngine {
 
 		XmlDocument tmx;
 
-
+		private String name;
 		public String orientation;
 		/// <summary>
 		/// In tiles (not pixels)!
@@ -33,11 +33,12 @@ namespace MakerEngine {
 		public List<Layer> layers;
 
 
-		public TMXFile(String tmxfile) {
+		public TMXFile(String tmxfile, String mapName) {
 
 			tmx = new XmlDocument();
 			tmx.Load(tmxfile);
 
+			name = mapName;
 			loadMapDescription();
 			loadTilesets();
 			loadLayerData();
@@ -109,7 +110,7 @@ namespace MakerEngine {
 			}
 		}
 
-		public void buildMapImages() {
+		private void buildMapImages() {
 
 
 			int width = mapWidth * tileWidth;
@@ -133,7 +134,10 @@ namespace MakerEngine {
 
 					}
 				}
-				outputFileName = @"D:\github projects\" + layer.name + " Layer.png";
+				String dir = @"D:\github projects\" + name + @"tempimgs\";
+				if (!Directory.Exists(dir))
+					Directory.CreateDirectory(dir);
+				outputFileName = dir + layer.name + " Layer.png";
 				using (MemoryStream memory = new MemoryStream()) {
 					using (FileStream fs = new FileStream(outputFileName, FileMode.Create, FileAccess.ReadWrite)) {
 						img.Save(memory, ImageFormat.Png);
@@ -159,7 +163,6 @@ namespace MakerEngine {
 			Graphics g = Graphics.FromImage(img);
 			//g.Clear(SystemColors.AppWorkspace);
 
-			//if (checkBox != null) {
 
 			for (int i = 0; i < checkBox.Length; ++i) {
 
@@ -167,12 +170,9 @@ namespace MakerEngine {
 					g.DrawImage(layers[i].image, new Point(0, 0));
 
 			}
-			//} else {
-			//	foreach (Layer layer in layers)
-			//		g.DrawImage(layer.image, new Point(0, 0));
-			//}
 
-			String outputFileName = @"D:\github projects\final.png";
+			String dir = @"D:\github projects\" + name + @"tempimgs\";
+			String outputFileName = dir + "final.png";
 
 			using (MemoryStream memory = new MemoryStream()) {
 				using (FileStream fs = new FileStream(outputFileName, FileMode.Create, FileAccess.ReadWrite)) {

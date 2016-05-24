@@ -41,7 +41,7 @@ namespace MakerEngine {
 		}
 
 		/// <summary>
-		/// Constructor for Sprite TreeView.
+		/// Constructor for Sprite & Map TreeViews.
 		/// </summary>
 		/// <param name="name"></param>
 		/// <param name="nd"></param>

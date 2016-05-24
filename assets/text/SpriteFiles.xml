@@ -1,16 +1,1 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<root game="First RPG" xml="Sprite Files">
-	<spriteFonts>
-		<font name="Arial Font" file="assets/fonts/Arial.spritefont" fontSize="16" />
-		<font name="Bookshelf" file="assets/fonts/Bookshelf.spritefont" fontSize="42" />
-		<font name="BlackCloak" file="assets/fonts/BlackCloak.spritefont" fontSize="32" />
-	</spriteFonts>
-	<gui>
-		<sprite name="Textbox side" file="assets/gfx/gui/border side (16x16).dds" />
-		<sprite name="Textbox corner" file="assets/gfx/gui/border corner (16x16).dds" />
-		<sprite name="Textbox bg" file="assets/gfx/gui/black (16x16).dds" />
-		<sprite name="Textbox caret" file="assets/gfx/gui/indicator.dds" />
-	</gui>
-	<map></map>
-	<actors></actors>
-</root>
+﻿<?xml version="1.0" encoding="utf-8"?><root game="First RPG" xml="Sprite Files"><spriteFonts><font name="Arial Font" file="assets/fonts/Arial.spritefont" fontSize="16" /><font name="Bookshelf" file="assets/fonts/Bookshelf.spritefont" fontSize="42" /><font name="BlackCloak" file="assets/fonts/BlackCloak.spritefont" fontSize="32" /></spriteFonts><gui><sprite name="Textbox side" file="assets/gfx/gui/border side (16x16).dds" /><sprite name="Textbox corner" file="assets/gfx/gui/border corner (16x16).dds" /><sprite name="Textbox bg" file="assets/gfx/gui/black (16x16).dds" /><sprite name="Textbox caret" file="assets/gfx/gui/indicator.dds" /></gui><map></map><actors></actors></root>

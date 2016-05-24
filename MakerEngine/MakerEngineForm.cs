@@ -23,10 +23,11 @@ namespace MakerEngine {
 
 		public String fontDir = "assets/fonts/";
 		public String spriteDir = "assets/gfx/";
+		public String mapDir = "assets/text/maps/";
 
 		public String dialogText = "assets/text/GameText.xml";
 		public String spriteText = "assets/text/SpriteFiles.xml";
-		public String mapsText = "assets/text/MapLegend.xml";
+		public String mapText = "assets/text/MapLegend.xml";
 
 
 		XmlDocument docDialogText;
@@ -73,7 +74,7 @@ namespace MakerEngine {
 		private void loadMapFiles() {
 
 			docMapLegend = new XmlDocument();
-			docMapLegend.Load(gameDirectory + mapsText);
+			docMapLegend.Load(gameDirectory + mapText);
 			XmlNode root = docMapLegend.GetElementsByTagName("root")[0];
 
 			List<TreeXMLNode> treeNodeList;
@@ -85,7 +86,6 @@ namespace MakerEngine {
 					new TreeXMLNode(node.Attributes["name"].InnerText, node));
 			}
 
-			//new TreeXMLNode(treeNodeList.ToArray()));
 
 		}
 
@@ -186,11 +186,15 @@ namespace MakerEngine {
 				}
 			}
 
-			XmlWriter writer = XmlWriter.Create(gameDirectory + dialogText);
-			docDialogText.Save(writer);
+			using (XmlWriter writer = XmlWriter.Create(gameDirectory + dialogText))
+				docDialogText.Save(writer);
 
-			writer = XmlWriter.Create(gameDirectory + spriteText);
-			docSpriteFiles.Save(writer);
+			using (XmlWriter writer = XmlWriter.Create(gameDirectory + spriteText))
+				docSpriteFiles.Save(writer);
+
+
+			using (XmlWriter writer = XmlWriter.Create(gameDirectory + mapText))
+				docMapLegend.Save(writer);
 
 			needSave(false);
 
@@ -607,7 +611,10 @@ namespace MakerEngine {
 
 				switch (selectedTextTreeNode.Text) {
 					case "Zone Text":
-						contextMenuStrip_ZoneText.Show(PointToScreen(e.Location));
+						Point loc = PointToScreen(e.Location);
+						loc.Y += contextMenuStrip_MapLegend.Size.Height;
+						loc.X += contextMenuStrip_MapLegend.Size.Width / 4;
+						contextMenuStrip_ZoneText.Show(loc);
 						break;
 				}
 			}
@@ -677,13 +684,6 @@ namespace MakerEngine {
 
 		private void button_CreateSpriteFont_Click(Object sender, EventArgs e) {
 
-			//using (FontDialog dialog = new FontDialog()) {
-
-			//	if (dialog.ShowDialog() == DialogResult.OK) { }
-
-			//	//dialog.
-
-			//}
 			using (SelectFontDialog dialog = new SelectFontDialog()) {
 
 				if (dialog.ShowDialog() == DialogResult.OK) {
@@ -742,12 +742,24 @@ namespace MakerEngine {
 			}
 		}
 
+
 		private void treeView_MapLegend_MouseDoubleClick(Object sender, MouseEventArgs e) {
+
 
 			selectedMapNode = ((TreeXMLNode)treeView_MapLegend.SelectedNode).node;
 
+			loadMap(selectedMapNode);
+
+
+
+
+
+		}
+
+		private void loadMap(XmlNode mapNode) {
+
 			// load .tmx file
-			mapTMX = new TMXFile(gameDirectory + selectedMapNode.Attributes["file"].InnerText);
+			mapTMX = new TMXFile(gameDirectory + mapNode.Attributes["file"].InnerText);
 
 			layerSelect.tableLayoutPanel_LayersGroupBox.Controls.Clear();
 			layerSelect.tableLayoutPanel_LayersGroupBox.RowCount = mapTMX.layers.Count;
@@ -756,7 +768,7 @@ namespace MakerEngine {
 			foreach (Layer layer in mapTMX.layers) {
 
 				CheckBox cb = new CheckBox();
-				
+
 				cb.Text = layer.name;
 				cb.Checked = true;
 				cb.CheckedChanged += new System.EventHandler(this.checkBoxLayerSelect_CheckedChanged);
@@ -766,7 +778,7 @@ namespace MakerEngine {
 
 
 
-			textBox_MapName.Text = selectedMapNode.Attributes["file"].InnerText;
+			textBox_MapName.Text = mapNode.Attributes["file"].InnerText;
 			textBox_Orientation.Text = mapTMX.orientation;
 			textBox_MapDimensions.Text = mapTMX.mapWidth + ", " + mapTMX.mapHeight;
 			textBox_TileDimensions.Text = mapTMX.tileWidth + ", " + mapTMX.tileHeight;
@@ -790,7 +802,6 @@ namespace MakerEngine {
 			layerSelect.Show();
 			imageViewer.Show();
 			pictureBox_Map.Image = mapTMX.getMapImage(layerSelect.checkBoxes.ToArray());
-
 		}
 
 		private void checkBoxLayerSelect_CheckedChanged(Object sender, EventArgs e) {
@@ -808,6 +819,67 @@ namespace MakerEngine {
 		}
 
 		private void toolStripDropDownButton_Layers_Click(Object sender, EventArgs e) {
+
+		}
+
+		private void treeView_MapLegend_MouseDown(Object sender, MouseEventArgs e) {
+
+			if (e.Button == MouseButtons.Right) {
+
+				TreeXMLNode selected = (TreeXMLNode)treeView_MapLegend.GetNodeAt(e.Location);
+
+				if (selected == null) {
+					this.toolStripMenuItem_AddMap.Enabled = true;
+					this.toolStripMenuItem_RemoveMap.Enabled = false;
+				} else {
+					this.toolStripMenuItem_AddMap.Enabled = false;
+					this.toolStripMenuItem_RemoveMap.Enabled = true;
+				}
+
+				Point loc = PointToScreen(e.Location);
+				loc.Y += contextMenuStrip_MapLegend.Size.Height;
+				loc.X += contextMenuStrip_MapLegend.Size.Width / 4;
+				contextMenuStrip_MapLegend.Show(loc);
+			}
+		}
+
+		private void toolStripMenuItem_RemoveMap_Click(Object sender, EventArgs e) {
+
+		}
+
+		private void toolStripMenuItem_AddMap_Click(Object sender, EventArgs e) {
+
+			if (openFileDialog_TMXFile.ShowDialog() == DialogResult.OK) {
+
+				String file = openFileDialog_TMXFile.FileName;
+
+				int index = file.LastIndexOf('/');
+				if (index <= 0)
+					index = file.LastIndexOf('\\');
+
+				String name = file.Substring(index + 1);
+				int lastIndex = file.LastIndexOf('.');
+				int length = lastIndex - index;
+				String shortname = file.Substring(index + 1, length - 1);
+
+				String eventTag = "<map name=\"" + shortname + "\" file=\"" + mapDir + name + "\" ></map>";
+				XmlDocument newXml = new XmlDocument();
+				newXml.Load(new StringReader(eventTag));
+
+				XmlNode newNode = newXml.DocumentElement;
+				XmlNode importNode = docMapLegend.ImportNode(newNode, true);
+				docMapLegend.GetElementsByTagName("root")[0].AppendChild(importNode);
+
+				loading = false;
+				textChanged(null, null);
+
+
+				treeView_MapLegend.Nodes.Add(
+					new TreeXMLNode(importNode.Attributes["name"].InnerText, importNode));
+				loadMap(importNode);
+
+			}
+
 
 		}
 	}

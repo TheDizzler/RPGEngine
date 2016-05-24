@@ -87,7 +87,11 @@
 			this.openFileDialog_Sprite = new System.Windows.Forms.OpenFileDialog();
 			this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
 			this.pictureBox_NeedSave = new System.Windows.Forms.PictureBox();
+			this.contextMenuStrip_MapLegend = new System.Windows.Forms.ContextMenuStrip(this.components);
+			this.toolStripMenuItem_AddMap = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripMenuItem_RemoveMap = new System.Windows.Forms.ToolStripMenuItem();
 			this.accordion_Dialog = new Opulos.Core.UI.Accordion();
+			this.openFileDialog_TMXFile = new System.Windows.Forms.OpenFileDialog();
 			this.menuStrip1.SuspendLayout();
 			this.tabControl.SuspendLayout();
 			this.tabPage_Dialog.SuspendLayout();
@@ -111,6 +115,7 @@
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox_SpriteView)).BeginInit();
 			this.contextMenuStrip_ZoneText.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox_NeedSave)).BeginInit();
+			this.contextMenuStrip_MapLegend.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// menuStrip1
@@ -372,6 +377,7 @@
 			this.treeView_MapLegend.Size = new System.Drawing.Size(280, 223);
 			this.treeView_MapLegend.TabIndex = 0;
 			this.treeView_MapLegend.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.treeView_MapLegend_MouseDoubleClick);
+			this.treeView_MapLegend.MouseDown += new System.Windows.Forms.MouseEventHandler(this.treeView_MapLegend_MouseDown);
 			// 
 			// tableLayoutPanel_TMXData
 			// 
@@ -740,6 +746,29 @@
 			this.pictureBox_NeedSave.TabIndex = 9;
 			this.pictureBox_NeedSave.TabStop = false;
 			// 
+			// contextMenuStrip_MapLegend
+			// 
+			this.contextMenuStrip_MapLegend.AllowMerge = false;
+			this.contextMenuStrip_MapLegend.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItem_AddMap,
+            this.toolStripMenuItem_RemoveMap});
+			this.contextMenuStrip_MapLegend.Name = "contextMenuStrip_MapLegend";
+			this.contextMenuStrip_MapLegend.Size = new System.Drawing.Size(150, 48);
+			// 
+			// toolStripMenuItem_AddMap
+			// 
+			this.toolStripMenuItem_AddMap.Name = "toolStripMenuItem_AddMap";
+			this.toolStripMenuItem_AddMap.Size = new System.Drawing.Size(149, 22);
+			this.toolStripMenuItem_AddMap.Text = "Add .tmx Map";
+			this.toolStripMenuItem_AddMap.Click += new System.EventHandler(this.toolStripMenuItem_AddMap_Click);
+			// 
+			// toolStripMenuItem_RemoveMap
+			// 
+			this.toolStripMenuItem_RemoveMap.Name = "toolStripMenuItem_RemoveMap";
+			this.toolStripMenuItem_RemoveMap.Size = new System.Drawing.Size(149, 22);
+			this.toolStripMenuItem_RemoveMap.Text = "Remove Map";
+			this.toolStripMenuItem_RemoveMap.Click += new System.EventHandler(this.toolStripMenuItem_RemoveMap_Click);
+			// 
 			// accordion_Dialog
 			// 
 			this.accordion_Dialog.AddResizeBars = false;
@@ -803,6 +832,11 @@
 			this.accordion_Dialog.TabIndex = 0;
 			this.accordion_Dialog.UpArrow = null;
 			// 
+			// openFileDialog_TMXFile
+			// 
+			this.openFileDialog_TMXFile.FileName = "openFileDialog_TMXFile";
+			this.openFileDialog_TMXFile.Filter = "Tiled | *.tmx";
+			// 
 			// MakerEngineForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -847,6 +881,7 @@
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox_SpriteView)).EndInit();
 			this.contextMenuStrip_ZoneText.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox_NeedSave)).EndInit();
+			this.contextMenuStrip_MapLegend.ResumeLayout(false);
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -917,6 +952,10 @@
 		private System.Windows.Forms.PictureBox pictureBox_Map;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
 		private System.Windows.Forms.ToolStripLabel toolStripLabel2;
+		private System.Windows.Forms.ContextMenuStrip contextMenuStrip_MapLegend;
+		private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem_AddMap;
+		private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem_RemoveMap;
+		private System.Windows.Forms.OpenFileDialog openFileDialog_TMXFile;
 	}
 }
 

@@ -51,10 +51,7 @@ namespace MakerEngine {
 
 			foreach (XmlNode layerNode in tmx.GetElementsByTagName("layer")) {
 
-				Layer layer = new Layer(layerNode.FirstChild.InnerText);
-				layer.name = layerNode.Attributes["name"].InnerText;
-				layer.width = Int32.Parse(layerNode.Attributes["width"].InnerText);
-				layer.height = Int32.Parse(layerNode.Attributes["height"].InnerText);
+				Layer layer = new Layer(layerNode);
 				layers.Add(layer);
 			}
 
@@ -130,7 +127,7 @@ namespace MakerEngine {
 				for (int j = 0; j < mapHeight; ++j) {
 					for (int i = 0; i < mapWidth; ++i) {
 
-						int key = layer.csv[j][i];
+						int key = layer.data[j][i];
 						if (key != 0)
 							g.DrawImage(imageDict[key], new Point(i * tileWidth, j * tileHeight));
 
@@ -199,31 +196,61 @@ namespace MakerEngine {
 
 		public String name;
 		public int width, height;
-		public List<List<int>> csv;
+		public List<List<int>> data;
 
 		public Image image;
 
 
-		public Layer(String text) {
+		public Layer(XmlNode layerNode) {
 
-			using (StringReader reader = new StringReader(text)) {
+			this.name = layerNode.Attributes["name"].InnerText;
+			this.width = Int32.Parse(layerNode.Attributes["width"].InnerText);
+			this.height = Int32.Parse(layerNode.Attributes["height"].InnerText);
 
-				string line = reader.ReadLine();
+			this.data = new List<List<int>>();
+			XmlNode data = layerNode.FirstChild;
 
-				csv = new List<List<int>>();
+			if (data.Attributes["encoding"] != null && data.Attributes["encoding"].InnerText == "csv") {
+				using (StringReader reader = new StringReader(data.InnerText)) {
 
-				while ((line = reader.ReadLine()) != null) {
+					string line/* = reader.ReadLine()*/;
 
-					List<int> row = new List<int>();
-					String[] gids = line.Split(',');
-					foreach (string gid in gids) {
-						if (!String.IsNullOrWhiteSpace(gid))
-							row.Add(Int32.Parse(gid));
+
+
+					while ((line = reader.ReadLine()) != null) {
+						if (String.IsNullOrWhiteSpace(line))
+							continue;
+						List<int> row = new List<int>();
+						String[] gids = line.Split(',');
+						foreach (string gid in gids) {
+							if (!String.IsNullOrWhiteSpace(gid))
+								row.Add(Int32.Parse(gid));
+						}
+
+						this.data.Add(row);
+
 					}
-
-					csv.Add(row);
-
 				}
+			} else {
+
+				int row = 0;
+				int col = 0;
+
+				List<int> rowList = new List<int>();
+
+				foreach (XmlNode tile in data.ChildNodes) {
+
+					rowList.Add(Int32.Parse(tile.Attributes["gid"].InnerText));
+					++col;
+					if (col >= width) {
+						++row;
+						this.data.Add(rowList);
+						rowList = new List<int>();
+						col = 0;
+
+					}
+				}
+
 			}
 		}
 	}

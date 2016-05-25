@@ -100,6 +100,9 @@
 			this.toolStripMenuItem_RemoveMap = new System.Windows.Forms.ToolStripMenuItem();
 			this.openFileDialog_TMXFile = new System.Windows.Forms.OpenFileDialog();
 			this.pictureBox_NeedSave = new System.Windows.Forms.PictureBox();
+			this.contextMenuStrip_SpriteTree = new System.Windows.Forms.ContextMenuStrip(this.components);
+			this.newCategoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.convertToDDSToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.accordion_Dialog = new Opulos.Core.UI.Accordion();
 			this.menuStrip1.SuspendLayout();
 			this.tabControl.SuspendLayout();
@@ -137,6 +140,7 @@
 			this.contextMenuStrip_ZoneText.SuspendLayout();
 			this.contextMenuStrip_MapLegend.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox_NeedSave)).BeginInit();
+			this.contextMenuStrip_SpriteTree.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// menuStrip1
@@ -820,6 +824,7 @@
 			this.treeView_Sprites.Size = new System.Drawing.Size(291, 425);
 			this.treeView_Sprites.TabIndex = 1;
 			this.treeView_Sprites.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.treeView_Sprites_MouseDoubleClick);
+			this.treeView_Sprites.MouseDown += new System.Windows.Forms.MouseEventHandler(this.treeView_Sprites_MouseDown);
 			// 
 			// pictureBox_SpriteView
 			// 
@@ -873,8 +878,8 @@
 			// 
 			// openFileDialog_Sprite
 			// 
-			this.openFileDialog_Sprite.FileName = "openFileDialog_Sprite";
-			this.openFileDialog_Sprite.Filter = "DDS files | *.dds";
+			this.openFileDialog_Sprite.Filter = "All Graphics Types|*.bmp;*.jpg;*.jpeg;*.png;*.tif;*.tiff;*.dds"
+				+ "|BMP|*.bmp|GIF|*.gif|JPG|*.jpg;*.jpeg|PNG|*.png|TIFF|*.tif;*.tiff|DDS|*.dds";
 			// 
 			// contextMenuStrip_MapLegend
 			// 
@@ -890,7 +895,7 @@
 			this.toolStripMenuItem_AddMap.Name = "toolStripMenuItem_AddMap";
 			this.toolStripMenuItem_AddMap.Size = new System.Drawing.Size(163, 22);
 			this.toolStripMenuItem_AddMap.Text = "Import .tmx Map";
-			this.toolStripMenuItem_AddMap.Click += new System.EventHandler(this.toolStripMenuItem_AddMap_Click);
+			this.toolStripMenuItem_AddMap.Click += new System.EventHandler(this.toolStripMenuItem_ImportMap_Click);
 			// 
 			// toolStripMenuItem_RemoveMap
 			// 
@@ -901,7 +906,6 @@
 			// 
 			// openFileDialog_TMXFile
 			// 
-			this.openFileDialog_TMXFile.FileName = "openFileDialog_TMXFile";
 			this.openFileDialog_TMXFile.Filter = "Tiled | *.tmx";
 			// 
 			// pictureBox_NeedSave
@@ -914,6 +918,27 @@
 			this.pictureBox_NeedSave.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
 			this.pictureBox_NeedSave.TabIndex = 9;
 			this.pictureBox_NeedSave.TabStop = false;
+			// 
+			// contextMenuStrip_SpriteTree
+			// 
+			this.contextMenuStrip_SpriteTree.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.newCategoryToolStripMenuItem,
+            this.convertToDDSToolStripMenuItem});
+			this.contextMenuStrip_SpriteTree.Name = "contextMenuStrip_SpriteTree";
+			this.contextMenuStrip_SpriteTree.Size = new System.Drawing.Size(154, 48);
+			// 
+			// newCategoryToolStripMenuItem
+			// 
+			this.newCategoryToolStripMenuItem.Name = "newCategoryToolStripMenuItem";
+			this.newCategoryToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
+			this.newCategoryToolStripMenuItem.Text = "New Category";
+			// 
+			// convertToDDSToolStripMenuItem
+			// 
+			this.convertToDDSToolStripMenuItem.Name = "convertToDDSToolStripMenuItem";
+			this.convertToDDSToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
+			this.convertToDDSToolStripMenuItem.Text = "Add Image File";
+			this.convertToDDSToolStripMenuItem.Click += new System.EventHandler(this.addImageFileToolStripMenuItem_Click);
 			// 
 			// accordion_Dialog
 			// 
@@ -1040,6 +1065,7 @@
 			this.contextMenuStrip_ZoneText.ResumeLayout(false);
 			this.contextMenuStrip_MapLegend.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox_NeedSave)).EndInit();
+			this.contextMenuStrip_SpriteTree.ResumeLayout(false);
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -1123,6 +1149,9 @@
 		private System.Windows.Forms.SplitContainer splitContainer_Base;
 		private System.Windows.Forms.TabControl tabControl_ImageViewer;
 		private System.Windows.Forms.TabPage tabPage1;
+		private System.Windows.Forms.ContextMenuStrip contextMenuStrip_SpriteTree;
+		private System.Windows.Forms.ToolStripMenuItem newCategoryToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem convertToDDSToolStripMenuItem;
 	}
 }
 

@@ -56,10 +56,11 @@ namespace MakerEngine {
 		/// <summary>
 		/// Constructor for Sprite TreeView with children.
 		/// </summary>
-		public TreeXMLNode(String name, TreeXMLNode[] children) : base("", children) {
+		public TreeXMLNode(String name, XmlNode nd, TreeXMLNode[] children) : base("", children) {
 
 			this.Text = name;
 			this.Name = name;
+			this.node = nd;
 		}
 	}
 }

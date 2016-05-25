@@ -13,13 +13,13 @@ namespace MakerEngine {
 
 	/// <summary>
 	/// Main form is getting bloated so I'm encapsulating functions based around
-	/// tmx files here.
+	/// tmx/map files here.
 	/// </summary>
 	class TMXFile {
 
-		XmlDocument tmx;
+		public XmlDocument tmx;
 
-		private String name;
+		public String name;
 		public String file;
 
 		public String orientation;
@@ -36,13 +36,25 @@ namespace MakerEngine {
 		public List<Layer> layers;
 
 
-		public TMXFile(String tmxfile, String mapName) {
+		public TMXFile(String mapfile, String mapName, bool converting) {
 
-			file = tmxfile;
+			file = mapfile;
 			tmx = new XmlDocument();
 			tmx.Load(file);
 
+
 			name = mapName;
+			if (!converting) {
+				load();
+			}
+
+		}
+
+		/// <summary>
+		/// Call this manually after converting from tmx file.
+		/// </summary>
+		public void load() {
+
 			loadMapDescription();
 			loadTilesets();
 			loadLayerData();
@@ -206,8 +218,14 @@ namespace MakerEngine {
 
 
 			XmlNode imageNode = tilesetNode.ChildNodes[0];
-			file = imageNode.Attributes["source"].InnerText;
-			image = Image.FromFile(file);
+			file = MakerEngineForm.gameDirectory + imageNode.Attributes["source"].InnerText;
+
+			//String ddsFile = openFileDialog_Sprite.FileName;
+			//image = Image.FromFile(file);
+			S16.Drawing.DDSImage ddsImage = new S16.Drawing.DDSImage(File.ReadAllBytes(file));
+			image = ddsImage.BitmapImage;
+
+			
 
 			name = tilesetNode.Attributes["name"].InnerText;
 			gid = Int32.Parse(tilesetNode.Attributes["firstgid"].InnerText);

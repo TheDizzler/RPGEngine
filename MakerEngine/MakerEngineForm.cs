@@ -22,7 +22,7 @@ namespace MakerEngine {
 		public String gameDirectory = AppDomain.CurrentDomain.BaseDirectory + "../../../";
 
 		public String fontDir = "assets/fonts/";
-		public String spriteDir = "assets/gfx/";
+		public String gfxDir = "assets/gfx/";
 		public String mapDir = "assets/text/maps/";
 
 		public String dialogText = "assets/text/GameText.xml";
@@ -43,7 +43,7 @@ namespace MakerEngine {
 		TMXFile mapTMX;
 
 
-		ImageViewer imageViewer;
+		//ImageViewer imageViewer;
 		//LayerSelectControl layerSelect;
 		public List<CheckBox> checkBoxes;
 
@@ -65,7 +65,7 @@ namespace MakerEngine {
 			accordion_Dialog.ContentBackColor = Color.CadetBlue;
 
 
-			imageViewer = new ImageViewer();
+			//imageViewer = new ImageViewer();
 			//layerSelect = new LayerSelectControl(this);
 			checkBoxes = new List<CheckBox>();
 
@@ -796,15 +796,27 @@ namespace MakerEngine {
 
 			}
 
-			imageViewer.flowLayoutPanel_ImageContainer.Controls.Clear();
-			foreach (Image image in mapTMX.tilesets) {
+
+			tabControl_ImageViewer.TabPages.Clear();
+			this.tabControl_ImageViewer.Controls.Clear();
+
+			foreach (TileSet tileset in mapTMX.tilesets) {
 				PictureBox pb = new PictureBox();
 				pb.SizeMode = PictureBoxSizeMode.AutoSize;
-				pb.Image = image;
-				imageViewer.flowLayoutPanel_ImageContainer.Controls.Add(pb);
+				pb.Image = tileset.image;
+
+				TabPage newTab = new TabPage();
+				newTab.Location = new System.Drawing.Point(4, 22);
+				newTab.Name = tileset.name + " tabPage";
+				newTab.Padding = new System.Windows.Forms.Padding(3);
+				newTab.Size = new System.Drawing.Size(317, 264);
+				newTab.TabIndex = 0;
+				newTab.Text = tileset.name;
+				newTab.UseVisualStyleBackColor = true;
+				newTab.Controls.Add(pb);
+				this.tabControl_ImageViewer.Controls.Add(newTab);
 			}
-			
-			imageViewer.Show();
+
 			if (pictureBox_Map.Image != null)
 				pictureBox_Map.Image.Dispose();
 			pictureBox_Map.Image = mapTMX.getMapImage(checkBoxes.ToArray());
@@ -863,12 +875,30 @@ namespace MakerEngine {
 
 		private void toolStripButton_HideSpritePanel_Click(Object sender, EventArgs e) {
 
-			imageViewer.Visible = !imageViewer.Visible;
+			if (splitContainer_Base.Panel2Collapsed) {
+				splitContainer_Base.Panel2Collapsed = false;
+				splitContainer_MapTools.Panel2Collapsed = false;
+
+			} else {
+				if (splitContainer_MapTools.Panel1Collapsed)
+					splitContainer_Base.Panel2Collapsed = true;
+				else
+					splitContainer_MapTools.Panel2Collapsed = !splitContainer_MapTools.Panel2Collapsed;
+			}
 		}
 
 		private void toolStripButton_HideLayerSelect_Click(Object sender, EventArgs e) {
 
-			splitContainer_Base.Panel2Collapsed = !splitContainer_Base.Panel2Collapsed;
+			if (splitContainer_Base.Panel2Collapsed) {
+				splitContainer_Base.Panel2Collapsed = false;
+				splitContainer_MapTools.Panel1Collapsed = false;
+
+			} else {
+				if (splitContainer_MapTools.Panel2Collapsed)
+					splitContainer_Base.Panel2Collapsed = true;
+				else
+					splitContainer_MapTools.Panel1Collapsed = !splitContainer_MapTools.Panel1Collapsed;
+			}
 		}
 
 		private void toolStripDropDownButton_Layers_Click(Object sender, EventArgs e) {
@@ -896,10 +926,38 @@ namespace MakerEngine {
 			}
 		}
 
+		private void button_ConvertTMX_Click(Object sender, EventArgs e) {
 
+			if (mapTMX == null)
+				return;
 
+			foreach (TileSet tileset in mapTMX.tilesets) {
+				ProcessStartInfo start = new ProcessStartInfo();
+				String texconv = "\"D:\\github projects\\RPGEngine\\assets\\gfx\\texconv\\texconv.exe\"";
+				String outputDir = "D:\\github projects\\RPGEngine\\assets\\gfx";
+				start.FileName = texconv;
+				start.Arguments = /*" -o " + outputDir*/
+								  /*+ */" \"" + tileset.file + "\""; // can't use string dir because the trailing '\' fucks everything up
+				start.WindowStyle = ProcessWindowStyle.Normal;
+				start.CreateNoWindow = false;
+				start.ErrorDialog = true;
 
+				using (Process proc = Process.Start(start)) {
 
-		
+					proc.WaitForExit();
+
+					String newFile = tileset.file.Substring(0, tileset.file.Length - 3) + "dds";
+
+					if (!File.Exists(newFile) || proc.ExitCode != 0) { // don't think this ever occurs :/
+						MessageBox.Show(this, "Could not convert image to DDS!" + newFile, "Error!",
+							MessageBoxButtons.OK, MessageBoxIcon.Error);
+						return;
+					}
+
+					String newLoc = outputDir + newFile.Substring(newFile.LastIndexOf("/"));
+					File.Move(newFile, newLoc);
+				}
+			}
+		}
 	}
 }

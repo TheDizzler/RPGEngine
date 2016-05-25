@@ -27,7 +27,8 @@ namespace MakerEngine {
 		public int mapWidth, mapHeight;
 		public int tileWidth, tileHeight;
 
-		public List<Image> tilesets;
+		public List<TileSet> tilesets;
+		//public Dictionary<String, Image> tilesetDict;
 		public Dictionary<int, Image> imageDict;
 
 		public List<Layer> layers;
@@ -71,35 +72,30 @@ namespace MakerEngine {
 
 		private void loadTilesets() {
 
-			tilesets = new List<Image>();
+			tilesets = new List<TileSet>();
+			//tilesetDict = new Dictionary<String, Image>();
 			imageDict = new Dictionary<int, Image>();
 
 
-			foreach (XmlNode tileset in tmx.GetElementsByTagName("tileset")) {
+			foreach (XmlNode tilesetNode in tmx.GetElementsByTagName("tileset")) {
 
-				XmlNode imageNode = tileset.ChildNodes[0];
-				Image image = Image.FromFile(imageNode.Attributes["source"].InnerText);
+				TileSet tileset = new TileSet(tilesetNode);
+				tilesets.Add(tileset);
 
-				tilesets.Add(image);
+				////tilesetDict.Add(tileset.Attributes["name"].InnerText, image);
+				int gid = Int32.Parse(tilesetNode.Attributes["firstgid"].InnerText);
 
-				int gid = Int32.Parse(tileset.Attributes["firstgid"].InnerText);
+				int tilewidth = Int32.Parse(tilesetNode.Attributes["tilewidth"].InnerText);
+				int tileheight = Int32.Parse(tilesetNode.Attributes["tileheight"].InnerText);
 
-				int tilewidth = Int32.Parse(tileset.Attributes["tilewidth"].InnerText);
-				int tileheight = Int32.Parse(tileset.Attributes["tileheight"].InnerText);
-
-				int tilesetWidth = Int32.Parse(imageNode.Attributes["width"].InnerText);
-				int tilesetHeight = Int32.Parse(imageNode.Attributes["height"].InnerText);
-
-				int columns = Int32.Parse(tileset.Attributes["columns"].InnerText);
-				int rows = Int32.Parse(tileset.Attributes["tilecount"].InnerText) / columns;
+				int columns = Int32.Parse(tilesetNode.Attributes["columns"].InnerText);
+				int rows = Int32.Parse(tilesetNode.Attributes["tilecount"].InnerText) / columns;
 
 				for (int h = 0; h < rows; ++h) {
 					for (int w = 0; w < columns; ++w) {
 
-						//if (w + tilewidth > tilesetWidth || h + tileheight > tilesetHeight)
-						//	continue; // sometimes the image file isn't 
 						Rectangle rect = new Rectangle(w * tilewidth, h * tileheight, tilewidth, tileheight);
-						Bitmap source = new Bitmap(image);
+						Bitmap source = new Bitmap(tileset.image);
 
 						Image cropped = source.Clone(rect, source.PixelFormat);
 						imageDict.Add(gid, cropped);
@@ -192,12 +188,45 @@ namespace MakerEngine {
 	}
 
 
+	class TileSet {
+
+		public String name;
+		public String file;
+		public int tilewidth, tileheight;
+		public int tilesetWidth, tilesetHeight;
+		public int gid;
+
+		public Image image;
+
+
+		public TileSet(XmlNode tilesetNode) {
+
+
+			XmlNode imageNode = tilesetNode.ChildNodes[0];
+			file = imageNode.Attributes["source"].InnerText;
+			image = Image.FromFile(file);
+
+			name = tilesetNode.Attributes["name"].InnerText;
+			gid = Int32.Parse(tilesetNode.Attributes["firstgid"].InnerText);
+
+			tilewidth = Int32.Parse(tilesetNode.Attributes["tilewidth"].InnerText);
+			tileheight = Int32.Parse(tilesetNode.Attributes["tileheight"].InnerText);
+
+			tilesetWidth = Int32.Parse(imageNode.Attributes["width"].InnerText);
+			tilesetHeight = Int32.Parse(imageNode.Attributes["height"].InnerText);
+		}
+	}
+
+
 	class Layer {
 
 		public String name;
 		public int width, height;
 		public List<List<int>> data;
 
+		/// <summary>
+		/// Fully realized image of this layer. 
+		/// </summary>
 		public Image image;
 
 

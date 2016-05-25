@@ -405,6 +405,7 @@
 			this.treeView_MapLegend.Size = new System.Drawing.Size(284, 347);
 			this.treeView_MapLegend.TabIndex = 0;
 			this.treeView_MapLegend.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.treeView_MapLegend_MouseDoubleClick);
+			this.treeView_MapLegend.MouseDown += new System.Windows.Forms.MouseEventHandler(this.treeView_MapLegend_MouseDown);
 			// 
 			// label6
 			// 
@@ -751,7 +752,7 @@
 			// button_LoadSprite
 			// 
 			this.button_LoadSprite.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.button_LoadSprite.Location = new System.Drawing.Point(787, 626);
+			this.button_LoadSprite.Location = new System.Drawing.Point(787, 403);
 			this.button_LoadSprite.Name = "button_LoadSprite";
 			this.button_LoadSprite.Size = new System.Drawing.Size(75, 23);
 			this.button_LoadSprite.TabIndex = 8;

@@ -20,6 +20,8 @@ namespace MakerEngine {
 		XmlDocument tmx;
 
 		private String name;
+		public String file;
+
 		public String orientation;
 		/// <summary>
 		/// In tiles (not pixels)!
@@ -36,8 +38,9 @@ namespace MakerEngine {
 
 		public TMXFile(String tmxfile, String mapName) {
 
+			file = tmxfile;
 			tmx = new XmlDocument();
-			tmx.Load(tmxfile);
+			tmx.Load(file);
 
 			name = mapName;
 			loadMapDescription();

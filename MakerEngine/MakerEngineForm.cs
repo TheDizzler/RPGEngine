@@ -642,8 +642,12 @@ namespace MakerEngine {
 			TreeMapXMLNode tmxl = ((TreeMapXMLNode)treeView_MapLegend.SelectedNode);
 			selectedMapNode = tmxl.node;
 
-			if (mapTMX != null && mapTMX == tmxl.tmxFile)
-				return;
+			if (mapTMX != null) {
+				if (mapTMX == tmxl.tmxFile)
+					return;
+				mapTMX.Dispose();
+
+			}
 
 			mapTMX = tmxl.tmxFile;
 
@@ -654,7 +658,10 @@ namespace MakerEngine {
 
 		private void loadMap(XmlNode mapNode) {
 
-			if (mapTMX == null) // load .tmx file
+			if (pictureBox_Map.Image != null)
+				pictureBox_Map.Image.Dispose();
+
+			//if (mapTMX == null) // load .tmx file
 				mapTMX = new TMXFile(gameDirectory + mapNode.Attributes["file"].InnerText, mapNode.Attributes["name"].InnerText, false);
 
 			this.tableLayoutPanel_LayersGroupBox.Controls.Clear();
@@ -707,8 +714,8 @@ namespace MakerEngine {
 				this.tabControl_ImageViewer.Controls.Add(newTab);
 			}
 
-			if (pictureBox_Map.Image != null)
-				pictureBox_Map.Image.Dispose();
+			//if (pictureBox_Map.Image != null)
+			//pictureBox_Map.Image.Dispose();
 			pictureBox_Map.Image = mapTMX.getMapImage(checkBoxes.ToArray());
 		}
 
@@ -719,9 +726,9 @@ namespace MakerEngine {
 
 				String tmxFile = openFileDialog_TMXFile.FileName;
 
-				int index = tmxFile.LastIndexOf('/');
-				if (index <= 0)
-					index = tmxFile.LastIndexOf('\\');
+				int lastIndexForwSlash = tmxFile.LastIndexOf('/');
+				int lastIndexBackSlash = tmxFile.LastIndexOf('\\');
+				int index = Math.Max(lastIndexBackSlash, lastIndexForwSlash);
 				int lastIndex = tmxFile.LastIndexOf('.');
 				int length = lastIndex - index;
 				String shortnameTMX = tmxFile.Substring(index + 1, length - 1);
@@ -742,8 +749,8 @@ namespace MakerEngine {
 
 				TreeMapXMLNode tmxl = new TreeMapXMLNode(importNode.Attributes["name"].InnerText, importNode);
 				treeView_MapLegend.Nodes.Add(tmxl);
-				//loadMap(importNode);
-				//tmxl.tmxFile = mapTMX;
+				
+				save();
 
 			}
 		}
@@ -780,8 +787,14 @@ namespace MakerEngine {
 			/* Create new MAP document and convert all tilesets used to dds. */
 			XmlDocument newMapDoc = newMAP.tmx;
 
+			int lastIndexBackSlash = tmxFile.LastIndexOf("\\");
+			int lastIndexForwSlash = tmxFile.LastIndexOf("/");
+			int lastIndex = Math.Max(lastIndexBackSlash, lastIndexForwSlash);
 
-			String outputDir = "assets/gfx/tmx";
+			//int lengthOfDir = tmxFile.Length - index;
+			String tmxDir = tmxFile.Substring(0, lastIndex + 1);
+			MessageBox.Show(tmxDir);
+			String outputDir = "assets/gfx/tmx/";
 
 			//foreach (TileSet tileset in newMAP.tilesets) {
 			foreach (XmlNode tilesetNode in newMapDoc.GetElementsByTagName("tileset")) {
@@ -789,7 +802,10 @@ namespace MakerEngine {
 				String source = tilesetNode.FirstChild.Attributes["source"].InnerText;
 				String tilename = tilesetNode.Attributes["name"].InnerText;
 
+				if (source[0] == '.') { // then it's relative path...grrr!
+					source = tmxDir + source;
 
+				}
 				String newFileName = convertToDDS(source, tilename, outputDir);
 				tilesetNode.FirstChild.Attributes["source"].InnerText = outputDir + newFileName;
 
@@ -854,7 +870,7 @@ namespace MakerEngine {
 				docSpriteFiles.Save(writer);
 			using (XmlWriter writer = XmlWriter.Create(gameDirectory + mapText))
 				docMapLegend.Save(writer);
-			newMAP.load();
+			//newMAP.load();
 			return newMAP;
 		}
 
@@ -975,9 +991,10 @@ namespace MakerEngine {
 
 					needSave(true);
 
-					int lastIndex = newFile.LastIndexOf("\\");
-					if (lastIndex <= 0)
-						lastIndex = newFile.LastIndexOf("/");
+					int lastIndexBackSlash = newFile.LastIndexOf("\\");
+					int lastIndexForwSlash = newFile.LastIndexOf("/");
+					int lastIndex = Math.Max(lastIndexBackSlash, lastIndexForwSlash);
+
 					String newFileName = newFile.Substring(lastIndex);
 					String newLoc = gameDirectory + outputDir + newFileName;
 
@@ -1152,10 +1169,12 @@ namespace MakerEngine {
 
 				String imagePath = openFileDialog_Sprite.FileName;
 				int indexDot = imagePath.Length - 3;
-				int lastIndex = imagePath.LastIndexOf("\\");
-					if (lastIndex <= 0)
-						lastIndex = imagePath.LastIndexOf("/");
-				String filename = imagePath.Substring(imagePath.LastIndexOf('\\') + 1);
+
+				int lastIndexBackSlash = imagePath.LastIndexOf("\\");
+				int lastIndexForwSlash = imagePath.LastIndexOf("/");
+				int lastIndex = Math.Max(lastIndexBackSlash, lastIndexForwSlash);
+
+				String filename = imagePath.Substring(lastIndex + 1);
 				String shortname = filename.Substring(0, filename.Length - 4);
 				String fileType = imagePath.Substring(indexDot);
 
@@ -1163,6 +1182,8 @@ namespace MakerEngine {
 
 				if (fileType != "dds") {
 					String newFileName = convertToDDS(imagePath, shortname, nodeDir);
+
+					// nothing happens here yet??
 				} else {
 
 					if (File.Exists(gameDirectory + nodeDir + filename)) {
@@ -1200,8 +1221,9 @@ namespace MakerEngine {
 
 			ProcessStartInfo start = new ProcessStartInfo();
 			start.FileName = texconv;
-			start.Arguments = /*" -o " + outputDir*/
-							  /*+ */" \"" + source + "\""; // having problems getting -o switch to work so manually moving files after creation
+			start.Arguments = "\"" + source + "\""; // having problems getting -o switch to work so manually moving files after creation
+													//start.Arguments += /*" -o " + outputDir*/
+													//" -f B8G8R8A8_UNORM";
 			start.WindowStyle = ProcessWindowStyle.Normal;
 			start.CreateNoWindow = false;
 			start.ErrorDialog = true;
@@ -1212,16 +1234,16 @@ namespace MakerEngine {
 
 				//int index = source.LastIndexOf('.');
 				String newFile = source.Substring(0, source.Length - 4) + ".dds";
-				int lastIndex = newFile.LastIndexOf("\\");
-				if (lastIndex <= 0)
-					lastIndex = newFile.LastIndexOf("/");
-				String newFileName = newFile.Substring(lastIndex);
+				int lastIndexBackSlash = newFile.LastIndexOf("\\");
+				int lastIndexForwSlash = newFile.LastIndexOf("/");
+				int lastIndex = Math.Max(lastIndexBackSlash, lastIndexForwSlash);
+				String newFileName = newFile.Substring(lastIndex + 1);
 				String newLoc = gameDirectory + outputDir + newFileName;
 
 				//tilesetNode.FirstChild.Attributes["source"].InnerText = outputDir + newFileName;
 
 
-				if (!File.Exists(newFile) || proc.ExitCode != 0) { // don't think this ever occurs :/
+				if (!File.Exists(newFile) || proc.ExitCode != 0) {
 					MessageBox.Show(this, "Could not convert " + tilename + " to DDS!", "Error!",
 						MessageBoxButtons.OK, MessageBoxIcon.Error);
 					return newFileName;
@@ -1248,9 +1270,13 @@ namespace MakerEngine {
 
 
 				} catch (IOException ex) {
-					// probably already exists, don't worry about it just continue
-					MessageBox.Show("Cannot move " + tilename + ". Does it already exist?");
-					File.Delete(newFile);
+					// probably already exists
+					if (MessageBox.Show(this, tilename + " already exists in. Overwrite?", "Action needed", MessageBoxButtons.YesNo)
+						== DialogResult.Yes) {
+						File.Delete(newLoc);
+						File.Move(newFile, newLoc);
+					} else
+						File.Delete(newFile);
 				}
 				return newFileName;
 			}

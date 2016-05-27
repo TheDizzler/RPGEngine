@@ -30,9 +30,9 @@ The creation tool edits XML files that are parsed by the RPG engine.
 >
 > Maker Engine
 >- Create, edit and save full dialog flow (mostly done: changes likely needed when linking to game objects)
->- Load dds gfx assets and save xml for engine
->- parse .tmx files (Tiled Map Editor) and view (edit?)
->- convert graphic files used in .tmx to .dds
+>- ~~Load dds gfx assets and save xml for engine~~
+>- ~~parse .tmx files (Tiled Map Editor) and view (edit?)~~
+>- ~~convert graphic files used in .tmx to .dds~~
 >- ~~Map creation and~~ linking to game text (npc chatting, triggered events, gfx)
 >- preview loaded spritefonts (possible??)
 

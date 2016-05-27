@@ -15,7 +15,7 @@ namespace MakerEngine {
 	/// Main form is getting bloated so I'm encapsulating functions based around
 	/// tmx/map files here.
 	/// </summary>
-	class TMXFile {
+	class TMXFile : IDisposable {
 
 		public XmlDocument tmx;
 
@@ -30,11 +30,11 @@ namespace MakerEngine {
 		public int tileWidth, tileHeight;
 
 		public List<TileSet> tilesets;
-		//public Dictionary<String, Image> tilesetDict;
 		public Dictionary<int, Image> imageDict;
-
 		public List<Layer> layers;
 
+		public String layerImageDir = MakerEngineForm.gameDirectory + MakerEngineForm.mapDir + @"tempimgs\";
+		public String missingNOImg = MakerEngineForm.gameDirectory + MakerEngineForm.gfxDir + "missingNO.dds";
 
 		public TMXFile(String mapfile, String mapName, bool converting) {
 
@@ -94,6 +94,11 @@ namespace MakerEngine {
 
 			foreach (XmlNode tilesetNode in tmx.GetElementsByTagName("tileset")) {
 
+				String file = MakerEngineForm.gameDirectory + tilesetNode.ChildNodes[0].Attributes["source"].InnerText;
+				if (!File.Exists(file)) {
+					//MessageBox.Show("Cannot find tileset image " + file);
+					continue;
+				}
 				TileSet tileset = new TileSet(tilesetNode);
 				tilesets.Add(tileset);
 
@@ -140,15 +145,21 @@ namespace MakerEngine {
 					for (int i = 0; i < mapWidth; ++i) {
 
 						int key = layer.data[j][i];
-						if (key != 0)
+						if (key != 0) {
+							//Image tileImg;
+							if (!imageDict.ContainsKey(key))
+								imageDict[key] = new S16.Drawing.DDSImage(File.ReadAllBytes(missingNOImg)).BitmapImage;
 							g.DrawImage(imageDict[key], new Point(i * tileWidth, j * tileHeight));
+						}
 
 					}
 				}
-				String dir = @"D:\github projects\" + name + @"tempimgs\";
+				String dir = layerImageDir;
 				if (!Directory.Exists(dir))
 					Directory.CreateDirectory(dir);
 				outputFileName = dir + layer.name + " Layer.png";
+				//if (File.Exists(outputFileName))
+				//	File.Delete(outputFileName);
 				using (MemoryStream memory = new MemoryStream()) {
 					using (FileStream fs = new FileStream(outputFileName, FileMode.Create, FileAccess.ReadWrite)) {
 						img.Save(memory, ImageFormat.Png);
@@ -163,7 +174,6 @@ namespace MakerEngine {
 
 
 		}
-
 
 		public Image getMapImage(CheckBox[] checkBox) {
 
@@ -182,7 +192,7 @@ namespace MakerEngine {
 
 			}
 
-			String dir = @"D:\github projects\" + name + @"tempimgs\";
+			String dir = layerImageDir;
 			String outputFileName = dir + "final.png";
 
 			using (MemoryStream memory = new MemoryStream()) {
@@ -200,6 +210,19 @@ namespace MakerEngine {
 
 		}
 
+
+		public void Dispose() {
+
+			foreach (Layer layer in layers) {
+				layer.data.Clear();
+				layer.image.Dispose();
+				File.Delete(layerImageDir + layer.name + " Layer.png");
+			}
+
+			layers.Clear();
+			imageDict.Clear();
+			tilesets.Clear();
+		}
 	}
 
 
@@ -225,7 +248,7 @@ namespace MakerEngine {
 			S16.Drawing.DDSImage ddsImage = new S16.Drawing.DDSImage(File.ReadAllBytes(file));
 			image = ddsImage.BitmapImage;
 
-			
+
 
 			name = tilesetNode.Attributes["name"].InnerText;
 			gid = Int32.Parse(tilesetNode.Attributes["firstgid"].InnerText);

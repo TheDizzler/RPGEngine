@@ -29,7 +29,7 @@ namespace MakerEngine {
 		public static String spriteText = "assets/text/SpriteFiles.xml";
 		public static String mapText = "assets/text/MapLegend.xml";
 
-		String texconv = "\"D:\\github projects\\RPGEngine\\assets\\gfx\\texconv\\texconv.exe\"";
+		String texconv = "\"D:/github projects/RPGEngine/assets/gfx/texconv/texconv.exe\"";
 
 		XmlDocument docDialogText;
 		XmlNode selectedTextNode;
@@ -41,6 +41,9 @@ namespace MakerEngine {
 
 		XmlDocument docMapLegend;
 		XmlNode selectedMapNode;
+		TreeXMLNode selectedMapTreeNode;
+
+
 		TMXFile mapTMX;
 
 
@@ -661,8 +664,8 @@ namespace MakerEngine {
 			if (pictureBox_Map.Image != null)
 				pictureBox_Map.Image.Dispose();
 
-			//if (mapTMX == null) // load .tmx file
-				mapTMX = new TMXFile(gameDirectory + mapNode.Attributes["file"].InnerText, mapNode.Attributes["name"].InnerText, false);
+			// load .tmx file
+			mapTMX = new TMXFile(gameDirectory + mapNode.Attributes["file"].InnerText, mapNode.Attributes["name"].InnerText, false);
 
 			this.tableLayoutPanel_LayersGroupBox.Controls.Clear();
 			this.checkBoxes.Clear();
@@ -714,9 +717,46 @@ namespace MakerEngine {
 				this.tabControl_ImageViewer.Controls.Add(newTab);
 			}
 
-			//if (pictureBox_Map.Image != null)
-			//pictureBox_Map.Image.Dispose();
 			pictureBox_Map.Image = mapTMX.getMapImage(checkBoxes.ToArray());
+		}
+
+
+		/// <summary>
+		/// Remove map from game.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void toolStripMenuItem_RemoveMap_Click(Object sender, EventArgs e) {
+
+			if (selectedMapTreeNode == null)
+				return;
+
+			String selectedName = selectedMapTreeNode.node.Attributes["name"].InnerText;
+			XmlNode root = docMapLegend.GetElementsByTagName("root")[0];
+
+			foreach (XmlNode node in root.ChildNodes) {
+				if (node.Attributes["name"].InnerText == selectedName) {
+					switch (MessageBox.Show(this, "Click 'Yes' to permanently delete this map." +
+						"\nClick 'No' to only remove this map from the game.",
+						"Action Required", MessageBoxButtons.YesNoCancel)) {
+						case DialogResult.No:
+							node.ParentNode.RemoveChild(node);
+							treeView_MapLegend.Nodes.Remove(selectedMapTreeNode);
+							needSave(true);
+							return;
+
+						case DialogResult.Yes:
+							File.Delete(gameDirectory + node.Attributes["file"].InnerText);
+							node.ParentNode.RemoveChild(node);
+							treeView_MapLegend.Nodes.Remove(selectedMapTreeNode);
+							save();
+							return;
+
+						case DialogResult.Cancel:
+							return;
+					}
+				}
+			}
 		}
 
 
@@ -749,7 +789,7 @@ namespace MakerEngine {
 
 				TreeMapXMLNode tmxl = new TreeMapXMLNode(importNode.Attributes["name"].InnerText, importNode);
 				treeView_MapLegend.Nodes.Add(tmxl);
-				
+
 				save();
 
 			}
@@ -757,14 +797,6 @@ namespace MakerEngine {
 
 		private TMXFile convertTMXtoMAP(String tmxFile, String shortnameTMX) {
 
-
-			//int index = tmxFile.LastIndexOf('/');
-			//if (index <= 0)
-			//	index = tmxFile.LastIndexOf('\\');
-
-			//String name = tmxFile.Substring(index + 1, tmxFile.Length - 4);
-
-			//String newMapFile = mapDir + shortnameTMX + ".map";
 			String newMapAbsoluteFile = gameDirectory + mapDir + shortnameTMX + ".map";
 
 			if (File.Exists(newMapAbsoluteFile)) {
@@ -791,78 +823,32 @@ namespace MakerEngine {
 			int lastIndexForwSlash = tmxFile.LastIndexOf("/");
 			int lastIndex = Math.Max(lastIndexBackSlash, lastIndexForwSlash);
 
-			//int lengthOfDir = tmxFile.Length - index;
-			String tmxDir = tmxFile.Substring(0, lastIndex + 1);
-			MessageBox.Show(tmxDir);
+
+			String tmxDir = tmxFile.Substring(0, lastIndex);
+
+			lastIndexBackSlash = tmxDir.LastIndexOf("\\");
+			lastIndexForwSlash = tmxDir.LastIndexOf("/");
+			 lastIndex = Math.Max(lastIndexBackSlash, lastIndexForwSlash);
+
+			String tmxDirParent = tmxDir.Substring(0, lastIndex);
+			tmxDirParent = tmxDirParent.Replace('\\','/');
 			String outputDir = "assets/gfx/tmx/";
 
-			//foreach (TileSet tileset in newMAP.tilesets) {
 			foreach (XmlNode tilesetNode in newMapDoc.GetElementsByTagName("tileset")) {
 
 				String source = tilesetNode.FirstChild.Attributes["source"].InnerText;
 				String tilename = tilesetNode.Attributes["name"].InnerText;
 
 				if (source[0] == '.') { // then it's relative path...grrr!
-					source = tmxDir + source;
-
+					
+					source = tmxDirParent + source.Substring(2);
+					MessageBox.Show(source);
 				}
+
 				String newFileName = convertToDDS(source, tilename, outputDir);
 				tilesetNode.FirstChild.Attributes["source"].InnerText = outputDir + newFileName;
 
-				//ProcessStartInfo start = new ProcessStartInfo();
-				//start.FileName = texconv;
-				//start.Arguments = /*" -o " + outputDir*/
-				//				  /*+ */" \"" + source + "\""; // having problems getting -o switch to work so manually moving files after creation
-				//start.WindowStyle = ProcessWindowStyle.Normal;
-				//start.CreateNoWindow = false;
-				//start.ErrorDialog = true;
 
-				//using (Process proc = Process.Start(start)) {
-
-				//	proc.WaitForExit();
-
-				//	int index = source.LastIndexOf('.');
-				//	String newFile = source.Substring(0, source.Length - 4) + ".dds";
-
-
-				//	String newFileName = newFile.Substring(newFile.LastIndexOf("/"));
-				//	String newLoc = gameDirectory + outputDir + newFileName;
-
-				//	tilesetNode.FirstChild.Attributes["source"].InnerText = outputDir + newFileName;
-
-
-				//	if (!File.Exists(newFile) || proc.ExitCode != 0) { // don't think this ever occurs :/
-				//		MessageBox.Show(this, "Could not convert " + tilename + " to DDS!", "Error!",
-				//			MessageBoxButtons.OK, MessageBoxIcon.Error);
-				//		continue;
-				//	}
-
-
-				//	needSave(true);
-
-
-				//	try {
-				//		File.Move(newFile, newLoc);
-
-				//		String dt = "<sprite name=\"" + tilename
-				//			+ "\" file=\"" + outputDir + newFileName + "\" />";
-
-				//		XmlDocument newXml = new XmlDocument();
-				//		newXml.Load(new StringReader(dt));
-
-				//		XmlNode newNode = newXml.DocumentElement;
-				//		XmlNode importNode = docSpriteFiles.ImportNode(newNode, true);
-
-				//		XmlNode sf = docSpriteFiles.GetElementsByTagName("tmx")[0];
-				//		sf.AppendChild(importNode);
-
-
-				//	} catch (IOException ex) {
-				//		// probably already exists, don't worry about it just continue
-				//		MessageBox.Show("Cannot move " + tilename + ". Does it already exist?");
-				//		File.Delete(newFile);
-				//	}
-				//}
 			}
 			using (XmlWriter writer = XmlWriter.Create(newMapAbsoluteFile))
 				newMapDoc.Save(writer);
@@ -870,16 +856,10 @@ namespace MakerEngine {
 				docSpriteFiles.Save(writer);
 			using (XmlWriter writer = XmlWriter.Create(gameDirectory + mapText))
 				docMapLegend.Save(writer);
-			//newMAP.load();
+
 			return newMAP;
 		}
 
-
-
-
-		private void toolStripMenuItem_RemoveMap_Click(Object sender, EventArgs e) {
-
-		}
 
 		private void checkBoxLayerSelect_CheckedChanged(Object sender, EventArgs e) {
 
@@ -926,9 +906,9 @@ namespace MakerEngine {
 
 			if (e.Button == MouseButtons.Right) {
 
-				TreeXMLNode selected = (TreeXMLNode)treeView_MapLegend.GetNodeAt(e.Location);
+				selectedMapTreeNode = (TreeXMLNode)treeView_MapLegend.GetNodeAt(e.Location);
 
-				if (selected == null) {
+				if (selectedMapTreeNode == null) {
 					this.toolStripMenuItem_AddMap.Enabled = true;
 					this.toolStripMenuItem_RemoveMap.Enabled = false;
 				} else {
@@ -1222,8 +1202,8 @@ namespace MakerEngine {
 			ProcessStartInfo start = new ProcessStartInfo();
 			start.FileName = texconv;
 			start.Arguments = "\"" + source + "\""; // having problems getting -o switch to work so manually moving files after creation
-													//start.Arguments += /*" -o " + outputDir*/
-													//" -f B8G8R8A8_UNORM";
+			/*start.Arguments += " -o " + outputDir;*/
+			start.Arguments += " -f B8G8R8A8_UNORM";
 			start.WindowStyle = ProcessWindowStyle.Normal;
 			start.CreateNoWindow = false;
 			start.ErrorDialog = true;
@@ -1232,7 +1212,6 @@ namespace MakerEngine {
 
 				proc.WaitForExit();
 
-				//int index = source.LastIndexOf('.');
 				String newFile = source.Substring(0, source.Length - 4) + ".dds";
 				int lastIndexBackSlash = newFile.LastIndexOf("\\");
 				int lastIndexForwSlash = newFile.LastIndexOf("/");

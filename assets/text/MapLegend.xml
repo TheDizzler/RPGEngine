@@ -1,5 +1,1 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<root game="First RPG" xml="Map Legend">
-	<map name="map2" file="assets/text/maps/map2.map" />
-	<map name="testmap" file="assets/text/maps/testmap.map" />
-</root>
+﻿<?xml version="1.0" encoding="utf-8"?><root game="First RPG" xml="Map Legend"><map name="testmap" file="assets/text/maps/testmap.map" /><map name="map2" file="assets/text/maps/map2.map" /><map name="Androsynth station" file="assets/text/maps/Androsynth station.map" /></root>

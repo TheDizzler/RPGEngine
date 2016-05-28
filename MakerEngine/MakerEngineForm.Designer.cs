@@ -104,6 +104,9 @@
 			this.contextMenuStrip_SpriteTree = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.newCategoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.convertToDDSToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.tabControl_LayerControls = new System.Windows.Forms.TabControl();
+			this.tabPage2 = new System.Windows.Forms.TabPage();
+			this.tabPage_ObjectLayers = new System.Windows.Forms.TabPage();
 			this.menuStrip1.SuspendLayout();
 			this.tabControl.SuspendLayout();
 			this.tabPage_Dialog.SuspendLayout();
@@ -141,6 +144,8 @@
 			this.contextMenuStrip_MapLegend.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox_NeedSave)).BeginInit();
 			this.contextMenuStrip_SpriteTree.SuspendLayout();
+			this.tabControl_LayerControls.SuspendLayout();
+			this.tabPage2.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// menuStrip1
@@ -621,7 +626,7 @@
 			// 
 			// splitContainer_MapTools.Panel1
 			// 
-			this.splitContainer_MapTools.Panel1.Controls.Add(this.panel_LayerSelect);
+			this.splitContainer_MapTools.Panel1.Controls.Add(this.tabControl_LayerControls);
 			// 
 			// splitContainer_MapTools.Panel2
 			// 
@@ -635,9 +640,9 @@
 			this.panel_LayerSelect.AutoSize = true;
 			this.panel_LayerSelect.Controls.Add(this.groupBox_LayersGroupBox);
 			this.panel_LayerSelect.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.panel_LayerSelect.Location = new System.Drawing.Point(0, 0);
+			this.panel_LayerSelect.Location = new System.Drawing.Point(3, 3);
 			this.panel_LayerSelect.Name = "panel_LayerSelect";
-			this.panel_LayerSelect.Size = new System.Drawing.Size(325, 294);
+			this.panel_LayerSelect.Size = new System.Drawing.Size(186, 68);
 			this.panel_LayerSelect.TabIndex = 4;
 			// 
 			// groupBox_LayersGroupBox
@@ -648,7 +653,7 @@
 			this.groupBox_LayersGroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.groupBox_LayersGroupBox.Location = new System.Drawing.Point(0, 0);
 			this.groupBox_LayersGroupBox.Name = "groupBox_LayersGroupBox";
-			this.groupBox_LayersGroupBox.Size = new System.Drawing.Size(325, 294);
+			this.groupBox_LayersGroupBox.Size = new System.Drawing.Size(186, 68);
 			this.groupBox_LayersGroupBox.TabIndex = 0;
 			this.groupBox_LayersGroupBox.TabStop = false;
 			this.groupBox_LayersGroupBox.Text = "Layers";
@@ -663,7 +668,7 @@
 			this.tableLayoutPanel_LayersGroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.tableLayoutPanel_LayersGroupBox.Location = new System.Drawing.Point(3, 16);
 			this.tableLayoutPanel_LayersGroupBox.Name = "tableLayoutPanel_LayersGroupBox";
-			this.tableLayoutPanel_LayersGroupBox.Size = new System.Drawing.Size(319, 275);
+			this.tableLayoutPanel_LayersGroupBox.Size = new System.Drawing.Size(180, 49);
 			this.tableLayoutPanel_LayersGroupBox.TabIndex = 0;
 			// 
 			// tabControl_ImageViewer
@@ -918,19 +923,19 @@
             this.deleteLocationToolStripMenuItem});
 			this.contextMenuStrip_ZoneText.Name = "contextMenuStrip_ZoneText";
 			this.contextMenuStrip_ZoneText.ShowImageMargin = false;
-			this.contextMenuStrip_ZoneText.Size = new System.Drawing.Size(128, 70);
+			this.contextMenuStrip_ZoneText.Size = new System.Drawing.Size(123, 48);
 			// 
 			// newLocationToolStripMenuItem
 			// 
 			this.newLocationToolStripMenuItem.Name = "newLocationToolStripMenuItem";
-			this.newLocationToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+			this.newLocationToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
 			this.newLocationToolStripMenuItem.Text = "New Location";
 			this.newLocationToolStripMenuItem.Click += new System.EventHandler(this.newLocationToolStripMenuItem_Click);
 			// 
 			// deleteLocationToolStripMenuItem
 			// 
 			this.deleteLocationToolStripMenuItem.Name = "deleteLocationToolStripMenuItem";
-			this.deleteLocationToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+			this.deleteLocationToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
 			this.deleteLocationToolStripMenuItem.Text = "Delete Zone";
 			// 
 			// imageTMXList
@@ -1003,6 +1008,39 @@
 			this.convertToDDSToolStripMenuItem.Text = "Add Image File";
 			this.convertToDDSToolStripMenuItem.Click += new System.EventHandler(this.addImageFileToolStripMenuItem_Click);
 			// 
+			// tabControl_LayerControls
+			// 
+			this.tabControl_LayerControls.Controls.Add(this.tabPage2);
+			this.tabControl_LayerControls.Controls.Add(this.tabPage_ObjectLayers);
+			this.tabControl_LayerControls.Location = new System.Drawing.Point(4, 3);
+			this.tabControl_LayerControls.Name = "tabControl_LayerControls";
+			this.tabControl_LayerControls.SelectedIndex = 0;
+			this.tabControl_LayerControls.Size = new System.Drawing.Size(200, 100);
+			this.tabControl_LayerControls.TabIndex = 1;
+			// 
+			// tabPage2
+			// 
+			this.tabPage2.AutoScroll = true;
+			this.tabPage2.Controls.Add(this.panel_LayerSelect);
+			this.tabPage2.Location = new System.Drawing.Point(4, 22);
+			this.tabPage2.Name = "tabPage2";
+			this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+			this.tabPage2.Size = new System.Drawing.Size(192, 74);
+			this.tabPage2.TabIndex = 0;
+			this.tabPage2.Text = "tabPage_Layers";
+			this.tabPage2.UseVisualStyleBackColor = true;
+			// 
+			// tabPage_ObjectLayers
+			// 
+			this.tabPage_ObjectLayers.AutoScroll = true;
+			this.tabPage_ObjectLayers.Location = new System.Drawing.Point(4, 22);
+			this.tabPage_ObjectLayers.Name = "tabPage_ObjectLayers";
+			this.tabPage_ObjectLayers.Padding = new System.Windows.Forms.Padding(3);
+			this.tabPage_ObjectLayers.Size = new System.Drawing.Size(192, 74);
+			this.tabPage_ObjectLayers.TabIndex = 1;
+			this.tabPage_ObjectLayers.Text = "tabPage3";
+			this.tabPage_ObjectLayers.UseVisualStyleBackColor = true;
+			// 
 			// MakerEngineForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1048,7 +1086,6 @@
 			this.panel_PictureBoxHolder.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox_Map)).EndInit();
 			this.splitContainer_MapTools.Panel1.ResumeLayout(false);
-			this.splitContainer_MapTools.Panel1.PerformLayout();
 			this.splitContainer_MapTools.Panel2.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer_MapTools)).EndInit();
 			this.splitContainer_MapTools.ResumeLayout(false);
@@ -1066,6 +1103,9 @@
 			this.contextMenuStrip_MapLegend.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox_NeedSave)).EndInit();
 			this.contextMenuStrip_SpriteTree.ResumeLayout(false);
+			this.tabControl_LayerControls.ResumeLayout(false);
+			this.tabPage2.ResumeLayout(false);
+			this.tabPage2.PerformLayout();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -1152,6 +1192,9 @@
 		private System.Windows.Forms.ContextMenuStrip contextMenuStrip_SpriteTree;
 		private System.Windows.Forms.ToolStripMenuItem newCategoryToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem convertToDDSToolStripMenuItem;
+		private System.Windows.Forms.TabControl tabControl_LayerControls;
+		private System.Windows.Forms.TabPage tabPage2;
+		private System.Windows.Forms.TabPage tabPage_ObjectLayers;
 	}
 }
 

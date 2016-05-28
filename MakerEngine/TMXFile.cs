@@ -32,6 +32,8 @@ namespace MakerEngine {
 		public List<TileSet> tilesets;
 		public Dictionary<int, Image> imageDict;
 		public List<Layer> layers;
+		public List<ObjectLayer> objectLayers;
+
 
 		public String layerImageDir = MakerEngineForm.gameDirectory + MakerEngineForm.mapDir + @"tempimgs\";
 		public String missingNOImg = MakerEngineForm.gameDirectory + MakerEngineForm.gfxDir + "missingNO.dds";
@@ -72,6 +74,13 @@ namespace MakerEngine {
 				layers.Add(layer);
 			}
 
+			objectLayers = new List<ObjectLayer>();
+			foreach (XmlNode objLayer in tmx.GetElementsByTagName("objectgroup")) {
+
+				objectLayers.Add(new ObjectLayer(objLayer));
+
+			}
+
 		}
 
 		private void loadMapDescription() {
@@ -88,7 +97,6 @@ namespace MakerEngine {
 		private void loadTilesets() {
 
 			tilesets = new List<TileSet>();
-			//tilesetDict = new Dictionary<String, Image>();
 			imageDict = new Dictionary<int, Image>();
 
 
@@ -102,7 +110,6 @@ namespace MakerEngine {
 				TileSet tileset = new TileSet(tilesetNode);
 				tilesets.Add(tileset);
 
-				////tilesetDict.Add(tileset.Attributes["name"].InnerText, image);
 				int gid = Int32.Parse(tilesetNode.Attributes["firstgid"].InnerText);
 
 				int tilewidth = Int32.Parse(tilesetNode.Attributes["tilewidth"].InnerText);
@@ -158,8 +165,7 @@ namespace MakerEngine {
 				if (!Directory.Exists(dir))
 					Directory.CreateDirectory(dir);
 				outputFileName = dir + layer.name + " Layer.png";
-				//if (File.Exists(outputFileName))
-				//	File.Delete(outputFileName);
+
 				using (MemoryStream memory = new MemoryStream()) {
 					using (FileStream fs = new FileStream(outputFileName, FileMode.Create, FileAccess.ReadWrite)) {
 						img.Save(memory, ImageFormat.Png);
@@ -172,10 +178,40 @@ namespace MakerEngine {
 				img.Dispose();
 			}
 
+			foreach (ObjectLayer objLayer in objectLayers) {
+
+				Image img = new Bitmap(width, height, PixelFormat.Format32bppPArgb);
+				Graphics g = Graphics.FromImage(img);
+
+
+				foreach (ObjectLayer.GameObject gameObj in objLayer.gameObjects) {
+
+					if (gameObj.gid == -1)
+						g.DrawRectangle(Pens.Firebrick, gameObj.getRect());
+					else
+						g.DrawImage(imageDict[gameObj.gid], new Point(gameObj.x, gameObj.y));
+				}
+
+				String dir = layerImageDir;
+				if (!Directory.Exists(dir))
+					Directory.CreateDirectory(dir);
+				outputFileName = dir + objLayer.name + " Layer.png";
+				using (MemoryStream memory = new MemoryStream()) {
+					using (FileStream fs = new FileStream(outputFileName, FileMode.Create, FileAccess.ReadWrite)) {
+						img.Save(memory, ImageFormat.Png);
+						byte[] bytes = memory.ToArray();
+						fs.Write(bytes, 0, bytes.Length);
+					}
+				}
+				objLayer.image = Image.FromFile(outputFileName);
+				g.Dispose();
+				img.Dispose();
+			}
+
 
 		}
 
-		public Image getMapImage(CheckBox[] checkBox) {
+		public Image getMapImage(CheckBox[] layerCheckBox, CheckBox[] objLayerCheckBox) {
 
 
 			int width = mapWidth * tileWidth;
@@ -185,10 +221,17 @@ namespace MakerEngine {
 			//g.Clear(SystemColors.AppWorkspace);
 
 
-			for (int i = 0; i < checkBox.Length; ++i) {
+			for (int i = 0; i < layerCheckBox.Length; ++i) {
 
-				if (checkBox[i].Checked)
+				if (layerCheckBox[i].Checked)
 					g.DrawImage(layers[i].image, new Point(0, 0));
+
+			}
+
+			for (int i = 0; i < objLayerCheckBox.Length; ++i) {
+
+				if (objLayerCheckBox[i].Checked)
+					g.DrawImage(objLayers[i].image, new Point(0, 0));
 
 			}
 
@@ -236,6 +279,8 @@ namespace MakerEngine {
 
 		public Image image;
 
+		public List<Animation> animations;
+
 
 		public TileSet(XmlNode tilesetNode) {
 
@@ -243,8 +288,6 @@ namespace MakerEngine {
 			XmlNode imageNode = tilesetNode.ChildNodes[0];
 			file = MakerEngineForm.gameDirectory + imageNode.Attributes["source"].InnerText;
 
-			//String ddsFile = openFileDialog_Sprite.FileName;
-			//image = Image.FromFile(file);
 			S16.Drawing.DDSImage ddsImage = new S16.Drawing.DDSImage(File.ReadAllBytes(file));
 			image = ddsImage.BitmapImage;
 
@@ -258,9 +301,61 @@ namespace MakerEngine {
 
 			tilesetWidth = Int32.Parse(imageNode.Attributes["width"].InnerText);
 			tilesetHeight = Int32.Parse(imageNode.Attributes["height"].InnerText);
-		}
-	}
 
+
+			while ((imageNode = imageNode.NextSibling) != null) {
+
+				if (animations == null)
+					animations = new List<Animation>();
+
+				foreach (XmlNode aniNode in imageNode.ChildNodes) {
+
+					animations.Add(new Animation(aniNode));
+				}
+
+			}
+
+		}
+
+
+		public class Animation {
+
+			int tileID;
+			List<Frame> frames;
+
+			public Animation(XmlNode aniNode) {
+
+				tileID = Int32.Parse(aniNode.Attributes["id"].InnerText);
+
+				frames = new List<Frame>();
+
+				foreach (XmlNode frameNode in aniNode.ChildNodes)
+					frames.Add(new Frame(frameNode));
+
+			}
+
+		}
+
+		class Frame {
+
+			/// <summary>
+			/// The tile id tha this frame displays.
+			/// </summary>
+			int tileid;
+			/// <summary>
+			/// Length in ms that this frame stays drawn.
+			/// </summary>
+			int duration;
+
+
+			public Frame(XmlNode frameNode) {
+
+				tileid = Int32.Parse(frameNode.Attributes["tileid"].InnerText);
+				duration = Int32.Parse(frameNode.Attributes["duration"].InnerText);
+			}
+		}
+
+	}
 
 	class Layer {
 
@@ -327,4 +422,69 @@ namespace MakerEngine {
 			}
 		}
 	}
+
+
+	class ObjectLayer {
+
+		public String name;
+
+		public List<GameObject> gameObjects;
+		/// <summary>
+		/// Fully realized image of this layer. 
+		/// </summary>
+		public Image image;
+
+
+		public ObjectLayer(XmlNode layerNode) {
+
+			name = layerNode.Attributes["name"].InnerText;
+
+			gameObjects = new List<GameObject>();
+
+			foreach (XmlNode obj in layerNode.ChildNodes)
+				gameObjects.Add(new GameObject(obj));
+
+		}
+
+
+		public class GameObject {
+
+			public String name;
+			public int id;
+
+			/// <summary>
+			/// ID of tile representing this object.
+			/// </summary>
+			public int gid = -1;
+			/// <summary>
+			/// Top-left coordinates of rect
+			/// </summary>
+			public int x, y;
+			public int width, height;
+
+
+			public GameObject(XmlNode objNode) {
+
+				name = objNode.Attributes["name"].InnerText;
+				id = Int32.Parse(objNode.Attributes["id"].InnerText);
+
+				if (objNode.Attributes["gid"] != null)
+					gid = Int32.Parse(objNode.Attributes["gid"].InnerText);
+
+				x = Int32.Parse(objNode.Attributes["x"].InnerText);
+				y = Int32.Parse(objNode.Attributes["y"].InnerText);
+				width = Int32.Parse(objNode.Attributes["width"].InnerText);
+				height = Int32.Parse(objNode.Attributes["height"].InnerText);
+			}
+
+
+			public Rectangle getRect() {
+
+				return new Rectangle(x, y, width, height);
+			}
+
+		}
+	}
+
+
 }

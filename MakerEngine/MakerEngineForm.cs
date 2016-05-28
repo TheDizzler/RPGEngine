@@ -684,6 +684,15 @@ namespace MakerEngine {
 				this.checkBoxes.Add(cb);
 			}
 
+			foreach (ObjectLayer objLayer in mapTMX.objectLayers) {
+				CheckBox cb = new CheckBox();
+
+				cb.Text = objLayer.name;
+				cb.Checked = true;
+				cb.CheckedChanged += new System.EventHandler(this.checkBoxLayerSelect_CheckedChanged);
+				this.tableLayoutPanel_LayersGroupBox.Controls.Add(cb, 0, row++);
+				this.checkBoxes.Add(cb);
+			}
 
 			textBox_MapName.Text = mapNode.Attributes["file"].InnerText;
 			textBox_Orientation.Text = mapTMX.orientation;
@@ -842,7 +851,7 @@ namespace MakerEngine {
 				if (source[0] == '.') { // then it's relative path...grrr!
 					
 					source = tmxDirParent + source.Substring(2);
-					MessageBox.Show(source);
+					//MessageBox.Show(source);
 				}
 
 				String newFileName = convertToDDS(source, tilename, outputDir);

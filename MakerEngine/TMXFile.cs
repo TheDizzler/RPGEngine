@@ -32,7 +32,7 @@ namespace MakerEngine {
 		public List<TileSet> tilesets;
 		public Dictionary<int, Image> imageDict;
 		public List<Layer> layers;
-		public List<ObjectLayer> objectLayers;
+		//public List<ObjectLayer> objectLayers;
 
 
 		public String layerImageDir = MakerEngineForm.gameDirectory + MakerEngineForm.mapDir + @"tempimgs\";
@@ -68,19 +68,17 @@ namespace MakerEngine {
 
 			layers = new List<Layer>();
 
-			foreach (XmlNode layerNode in tmx.GetElementsByTagName("layer")) {
+			foreach (XmlNode node in tmx.GetElementsByTagName("map")[0].ChildNodes) {
 
-				Layer layer = new Layer(layerNode);
-				layers.Add(layer);
+				switch (node.Name) {
+					case "layer":
+						layers.Add(new TileLayer(node));
+						break;
+					case "objectgroup":
+						layers.Add(new ObjectLayer(node));
+						break;
+				}
 			}
-
-			objectLayers = new List<ObjectLayer>();
-			foreach (XmlNode objLayer in tmx.GetElementsByTagName("objectgroup")) {
-
-				objectLayers.Add(new ObjectLayer(objLayer));
-
-			}
-
 		}
 
 		private void loadMapDescription() {
@@ -121,7 +119,8 @@ namespace MakerEngine {
 				for (int h = 0; h < rows; ++h) {
 					for (int w = 0; w < columns; ++w) {
 
-						Rectangle rect = new Rectangle(w * tilewidth, h * tileheight, tilewidth, tileheight);
+						Rectangle rect = new Rectangle((w  * tilewidth) + tileset.spacing,
+							(h  * tileheight) + tileset.spacing, tilewidth, tileheight);
 						Bitmap source = new Bitmap(tileset.image);
 
 						Image cropped = source.Clone(rect, source.PixelFormat);
@@ -148,23 +147,39 @@ namespace MakerEngine {
 				Image img = new Bitmap(width, height, PixelFormat.Format32bppPArgb);
 				Graphics g = Graphics.FromImage(img);
 
-				for (int j = 0; j < mapHeight; ++j) {
-					for (int i = 0; i < mapWidth; ++i) {
+				if (layer.GetType() == typeof(TileLayer)) {
 
-						int key = layer.data[j][i];
-						if (key != 0) {
-							//Image tileImg;
-							if (!imageDict.ContainsKey(key))
-								imageDict[key] = new S16.Drawing.DDSImage(File.ReadAllBytes(missingNOImg)).BitmapImage;
-							g.DrawImage(imageDict[key], new Point(i * tileWidth, j * tileHeight));
+					for (int j = 0; j < mapHeight; ++j) {
+						for (int i = 0; i < mapWidth; ++i) {
+
+							int key = ((TileLayer)layer).data[j][i];
+							if (key != 0) {
+								if (!imageDict.ContainsKey(key))
+									imageDict[key] = new S16.Drawing.DDSImage(File.ReadAllBytes(missingNOImg)).BitmapImage;
+								g.DrawImage(imageDict[key], new Point(i * tileWidth, j * tileHeight));
+							}
+
 						}
+					}
 
+				} else if (layer.GetType() == typeof(ObjectLayer)) {
+
+					foreach (ObjectLayer.GameObject gameObj in ((ObjectLayer)layer).gameObjects) {
+						if (gameObj.gid == -1)
+							g.DrawRectangle(Pens.Firebrick, gameObj.getRect());
+						else
+							g.DrawImage(imageDict[gameObj.gid], 
+								new Point(gameObj.x, gameObj.y - gameObj.height));
+						// these sprites aren't displaying in proper position.
+						// Offsetting the y pos helps but still not exact.
 					}
 				}
+
+
 				String dir = layerImageDir;
 				if (!Directory.Exists(dir))
 					Directory.CreateDirectory(dir);
-				outputFileName = dir + layer.name + " Layer.png";
+				outputFileName = dir + layer.getName() + " Layer.png";
 
 				using (MemoryStream memory = new MemoryStream()) {
 					using (FileStream fs = new FileStream(outputFileName, FileMode.Create, FileAccess.ReadWrite)) {
@@ -177,41 +192,10 @@ namespace MakerEngine {
 				g.Dispose();
 				img.Dispose();
 			}
-
-			foreach (ObjectLayer objLayer in objectLayers) {
-
-				Image img = new Bitmap(width, height, PixelFormat.Format32bppPArgb);
-				Graphics g = Graphics.FromImage(img);
-
-
-				foreach (ObjectLayer.GameObject gameObj in objLayer.gameObjects) {
-
-					if (gameObj.gid == -1)
-						g.DrawRectangle(Pens.Firebrick, gameObj.getRect());
-					else
-						g.DrawImage(imageDict[gameObj.gid], new Point(gameObj.x, gameObj.y));
-				}
-
-				String dir = layerImageDir;
-				if (!Directory.Exists(dir))
-					Directory.CreateDirectory(dir);
-				outputFileName = dir + objLayer.name + " Layer.png";
-				using (MemoryStream memory = new MemoryStream()) {
-					using (FileStream fs = new FileStream(outputFileName, FileMode.Create, FileAccess.ReadWrite)) {
-						img.Save(memory, ImageFormat.Png);
-						byte[] bytes = memory.ToArray();
-						fs.Write(bytes, 0, bytes.Length);
-					}
-				}
-				objLayer.image = Image.FromFile(outputFileName);
-				g.Dispose();
-				img.Dispose();
-			}
-
-
 		}
 
-		public Image getMapImage(CheckBox[] layerCheckBox, CheckBox[] objLayerCheckBox) {
+
+		public Image getMapImage(CheckBox[] layerCheckBox) {
 
 
 			int width = mapWidth * tileWidth;
@@ -225,13 +209,6 @@ namespace MakerEngine {
 
 				if (layerCheckBox[i].Checked)
 					g.DrawImage(layers[i].image, new Point(0, 0));
-
-			}
-
-			for (int i = 0; i < objLayerCheckBox.Length; ++i) {
-
-				if (objLayerCheckBox[i].Checked)
-					g.DrawImage(objLayers[i].image, new Point(0, 0));
 
 			}
 
@@ -257,24 +234,24 @@ namespace MakerEngine {
 		public void Dispose() {
 
 			foreach (Layer layer in layers) {
-				layer.data.Clear();
-				layer.image.Dispose();
-				File.Delete(layerImageDir + layer.name + " Layer.png");
+				layer.Dispose();
+				File.Delete(layerImageDir + layer.getName() + " Layer.png");
 			}
-
-			layers.Clear();
-			imageDict.Clear();
-			tilesets.Clear();
+			foreach (KeyValuePair<int, Image> entry in imageDict)
+				imageDict[entry.Key].Dispose();
+			//foreach (TileSet set in tilesets)
+			//	set.Dispose(); // Disposing of these crashes the tabControl_ImageViewer when trying to clear it
 		}
 	}
 
 
-	class TileSet {
+	class TileSet : IDisposable {
 
 		public String name;
 		public String file;
 		public int tilewidth, tileheight;
 		public int tilesetWidth, tilesetHeight;
+		public int spacing = 0;
 		public int gid;
 
 		public Image image;
@@ -302,6 +279,8 @@ namespace MakerEngine {
 			tilesetWidth = Int32.Parse(imageNode.Attributes["width"].InnerText);
 			tilesetHeight = Int32.Parse(imageNode.Attributes["height"].InnerText);
 
+			if (imageNode.Attributes["spacing"] != null)
+				spacing = Int32.Parse(imageNode.Attributes["spacing"].InnerText);
 
 			while ((imageNode = imageNode.NextSibling) != null) {
 
@@ -318,14 +297,23 @@ namespace MakerEngine {
 		}
 
 
+		public void Dispose() {
+
+			image.Dispose();
+
+		}
+
 		public class Animation {
 
+			/// <summary>
+			/// Relative tileid to firstgid of this tileset.
+			/// </summary>
 			int tileID;
 			List<Frame> frames;
 
 			public Animation(XmlNode aniNode) {
 
-				tileID = Int32.Parse(aniNode.Attributes["id"].InnerText);
+				tileID = Int32.Parse(aniNode.ParentNode.Attributes["id"].InnerText);
 
 				frames = new List<Frame>();
 
@@ -335,6 +323,8 @@ namespace MakerEngine {
 			}
 
 		}
+
+
 
 		class Frame {
 
@@ -354,10 +344,22 @@ namespace MakerEngine {
 				duration = Int32.Parse(frameNode.Attributes["duration"].InnerText);
 			}
 		}
+	}
+
+
+	public interface Layer : IDisposable {
+
+		String getName();
+
+		/// <summary>
+		/// Get/Set fully realized image of this layer. 
+		/// </summary>
+		Image image { get; set; }
 
 	}
 
-	class Layer {
+
+	class TileLayer : Layer {
 
 		public String name;
 		public int width, height;
@@ -366,10 +368,18 @@ namespace MakerEngine {
 		/// <summary>
 		/// Fully realized image of this layer. 
 		/// </summary>
-		public Image image;
+		Image image;
 
+		Image Layer.image {
+			get {
+				return image;
+			}
+			set {
+				image = value;
+			}
+		}
 
-		public Layer(XmlNode layerNode) {
+		public TileLayer(XmlNode layerNode) {
 
 			this.name = layerNode.Attributes["name"].InnerText;
 			this.width = Int32.Parse(layerNode.Attributes["width"].InnerText);
@@ -421,10 +431,19 @@ namespace MakerEngine {
 
 			}
 		}
+
+		public String getName() {
+			return name;
+		}
+
+		public void Dispose() {
+
+			image.Dispose();
+		}
 	}
 
 
-	class ObjectLayer {
+	class ObjectLayer : Layer {
 
 		public String name;
 
@@ -434,6 +453,14 @@ namespace MakerEngine {
 		/// </summary>
 		public Image image;
 
+		Image Layer.image {
+			get {
+				return image;
+			}
+			set {
+				image = value;
+			}
+		}
 
 		public ObjectLayer(XmlNode layerNode) {
 
@@ -446,6 +473,13 @@ namespace MakerEngine {
 
 		}
 
+		public String getName() {
+			return name;
+		}
+
+		public void Dispose() {
+			image.Dispose();
+		}
 
 		public class GameObject {
 
@@ -465,7 +499,8 @@ namespace MakerEngine {
 
 			public GameObject(XmlNode objNode) {
 
-				name = objNode.Attributes["name"].InnerText;
+				if (objNode.Attributes["name"] != null)
+					name = objNode.Attributes["name"].InnerText;
 				id = Int32.Parse(objNode.Attributes["id"].InnerText);
 
 				if (objNode.Attributes["gid"] != null)

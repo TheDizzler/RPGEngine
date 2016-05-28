@@ -677,37 +677,28 @@ namespace MakerEngine {
 
 				CheckBox cb = new CheckBox();
 
-				cb.Text = layer.name;
+				cb.Text = layer.getName();
 				cb.Checked = true;
 				cb.CheckedChanged += new System.EventHandler(this.checkBoxLayerSelect_CheckedChanged);
 				this.tableLayoutPanel_LayersGroupBox.Controls.Add(cb, 0, row++);
 				this.checkBoxes.Add(cb);
 			}
 
-			foreach (ObjectLayer objLayer in mapTMX.objectLayers) {
-				CheckBox cb = new CheckBox();
-
-				cb.Text = objLayer.name;
-				cb.Checked = true;
-				cb.CheckedChanged += new System.EventHandler(this.checkBoxLayerSelect_CheckedChanged);
-				this.tableLayoutPanel_LayersGroupBox.Controls.Add(cb, 0, row++);
-				this.checkBoxes.Add(cb);
-			}
 
 			textBox_MapName.Text = mapNode.Attributes["file"].InnerText;
 			textBox_Orientation.Text = mapTMX.orientation;
 			textBox_MapDimensions.Text = mapTMX.mapWidth + ", " + mapTMX.mapHeight;
 			textBox_TileDimensions.Text = mapTMX.tileWidth + ", " + mapTMX.tileHeight;
 
-			foreach (KeyValuePair<int, Image> entry in mapTMX.imageDict) {
+			//foreach (KeyValuePair<int, Image> entry in mapTMX.imageDict) {
 
-				imageTMXList.Images.Add(entry.Value);
+			//	imageTMXList.Images.Add(entry.Value);
 
-			}
+			//}
 
-
-			tabControl_ImageViewer.TabPages.Clear();
+			this.tabControl_ImageViewer.TabPages.Clear();
 			this.tabControl_ImageViewer.Controls.Clear();
+
 
 			foreach (TileSet tileset in mapTMX.tilesets) {
 				PictureBox pb = new PictureBox();
@@ -728,6 +719,7 @@ namespace MakerEngine {
 
 			pictureBox_Map.Image = mapTMX.getMapImage(checkBoxes.ToArray());
 		}
+
 
 
 		/// <summary>

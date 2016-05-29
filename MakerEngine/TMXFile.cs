@@ -119,8 +119,8 @@ namespace MakerEngine {
 				for (int h = 0; h < rows; ++h) {
 					for (int w = 0; w < columns; ++w) {
 
-						Rectangle rect = new Rectangle((w  * tilewidth) + tileset.spacing,
-							(h  * tileheight) + tileset.spacing, tilewidth, tileheight);
+						Rectangle rect = new Rectangle((w * tilewidth) + tileset.spacing,
+							(h * tileheight) + tileset.spacing, tilewidth, tileheight);
 						Bitmap source = new Bitmap(tileset.image);
 
 						Image cropped = source.Clone(rect, source.PixelFormat);
@@ -165,11 +165,13 @@ namespace MakerEngine {
 				} else if (layer.GetType() == typeof(ObjectLayer)) {
 
 					foreach (ObjectLayer.GameObject gameObj in ((ObjectLayer)layer).gameObjects) {
-						if (gameObj.gid == -1)
-							g.DrawRectangle(Pens.Firebrick, gameObj.getRect());
-						else
-							g.DrawImage(imageDict[gameObj.gid], 
-								new Point(gameObj.x, gameObj.y - gameObj.height));
+						if (gameObj.display) {
+							if (gameObj.gid == -1)
+								g.DrawRectangle(Pens.Firebrick, gameObj.getRect());
+							else
+								g.DrawImage(imageDict[gameObj.gid],
+									new Point(gameObj.x, gameObj.y - gameObj.height));
+						}
 						// these sprites aren't displaying in proper position.
 						// Offsetting the y pos helps but still not exact.
 					}
@@ -194,8 +196,49 @@ namespace MakerEngine {
 			}
 		}
 
+		public void rebuildObjectLayerImage(ObjectLayer layer) {
 
-		public Image getMapImage(CheckBox[] layerCheckBox) {
+			layer.image.Dispose();
+
+			int width = mapWidth * tileWidth;
+			int height = mapHeight * tileHeight;
+
+			Image img = new Bitmap(width, height, PixelFormat.Format32bppPArgb);
+			Graphics g = Graphics.FromImage(img);
+
+			foreach (ObjectLayer.GameObject gameObj in layer.gameObjects) {
+				if (gameObj.display) {
+					if (gameObj.gid == -1)
+						g.DrawRectangle(Pens.Firebrick, gameObj.getRect());
+					else
+						g.DrawImage(imageDict[gameObj.gid],
+							new Point(gameObj.x, gameObj.y - gameObj.height));
+				}
+				// these sprites aren't displaying in proper position.
+				// Offsetting the y pos helps but still not exact.
+			}
+
+			String dir = layerImageDir;
+			if (!Directory.Exists(dir))
+				Directory.CreateDirectory(dir);
+			String outputFileName = dir + layer.getName() + " Layer.png";
+
+			using (MemoryStream memory = new MemoryStream()) {
+				using (FileStream fs = new FileStream(outputFileName, FileMode.Create, FileAccess.ReadWrite)) {
+					img.Save(memory, ImageFormat.Png);
+					byte[] bytes = memory.ToArray();
+					fs.Write(bytes, 0, bytes.Length);
+				}
+			}
+
+			layer.image = Image.FromFile(outputFileName);
+			g.Dispose();
+			img.Dispose();
+
+		}
+
+
+		public Image getMapImage(CheckBox[] layerCheckBoxes/*, TreeNodeCollection objectLayerBoxes*/) {
 
 
 			int width = mapWidth * tileWidth;
@@ -205,10 +248,12 @@ namespace MakerEngine {
 			//g.Clear(SystemColors.AppWorkspace);
 
 
-			for (int i = 0; i < layerCheckBox.Length; ++i) {
+			for (int i = 0; i < layerCheckBoxes.Length; ++i) {
 
-				if (layerCheckBox[i].Checked)
+				if (layerCheckBoxes[i].Checked) {
+
 					g.DrawImage(layers[i].image, new Point(0, 0));
+				}
 
 			}
 
@@ -303,6 +348,7 @@ namespace MakerEngine {
 
 		}
 
+
 		public class Animation {
 
 			/// <summary>
@@ -323,7 +369,6 @@ namespace MakerEngine {
 			}
 
 		}
-
 
 
 		class Frame {
@@ -495,6 +540,8 @@ namespace MakerEngine {
 			/// </summary>
 			public int x, y;
 			public int width, height;
+
+			public bool display = true;
 
 
 			public GameObject(XmlNode objNode) {

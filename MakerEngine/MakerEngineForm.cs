@@ -672,16 +672,33 @@ namespace MakerEngine {
 			this.tableLayoutPanel_LayersGroupBox.RowCount = mapTMX.layers.Count;
 
 			int row = 0;
+			//int row2 = 0;
 
 			foreach (Layer layer in mapTMX.layers) {
 
 				CheckBox cb = new CheckBox();
 
 				cb.Text = layer.getName();
+				//cb.Name = layer.ToString();
 				cb.Checked = true;
 				cb.CheckedChanged += new System.EventHandler(this.checkBoxLayerSelect_CheckedChanged);
 				this.tableLayoutPanel_LayersGroupBox.Controls.Add(cb, 0, row++);
 				this.checkBoxes.Add(cb);
+
+				if (layer.GetType() == typeof(ObjectLayer)) {
+
+					List<TreeNode> objects = new List<TreeNode>();
+					foreach (ObjectLayer.GameObject gameObjects in ((ObjectLayer)layer).gameObjects) {
+
+						TreeCheckBoxNode tcbNode = new TreeCheckBoxNode(gameObjects, (ObjectLayer)layer);
+						tcbNode.Checked = true;
+						objects.Add(tcbNode);
+
+					}
+					TreeNode tn = new TreeNode(layer.getName(), objects.ToArray());
+					tn.Checked = true;
+					this.treeView_GameObjects.Nodes.Add(tn);
+				}
 			}
 
 
@@ -719,7 +736,6 @@ namespace MakerEngine {
 
 			pictureBox_Map.Image = mapTMX.getMapImage(checkBoxes.ToArray());
 		}
-
 
 
 		/// <summary>
@@ -796,6 +812,7 @@ namespace MakerEngine {
 			}
 		}
 
+
 		private TMXFile convertTMXtoMAP(String tmxFile, String shortnameTMX) {
 
 			String newMapAbsoluteFile = gameDirectory + mapDir + shortnameTMX + ".map";
@@ -829,10 +846,10 @@ namespace MakerEngine {
 
 			lastIndexBackSlash = tmxDir.LastIndexOf("\\");
 			lastIndexForwSlash = tmxDir.LastIndexOf("/");
-			 lastIndex = Math.Max(lastIndexBackSlash, lastIndexForwSlash);
+			lastIndex = Math.Max(lastIndexBackSlash, lastIndexForwSlash);
 
 			String tmxDirParent = tmxDir.Substring(0, lastIndex);
-			tmxDirParent = tmxDirParent.Replace('\\','/');
+			tmxDirParent = tmxDirParent.Replace('\\', '/');
 			String outputDir = "assets/gfx/tmx/";
 
 			foreach (XmlNode tilesetNode in newMapDoc.GetElementsByTagName("tileset")) {
@@ -841,7 +858,7 @@ namespace MakerEngine {
 				String tilename = tilesetNode.Attributes["name"].InnerText;
 
 				if (source[0] == '.') { // then it's relative path...grrr!
-					
+
 					source = tmxDirParent + source.Substring(2);
 					//MessageBox.Show(source);
 				}
@@ -864,10 +881,48 @@ namespace MakerEngine {
 
 		private void checkBoxLayerSelect_CheckedChanged(Object sender, EventArgs e) {
 
+			treeView_GameObjects.AfterCheck -= treeView_GameObjects_AfterCheck;
+
+			foreach (TreeNode tcbNode in treeView_GameObjects.Nodes) {
+				foreach (CheckBox cb in checkBoxes)
+					if (tcbNode.Text == cb.Text)
+						tcbNode.Checked = cb.Checked;
+
+			}
+
 			pictureBox_Map.Image.Dispose();
 			pictureBox_Map.Image = mapTMX.getMapImage(checkBoxes.ToArray());
 
+			treeView_GameObjects.AfterCheck
+				+= new TreeViewEventHandler(this.treeView_GameObjects_AfterCheck);
+
 		}
+
+		/// <summary>
+		/// Called when a Object Layer checkbox is changed.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void treeView_GameObjects_AfterCheck(Object sender, TreeViewEventArgs e) {
+
+			if (e.Node.GetType() == typeof(TreeCheckBoxNode)) {
+
+				TreeCheckBoxNode tcbNode = (TreeCheckBoxNode) e.Node;
+				tcbNode.gameObject.display = e.Node.Checked;
+				mapTMX.rebuildObjectLayerImage(tcbNode.layer);
+
+				pictureBox_Map.Image.Dispose();
+				pictureBox_Map.Image = mapTMX.getMapImage(checkBoxes.ToArray());
+
+			} else {
+				foreach (CheckBox cb in checkBoxes)
+					if (e.Node.Text == cb.Text)
+						cb.Checked = e.Node.Checked;
+			}
+
+		
+		}
+
 
 		private void toolStripButton_HideLeftPanel_Click(Object sender, EventArgs e) {
 
@@ -1203,7 +1258,7 @@ namespace MakerEngine {
 			ProcessStartInfo start = new ProcessStartInfo();
 			start.FileName = texconv;
 			start.Arguments = "\"" + source + "\""; // having problems getting -o switch to work so manually moving files after creation
-			/*start.Arguments += " -o " + outputDir;*/
+													/*start.Arguments += " -o " + outputDir;*/
 			start.Arguments += " -f B8G8R8A8_UNORM";
 			start.WindowStyle = ProcessWindowStyle.Normal;
 			start.CreateNoWindow = false;
@@ -1285,5 +1340,7 @@ namespace MakerEngine {
 			}
 
 		}
+
+
 	}
 }

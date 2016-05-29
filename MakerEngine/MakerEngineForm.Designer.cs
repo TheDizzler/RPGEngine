@@ -38,6 +38,7 @@
 			this.button_NewEvent = new System.Windows.Forms.Button();
 			this.label1 = new System.Windows.Forms.Label();
 			this.groupBox_AccordionHolder = new System.Windows.Forms.GroupBox();
+			this.accordion_Dialog = new Opulos.Core.UI.Accordion();
 			this.richTextBox_EscapeCharacters = new System.Windows.Forms.RichTextBox();
 			this.label_Speaker = new System.Windows.Forms.Label();
 			this.textBox_Speaker = new System.Windows.Forms.TextBox();
@@ -62,9 +63,14 @@
 			this.panel_PictureBoxHolder = new System.Windows.Forms.Panel();
 			this.pictureBox_Map = new System.Windows.Forms.PictureBox();
 			this.splitContainer_MapTools = new System.Windows.Forms.SplitContainer();
+			this.tabControl_LayerControls = new System.Windows.Forms.TabControl();
+			this.tabPage_Layers = new System.Windows.Forms.TabPage();
 			this.panel_LayerSelect = new System.Windows.Forms.Panel();
-			this.groupBox_LayersGroupBox = new System.Windows.Forms.GroupBox();
+			this.groupBox_Layers = new System.Windows.Forms.GroupBox();
 			this.tableLayoutPanel_LayersGroupBox = new System.Windows.Forms.TableLayoutPanel();
+			this.tabPage_ObjectLayers = new System.Windows.Forms.TabPage();
+			this.groupBox_GameObjects = new System.Windows.Forms.GroupBox();
+			this.treeView_GameObjects = new System.Windows.Forms.TreeView();
 			this.tabControl_ImageViewer = new System.Windows.Forms.TabControl();
 			this.tabPage1 = new System.Windows.Forms.TabPage();
 			this.toolStrip1 = new System.Windows.Forms.ToolStrip();
@@ -103,10 +109,6 @@
 			this.contextMenuStrip_SpriteTree = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.newCategoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.convertToDDSToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.tabControl_LayerControls = new System.Windows.Forms.TabControl();
-			this.tabPage2 = new System.Windows.Forms.TabPage();
-			this.tabPage_ObjectLayers = new System.Windows.Forms.TabPage();
-			this.accordion_Dialog = new Opulos.Core.UI.Accordion();
 			this.menuStrip1.SuspendLayout();
 			this.tabControl.SuspendLayout();
 			this.tabPage_Dialog.SuspendLayout();
@@ -134,8 +136,12 @@
 			this.splitContainer_MapTools.Panel1.SuspendLayout();
 			this.splitContainer_MapTools.Panel2.SuspendLayout();
 			this.splitContainer_MapTools.SuspendLayout();
+			this.tabControl_LayerControls.SuspendLayout();
+			this.tabPage_Layers.SuspendLayout();
 			this.panel_LayerSelect.SuspendLayout();
-			this.groupBox_LayersGroupBox.SuspendLayout();
+			this.groupBox_Layers.SuspendLayout();
+			this.tabPage_ObjectLayers.SuspendLayout();
+			this.groupBox_GameObjects.SuspendLayout();
 			this.tabControl_ImageViewer.SuspendLayout();
 			this.toolStrip1.SuspendLayout();
 			this.tabPage_SpriteLoader.SuspendLayout();
@@ -144,8 +150,6 @@
 			this.contextMenuStrip_MapLegend.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox_NeedSave)).BeginInit();
 			this.contextMenuStrip_SpriteTree.SuspendLayout();
-			this.tabControl_LayerControls.SuspendLayout();
-			this.tabPage2.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// menuStrip1
@@ -272,6 +276,69 @@
 			this.groupBox_AccordionHolder.TabIndex = 7;
 			this.groupBox_AccordionHolder.TabStop = false;
 			this.groupBox_AccordionHolder.Text = "Dialog Flow";
+			// 
+			// accordion_Dialog
+			// 
+			this.accordion_Dialog.AddResizeBars = false;
+			this.accordion_Dialog.AllowMouseResize = false;
+			this.accordion_Dialog.AnimateCloseEffect = ((Opulos.Core.UI.AnimateWindowFlags)(((Opulos.Core.UI.AnimateWindowFlags.VerticalNegative | Opulos.Core.UI.AnimateWindowFlags.Hide) 
+            | Opulos.Core.UI.AnimateWindowFlags.Slide)));
+			this.accordion_Dialog.AnimateCloseMillis = 300;
+			this.accordion_Dialog.AnimateOpenEffect = ((Opulos.Core.UI.AnimateWindowFlags)(((Opulos.Core.UI.AnimateWindowFlags.VerticalPositive | Opulos.Core.UI.AnimateWindowFlags.Show) 
+            | Opulos.Core.UI.AnimateWindowFlags.Slide)));
+			this.accordion_Dialog.AnimateOpenMillis = 300;
+			this.accordion_Dialog.AutoFixDockStyle = true;
+			this.accordion_Dialog.AutoScroll = true;
+			this.accordion_Dialog.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+			this.accordion_Dialog.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.accordion_Dialog.CheckBoxFactory = null;
+			this.accordion_Dialog.CheckBoxMargin = new System.Windows.Forms.Padding(0);
+			this.accordion_Dialog.ContentBackColor = null;
+			this.accordion_Dialog.ContentMargin = null;
+			this.accordion_Dialog.ContentPadding = new System.Windows.Forms.Padding(5);
+			this.accordion_Dialog.ControlBackColor = null;
+			this.accordion_Dialog.ControlMinimumHeightIsItsPreferredHeight = true;
+			this.accordion_Dialog.ControlMinimumWidthIsItsPreferredWidth = true;
+			this.accordion_Dialog.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.accordion_Dialog.DownArrow = null;
+			this.accordion_Dialog.FillHeight = true;
+			this.accordion_Dialog.FillLastOpened = false;
+			this.accordion_Dialog.FillModeGrowOnly = false;
+			this.accordion_Dialog.FillResetOnCollapse = false;
+			this.accordion_Dialog.FillWidth = true;
+			this.accordion_Dialog.GrabCursor = System.Windows.Forms.Cursors.SizeNS;
+			this.accordion_Dialog.GrabRequiresPositiveFillWeight = true;
+			this.accordion_Dialog.GrabWidth = 0;
+			this.accordion_Dialog.GrowAndShrink = true;
+			this.accordion_Dialog.Insets = new System.Windows.Forms.Padding(0);
+			this.accordion_Dialog.Location = new System.Drawing.Point(3, 16);
+			this.accordion_Dialog.Name = "accordion_Dialog";
+			this.accordion_Dialog.OpenOnAdd = false;
+			this.accordion_Dialog.OpenOneOnly = false;
+			this.accordion_Dialog.ResizeBarFactory = null;
+			this.accordion_Dialog.ResizeBarsAlign = 0.5D;
+			this.accordion_Dialog.ResizeBarsArrowKeyDelta = 10;
+			this.accordion_Dialog.ResizeBarsFadeInMillis = 800;
+			this.accordion_Dialog.ResizeBarsFadeOutMillis = 800;
+			this.accordion_Dialog.ResizeBarsFadeProximity = 24;
+			this.accordion_Dialog.ResizeBarsFill = 1D;
+			this.accordion_Dialog.ResizeBarsKeepFocusAfterMouseDrag = false;
+			this.accordion_Dialog.ResizeBarsKeepFocusIfControlOutOfView = true;
+			this.accordion_Dialog.ResizeBarsKeepFocusOnClick = true;
+			this.accordion_Dialog.ResizeBarsMargin = null;
+			this.accordion_Dialog.ResizeBarsMinimumLength = 50;
+			this.accordion_Dialog.ResizeBarsStayInViewOnArrowKey = true;
+			this.accordion_Dialog.ResizeBarsStayInViewOnMouseDrag = true;
+			this.accordion_Dialog.ResizeBarsStayVisibleIfFocused = true;
+			this.accordion_Dialog.ResizeBarsTabStop = true;
+			this.accordion_Dialog.ShowPartiallyVisibleResizeBars = false;
+			this.accordion_Dialog.ShowToolMenu = true;
+			this.accordion_Dialog.ShowToolMenuOnHoverWhenClosed = false;
+			this.accordion_Dialog.ShowToolMenuOnRightClick = true;
+			this.accordion_Dialog.ShowToolMenuRequiresPositiveFillWeight = false;
+			this.accordion_Dialog.Size = new System.Drawing.Size(1185, 568);
+			this.accordion_Dialog.TabIndex = 0;
+			this.accordion_Dialog.UpArrow = null;
 			// 
 			// richTextBox_EscapeCharacters
 			// 
@@ -572,28 +639,51 @@
 			this.splitContainer_MapTools.SplitterDistance = 294;
 			this.splitContainer_MapTools.TabIndex = 11;
 			// 
+			// tabControl_LayerControls
+			// 
+			this.tabControl_LayerControls.Controls.Add(this.tabPage_Layers);
+			this.tabControl_LayerControls.Controls.Add(this.tabPage_ObjectLayers);
+			this.tabControl_LayerControls.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.tabControl_LayerControls.Location = new System.Drawing.Point(0, 0);
+			this.tabControl_LayerControls.Name = "tabControl_LayerControls";
+			this.tabControl_LayerControls.SelectedIndex = 0;
+			this.tabControl_LayerControls.Size = new System.Drawing.Size(325, 294);
+			this.tabControl_LayerControls.TabIndex = 1;
+			// 
+			// tabPage_Layers
+			// 
+			this.tabPage_Layers.AutoScroll = true;
+			this.tabPage_Layers.Controls.Add(this.panel_LayerSelect);
+			this.tabPage_Layers.Location = new System.Drawing.Point(4, 22);
+			this.tabPage_Layers.Name = "tabPage_Layers";
+			this.tabPage_Layers.Padding = new System.Windows.Forms.Padding(3);
+			this.tabPage_Layers.Size = new System.Drawing.Size(317, 268);
+			this.tabPage_Layers.TabIndex = 0;
+			this.tabPage_Layers.Text = "Layers";
+			this.tabPage_Layers.UseVisualStyleBackColor = true;
+			// 
 			// panel_LayerSelect
 			// 
 			this.panel_LayerSelect.AutoSize = true;
-			this.panel_LayerSelect.Controls.Add(this.groupBox_LayersGroupBox);
+			this.panel_LayerSelect.Controls.Add(this.groupBox_Layers);
 			this.panel_LayerSelect.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.panel_LayerSelect.Location = new System.Drawing.Point(3, 3);
 			this.panel_LayerSelect.Name = "panel_LayerSelect";
 			this.panel_LayerSelect.Size = new System.Drawing.Size(311, 262);
 			this.panel_LayerSelect.TabIndex = 4;
 			// 
-			// groupBox_LayersGroupBox
+			// groupBox_Layers
 			// 
-			this.groupBox_LayersGroupBox.AutoSize = true;
-			this.groupBox_LayersGroupBox.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			this.groupBox_LayersGroupBox.Controls.Add(this.tableLayoutPanel_LayersGroupBox);
-			this.groupBox_LayersGroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.groupBox_LayersGroupBox.Location = new System.Drawing.Point(0, 0);
-			this.groupBox_LayersGroupBox.Name = "groupBox_LayersGroupBox";
-			this.groupBox_LayersGroupBox.Size = new System.Drawing.Size(311, 262);
-			this.groupBox_LayersGroupBox.TabIndex = 0;
-			this.groupBox_LayersGroupBox.TabStop = false;
-			this.groupBox_LayersGroupBox.Text = "Layers";
+			this.groupBox_Layers.AutoSize = true;
+			this.groupBox_Layers.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+			this.groupBox_Layers.Controls.Add(this.tableLayoutPanel_LayersGroupBox);
+			this.groupBox_Layers.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.groupBox_Layers.Location = new System.Drawing.Point(0, 0);
+			this.groupBox_Layers.Name = "groupBox_Layers";
+			this.groupBox_Layers.Size = new System.Drawing.Size(311, 262);
+			this.groupBox_Layers.TabIndex = 0;
+			this.groupBox_Layers.TabStop = false;
+			this.groupBox_Layers.Text = "Layers";
 			// 
 			// tableLayoutPanel_LayersGroupBox
 			// 
@@ -607,6 +697,41 @@
 			this.tableLayoutPanel_LayersGroupBox.Name = "tableLayoutPanel_LayersGroupBox";
 			this.tableLayoutPanel_LayersGroupBox.Size = new System.Drawing.Size(305, 243);
 			this.tableLayoutPanel_LayersGroupBox.TabIndex = 0;
+			// 
+			// tabPage_ObjectLayers
+			// 
+			this.tabPage_ObjectLayers.AutoScroll = true;
+			this.tabPage_ObjectLayers.Controls.Add(this.groupBox_GameObjects);
+			this.tabPage_ObjectLayers.Location = new System.Drawing.Point(4, 22);
+			this.tabPage_ObjectLayers.Name = "tabPage_ObjectLayers";
+			this.tabPage_ObjectLayers.Padding = new System.Windows.Forms.Padding(3);
+			this.tabPage_ObjectLayers.Size = new System.Drawing.Size(317, 268);
+			this.tabPage_ObjectLayers.TabIndex = 1;
+			this.tabPage_ObjectLayers.Text = "Object Layers";
+			this.tabPage_ObjectLayers.UseVisualStyleBackColor = true;
+			// 
+			// groupBox_GameObjects
+			// 
+			this.groupBox_GameObjects.AutoSize = true;
+			this.groupBox_GameObjects.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+			this.groupBox_GameObjects.Controls.Add(this.treeView_GameObjects);
+			this.groupBox_GameObjects.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.groupBox_GameObjects.Location = new System.Drawing.Point(3, 3);
+			this.groupBox_GameObjects.Name = "groupBox_GameObjects";
+			this.groupBox_GameObjects.Size = new System.Drawing.Size(311, 262);
+			this.groupBox_GameObjects.TabIndex = 1;
+			this.groupBox_GameObjects.TabStop = false;
+			this.groupBox_GameObjects.Text = "Object Layers";
+			// 
+			// treeView_GameObjects
+			// 
+			this.treeView_GameObjects.CheckBoxes = true;
+			this.treeView_GameObjects.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.treeView_GameObjects.Location = new System.Drawing.Point(3, 16);
+			this.treeView_GameObjects.Name = "treeView_GameObjects";
+			this.treeView_GameObjects.Size = new System.Drawing.Size(305, 243);
+			this.treeView_GameObjects.TabIndex = 0;
+			this.treeView_GameObjects.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.treeView_GameObjects_AfterCheck);
 			// 
 			// tabControl_ImageViewer
 			// 
@@ -945,103 +1070,6 @@
 			this.convertToDDSToolStripMenuItem.Text = "Add Image File";
 			this.convertToDDSToolStripMenuItem.Click += new System.EventHandler(this.addImageFileToolStripMenuItem_Click);
 			// 
-			// tabControl_LayerControls
-			// 
-			this.tabControl_LayerControls.Controls.Add(this.tabPage2);
-			this.tabControl_LayerControls.Controls.Add(this.tabPage_ObjectLayers);
-			this.tabControl_LayerControls.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.tabControl_LayerControls.Location = new System.Drawing.Point(0, 0);
-			this.tabControl_LayerControls.Name = "tabControl_LayerControls";
-			this.tabControl_LayerControls.SelectedIndex = 0;
-			this.tabControl_LayerControls.Size = new System.Drawing.Size(325, 294);
-			this.tabControl_LayerControls.TabIndex = 1;
-			// 
-			// tabPage2
-			// 
-			this.tabPage2.AutoScroll = true;
-			this.tabPage2.Controls.Add(this.panel_LayerSelect);
-			this.tabPage2.Location = new System.Drawing.Point(4, 22);
-			this.tabPage2.Name = "tabPage2";
-			this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage2.Size = new System.Drawing.Size(317, 268);
-			this.tabPage2.TabIndex = 0;
-			this.tabPage2.Text = "tabPage_Layers";
-			this.tabPage2.UseVisualStyleBackColor = true;
-			// 
-			// tabPage_ObjectLayers
-			// 
-			this.tabPage_ObjectLayers.AutoScroll = true;
-			this.tabPage_ObjectLayers.Location = new System.Drawing.Point(4, 22);
-			this.tabPage_ObjectLayers.Name = "tabPage_ObjectLayers";
-			this.tabPage_ObjectLayers.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage_ObjectLayers.Size = new System.Drawing.Size(192, 74);
-			this.tabPage_ObjectLayers.TabIndex = 1;
-			this.tabPage_ObjectLayers.Text = "Game Objects";
-			this.tabPage_ObjectLayers.UseVisualStyleBackColor = true;
-			// 
-			// accordion_Dialog
-			// 
-			this.accordion_Dialog.AddResizeBars = false;
-			this.accordion_Dialog.AllowMouseResize = false;
-			this.accordion_Dialog.AnimateCloseEffect = ((Opulos.Core.UI.AnimateWindowFlags)(((Opulos.Core.UI.AnimateWindowFlags.VerticalNegative | Opulos.Core.UI.AnimateWindowFlags.Hide) 
-            | Opulos.Core.UI.AnimateWindowFlags.Slide)));
-			this.accordion_Dialog.AnimateCloseMillis = 300;
-			this.accordion_Dialog.AnimateOpenEffect = ((Opulos.Core.UI.AnimateWindowFlags)(((Opulos.Core.UI.AnimateWindowFlags.VerticalPositive | Opulos.Core.UI.AnimateWindowFlags.Show) 
-            | Opulos.Core.UI.AnimateWindowFlags.Slide)));
-			this.accordion_Dialog.AnimateOpenMillis = 300;
-			this.accordion_Dialog.AutoFixDockStyle = true;
-			this.accordion_Dialog.AutoScroll = true;
-			this.accordion_Dialog.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			this.accordion_Dialog.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.accordion_Dialog.CheckBoxFactory = null;
-			this.accordion_Dialog.CheckBoxMargin = new System.Windows.Forms.Padding(0);
-			this.accordion_Dialog.ContentBackColor = null;
-			this.accordion_Dialog.ContentMargin = null;
-			this.accordion_Dialog.ContentPadding = new System.Windows.Forms.Padding(5);
-			this.accordion_Dialog.ControlBackColor = null;
-			this.accordion_Dialog.ControlMinimumHeightIsItsPreferredHeight = true;
-			this.accordion_Dialog.ControlMinimumWidthIsItsPreferredWidth = true;
-			this.accordion_Dialog.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.accordion_Dialog.DownArrow = null;
-			this.accordion_Dialog.FillHeight = true;
-			this.accordion_Dialog.FillLastOpened = false;
-			this.accordion_Dialog.FillModeGrowOnly = false;
-			this.accordion_Dialog.FillResetOnCollapse = false;
-			this.accordion_Dialog.FillWidth = true;
-			this.accordion_Dialog.GrabCursor = System.Windows.Forms.Cursors.SizeNS;
-			this.accordion_Dialog.GrabRequiresPositiveFillWeight = true;
-			this.accordion_Dialog.GrabWidth = 0;
-			this.accordion_Dialog.GrowAndShrink = true;
-			this.accordion_Dialog.Insets = new System.Windows.Forms.Padding(0);
-			this.accordion_Dialog.Location = new System.Drawing.Point(3, 16);
-			this.accordion_Dialog.Name = "accordion_Dialog";
-			this.accordion_Dialog.OpenOnAdd = false;
-			this.accordion_Dialog.OpenOneOnly = false;
-			this.accordion_Dialog.ResizeBarFactory = null;
-			this.accordion_Dialog.ResizeBarsAlign = 0.5D;
-			this.accordion_Dialog.ResizeBarsArrowKeyDelta = 10;
-			this.accordion_Dialog.ResizeBarsFadeInMillis = 800;
-			this.accordion_Dialog.ResizeBarsFadeOutMillis = 800;
-			this.accordion_Dialog.ResizeBarsFadeProximity = 24;
-			this.accordion_Dialog.ResizeBarsFill = 1D;
-			this.accordion_Dialog.ResizeBarsKeepFocusAfterMouseDrag = false;
-			this.accordion_Dialog.ResizeBarsKeepFocusIfControlOutOfView = true;
-			this.accordion_Dialog.ResizeBarsKeepFocusOnClick = true;
-			this.accordion_Dialog.ResizeBarsMargin = null;
-			this.accordion_Dialog.ResizeBarsMinimumLength = 50;
-			this.accordion_Dialog.ResizeBarsStayInViewOnArrowKey = true;
-			this.accordion_Dialog.ResizeBarsStayInViewOnMouseDrag = true;
-			this.accordion_Dialog.ResizeBarsStayVisibleIfFocused = true;
-			this.accordion_Dialog.ResizeBarsTabStop = true;
-			this.accordion_Dialog.ShowPartiallyVisibleResizeBars = false;
-			this.accordion_Dialog.ShowToolMenu = true;
-			this.accordion_Dialog.ShowToolMenuOnHoverWhenClosed = false;
-			this.accordion_Dialog.ShowToolMenuOnRightClick = true;
-			this.accordion_Dialog.ShowToolMenuRequiresPositiveFillWeight = false;
-			this.accordion_Dialog.Size = new System.Drawing.Size(1185, 568);
-			this.accordion_Dialog.TabIndex = 0;
-			this.accordion_Dialog.UpArrow = null;
-			// 
 			// MakerEngineForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1090,10 +1118,16 @@
 			this.splitContainer_MapTools.Panel2.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer_MapTools)).EndInit();
 			this.splitContainer_MapTools.ResumeLayout(false);
+			this.tabControl_LayerControls.ResumeLayout(false);
+			this.tabPage_Layers.ResumeLayout(false);
+			this.tabPage_Layers.PerformLayout();
 			this.panel_LayerSelect.ResumeLayout(false);
 			this.panel_LayerSelect.PerformLayout();
-			this.groupBox_LayersGroupBox.ResumeLayout(false);
-			this.groupBox_LayersGroupBox.PerformLayout();
+			this.groupBox_Layers.ResumeLayout(false);
+			this.groupBox_Layers.PerformLayout();
+			this.tabPage_ObjectLayers.ResumeLayout(false);
+			this.tabPage_ObjectLayers.PerformLayout();
+			this.groupBox_GameObjects.ResumeLayout(false);
 			this.tabControl_ImageViewer.ResumeLayout(false);
 			this.toolStrip1.ResumeLayout(false);
 			this.toolStrip1.PerformLayout();
@@ -1104,9 +1138,6 @@
 			this.contextMenuStrip_MapLegend.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox_NeedSave)).EndInit();
 			this.contextMenuStrip_SpriteTree.ResumeLayout(false);
-			this.tabControl_LayerControls.ResumeLayout(false);
-			this.tabPage2.ResumeLayout(false);
-			this.tabPage2.PerformLayout();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -1184,7 +1215,7 @@
 		public System.Windows.Forms.PictureBox pictureBox_Map;
 		private System.Windows.Forms.SplitContainer splitContainer_MapTools;
 		private System.Windows.Forms.Panel panel_LayerSelect;
-		private System.Windows.Forms.GroupBox groupBox_LayersGroupBox;
+		private System.Windows.Forms.GroupBox groupBox_Layers;
 		public System.Windows.Forms.TableLayoutPanel tableLayoutPanel_LayersGroupBox;
 		private System.Windows.Forms.Panel panel_PictureBoxHolder;
 		private System.Windows.Forms.SplitContainer splitContainer_Base;
@@ -1194,8 +1225,10 @@
 		private System.Windows.Forms.ToolStripMenuItem newCategoryToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem convertToDDSToolStripMenuItem;
 		private System.Windows.Forms.TabControl tabControl_LayerControls;
-		private System.Windows.Forms.TabPage tabPage2;
+		private System.Windows.Forms.TabPage tabPage_Layers;
 		private System.Windows.Forms.TabPage tabPage_ObjectLayers;
+		private System.Windows.Forms.GroupBox groupBox_GameObjects;
+		private System.Windows.Forms.TreeView treeView_GameObjects;
 	}
 }
 

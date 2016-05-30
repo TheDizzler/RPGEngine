@@ -35,14 +35,14 @@
 			this.newGameFileDialog = new System.Windows.Forms.SaveFileDialog();
 			this.tabControl = new System.Windows.Forms.TabControl();
 			this.tabPage_Dialog = new System.Windows.Forms.TabPage();
+			this.button_SearchForSpeaker = new System.Windows.Forms.Button();
 			this.button_NewEvent = new System.Windows.Forms.Button();
 			this.label1 = new System.Windows.Forms.Label();
 			this.groupBox_AccordionHolder = new System.Windows.Forms.GroupBox();
-			this.accordion_Dialog = new Opulos.Core.UI.Accordion();
-			this.richTextBox_EscapeCharacters = new System.Windows.Forms.RichTextBox();
 			this.label_Speaker = new System.Windows.Forms.Label();
 			this.textBox_Speaker = new System.Windows.Forms.TextBox();
 			this.treeView_Dialog = new System.Windows.Forms.TreeView();
+			this.richTextBox_EscapeCharacters = new System.Windows.Forms.RichTextBox();
 			this.tabPage_Map = new System.Windows.Forms.TabPage();
 			this.toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
 			this.splitContainer_Base = new System.Windows.Forms.SplitContainer();
@@ -81,9 +81,6 @@
 			this.tabPage_SpriteLoader = new System.Windows.Forms.TabPage();
 			this.button_CreateSpriteFont = new System.Windows.Forms.Button();
 			this.button3 = new System.Windows.Forms.Button();
-			this.button1 = new System.Windows.Forms.Button();
-			this.button2 = new System.Windows.Forms.Button();
-			this.button_Zoom = new System.Windows.Forms.Button();
 			this.textBox_SpriteFilePath = new System.Windows.Forms.TextBox();
 			this.button_LoadSprite = new System.Windows.Forms.Button();
 			this.textBox_Dimensions = new System.Windows.Forms.TextBox();
@@ -104,11 +101,13 @@
 			this.contextMenuStrip_MapLegend = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.toolStripMenuItem_AddMap = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripMenuItem_RemoveMap = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripMenuItem_ChangeMapName = new System.Windows.Forms.ToolStripMenuItem();
 			this.openFileDialog_TMXFile = new System.Windows.Forms.OpenFileDialog();
 			this.pictureBox_NeedSave = new System.Windows.Forms.PictureBox();
 			this.contextMenuStrip_SpriteTree = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.newCategoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.convertToDDSToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.accordion_Dialog = new Opulos.Core.UI.Accordion();
 			this.menuStrip1.SuspendLayout();
 			this.tabControl.SuspendLayout();
 			this.tabPage_Dialog.SuspendLayout();
@@ -226,16 +225,18 @@
 			this.tabControl.SelectedIndex = 0;
 			this.tabControl.Size = new System.Drawing.Size(1477, 645);
 			this.tabControl.TabIndex = 2;
+			this.tabControl.Selecting += new System.Windows.Forms.TabControlCancelEventHandler(this.tabControl_Selecting);
 			// 
 			// tabPage_Dialog
 			// 
+			this.tabPage_Dialog.Controls.Add(this.button_SearchForSpeaker);
 			this.tabPage_Dialog.Controls.Add(this.button_NewEvent);
 			this.tabPage_Dialog.Controls.Add(this.label1);
 			this.tabPage_Dialog.Controls.Add(this.groupBox_AccordionHolder);
-			this.tabPage_Dialog.Controls.Add(this.richTextBox_EscapeCharacters);
 			this.tabPage_Dialog.Controls.Add(this.label_Speaker);
 			this.tabPage_Dialog.Controls.Add(this.textBox_Speaker);
 			this.tabPage_Dialog.Controls.Add(this.treeView_Dialog);
+			this.tabPage_Dialog.Controls.Add(this.richTextBox_EscapeCharacters);
 			this.tabPage_Dialog.Location = new System.Drawing.Point(4, 22);
 			this.tabPage_Dialog.Name = "tabPage_Dialog";
 			this.tabPage_Dialog.Padding = new System.Windows.Forms.Padding(3);
@@ -244,10 +245,19 @@
 			this.tabPage_Dialog.Text = "Dialog Text";
 			this.tabPage_Dialog.UseVisualStyleBackColor = true;
 			// 
+			// button_SearchForSpeaker
+			// 
+			this.button_SearchForSpeaker.Location = new System.Drawing.Point(471, 4);
+			this.button_SearchForSpeaker.Name = "button_SearchForSpeaker";
+			this.button_SearchForSpeaker.Size = new System.Drawing.Size(75, 23);
+			this.button_SearchForSpeaker.TabIndex = 9;
+			this.button_SearchForSpeaker.Text = "Search";
+			this.button_SearchForSpeaker.UseVisualStyleBackColor = true;
+			// 
 			// button_NewEvent
 			// 
 			this.button_NewEvent.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.button_NewEvent.Location = new System.Drawing.Point(7, 638);
+			this.button_NewEvent.Location = new System.Drawing.Point(7, 1189);
 			this.button_NewEvent.Name = "button_NewEvent";
 			this.button_NewEvent.Size = new System.Drawing.Size(85, 23);
 			this.button_NewEvent.TabIndex = 1;
@@ -272,85 +282,10 @@
 			this.groupBox_AccordionHolder.Controls.Add(this.accordion_Dialog);
 			this.groupBox_AccordionHolder.Location = new System.Drawing.Point(270, 32);
 			this.groupBox_AccordionHolder.Name = "groupBox_AccordionHolder";
-			this.groupBox_AccordionHolder.Size = new System.Drawing.Size(1191, 587);
+			this.groupBox_AccordionHolder.Size = new System.Drawing.Size(1188, 587);
 			this.groupBox_AccordionHolder.TabIndex = 7;
 			this.groupBox_AccordionHolder.TabStop = false;
 			this.groupBox_AccordionHolder.Text = "Dialog Flow";
-			// 
-			// accordion_Dialog
-			// 
-			this.accordion_Dialog.AddResizeBars = false;
-			this.accordion_Dialog.AllowMouseResize = false;
-			this.accordion_Dialog.AnimateCloseEffect = ((Opulos.Core.UI.AnimateWindowFlags)(((Opulos.Core.UI.AnimateWindowFlags.VerticalNegative | Opulos.Core.UI.AnimateWindowFlags.Hide) 
-            | Opulos.Core.UI.AnimateWindowFlags.Slide)));
-			this.accordion_Dialog.AnimateCloseMillis = 300;
-			this.accordion_Dialog.AnimateOpenEffect = ((Opulos.Core.UI.AnimateWindowFlags)(((Opulos.Core.UI.AnimateWindowFlags.VerticalPositive | Opulos.Core.UI.AnimateWindowFlags.Show) 
-            | Opulos.Core.UI.AnimateWindowFlags.Slide)));
-			this.accordion_Dialog.AnimateOpenMillis = 300;
-			this.accordion_Dialog.AutoFixDockStyle = true;
-			this.accordion_Dialog.AutoScroll = true;
-			this.accordion_Dialog.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			this.accordion_Dialog.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.accordion_Dialog.CheckBoxFactory = null;
-			this.accordion_Dialog.CheckBoxMargin = new System.Windows.Forms.Padding(0);
-			this.accordion_Dialog.ContentBackColor = null;
-			this.accordion_Dialog.ContentMargin = null;
-			this.accordion_Dialog.ContentPadding = new System.Windows.Forms.Padding(5);
-			this.accordion_Dialog.ControlBackColor = null;
-			this.accordion_Dialog.ControlMinimumHeightIsItsPreferredHeight = true;
-			this.accordion_Dialog.ControlMinimumWidthIsItsPreferredWidth = true;
-			this.accordion_Dialog.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.accordion_Dialog.DownArrow = null;
-			this.accordion_Dialog.FillHeight = true;
-			this.accordion_Dialog.FillLastOpened = false;
-			this.accordion_Dialog.FillModeGrowOnly = false;
-			this.accordion_Dialog.FillResetOnCollapse = false;
-			this.accordion_Dialog.FillWidth = true;
-			this.accordion_Dialog.GrabCursor = System.Windows.Forms.Cursors.SizeNS;
-			this.accordion_Dialog.GrabRequiresPositiveFillWeight = true;
-			this.accordion_Dialog.GrabWidth = 0;
-			this.accordion_Dialog.GrowAndShrink = true;
-			this.accordion_Dialog.Insets = new System.Windows.Forms.Padding(0);
-			this.accordion_Dialog.Location = new System.Drawing.Point(3, 16);
-			this.accordion_Dialog.Name = "accordion_Dialog";
-			this.accordion_Dialog.OpenOnAdd = false;
-			this.accordion_Dialog.OpenOneOnly = false;
-			this.accordion_Dialog.ResizeBarFactory = null;
-			this.accordion_Dialog.ResizeBarsAlign = 0.5D;
-			this.accordion_Dialog.ResizeBarsArrowKeyDelta = 10;
-			this.accordion_Dialog.ResizeBarsFadeInMillis = 800;
-			this.accordion_Dialog.ResizeBarsFadeOutMillis = 800;
-			this.accordion_Dialog.ResizeBarsFadeProximity = 24;
-			this.accordion_Dialog.ResizeBarsFill = 1D;
-			this.accordion_Dialog.ResizeBarsKeepFocusAfterMouseDrag = false;
-			this.accordion_Dialog.ResizeBarsKeepFocusIfControlOutOfView = true;
-			this.accordion_Dialog.ResizeBarsKeepFocusOnClick = true;
-			this.accordion_Dialog.ResizeBarsMargin = null;
-			this.accordion_Dialog.ResizeBarsMinimumLength = 50;
-			this.accordion_Dialog.ResizeBarsStayInViewOnArrowKey = true;
-			this.accordion_Dialog.ResizeBarsStayInViewOnMouseDrag = true;
-			this.accordion_Dialog.ResizeBarsStayVisibleIfFocused = true;
-			this.accordion_Dialog.ResizeBarsTabStop = true;
-			this.accordion_Dialog.ShowPartiallyVisibleResizeBars = false;
-			this.accordion_Dialog.ShowToolMenu = true;
-			this.accordion_Dialog.ShowToolMenuOnHoverWhenClosed = false;
-			this.accordion_Dialog.ShowToolMenuOnRightClick = true;
-			this.accordion_Dialog.ShowToolMenuRequiresPositiveFillWeight = false;
-			this.accordion_Dialog.Size = new System.Drawing.Size(1185, 568);
-			this.accordion_Dialog.TabIndex = 0;
-			this.accordion_Dialog.UpArrow = null;
-			// 
-			// richTextBox_EscapeCharacters
-			// 
-			this.richTextBox_EscapeCharacters.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.richTextBox_EscapeCharacters.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
-			this.richTextBox_EscapeCharacters.Location = new System.Drawing.Point(98, 638);
-			this.richTextBox_EscapeCharacters.Name = "richTextBox_EscapeCharacters";
-			this.richTextBox_EscapeCharacters.ReadOnly = true;
-			this.richTextBox_EscapeCharacters.Size = new System.Drawing.Size(162, 65);
-			this.richTextBox_EscapeCharacters.TabIndex = 4;
-			this.richTextBox_EscapeCharacters.TabStop = false;
-			this.richTextBox_EscapeCharacters.Text = "Special Characters:\n\\hero for player\'s name\n\\speaker for speakers name";
 			// 
 			// label_Speaker
 			// 
@@ -375,10 +310,22 @@
             | System.Windows.Forms.AnchorStyles.Left)));
 			this.treeView_Dialog.Location = new System.Drawing.Point(7, 27);
 			this.treeView_Dialog.Name = "treeView_Dialog";
-			this.treeView_Dialog.Size = new System.Drawing.Size(253, 592);
+			this.treeView_Dialog.Size = new System.Drawing.Size(253, 1143);
 			this.treeView_Dialog.TabIndex = 0;
 			this.treeView_Dialog.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.treeView_Dialog_MouseDoubleClick);
 			this.treeView_Dialog.MouseUp += new System.Windows.Forms.MouseEventHandler(this.mouseUp_EventsTreeView);
+			// 
+			// richTextBox_EscapeCharacters
+			// 
+			this.richTextBox_EscapeCharacters.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.richTextBox_EscapeCharacters.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+			this.richTextBox_EscapeCharacters.Location = new System.Drawing.Point(98, 1189);
+			this.richTextBox_EscapeCharacters.Name = "richTextBox_EscapeCharacters";
+			this.richTextBox_EscapeCharacters.ReadOnly = true;
+			this.richTextBox_EscapeCharacters.Size = new System.Drawing.Size(162, 65);
+			this.richTextBox_EscapeCharacters.TabIndex = 4;
+			this.richTextBox_EscapeCharacters.TabStop = false;
+			this.richTextBox_EscapeCharacters.Text = "Special Characters:\n\\hero for player\'s name\n\\speaker for speakers name";
 			// 
 			// tabPage_Map
 			// 
@@ -496,6 +443,7 @@
 			// 
 			this.button_ConvertTMX.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+			this.button_ConvertTMX.Enabled = false;
 			this.button_ConvertTMX.Location = new System.Drawing.Point(4, 369);
 			this.button_ConvertTMX.Name = "button_ConvertTMX";
 			this.button_ConvertTMX.Size = new System.Drawing.Size(284, 23);
@@ -732,6 +680,7 @@
 			this.treeView_GameObjects.Size = new System.Drawing.Size(305, 243);
 			this.treeView_GameObjects.TabIndex = 0;
 			this.treeView_GameObjects.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.treeView_GameObjects_AfterCheck);
+			this.treeView_GameObjects.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.treeView_GameObjects_MouseDoubleClick);
 			// 
 			// tabControl_ImageViewer
 			// 
@@ -807,9 +756,6 @@
 			// 
 			this.tabPage_SpriteLoader.Controls.Add(this.button_CreateSpriteFont);
 			this.tabPage_SpriteLoader.Controls.Add(this.button3);
-			this.tabPage_SpriteLoader.Controls.Add(this.button1);
-			this.tabPage_SpriteLoader.Controls.Add(this.button2);
-			this.tabPage_SpriteLoader.Controls.Add(this.button_Zoom);
 			this.tabPage_SpriteLoader.Controls.Add(this.textBox_SpriteFilePath);
 			this.tabPage_SpriteLoader.Controls.Add(this.button_LoadSprite);
 			this.tabPage_SpriteLoader.Controls.Add(this.textBox_Dimensions);
@@ -846,34 +792,6 @@
 			this.button3.TabIndex = 13;
 			this.button3.Text = "Save Sprite";
 			this.button3.UseVisualStyleBackColor = true;
-			// 
-			// button1
-			// 
-			this.button1.Location = new System.Drawing.Point(868, 52);
-			this.button1.Name = "button1";
-			this.button1.Size = new System.Drawing.Size(24, 23);
-			this.button1.TabIndex = 12;
-			this.button1.Text = "O";
-			this.button1.UseVisualStyleBackColor = true;
-			// 
-			// button2
-			// 
-			this.button2.Location = new System.Drawing.Point(868, 84);
-			this.button2.Name = "button2";
-			this.button2.Size = new System.Drawing.Size(24, 23);
-			this.button2.TabIndex = 11;
-			this.button2.Text = "-";
-			this.button2.UseVisualStyleBackColor = true;
-			// 
-			// button_Zoom
-			// 
-			this.button_Zoom.Location = new System.Drawing.Point(868, 23);
-			this.button_Zoom.Name = "button_Zoom";
-			this.button_Zoom.Size = new System.Drawing.Size(24, 23);
-			this.button_Zoom.TabIndex = 10;
-			this.button_Zoom.Text = "+";
-			this.button_Zoom.UseVisualStyleBackColor = true;
-			this.button_Zoom.Click += new System.EventHandler(this.button_Zoom_Click);
 			// 
 			// textBox_SpriteFilePath
 			// 
@@ -1016,23 +934,31 @@
 			this.contextMenuStrip_MapLegend.AllowMerge = false;
 			this.contextMenuStrip_MapLegend.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripMenuItem_AddMap,
-            this.toolStripMenuItem_RemoveMap});
+            this.toolStripMenuItem_RemoveMap,
+            this.toolStripMenuItem_ChangeMapName});
 			this.contextMenuStrip_MapLegend.Name = "contextMenuStrip_MapLegend";
-			this.contextMenuStrip_MapLegend.Size = new System.Drawing.Size(164, 48);
+			this.contextMenuStrip_MapLegend.Size = new System.Drawing.Size(178, 70);
 			// 
 			// toolStripMenuItem_AddMap
 			// 
 			this.toolStripMenuItem_AddMap.Name = "toolStripMenuItem_AddMap";
-			this.toolStripMenuItem_AddMap.Size = new System.Drawing.Size(163, 22);
+			this.toolStripMenuItem_AddMap.Size = new System.Drawing.Size(177, 22);
 			this.toolStripMenuItem_AddMap.Text = "Import .tmx Map";
 			this.toolStripMenuItem_AddMap.Click += new System.EventHandler(this.toolStripMenuItem_ImportMap_Click);
 			// 
 			// toolStripMenuItem_RemoveMap
 			// 
 			this.toolStripMenuItem_RemoveMap.Name = "toolStripMenuItem_RemoveMap";
-			this.toolStripMenuItem_RemoveMap.Size = new System.Drawing.Size(163, 22);
+			this.toolStripMenuItem_RemoveMap.Size = new System.Drawing.Size(177, 22);
 			this.toolStripMenuItem_RemoveMap.Text = "Remove Map";
 			this.toolStripMenuItem_RemoveMap.Click += new System.EventHandler(this.toolStripMenuItem_RemoveMap_Click);
+			// 
+			// toolStripMenuItem_ChangeMapName
+			// 
+			this.toolStripMenuItem_ChangeMapName.Name = "toolStripMenuItem_ChangeMapName";
+			this.toolStripMenuItem_ChangeMapName.Size = new System.Drawing.Size(177, 22);
+			this.toolStripMenuItem_ChangeMapName.Text = "Change Map Name";
+			this.toolStripMenuItem_ChangeMapName.Click += new System.EventHandler(this.changeMapNameToolStripMenuItem_Click);
 			// 
 			// openFileDialog_TMXFile
 			// 
@@ -1069,6 +995,69 @@
 			this.convertToDDSToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
 			this.convertToDDSToolStripMenuItem.Text = "Add Image File";
 			this.convertToDDSToolStripMenuItem.Click += new System.EventHandler(this.addImageFileToolStripMenuItem_Click);
+			// 
+			// accordion_Dialog
+			// 
+			this.accordion_Dialog.AddResizeBars = false;
+			this.accordion_Dialog.AllowMouseResize = false;
+			this.accordion_Dialog.AnimateCloseEffect = ((Opulos.Core.UI.AnimateWindowFlags)(((Opulos.Core.UI.AnimateWindowFlags.VerticalNegative | Opulos.Core.UI.AnimateWindowFlags.Hide) 
+            | Opulos.Core.UI.AnimateWindowFlags.Slide)));
+			this.accordion_Dialog.AnimateCloseMillis = 300;
+			this.accordion_Dialog.AnimateOpenEffect = ((Opulos.Core.UI.AnimateWindowFlags)(((Opulos.Core.UI.AnimateWindowFlags.VerticalPositive | Opulos.Core.UI.AnimateWindowFlags.Show) 
+            | Opulos.Core.UI.AnimateWindowFlags.Slide)));
+			this.accordion_Dialog.AnimateOpenMillis = 300;
+			this.accordion_Dialog.AutoFixDockStyle = true;
+			this.accordion_Dialog.AutoScroll = true;
+			this.accordion_Dialog.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+			this.accordion_Dialog.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.accordion_Dialog.CheckBoxFactory = null;
+			this.accordion_Dialog.CheckBoxMargin = new System.Windows.Forms.Padding(0);
+			this.accordion_Dialog.ContentBackColor = null;
+			this.accordion_Dialog.ContentMargin = null;
+			this.accordion_Dialog.ContentPadding = new System.Windows.Forms.Padding(5);
+			this.accordion_Dialog.ControlBackColor = null;
+			this.accordion_Dialog.ControlMinimumHeightIsItsPreferredHeight = true;
+			this.accordion_Dialog.ControlMinimumWidthIsItsPreferredWidth = true;
+			this.accordion_Dialog.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.accordion_Dialog.DownArrow = null;
+			this.accordion_Dialog.FillHeight = true;
+			this.accordion_Dialog.FillLastOpened = false;
+			this.accordion_Dialog.FillModeGrowOnly = false;
+			this.accordion_Dialog.FillResetOnCollapse = false;
+			this.accordion_Dialog.FillWidth = true;
+			this.accordion_Dialog.GrabCursor = System.Windows.Forms.Cursors.SizeNS;
+			this.accordion_Dialog.GrabRequiresPositiveFillWeight = true;
+			this.accordion_Dialog.GrabWidth = 0;
+			this.accordion_Dialog.GrowAndShrink = true;
+			this.accordion_Dialog.Insets = new System.Windows.Forms.Padding(0);
+			this.accordion_Dialog.Location = new System.Drawing.Point(3, 16);
+			this.accordion_Dialog.Name = "accordion_Dialog";
+			this.accordion_Dialog.OpenOnAdd = false;
+			this.accordion_Dialog.OpenOneOnly = false;
+			this.accordion_Dialog.ResizeBarFactory = null;
+			this.accordion_Dialog.ResizeBarsAlign = 0.5D;
+			this.accordion_Dialog.ResizeBarsArrowKeyDelta = 10;
+			this.accordion_Dialog.ResizeBarsFadeInMillis = 800;
+			this.accordion_Dialog.ResizeBarsFadeOutMillis = 800;
+			this.accordion_Dialog.ResizeBarsFadeProximity = 24;
+			this.accordion_Dialog.ResizeBarsFill = 1D;
+			this.accordion_Dialog.ResizeBarsKeepFocusAfterMouseDrag = false;
+			this.accordion_Dialog.ResizeBarsKeepFocusIfControlOutOfView = true;
+			this.accordion_Dialog.ResizeBarsKeepFocusOnClick = true;
+			this.accordion_Dialog.ResizeBarsMargin = null;
+			this.accordion_Dialog.ResizeBarsMinimumLength = 50;
+			this.accordion_Dialog.ResizeBarsStayInViewOnArrowKey = true;
+			this.accordion_Dialog.ResizeBarsStayInViewOnMouseDrag = true;
+			this.accordion_Dialog.ResizeBarsStayVisibleIfFocused = true;
+			this.accordion_Dialog.ResizeBarsTabStop = true;
+			this.accordion_Dialog.ShowPartiallyVisibleResizeBars = false;
+			this.accordion_Dialog.ShowToolMenu = true;
+			this.accordion_Dialog.ShowToolMenuOnHoverWhenClosed = false;
+			this.accordion_Dialog.ShowToolMenuOnRightClick = true;
+			this.accordion_Dialog.ShowToolMenuRequiresPositiveFillWeight = false;
+			this.accordion_Dialog.Size = new System.Drawing.Size(1182, 568);
+			this.accordion_Dialog.TabIndex = 0;
+			this.accordion_Dialog.UpArrow = null;
 			// 
 			// MakerEngineForm
 			// 
@@ -1183,9 +1172,6 @@
 		private System.Windows.Forms.OpenFileDialog openFileDialog_Sprite;
 		private System.Windows.Forms.TextBox textBox_SpriteFilePath;
 		private System.Windows.Forms.ToolTip toolTip1;
-		private System.Windows.Forms.Button button2;
-		private System.Windows.Forms.Button button_Zoom;
-		private System.Windows.Forms.Button button1;
 		private System.Windows.Forms.Button button3;
 		private System.Windows.Forms.Button button_CreateSpriteFont;
 		private System.Windows.Forms.ToolStripContainer toolStripContainer1;
@@ -1229,6 +1215,8 @@
 		private System.Windows.Forms.TabPage tabPage_ObjectLayers;
 		private System.Windows.Forms.GroupBox groupBox_GameObjects;
 		private System.Windows.Forms.TreeView treeView_GameObjects;
+		private System.Windows.Forms.Button button_SearchForSpeaker;
+		private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem_ChangeMapName;
 	}
 }
 

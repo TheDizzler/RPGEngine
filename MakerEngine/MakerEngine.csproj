@@ -115,6 +115,12 @@
     <Compile Include="SelectFontDialog.Designer.cs">
       <DependentUpon>SelectFontDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="TextInputDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TextInputDialog.Designer.cs">
+      <DependentUpon>TextInputDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="TMXFile.cs" />
     <Compile Include="TreeCheckBoxNode.cs" />
     <Compile Include="TreeMapXMLNode.cs" />
@@ -155,6 +161,9 @@
     </Compile>
     <EmbeddedResource Include="SelectFontDialog.resx">
       <DependentUpon>SelectFontDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TextInputDialog.resx">
+      <DependentUpon>TextInputDialog.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

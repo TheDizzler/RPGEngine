@@ -6,9 +6,16 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace MakerEngine {
+
+	/// <summary>
+	///  For Layer Control TreeView with checkboxes.
+	/// </summary>
 	class TreeCheckBoxNode : TreeNode {
 
 		public ObjectLayer.GameObject gameObject;
+		/// <summary>
+		/// The layer that this game object is contained in.
+		/// </summary>
 		public ObjectLayer layer;
 
 

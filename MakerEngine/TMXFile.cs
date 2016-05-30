@@ -33,6 +33,7 @@ namespace MakerEngine {
 		public Dictionary<int, Image> imageDict;
 		public List<Layer> layers;
 		//public List<ObjectLayer> objectLayers;
+		public ObjectLayer NPCLayer;
 
 
 		public String layerImageDir = MakerEngineForm.gameDirectory + MakerEngineForm.mapDir + @"tempimgs\";
@@ -75,7 +76,10 @@ namespace MakerEngine {
 						layers.Add(new TileLayer(node));
 						break;
 					case "objectgroup":
-						layers.Add(new ObjectLayer(node));
+						ObjectLayer newLayer = new ObjectLayer(node);
+						layers.Add(newLayer);
+						if (newLayer.name == "NPC")
+							NPCLayer = newLayer;
 						break;
 				}
 			}
@@ -238,7 +242,7 @@ namespace MakerEngine {
 		}
 
 
-		public Image getMapImage(CheckBox[] layerCheckBoxes/*, TreeNodeCollection objectLayerBoxes*/) {
+		public Image getMapImage(CheckBox[] layerCheckBoxes) {
 
 
 			int width = mapWidth * tileWidth;

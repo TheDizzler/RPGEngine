@@ -34,6 +34,7 @@ namespace MakerEngine {
 		XmlDocument docDialogText;
 		XmlNode selectedTextNode;
 		TreeXMLNode selectedTextTreeNode;
+		TreeXMLNode zoneTextTreeNode;
 
 		XmlDocument docSpriteFiles;
 		XmlNode selectedSpriteNode;
@@ -46,7 +47,7 @@ namespace MakerEngine {
 
 		TMXFile mapTMX;
 
-
+		public List<String> speakerList;
 		public List<CheckBox> checkBoxes;
 
 
@@ -147,6 +148,7 @@ namespace MakerEngine {
 
 		private void loadGameTextXml() {
 
+
 			docDialogText = new XmlDocument();
 			docDialogText.Load(gameDirectory + dialogText);
 			XmlNode root = docDialogText.GetElementsByTagName("root")[0];
@@ -155,6 +157,7 @@ namespace MakerEngine {
 
 			// build tree view from dialog text
 			List<TreeXMLNode> treeNodeList;
+			speakerList = new List<String>();
 
 			foreach (XmlNode node in root.ChildNodes) {
 
@@ -166,8 +169,10 @@ namespace MakerEngine {
 					if (child.Name == "zone") {
 						List<TreeXMLNode> subNodeList = new List<TreeXMLNode>();
 
-						foreach (XmlNode sub in child.ChildNodes)
+						foreach (XmlNode sub in child.ChildNodes) {
+							speakerList.Add(sub.Attributes["speaker"].InnerText);
 							subNodeList.Add(new TreeXMLNode(sub));
+						}
 
 						treeNodeList.Add(new TreeXMLNode(child, subNodeList.ToArray()));
 
@@ -176,8 +181,20 @@ namespace MakerEngine {
 						treeNodeList.Add(new TreeXMLNode(child));
 
 				}
-				treeView_Dialog.Nodes.Add(new TreeXMLNode(node, treeNodeList.ToArray()));
+
+				TreeXMLNode newNode = new TreeXMLNode(node, treeNodeList.ToArray());
+				if (node.Attributes["type"].InnerText == "Zone Text")
+					zoneTextTreeNode = newNode;
+
+				treeView_Dialog.Nodes.Add(newNode);
 			}
+
+			AutoCompleteStringCollection coll = new AutoCompleteStringCollection();
+			coll.AddRange(speakerList.ToArray());
+			textBox_Speaker.AutoCompleteCustomSource = null;
+			textBox_Speaker.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+			textBox_Speaker.AutoCompleteSource = AutoCompleteSource.CustomSource;
+			textBox_Speaker.AutoCompleteCustomSource = coll;
 
 		}
 
@@ -191,13 +208,9 @@ namespace MakerEngine {
 				} else {
 					selectedTextNode.Attributes["speaker"].InnerText = textBox_Speaker.Text;
 					foreach (AccordionControl control in accordionControlsList) {
-
 						control.saveChanges();
-
 					}
 				}
-
-
 			}
 
 			using (XmlWriter writer = XmlWriter.Create(gameDirectory + dialogText))
@@ -221,10 +234,17 @@ namespace MakerEngine {
 				pictureBox_NeedSave.Image = Properties.Resources.Red;
 				label_ChangesMade.Text = "Changes made";
 				changesNeedSaving = true;
+				int lastInd = tabControl.SelectedTab.Text.LastIndexOf('*');
+				if (lastInd < 0)
+					tabControl.SelectedTab.Text += "*";
 			} else {
 				pictureBox_NeedSave.Image = Properties.Resources.Green;
 				label_ChangesMade.Text = "No Changes";
 				changesNeedSaving = false;
+				int lastInd = tabControl.SelectedTab.Text.LastIndexOf('*');
+				if (lastInd > 0)
+					tabControl.SelectedTab.Text =
+						tabControl.SelectedTab.Text.Substring(0, tabControl.SelectedTab.Text.Length - 1);
 			}
 		}
 
@@ -255,6 +275,17 @@ namespace MakerEngine {
 
 		private void saveToolStripMenuItem_Click(Object sender, EventArgs e) {
 			save();
+		}
+
+		private void tabControl_Selecting(Object sender, TabControlCancelEventArgs e) {
+
+			if (changesNeedSaving) {
+
+				MessageBox.Show("You should save any changes before changing tabs!");
+				e.Cancel = true;
+				return;
+
+			}
 		}
 
 
@@ -307,7 +338,7 @@ namespace MakerEngine {
 					selectedTextTreeNode.Nodes.Add(new TreeXMLNode(newNode, new TreeXMLNode[0]));
 
 					loading = false;
-					textChanged(null, null);
+					needSave(true);
 
 				}
 
@@ -672,7 +703,6 @@ namespace MakerEngine {
 			this.tableLayoutPanel_LayersGroupBox.RowCount = mapTMX.layers.Count;
 
 			int row = 0;
-			//int row2 = 0;
 
 			foreach (Layer layer in mapTMX.layers) {
 
@@ -737,9 +767,31 @@ namespace MakerEngine {
 			pictureBox_Map.Image = mapTMX.getMapImage(checkBoxes.ToArray());
 		}
 
+		/// <summary>
+		/// Rename map.
+		/// Context Menu Item.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void changeMapNameToolStripMenuItem_Click(Object sender, EventArgs e) {
+
+			if (selectedMapTreeNode == null)
+				return;
+
+			String selectedName = selectedMapTreeNode.node.Attributes["name"].InnerText;
+
+			TextInputDialog dialog = new TextInputDialog();
+			if (dialog.ShowDialog() == DialogResult.OK) {
+
+				selectedMapTreeNode.node.Attributes["name"].InnerText = dialog.textBox_NewMapName.Text;
+				treeView_MapLegend.SelectedNode.Text = dialog.textBox_NewMapName.Text;
+				needSave(true);
+			}
+		}
 
 		/// <summary>
 		/// Remove map from game.
+		/// Context Menu Item.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -776,7 +828,12 @@ namespace MakerEngine {
 			}
 		}
 
-
+		/// <summary>
+		/// Import map and convert into game format.
+		/// Context Menu Item.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void toolStripMenuItem_ImportMap_Click(Object sender, EventArgs e) {
 
 			if (openFileDialog_TMXFile.ShowDialog() == DialogResult.OK) {
@@ -791,6 +848,9 @@ namespace MakerEngine {
 				String shortnameTMX = tmxFile.Substring(index + 1, length - 1);
 
 				TMXFile newMAPFile = convertTMXtoMAP(tmxFile, shortnameTMX);
+				if (newMAPFile == null)
+					return;
+				newMAPFile.load();
 				String newMapFilepath = mapDir + shortnameTMX + ".map";
 
 				String mapTag = "<map name=\"" + newMAPFile.name + "\" file=\"" + newMapFilepath + "\" ></map>";
@@ -807,11 +867,115 @@ namespace MakerEngine {
 				TreeMapXMLNode tmxl = new TreeMapXMLNode(importNode.Attributes["name"].InnerText, importNode);
 				treeView_MapLegend.Nodes.Add(tmxl);
 
+				// add new map location to Zone Text events
+				addLocation(newMAPFile);
+
 				save();
 
 			}
 		}
 
+		/// <summary>
+		/// Add new map location to Zone Text events.
+		/// </summary>
+		/// <param name="newMAPFile"></param>
+		private void addLocation(TMXFile newMAPFile) {
+
+			// add new map to Zone Text events
+			foreach (XmlNode eventNode in docDialogText.GetElementsByTagName("event")) {
+
+				if (eventNode.Attributes["type"].InnerText == "Zone Text") {
+
+					TreeXMLNode locationTreeNode = null; // treeview node to add new dialogs
+					XmlNode locationXMLNode = null;
+					foreach (XmlNode locNode in eventNode.ChildNodes) {
+						if (locNode.Attributes["location"].InnerText == newMAPFile.name) {
+
+							// this location already exists
+							locationXMLNode = locNode;
+							foreach (TreeNode subNode in zoneTextTreeNode.Nodes) {
+								if (subNode.Text == newMAPFile.name) {
+									locationTreeNode = (TreeXMLNode)subNode;
+									break;
+								}
+
+							}
+							break;
+						}
+					}
+
+					if (locationXMLNode == null) {
+						String zoneTag = "<zone location=\"" + newMAPFile.name + "\"  ></zone>";
+						XmlDocument newEventXml = new XmlDocument();
+						newEventXml.Load(new StringReader(zoneTag));
+
+						locationXMLNode = newEventXml.DocumentElement;
+
+						// Populate Treeview with new location node
+						//foreach (TreeNode treeNode in treeView_Dialog.Nodes) {
+						//	TreeXMLNode textTreeNode = (TreeXMLNode)treeNode;
+						//	if (textTreeNode.Text == "Zone Text") {
+						locationTreeNode = new TreeXMLNode(locationXMLNode, new TreeXMLNode[0]);
+						zoneTextTreeNode.Nodes.Add(locationTreeNode);
+						break;
+					}
+					//}
+
+					//}
+
+					addNPCs(newMAPFile, locationXMLNode, locationTreeNode);
+					//XmlNode importEventNode = docDialogText.ImportNode(locationNode, true);
+					//eventNode.AppendChild(importEventNode);
+
+
+					return;
+				}
+			}
+		}
+
+		private void addNPCs(TMXFile newMAPFile, XmlNode newEventNode, TreeXMLNode locationTreeNode) {
+
+			ObjectLayer npcLayer = newMAPFile.NPCLayer;
+			if (npcLayer == null)
+				return;
+
+			foreach (ObjectLayer.GameObject gameObj in npcLayer.gameObjects) {
+
+				bool found = false;
+				String name = gameObj.name;
+
+				// search for entry in treeview
+				foreach (TreeNode locNode in zoneTextTreeNode.Nodes) {
+					if (locNode.Text == newMAPFile.name) {
+						foreach (TreeNode dialogNode in locNode.Nodes) {
+							if (dialogNode.Text == name) {
+								found = true;
+								break;
+							}
+						}
+						break;
+					}
+				}
+
+
+				if (found)
+					continue;
+
+				// add new dialog speaker
+				String zoneTag = "<dialog speaker=\"" + name + "\"  ></dialog>";
+				XmlDocument newEventXml = new XmlDocument();
+				newEventXml.Load(new StringReader(zoneTag));
+
+				XmlNode newDialogNode = newEventXml.DocumentElement;
+				XmlNode importEventNode = docDialogText.ImportNode(newDialogNode, true);
+				newEventNode.AppendChild(importEventNode);
+
+				// add new speaker to TreeView
+				speakerList.Add(name);
+				locationTreeNode.Nodes.Add(new TreeXMLNode(newDialogNode));
+
+			}
+		}
 
 		private TMXFile convertTMXtoMAP(String tmxFile, String shortnameTMX) {
 
@@ -907,7 +1071,7 @@ namespace MakerEngine {
 
 			if (e.Node.GetType() == typeof(TreeCheckBoxNode)) {
 
-				TreeCheckBoxNode tcbNode = (TreeCheckBoxNode) e.Node;
+				TreeCheckBoxNode tcbNode = (TreeCheckBoxNode)e.Node;
 				tcbNode.gameObject.display = e.Node.Checked;
 				mapTMX.rebuildObjectLayerImage(tcbNode.layer);
 
@@ -920,7 +1084,35 @@ namespace MakerEngine {
 						cb.Checked = e.Node.Checked;
 			}
 
-		
+
+		}
+
+		private void treeView_GameObjects_MouseDoubleClick(Object sender, MouseEventArgs e) {
+
+			if (treeView_GameObjects.SelectedNode.GetType() != typeof(TreeCheckBoxNode))
+				return;
+
+			TreeCheckBoxNode tcbNode = (TreeCheckBoxNode)treeView_GameObjects.SelectedNode;
+			if (tcbNode.layer.name == "NPC") { // check if selected node is an NPC
+				String name = tcbNode.Text;
+
+				// find npc name in dialog TreeView
+				foreach (TreeNode zoneNode in zoneTextTreeNode.Nodes) {
+					if (zoneNode.Text == mapTMX.name) {
+						foreach (TreeNode speakerNode in zoneNode.Nodes) {
+							if (speakerNode.Text == name) {
+								//selectedTextTreeNode = (TreeXMLNode) speakerNode;
+								treeView_Dialog.SelectedNode = speakerNode;
+
+								tabControl.SelectedIndex = 0;
+								treeView_Dialog_MouseDoubleClick(null, e);
+								break;
+							}
+						}
+						break;
+					}
+				}
+			}
 		}
 
 
@@ -957,7 +1149,11 @@ namespace MakerEngine {
 			}
 		}
 
-
+		/// <summary>
+		/// Right Click Context Menufor Map TreeView.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void treeView_MapLegend_MouseDown(Object sender, MouseEventArgs e) {
 
 			if (e.Button == MouseButtons.Right) {
@@ -967,9 +1163,11 @@ namespace MakerEngine {
 				if (selectedMapTreeNode == null) {
 					this.toolStripMenuItem_AddMap.Enabled = true;
 					this.toolStripMenuItem_RemoveMap.Enabled = false;
+					this.toolStripMenuItem_ChangeMapName.Enabled = false;
 				} else {
 					this.toolStripMenuItem_AddMap.Enabled = false;
 					this.toolStripMenuItem_RemoveMap.Enabled = true;
+					this.toolStripMenuItem_ChangeMapName.Enabled = true;
 				}
 
 				Point loc = PointToScreen(e.Location);
@@ -980,95 +1178,96 @@ namespace MakerEngine {
 		}
 
 
+		// Deprecated?
 		private void button_ConvertTMX_Click(Object sender, EventArgs e) {
 
-			if (mapTMX == null)
-				return;
+			//if (mapTMX == null)
+			//	return;
 
-			String newMapFile = mapTMX.file.Substring(0, mapTMX.file.Length - 3) + "map";
-			if (File.Exists(newMapFile)) {
-				DialogResult result
-					= MessageBox.Show(this, "Map file already exists. Overwrite?",
-						"Overwrite?", MessageBoxButtons.YesNo);
-				if (result == DialogResult.No) {
-					MessageBox.Show("No changes saved.");
-					return;
-				}
-			}
+			//String newMapFile = mapTMX.file.Substring(0, mapTMX.file.Length - 3) + "map";
+			//if (File.Exists(newMapFile)) {
+			//	DialogResult result
+			//		= MessageBox.Show(this, "Map file already exists. Overwrite?",
+			//			"Overwrite?", MessageBoxButtons.YesNo);
+			//	if (result == DialogResult.No) {
+			//		MessageBox.Show("No changes saved.");
+			//		return;
+			//	}
+			//}
 
-			File.Copy(mapTMX.file, newMapFile, true);
+			//File.Copy(mapTMX.file, newMapFile, true);
 
-			XmlDocument newMap = new XmlDocument();
-			newMap.Load(newMapFile);
+			//XmlDocument newMap = new XmlDocument();
+			//newMap.Load(newMapFile);
 
-			String texconv = "\"D:\\github projects\\RPGEngine\\assets\\gfx\\texconv\\texconv.exe\"";
-			String outputDir = "assets/gfx/tmx";
+			//String texconv = "\"D:\\github projects\\RPGEngine\\assets\\gfx\\texconv\\texconv.exe\"";
+			//String outputDir = "assets/gfx/tmx";
 
-			foreach (TileSet tileset in mapTMX.tilesets) {
-				ProcessStartInfo start = new ProcessStartInfo();
-				start.FileName = texconv;
-				start.Arguments = /*" -o " + outputDir*/
-								  /*+ */" \"" + tileset.file + "\""; // having problems getting -o switch to work so manually moving files after creation
-				start.WindowStyle = ProcessWindowStyle.Normal;
-				start.CreateNoWindow = false;
-				start.ErrorDialog = true;
+			//foreach (TileSet tileset in mapTMX.tilesets) {
+			//	ProcessStartInfo start = new ProcessStartInfo();
+			//	start.FileName = texconv;
+			//	start.Arguments = /*" -o " + outputDir*/
+			//					  /*+ */" \"" + tileset.file + "\""; // having problems getting -o switch to work so manually moving files after creation
+			//	start.WindowStyle = ProcessWindowStyle.Normal;
+			//	start.CreateNoWindow = false;
+			//	start.ErrorDialog = true;
 
-				using (Process proc = Process.Start(start)) {
+			//	using (Process proc = Process.Start(start)) {
 
-					proc.WaitForExit();
+			//		proc.WaitForExit();
 
-					String newFile = tileset.file.Substring(0, tileset.file.Length - 3) + "dds";
+			//		String newFile = tileset.file.Substring(0, tileset.file.Length - 3) + "dds";
 
-					if (!File.Exists(newFile) || proc.ExitCode != 0) { // don't think this ever occurs :/
-						MessageBox.Show(this, "Could not convert image to DDS!" + newFile, "Error!",
-							MessageBoxButtons.OK, MessageBoxIcon.Error);
-						return;
-					}
+			//		if (!File.Exists(newFile) || proc.ExitCode != 0) { // don't think this ever occurs :/
+			//			MessageBox.Show(this, "Could not convert image to DDS!" + newFile, "Error!",
+			//				MessageBoxButtons.OK, MessageBoxIcon.Error);
+			//			return;
+			//		}
 
-					needSave(true);
+			//		needSave(true);
 
-					int lastIndexBackSlash = newFile.LastIndexOf("\\");
-					int lastIndexForwSlash = newFile.LastIndexOf("/");
-					int lastIndex = Math.Max(lastIndexBackSlash, lastIndexForwSlash);
+			//		int lastIndexBackSlash = newFile.LastIndexOf("\\");
+			//		int lastIndexForwSlash = newFile.LastIndexOf("/");
+			//		int lastIndex = Math.Max(lastIndexBackSlash, lastIndexForwSlash);
 
-					String newFileName = newFile.Substring(lastIndex);
-					String newLoc = gameDirectory + outputDir + newFileName;
+			//		String newFileName = newFile.Substring(lastIndex);
+			//		String newLoc = gameDirectory + outputDir + newFileName;
 
-					XmlNode imageNode = null;
-					foreach (XmlNode node in newMap.GetElementsByTagName("tileset"))
-						if (node.Attributes["name"].InnerText == tileset.name)
-							imageNode = node;
-					if (imageNode == null) {
-						MessageBox.Show("Can't find " + tileset.name + " in this map.", "SRS problems, bro");
-						return;
-					}
-					imageNode.FirstChild.Attributes["source"].InnerText = outputDir + newFileName;
+			//		XmlNode imageNode = null;
+			//		foreach (XmlNode node in newMap.GetElementsByTagName("tileset"))
+			//			if (node.Attributes["name"].InnerText == tileset.name)
+			//				imageNode = node;
+			//		if (imageNode == null) {
+			//			MessageBox.Show("Can't find " + tileset.name + " in this map.", "SRS problems, bro");
+			//			return;
+			//		}
+			//		imageNode.FirstChild.Attributes["source"].InnerText = outputDir + newFileName;
 
-					try {
-						File.Move(newFile, newLoc);
+			//		try {
+			//			File.Move(newFile, newLoc);
 
-						String dt = "<sprite name=\"" + tileset.name
-							+ "\" file=\"" + outputDir + newFileName + "\" />";
+			//			String dt = "<sprite name=\"" + tileset.name
+			//				+ "\" file=\"" + outputDir + newFileName + "\" />";
 
-						XmlDocument newXml = new XmlDocument();
-						newXml.Load(new StringReader(dt));
+			//			XmlDocument newXml = new XmlDocument();
+			//			newXml.Load(new StringReader(dt));
 
-						XmlNode newNode = newXml.DocumentElement;
-						XmlNode importNode = docSpriteFiles.ImportNode(newNode, true);
+			//			XmlNode newNode = newXml.DocumentElement;
+			//			XmlNode importNode = docSpriteFiles.ImportNode(newNode, true);
 
-						XmlNode sf = docSpriteFiles.GetElementsByTagName("tmx")[0];
-						sf.AppendChild(importNode);
+			//			XmlNode sf = docSpriteFiles.GetElementsByTagName("tmx")[0];
+			//			sf.AppendChild(importNode);
 
 
-					} catch (IOException ex) {
-						// probably already exists, don't worry about it just continue
-						MessageBox.Show(tileset.name + " already exists?");
-						File.Delete(newFile);
-					}
-				}
-			}
-			using (XmlWriter writer = XmlWriter.Create(newMapFile))
-				newMap.Save(writer);
+			//		} catch (IOException ex) {
+			//			// probably already exists, don't worry about it just continue
+			//			MessageBox.Show(tileset.name + " already exists?");
+			//			File.Delete(newFile);
+			//		}
+			//	}
+			//}
+			//using (XmlWriter writer = XmlWriter.Create(newMapFile))
+			//	newMap.Save(writer);
 		}
 
 
@@ -1341,6 +1540,6 @@ namespace MakerEngine {
 
 		}
 
-
+		
 	}
 }

@@ -1,11 +1,11 @@
 #pragma once
 
 #include "Screen.h"
-
+#include "MapData\MAPFile.h"
 
 class MapScreen : public Screen {
 public:
-	MapScreen();
+	MapScreen(xml_document* doc);
 	~MapScreen();
 
 	// Inherited via Screen
@@ -21,4 +21,11 @@ private:
 	Game* game;
 
 	TextBoxManager* textBoxManager;
+
+	unique_ptr<xml_document> docCurrentMap;
+
+	xml_node rootLegendNode;
+	unique_ptr<MAPFile> map;
+
+	void loadMap();
 };

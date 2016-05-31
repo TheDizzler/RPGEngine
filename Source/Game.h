@@ -1,9 +1,9 @@
 #pragma once
 
 #include <stdio.h>
-#include <map>
 
 
+#include "GameScreens\MapScreen.h"
 #include "GameScreens\BattleScreen.h"
 #include "GameObjects\GUIObjects\MenuTest.h"
 #include "Engine\MouseController.h"
@@ -49,6 +49,7 @@ public:
 private:
 
 	Screen* currentScreen;
+	unique_ptr<MapScreen> mapScreen;
 	Screen* lastScreen = 0;
 
 	GameEngine* gameEngine;
@@ -61,10 +62,12 @@ private:
 	//xmlDoc* doc;
 	//xmlNode* gameTextRootNode;
 	pugi::xml_document* docDialogText;
-	//pugi::xml_document* docMapText;
+	/*pugi::xml_document* docMapText;*/
+	pugi::xml_document* docMapLegend;
+	pugi::xml_document* docSpriteFiles;
 
 	//pugi::xml_parse_result result;
-	bool parseGameText();
+	bool parseXMLFiles();
 
 
 	static map<wstring, wstring> storedVariables;

@@ -30,6 +30,7 @@ namespace MakerEngine {
 		public static String mapText = "assets/text/MapLegend.xml";
 
 		String texconv = "\"D:/github projects/RPGEngine/assets/gfx/texconv/texconv.exe\"";
+		//texconv.exe SpriteSheetSample.png -f BC3_UNORM -m 1 -pmalpha
 
 		XmlDocument docDialogText;
 		XmlNode selectedTextNode;

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root game="First RPG" xml="Item Catalog">
+	<consumable>
+		<potion name="Weird Potion" cost="30" type="heal" effect="50">
+			A magical potion that rejuvinates its imbiber.
+		</potion>
+	</consumable>
+	<equipable>
+		<weapon name="Long Sword" type="blade" atk="10" parry="10" cost="50">
+			It cuts and pierces! It hacks and slashes!
+		</weapon>
+		<armor name="Leather Jerkin" type="light" block="5" cost="25">
+			You may look like a jerkin this armor.
+		</armor>
+		<shield name="Wooden Shield" block="10" parry="20" atk="5" cost="25">
+			A round shield made of oak.
+		</shield>
+	</equipable>
+
+</root>

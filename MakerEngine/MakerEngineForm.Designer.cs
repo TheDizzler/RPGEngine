@@ -108,6 +108,7 @@
 			this.newCategoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.convertToDDSToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.accordion_Dialog = new Opulos.Core.UI.Accordion();
+			this.tabPage_Items = new System.Windows.Forms.TabPage();
 			this.menuStrip1.SuspendLayout();
 			this.tabControl.SuspendLayout();
 			this.tabPage_Dialog.SuspendLayout();
@@ -219,6 +220,7 @@
 			this.tabControl.Controls.Add(this.tabPage_Dialog);
 			this.tabControl.Controls.Add(this.tabPage_Map);
 			this.tabControl.Controls.Add(this.tabPage_SpriteLoader);
+			this.tabControl.Controls.Add(this.tabPage_Items);
 			this.tabControl.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.tabControl.Location = new System.Drawing.Point(0, 24);
 			this.tabControl.Name = "tabControl";
@@ -1059,6 +1061,16 @@
 			this.accordion_Dialog.TabIndex = 0;
 			this.accordion_Dialog.UpArrow = null;
 			// 
+			// tabPage_Items
+			// 
+			this.tabPage_Items.Location = new System.Drawing.Point(4, 22);
+			this.tabPage_Items.Name = "tabPage_Items";
+			this.tabPage_Items.Padding = new System.Windows.Forms.Padding(3);
+			this.tabPage_Items.Size = new System.Drawing.Size(1469, 619);
+			this.tabPage_Items.TabIndex = 4;
+			this.tabPage_Items.Text = "Items";
+			this.tabPage_Items.UseVisualStyleBackColor = true;
+			// 
 			// MakerEngineForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1217,6 +1229,7 @@
 		private System.Windows.Forms.TreeView treeView_GameObjects;
 		private System.Windows.Forms.Button button_SearchForSpeaker;
 		private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem_ChangeMapName;
+		private System.Windows.Forms.TabPage tabPage_Items;
 	}
 }
 

@@ -7,9 +7,9 @@ Game::Game(GameEngine* gmngn) {
 
 Game::~Game() {
 
-	//xmlFreeDoc(doc);
-	//xmlCleanupParser();
 	delete docDialogText;
+	delete docMapLegend;
+	delete docSpriteFiles;
 }
 
 bool Game::initializeGame(ID3D11Device* dvc, MouseController* ms) {
@@ -17,7 +17,7 @@ bool Game::initializeGame(ID3D11Device* dvc, MouseController* ms) {
 	device = dvc;
 	mouse = ms;
 
-	if (!parseGameText()) {
+	if (!parseXMLFiles()) {
 		MessageBox(0, L"Could not parse game text", L"Error parsing text", MB_OK);
 		return false;
 	}
@@ -27,8 +27,9 @@ bool Game::initializeGame(ID3D11Device* dvc, MouseController* ms) {
 	if (!textBoxManager->load(device))
 		return false;
 
+	
 
-	currentScreen = new MenuTest();
+	currentScreen = new MapScreen(docMapLegend);
 	if (!currentScreen->initialize(device, textBoxManager.get()))
 		return false;
 	currentScreen->setGameManager(this);
@@ -58,7 +59,7 @@ void Game::loadLevel() {
 	if (lastScreen)
 		delete lastScreen;
 	lastScreen = currentScreen;
-	currentScreen = new BattleScreen();
+	//currentScreen = new BattleScreen();
 
 	if (!currentScreen->initialize(device, textBoxManager.get())) {
 		MessageBox(NULL, L"Failed to load screen", L"ERROR", MB_OK);
@@ -73,7 +74,7 @@ void Game::loadMainMenu() {
 	if (lastScreen)
 		delete lastScreen;
 	lastScreen = currentScreen;
-	currentScreen = new BattleScreen();
+	//currentScreen = new BattleScreen();
 
 	if (!currentScreen->initialize(device, textBoxManager.get())) {
 		MessageBox(NULL, L"Failed to load main menu", L"ERROR", MB_OK);
@@ -122,7 +123,7 @@ wstring Game::getStoredVariable(wstring escape) {
 	return storedVariables[escape];
 }
 
-bool Game::parseGameText() {
+bool Game::parseXMLFiles() {
 
 
 	docDialogText = new pugi::xml_document();
@@ -130,6 +131,19 @@ bool Game::parseGameText() {
 		MessageBox(0, L"Could not read gameTextFile", L"Error", MB_OK);
 		return false;
 	}
+
+	docMapLegend = new pugi::xml_document();
+	if (!docMapLegend->load_file(Assets::mapLegendFile)) {
+		MessageBox(0, L"Could not read MapLegend file", L"Error", MB_OK);
+		return false;
+	}
+
+	docSpriteFiles = new pugi::xml_document();
+	if (!docSpriteFiles->load_file(Assets::spriteFiles)) {
+		MessageBox(0, L"Could not read SpriteFiles file", L"Error", MB_OK);
+		return false;
+	}
+
 
 	return true;
 }

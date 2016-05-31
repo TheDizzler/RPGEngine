@@ -7,7 +7,7 @@
 
 #include "../../globals.h"
 #include "GUIBox.h"
-#include "../../Engine/BaseGraphics/Sprite.h"
+//#include "../../Engine/BaseGraphics/Sprite.h"
 #include "TextLabel.h"
 //#include "../GameVariables.h"
 

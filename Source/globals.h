@@ -3,8 +3,11 @@
 
 /* Global variables and includes */
 #include <comdef.h>
+#include <tchar.h>
+#include <sstream>
+#include <strsafe.h>
 
-
+using namespace std;
 
 namespace Globals {
 
@@ -25,7 +28,25 @@ namespace Globals {
 	const float LETTER_DELAY_FAST = .000001;
 
 	static const int MAX_CHARACTERS = 10;
-	
+
+
+	inline wchar_t* convertCharStarToWCharT(const char* text) {
+
+		const size_t cSize = strlen(text) + 1;
+		wchar_t* wc = new wchar_t[cSize];
+		mbstowcs(wc, text, cSize);
+
+		return wc;
+	}
+
+	inline const wchar_t* convertStringToCWCT(std::string text) {
+
+		wstring wstr = wstring(text.begin(), text.end());
+
+		return wstr.c_str();
+
+	}
+
 
 	inline bool reportError(HRESULT hr) {
 

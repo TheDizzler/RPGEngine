@@ -442,8 +442,6 @@ namespace MakerEngine {
 
 					string line/* = reader.ReadLine()*/;
 
-
-
 					while ((line = reader.ReadLine()) != null) {
 						if (String.IsNullOrWhiteSpace(line))
 							continue;

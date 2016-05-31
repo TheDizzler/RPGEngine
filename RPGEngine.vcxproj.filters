@@ -120,6 +120,15 @@
     <ClCompile Include="Source\GameObjects\GameVariables.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Source\GameScreens\MapData\MAPFile.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Engine\BaseGraphics\SpriteSheet.cpp">
+      <Filter>Source Files\Engine\BaseGraphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameScreens\MapData\Layer.cpp">
+      <Filter>Source Files\Screens</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Game.h">
@@ -214,6 +223,15 @@
     </ClInclude>
     <ClInclude Include="Source\GameObjects\GameVariables.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameScreens\MapData\MAPFile.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engine\BaseGraphics\SpriteSheet.h">
+      <Filter>Header Files\Engine\BaseGraphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameScreens\MapData\Layer.h">
+      <Filter>Header Files\Screens</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

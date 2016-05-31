@@ -138,6 +138,9 @@ bool Game::parseXMLFiles() {
 		return false;
 	}
 
+	
+	//MessageBox(0, Globals::convertCharStarToWCharT(Assets::mapLegendFile), L"This is test desu.", MB_OK);
+
 	docSpriteFiles = new pugi::xml_document();
 	if (!docSpriteFiles->load_file(Assets::spriteFiles)) {
 		MessageBox(0, L"Could not read SpriteFiles file", L"Error", MB_OK);

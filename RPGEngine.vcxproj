@@ -145,6 +145,7 @@
   <ItemGroup>
     <ClCompile Include="Source\Engine\BaseGraphics\FontSet.cpp" />
     <ClCompile Include="Source\Engine\BaseGraphics\Sprite.cpp" />
+    <ClCompile Include="Source\Engine\BaseGraphics\SpriteSheet.cpp" />
     <ClCompile Include="Source\Engine\GameEngine.cpp" />
     <ClCompile Include="Source\Engine\GraphicsEngine.cpp" />
     <ClCompile Include="Source\Engine\Input.cpp" />
@@ -168,6 +169,8 @@
     <ClCompile Include="Source\GameObjects\GUIObjects\TextBoxManager.cpp" />
     <ClCompile Include="Source\GameObjects\GUIObjects\TextLabel.cpp" />
     <ClCompile Include="Source\GameScreens\BattleScreen.cpp" />
+    <ClCompile Include="Source\GameScreens\MapData\Layer.cpp" />
+    <ClCompile Include="Source\GameScreens\MapData\MAPFile.cpp" />
     <ClCompile Include="Source\GameScreens\MapScreen.cpp" />
     <ClCompile Include="Source\GameScreens\MenuScreen.cpp" />
   </ItemGroup>
@@ -177,6 +180,7 @@
     <ClInclude Include="Source\Engine\BaseGraphics\FontSet.h" />
     <ClInclude Include="Source\Engine\BaseGraphics\IElement2D.h" />
     <ClInclude Include="Source\Engine\BaseGraphics\Sprite.h" />
+    <ClInclude Include="Source\Engine\BaseGraphics\SpriteSheet.h" />
     <ClInclude Include="Source\Engine\GameEngine.h" />
     <ClInclude Include="Source\Engine\GraphicsEngine.h" />
     <ClInclude Include="Source\Engine\Input.h" />
@@ -199,6 +203,8 @@
     <ClInclude Include="Source\GameObjects\GUIObjects\TextBoxManager.h" />
     <ClInclude Include="Source\GameObjects\GUIObjects\TextLabel.h" />
     <ClInclude Include="Source\GameScreens\BattleScreen.h" />
+    <ClInclude Include="Source\GameScreens\MapData\Layer.h" />
+    <ClInclude Include="Source\GameScreens\MapData\MAPFile.h" />
     <ClInclude Include="Source\GameScreens\MapScreen.h" />
     <ClInclude Include="Source\GameScreens\MenuScreen.h" />
     <ClInclude Include="Source\GameScreens\Screen.h" />

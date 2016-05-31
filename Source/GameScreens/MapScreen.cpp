@@ -13,7 +13,7 @@ bool MapScreen::initialize(ID3D11Device* device, TextBoxManager* txtBxMng) {
 	textBoxManager = txtBxMng;
 	textBoxManager->startDialogTest();
 
-	char* mapFile = rootLegendNode.find_child_by_attribute("name", "Test Village").attribute("file").as_string;
+	const char* mapFile = rootLegendNode.find_child_by_attribute("name", "Test Village").attribute("file").as_string();
 
 	docCurrentMap.reset(new xml_document());
 	if (!docCurrentMap->load_file(mapFile)) {
@@ -25,9 +25,10 @@ bool MapScreen::initialize(ID3D11Device* device, TextBoxManager* txtBxMng) {
 		return false;
 	}
 
+
 	map.reset(new MAPFile(docCurrentMap->child("map")));
 
-	if (!map->initialize())
+	if (!map->initialize(device))
 		return false;
 
 
@@ -50,5 +51,6 @@ void MapScreen::update(double deltaTime, SimpleKeyboard* keys) {
 
 void MapScreen::draw(SpriteBatch * batch) {
 
+	map->draw(batch);
 
 }

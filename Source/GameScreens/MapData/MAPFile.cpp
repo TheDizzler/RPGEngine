@@ -5,8 +5,6 @@ MAPFile::MAPFile(xml_node maprt) {
 
 	mapRoot = maprt;
 
-
-
 }
 
 MAPFile::~MAPFile() {
@@ -31,18 +29,29 @@ void MAPFile::draw(SpriteBatch* batch) {
 		for (int row = 0; row < mapHeight; ++row) {
 			for (int col = 0; col < mapWidth; ++col) {
 
-				int key = layer->data[row][col];
+				int key = layer->data[col][row];
 				if (key <= 0)
 					continue;
 				SpriteSheet::SpriteFrame* spriteFrame = spriteDict[key];
 
-				batch->Draw(spriteFrame->sheet->texture.Get(), Vector2(row * tileWidth, col *tileHeight),
+				batch->Draw(spriteFrame->sheet->texture.Get(),
+					Vector2(row * tileWidth, col *tileHeight),
 					&spriteFrame->sourceRect, spriteFrame->tint,
-					spriteFrame->rotation, spriteFrame->origin, spriteFrame->scale, SpriteEffects_None,
+					spriteFrame->rotation, spriteFrame->origin,
+					spriteFrame->scale, SpriteEffects_None,
 					spriteFrame->layerDepth);
 			}
 		}
 	}
+
+	//sprite->draw(batch);
+
+	//RECT sourceRect = { 32, 32, 32, 32};
+
+	/*batch->Draw(sprite->texture, Vector2(tileWidth, tileHeight),
+		&sourceRect, spriteFrame->tint,
+		spriteFrame->rotation, spriteFrame->origin, spriteFrame->scale, SpriteEffects_None,
+		spriteFrame->layerDepth);*/
 }
 
 bool MAPFile::loadMapDescription() {
@@ -56,6 +65,12 @@ bool MAPFile::loadMapDescription() {
 }
 
 bool MAPFile::loadTileset(ID3D11Device * device) {
+
+	/*sprite.reset(new Sprite());
+	if (!sprite->load(device, L"assets/gfx/tmx/grass-tiles-2-small.dds")) {
+		MessageBox(0, L"Booooo", L"Error loading sprite sheet", MB_OK);
+		return false;
+	}*/
 
 	spriteDict.clear();
 
@@ -76,6 +91,7 @@ bool MAPFile::loadTileset(ID3D11Device * device) {
 
 #include <sstream>
 #include <iostream>
+#include <algorithm>
 bool MAPFile::loadLayerData() {
 
 	for each (xml_node layer in mapRoot.children("layer")) {
@@ -91,6 +107,7 @@ bool MAPFile::loadLayerData() {
 			string line;
 
 			while (getline(datastream, line)) {
+				line.erase(remove_if(line.begin(), line.end(), isspace), line.end());
 				if (line.length() <= 0)
 					continue;
 				tileLayer->data.push_back(split(line));

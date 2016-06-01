@@ -5,6 +5,7 @@
 
 #include "pugixml.hpp"
 
+#include "../../Engine/BaseGraphics/Sprite.h"
 #include "../../Engine/BaseGraphics/SpriteSheet.h"
 
 using namespace std;
@@ -46,6 +47,8 @@ private:
 	bool loadLayerData();
 
 	vector<int> split(string line);
+
+	unique_ptr<Sprite> sprite;
 };
 
 

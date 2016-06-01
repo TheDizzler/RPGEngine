@@ -25,11 +25,11 @@ public:
 		int gid = -1;
 		//XMFLOAT2 size;
 		XMFLOAT2 origin;
-		Color tint;
-		Vector2 scale = Vector2(0, 0);
-		float alpha;
-		float rotation = 0;
-		float layerDepth;
+		Color tint = DirectX::Colors::White.v;
+		Vector2 scale = Vector2(1, 1);
+		float alpha = 1.0f;
+		float rotation = 0.0f;
+		float layerDepth = 0.0f;
 
 		SpriteSheet* sheet;
 	};
@@ -40,7 +40,7 @@ public:
 
 	string name;
 	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> texture;
-	//void draw(SpriteBatch* batch, int gid, Vector2 pos);
+	
 private:
 
 	

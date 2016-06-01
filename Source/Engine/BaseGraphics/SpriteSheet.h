@@ -9,21 +9,16 @@
 #include "SpriteBatch.h"
 #include <pugixml.hpp>
 
-
-
-
-
 using namespace std;
 using namespace DirectX;
 using namespace DirectX::SimpleMath;
-
+using namespace pugi;
 
 class SpriteSheet {
 public:
 	struct SpriteFrame {
 		RECT sourceRect;
 		int gid = -1;
-		//XMFLOAT2 size;
 		XMFLOAT2 origin;
 		Color tint = DirectX::Colors::White.v;
 		Vector2 scale = Vector2(1, 1);

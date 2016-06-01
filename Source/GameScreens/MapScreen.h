@@ -27,5 +27,5 @@ private:
 	xml_node rootLegendNode;
 	unique_ptr<MAPFile> map;
 
-	void loadMap();
+	//void loadMap();
 };

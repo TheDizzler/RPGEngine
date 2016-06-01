@@ -41,10 +41,10 @@ void MapScreen::setGameManager(Game* gm) {
 }
 
 
-void loadMap() {
-
-
-}
+//void MapScreen::loadMap() {
+//
+//
+//}
 
 void MapScreen::update(double deltaTime, SimpleKeyboard* keys) {
 }

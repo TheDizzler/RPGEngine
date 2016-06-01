@@ -37,6 +37,12 @@
     <Filter Include="Source Files\GUI">
       <UniqueIdentifier>{6379cebb-a932-4277-aa5c-3eb9c92b552c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Screens\MapData">
+      <UniqueIdentifier>{30847525-3c6e-4a3c-89ba-c0d42c9979be}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Screens\MapData">
+      <UniqueIdentifier>{dc6d6092-606c-4d3f-81c9-abfe1a868613}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Game.cpp">
@@ -120,14 +126,14 @@
     <ClCompile Include="Source\GameObjects\GameVariables.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\GameScreens\MapData\MAPFile.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Engine\BaseGraphics\SpriteSheet.cpp">
       <Filter>Source Files\Engine\BaseGraphics</Filter>
     </ClCompile>
     <ClCompile Include="Source\GameScreens\MapData\Layer.cpp">
-      <Filter>Source Files\Screens</Filter>
+      <Filter>Source Files\Screens\MapData</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameScreens\MapData\MAPFile.cpp">
+      <Filter>Source Files\Screens\MapData</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -224,14 +230,14 @@
     <ClInclude Include="Source\GameObjects\GameVariables.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\GameScreens\MapData\MAPFile.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Engine\BaseGraphics\SpriteSheet.h">
       <Filter>Header Files\Engine\BaseGraphics</Filter>
     </ClInclude>
     <ClInclude Include="Source\GameScreens\MapData\Layer.h">
-      <Filter>Header Files\Screens</Filter>
+      <Filter>Header Files\Screens\MapData</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameScreens\MapData\MAPFile.h">
+      <Filter>Header Files\Screens\MapData</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

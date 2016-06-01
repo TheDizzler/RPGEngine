@@ -8,6 +8,10 @@ MAPFile::MAPFile(xml_node maprt) {
 }
 
 MAPFile::~MAPFile() {
+	for each (SpriteSheet* sheet in spriteSheets)
+		delete sheet;
+	for each (Layer* layer in layers)
+		delete layer;
 }
 
 bool MAPFile::initialize(ID3D11Device * device) {
@@ -24,35 +28,14 @@ bool MAPFile::initialize(ID3D11Device * device) {
 void MAPFile::draw(SpriteBatch* batch) {
 
 
-	for each (TileLayer* layer in layers) {
+	for each (Layer* layer in layers) {
 
-		for (int row = 0; row < mapHeight; ++row) {
-			for (int col = 0; col < mapWidth; ++col) {
+		layer->draw(batch, spriteDict);
 
-				int key = layer->data[col][row];
-				if (key <= 0)
-					continue;
-				SpriteSheet::SpriteFrame* spriteFrame = spriteDict[key];
-
-				batch->Draw(spriteFrame->sheet->texture.Get(),
-					Vector2(row * tileWidth, col *tileHeight),
-					&spriteFrame->sourceRect, spriteFrame->tint,
-					spriteFrame->rotation, spriteFrame->origin,
-					spriteFrame->scale, SpriteEffects_None,
-					spriteFrame->layerDepth);
-			}
-		}
 	}
 
-	//sprite->draw(batch);
-
-	//RECT sourceRect = { 32, 32, 32, 32};
-
-	/*batch->Draw(sprite->texture, Vector2(tileWidth, tileHeight),
-		&sourceRect, spriteFrame->tint,
-		spriteFrame->rotation, spriteFrame->origin, spriteFrame->scale, SpriteEffects_None,
-		spriteFrame->layerDepth);*/
 }
+
 
 bool MAPFile::loadMapDescription() {
 
@@ -66,11 +49,6 @@ bool MAPFile::loadMapDescription() {
 
 bool MAPFile::loadTileset(ID3D11Device * device) {
 
-	/*sprite.reset(new Sprite());
-	if (!sprite->load(device, L"assets/gfx/tmx/grass-tiles-2-small.dds")) {
-		MessageBox(0, L"Booooo", L"Error loading sprite sheet", MB_OK);
-		return false;
-	}*/
 
 	spriteDict.clear();
 
@@ -89,49 +67,36 @@ bool MAPFile::loadTileset(ID3D11Device * device) {
 	return true;
 }
 
-#include <sstream>
-#include <iostream>
-#include <algorithm>
+
 bool MAPFile::loadLayerData() {
 
-	for each (xml_node layer in mapRoot.children("layer")) {
+	for each (xml_node layerNode in mapRoot.children()) {
 
-		TileLayer* tileLayer = new TileLayer();
+		Layer* layer;
 
-		xml_node layerData = layer.child("data");
-		if (layerData.attribute("encoding")) { // just gonna assume it's csv
 
-			string str = layerData.text().as_string();
+		if (strcmp(layerNode.name(), "layer") == 0) {
 
-			istringstream datastream(str);
-			string line;
+			layer = new TileLayer();
+			layer->load(layerNode);
 
-			while (getline(datastream, line)) {
-				line.erase(remove_if(line.begin(), line.end(), isspace), line.end());
-				if (line.length() <= 0)
-					continue;
-				tileLayer->data.push_back(split(line));
-			}
-		}
+		} else if (strcmp(layerNode.name(), "objectgroup") == 0) {
 
-		layers.push_back(tileLayer);
+			layer = new ObjectLayer();
+
+			((ObjectLayer*) layer)->load(layerNode);
+
+
+		} else
+			continue;
+
+		// leaving this here just as a check to see if everything is going right
+		layer->name = layerNode.attribute("name").as_string();
+		layers.push_back(layer);
 	}
 
 	return true;
 }
 
-vector<int> MAPFile::split(string line) {
 
-	vector<int> rowdata;
-	stringstream ss(line);
-	string token;
 
-	while (getline(ss, token, ',')) {
-		int i;
-		istringstream(token) >> i;
-		rowdata.push_back(i);
-	}
-
-	return rowdata;
-
-}

@@ -1,26 +1,16 @@
 #pragma once
 
-#include <vector>
+
 #include <map>
 
 #include "pugixml.hpp"
 
-#include "../../Engine/BaseGraphics/Sprite.h"
-#include "../../Engine/BaseGraphics/SpriteSheet.h"
-
-using namespace std;
-using namespace DirectX;
-using namespace pugi;
-
-
-class TileLayer {
-public:
-
-	vector<vector<int>> data;
+#include "../../GameScreens/MapData/Layer.h"
 
 
 
-};
+
+
 
 class MAPFile {
 public:
@@ -31,6 +21,8 @@ public:
 
 	void draw(SpriteBatch* batch);
 
+	
+
 private:
 
 	xml_node mapRoot;
@@ -40,15 +32,14 @@ private:
 	map<int, SpriteSheet::SpriteFrame*> spriteDict;
 
 	vector<SpriteSheet*> spriteSheets;
-	vector<TileLayer*> layers;
+	vector<Layer*> layers;
 
 	bool loadMapDescription();
 	bool loadTileset(ID3D11Device * device);
 	bool loadLayerData();
 
-	vector<int> split(string line);
+	
 
-	unique_ptr<Sprite> sprite;
 };
 
 

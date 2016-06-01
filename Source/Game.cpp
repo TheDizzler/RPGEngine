@@ -12,6 +12,7 @@ Game::~Game() {
 	delete docSpriteFiles;
 }
 
+#include "GameObjects/PC.h"
 bool Game::initializeGame(ID3D11Device* dvc, MouseController* ms) {
 
 	device = dvc;
@@ -27,13 +28,14 @@ bool Game::initializeGame(ID3D11Device* dvc, MouseController* ms) {
 	if (!textBoxManager->load(device))
 		return false;
 
-	
+	PC::pc.reset(new PC());
 
 	currentScreen = new MapScreen(docMapLegend);
 	if (!currentScreen->initialize(device, textBoxManager.get()))
 		return false;
 	currentScreen->setGameManager(this);
 
+	
 
 	return true;
 }
@@ -95,6 +97,7 @@ void Game::exit() {
 }
 
 map<wstring, wstring> Game::storedVariables;
+
 
 void Game::storeVariable(wstring escape, wstring * store) {
 

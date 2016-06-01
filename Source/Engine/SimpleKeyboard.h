@@ -7,7 +7,7 @@ const enum KEYS {
 	UP, DOWN, LEFT, RIGHT, SELECT, CANCEL, ESC
 };
 
-
+const int KEYCOUNT = 7;
 
 class SimpleKeyboard {
 public:
@@ -15,12 +15,12 @@ public:
 	~SimpleKeyboard();
 
 	void getInput(RAWKEYBOARD* rawKey);
-
+	void getLastInput();
 	UINT getAlphaKey();
 
 
-	bool keyDown[7] = {false, false, false, false, false, false, false};
-	bool lastDown[7] = {false, false, false, false, false, false, false};
+	bool keyDown[KEYCOUNT] = {false, false, false, false, false, false, false};
+	bool lastDown[KEYCOUNT] = {false, false, false, false, false, false, false};
 
 private:
 	RAWKEYBOARD* rawKey;

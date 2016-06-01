@@ -37,7 +37,7 @@ bool SpriteSheet::load(ID3D11Device* device, pugi::xml_node tilesetNode) {
 			SpriteFrame* frame = new SpriteFrame();
 			frame->sourceRect = {w * tilewidth, h * tileheight,
 									w * tilewidth + tilewidth, h * tileheight + tileheight};
-			frame->origin = Vector2(tilewidth / 2.0f, tileheight / 2.0f);
+			frame->origin = Vector2(0, 0);
 			frame->gid = firstGID;
 			frame->sheet = this;
 			spriteMap[firstGID++] = frame;

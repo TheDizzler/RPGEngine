@@ -14,7 +14,7 @@ MAPFile::~MAPFile() {
 		delete layer;
 }
 
-bool MAPFile::initialize(ID3D11Device * device) {
+bool MAPFile::initialize(ID3D11Device* device) {
 
 	if (!loadMapDescription())
 		return false;
@@ -25,8 +25,23 @@ bool MAPFile::initialize(ID3D11Device * device) {
 	return true;
 }
 
-void MAPFile::draw(SpriteBatch* batch) {
+#include "../../GameObjects/PC.h"
+void MAPFile::update(double deltaTime, SimpleKeyboard* keys) {
 
+	if (keys->keyDown[UP]) {
+		PC::pc->update(deltaTime, Vector2(0, -WALK_SPEED*deltaTime));
+	} else if (keys->keyDown[DOWN]) {
+		PC::pc->update(deltaTime, Vector2(0, WALK_SPEED*deltaTime));
+	}
+	if (keys->keyDown[LEFT]) {
+		PC::pc->update(deltaTime, Vector2(-WALK_SPEED*deltaTime, 0));
+	} else if (keys->keyDown[RIGHT]) {
+		PC::pc->update(deltaTime, Vector2(WALK_SPEED*deltaTime, 0));
+	}
+
+}
+
+void MAPFile::draw(SpriteBatch* batch) {
 
 	for each (Layer* layer in layers) {
 
@@ -81,6 +96,19 @@ bool MAPFile::loadLayerData() {
 			layer->load(layerNode);
 
 		} else if (strcmp(layerNode.name(), "objectgroup") == 0) {
+
+			if (strcmp(layerNode.attribute("name").as_string(), "Start") == 0) {
+
+				int x = layerNode.child("object").attribute("x").as_int()/* +
+					layerNode.child("object").attribute("width").as_int() / 2*/;
+				int y = layerNode.child("object").attribute("y").as_int()/* +
+					layerNode.child("object").attribute("height").as_int() / 2*/;
+				startPos = Vector2(x, y);
+
+					// set PC start position
+				PC::pc->gameObject->position = startPos;
+				continue;
+			}
 
 			layer = new ObjectLayer();
 

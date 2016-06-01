@@ -5,6 +5,7 @@
 #include <map>
 #include "../globals.h"
 
+
 using namespace std;
 
 /** NOT USING THIS! (It didn't work :( ) */
@@ -47,6 +48,7 @@ namespace GameVariables {
 		MessageBox(0, storedVariables[escapeStrings[temp1]].c_str(), escapeStrings[temp1].c_str(), MB_OK);
 		MessageBox(0, storedVariables[escapeStrings[temp2]].c_str(), escapeStrings[temp2].c_str(), MB_OK);
 	}
+
 
 
 };

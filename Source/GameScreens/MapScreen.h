@@ -3,6 +3,8 @@
 #include "Screen.h"
 #include "MapData\MAPFile.h"
 
+class Game;
+
 class MapScreen : public Screen {
 public:
 	MapScreen(xml_document* doc);

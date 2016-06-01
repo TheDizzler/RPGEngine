@@ -6,10 +6,7 @@
 #include "pugixml.hpp"
 
 #include "../../GameScreens/MapData/Layer.h"
-
-
-
-
+#include "../../Engine/SimpleKeyboard.h"
 
 
 class MAPFile {
@@ -19,6 +16,7 @@ public:
 
 	bool initialize(ID3D11Device* device);
 
+	void update(double deltaTime, SimpleKeyboard * keys);
 	void draw(SpriteBatch* batch);
 
 	
@@ -38,6 +36,8 @@ private:
 	bool loadTileset(ID3D11Device * device);
 	bool loadLayerData();
 
+
+	Vector2 startPos;
 	
 
 };

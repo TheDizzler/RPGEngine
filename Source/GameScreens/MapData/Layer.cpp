@@ -4,17 +4,28 @@
 #include <iostream>
 #include <algorithm>
 
+//#include "../../Game.h"
+#include "../../GameObjects/PC.h"
+
 void ObjectLayer::load(xml_node objectLayerNode) {
 
+	if (strcmp(objectLayerNode.attribute("name").as_string(), "NPC") == 0) {
+	// Add the pc to the npc layer
+		gameObjects.push_back(PC::pc->gameObject.get());
+
+	}
+
 	for each (xml_node objectNode in objectLayerNode.children("object")) {
-		ObjectLayer::GameObject* gameObj = new ObjectLayer::GameObject();
+		GameObject* gameObj = new GameObject();
 
 		gameObj->gid = objectNode.attribute("gid").as_int();
 		gameObj->name = objectNode.attribute("name").as_string();
-		gameObj->position = Vector2(objectNode.attribute("x").as_int(),
-			objectNode.attribute("y").as_int());
+
 		gameObj->width = objectNode.attribute("width").as_int();
 		gameObj->height = objectNode.attribute("height").as_int();
+		int x = objectNode.attribute("x").as_int();
+		int y = objectNode.attribute("y").as_int() - gameObj->height;
+		gameObj->position = Vector2(x, y);
 		gameObjects.push_back(gameObj);
 	}
 
@@ -72,11 +83,11 @@ void TileLayer::draw(SpriteBatch * batch, map<int, SpriteSheet::SpriteFrame*>& s
 void ObjectLayer::draw(SpriteBatch * batch, map<int, SpriteSheet::SpriteFrame*>& spriteDict) {
 
 	for each (GameObject* gameObject in gameObjects) {
-		if (gameObject->gid <= 0)
+		if (gameObject->gid <= 0) // empty tile
 			return;
 		SpriteSheet::SpriteFrame* spriteFrame = spriteDict[gameObject->gid];
 
-		if (!spriteFrame->sheet->texture)
+		if (!spriteFrame->sheet->texture) // not an object with a visual representation on the map
 			return;
 		batch->Draw(spriteFrame->sheet->texture.Get(), gameObject->position,
 			&spriteFrame->sourceRect, spriteFrame->tint,

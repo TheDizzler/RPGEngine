@@ -68,6 +68,13 @@ void SimpleKeyboard::getInput(RAWKEYBOARD* rwky) {
 
 }
 
+void SimpleKeyboard::getLastInput() {
+
+	for (int i = 0; i < KEYCOUNT; ++i)
+		lastDown[i] = keyDown[i];
+
+}
+
 UINT SimpleKeyboard::getAlphaKey() {
 
 	UINT keyChar = rawKey->VKey;

@@ -3,6 +3,7 @@
 #include <vector>
 #include "pugixml.hpp"
 
+#include "../../GameObjects/GameObject.h"
 #include "../../Engine/BaseGraphics/SpriteSheet.h"
 
 class Layer {
@@ -23,7 +24,6 @@ public:
 
 	virtual void load(xml_node tileLayerNode) override;
 
-
 	virtual void draw(SpriteBatch* batch, map<int, SpriteSheet::SpriteFrame*> & spriteDict) override;
 
 private:
@@ -33,15 +33,6 @@ private:
 class ObjectLayer : public Layer {
 
 public:
-	struct GameObject {
-		string name;
-		int id = -1;
-		/* ID of tile representing this object. */
-		int gid = -1;
-		/* Top-left coordinates of rect. */
-		Vector2 position;
-		int width, height;
-	};
 
 	vector<GameObject*> gameObjects;
 

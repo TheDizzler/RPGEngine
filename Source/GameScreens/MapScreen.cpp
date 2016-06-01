@@ -47,6 +47,8 @@ void MapScreen::setGameManager(Game* gm) {
 //}
 
 void MapScreen::update(double deltaTime, SimpleKeyboard* keys) {
+
+	map->update(deltaTime, keys);
 }
 
 void MapScreen::draw(SpriteBatch * batch) {

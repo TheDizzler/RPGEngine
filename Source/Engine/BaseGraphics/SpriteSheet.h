@@ -19,7 +19,7 @@ public:
 	struct SpriteFrame {
 		RECT sourceRect;
 		int gid = -1;
-		XMFLOAT2 origin;
+		XMFLOAT2 origin = Vector2(0, 0);
 		Color tint = DirectX::Colors::White.v;
 		Vector2 scale = Vector2(1, 1);
 		float alpha = 1.0f;

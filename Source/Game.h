@@ -3,11 +3,11 @@
 #include <stdio.h>
 
 
-#include "GameScreens\MapScreen.h"
-#include "GameScreens\BattleScreen.h"
-#include "GameObjects\GUIObjects\MenuTest.h"
-#include "Engine\MouseController.h"
-
+#include "GameScreens/MapScreen.h"
+#include "GameScreens/BattleScreen.h"
+#include "GameObjects/GUIObjects/MenuTest.h"
+#include "Engine/MouseController.h"
+//#include "GameObjects/PC.h"
 
 enum GameState {
 	menu, paused, playing
@@ -20,7 +20,7 @@ static const enum EscapeStrings {
 static const wstring escapeStrings[3] = {L"hero", L"temp1", L"temp2"};
 
 
-
+//class PC;
 class GameEngine;
 
 /** The lowest level of class where game code should be included.
@@ -43,10 +43,14 @@ public:
 	void loadMainMenu();
 	void exit();
 
-	
+	// A pointer to all things player related
+	//static PC* pc;
+
 	static void storeVariable(wstring escape, wstring* store);
 	static wstring getStoredVariable(wstring escape);
 private:
+
+	
 
 	Screen* currentScreen;
 	unique_ptr<MapScreen> mapScreen;

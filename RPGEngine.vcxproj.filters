@@ -135,6 +135,12 @@
     <ClCompile Include="Source\GameScreens\MapData\MAPFile.cpp">
       <Filter>Source Files\Screens\MapData</Filter>
     </ClCompile>
+    <ClCompile Include="Source\GameObjects\PC.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameObjects\GameObject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Game.h">
@@ -238,6 +244,12 @@
     </ClInclude>
     <ClInclude Include="Source\GameScreens\MapData\MAPFile.h">
       <Filter>Header Files\Screens\MapData</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameObjects\PC.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameObjects\GameObject.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

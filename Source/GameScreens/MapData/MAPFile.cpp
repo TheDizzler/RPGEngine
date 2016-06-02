@@ -29,15 +29,48 @@ bool MAPFile::initialize(ID3D11Device* device) {
 void MAPFile::update(double deltaTime, SimpleKeyboard* keys) {
 
 	if (keys->keyDown[UP]) {
-		PC::pc->update(deltaTime, Vector2(0, -WALK_SPEED*deltaTime));
+	// get max move distance
+	// check for collisions and get distance to collision
+		Vector2 distanceToTravel(0, -WALK_SPEED*deltaTime);
+
+		for each(Layer* layer in collidable) {
+
+			layer->checkCollision(PC::pc->gameObject.get(), distanceToTravel);
+
+		}
+		//PC::pc->update(deltaTime, distanceToTravel);
+
 	} else if (keys->keyDown[DOWN]) {
-		PC::pc->update(deltaTime, Vector2(0, WALK_SPEED*deltaTime));
+		//PC::pc->update(deltaTime, Vector2(0, WALK_SPEED*deltaTime));
+		Vector2 distanceToTravel(0, WALK_SPEED*deltaTime);
+
+		for each(Layer* layer in collidable) {
+
+			layer->checkCollision(PC::pc->gameObject.get(), distanceToTravel);
+
+		}
 	}
 	if (keys->keyDown[LEFT]) {
-		PC::pc->update(deltaTime, Vector2(-WALK_SPEED*deltaTime, 0));
+		//PC::pc->update(deltaTime, Vector2(-WALK_SPEED*deltaTime, 0));
+		Vector2 distanceToTravel(-WALK_SPEED*deltaTime, 0);
+
+		for each(Layer* layer in collidable) {
+
+			layer->checkCollision(PC::pc->gameObject.get(), distanceToTravel);
+
+		}
 	} else if (keys->keyDown[RIGHT]) {
-		PC::pc->update(deltaTime, Vector2(WALK_SPEED*deltaTime, 0));
+		//PC::pc->update(deltaTime, Vector2(WALK_SPEED*deltaTime, 0));
+		Vector2 distanceToTravel(WALK_SPEED*deltaTime, 0);
+
+		for each(Layer* layer in collidable) {
+
+			layer->checkCollision(PC::pc->gameObject.get(), distanceToTravel);
+
+		}
 	}
+
+
 
 }
 
@@ -97,23 +130,30 @@ bool MAPFile::loadLayerData() {
 
 		} else if (strcmp(layerNode.name(), "objectgroup") == 0) {
 
+		// this is where the PC starts on the map
 			if (strcmp(layerNode.attribute("name").as_string(), "Start") == 0) {
 
 				int x = layerNode.child("object").attribute("x").as_int()/* +
 					layerNode.child("object").attribute("width").as_int() / 2*/;
 				int y = layerNode.child("object").attribute("y").as_int()/* +
 					layerNode.child("object").attribute("height").as_int() / 2*/;
-				startPos = Vector2(x, y);
+				//startPos = Vector2(x, y);
 
 					// set PC start position
-				PC::pc->gameObject->position = startPos;
+				PC::pc->gameObject->x = x;
+				PC::pc->gameObject->y = y;
+				PC::pc->gameObject->setRect();
 				continue;
 			}
 
 			layer = new ObjectLayer();
 
 			((ObjectLayer*) layer)->load(layerNode);
+			if (strcmp(layer->name.c_str(), "Collision") == 0
+				|| strcmp(layer->name.c_str(), "NPC")) {
+				collidable.push_back(layer);
 
+			}
 
 		} else
 			continue;

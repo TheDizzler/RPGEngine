@@ -14,7 +14,12 @@ PC::PC() {
 PC::~PC() {
 }
 
+Vector2 PC::getPosition() {
+	return Vector2(gameObject->x, gameObject->y);
+}
+
 void PC::update(double deltaTime, Vector2 move) {
 
-	gameObject->position += move;
+	//gameObject->position += move;
+	gameObject->update(deltaTime);
 }

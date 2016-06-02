@@ -25,7 +25,10 @@ void ObjectLayer::load(xml_node objectLayerNode) {
 		gameObj->height = objectNode.attribute("height").as_int();
 		int x = objectNode.attribute("x").as_int();
 		int y = objectNode.attribute("y").as_int() - gameObj->height;
-		gameObj->position = Vector2(x, y);
+		//gameObj->position = Vector2(x, y);
+		gameObj->x = x;
+		gameObj->y = y;
+		gameObj->setRect();
 		gameObjects.push_back(gameObj);
 	}
 
@@ -65,6 +68,7 @@ void TileLayer::draw(SpriteBatch * batch, map<int, SpriteSheet::SpriteFrame*>& s
 			int gid = data[col][row];
 			if (gid <= 0)
 				continue;
+
 			SpriteSheet::SpriteFrame* spriteFrame = spriteDict[gid];
 
 			batch->Draw(spriteFrame->sheet->texture.Get(),
@@ -78,6 +82,9 @@ void TileLayer::draw(SpriteBatch * batch, map<int, SpriteSheet::SpriteFrame*>& s
 
 }
 
+void TileLayer::checkCollision(GameObject * movingObject, Vector2 moveDistance) {
+}
+
 
 
 void ObjectLayer::draw(SpriteBatch * batch, map<int, SpriteSheet::SpriteFrame*>& spriteDict) {
@@ -89,13 +96,47 @@ void ObjectLayer::draw(SpriteBatch * batch, map<int, SpriteSheet::SpriteFrame*>&
 
 		if (!spriteFrame->sheet->texture) // not an object with a visual representation on the map
 			return;
-		batch->Draw(spriteFrame->sheet->texture.Get(), gameObject->position,
+
+		batch->Draw(spriteFrame->sheet->texture.Get(), Vector2(gameObject->x, gameObject->y),
 			&spriteFrame->sourceRect, spriteFrame->tint,
 			spriteFrame->rotation, spriteFrame->origin,
 			spriteFrame->scale, SpriteEffects_None,
 			spriteFrame->layerDepth);
 
 	}
+}
+
+void ObjectLayer::checkCollision(GameObject* movingObject, Vector2 moveDistance) {
+
+	//Vector2 actualMove;
+
+	for each (GameObject* gameObject in gameObjects) {
+
+		if (strcmp(gameObject->name.c_str(), movingObject->name.c_str()) == 0)
+			continue;
+
+
+		RECT overlapRect;
+		// If the rectangles intersect, the return value is nonzero.
+		// If the rectangles do not intersect, the return value is zero.
+		if (IntersectRect(&overlapRect, &movingObject->rect, &gameObject->rect) == 0)
+			continue;
+
+		if (moveDistance.x != 0) {
+			int distanceToFar = overlapRect.right - overlapRect.left;
+			moveDistance.x -= distanceToFar;
+		}
+		if (moveDistance.y != 0) {
+			int distanceToFar = overlapRect.bottom - overlapRect.top;
+			moveDistance.y -= distanceToFar;
+			
+		}
+		break;
+	}
+
+	movingObject->move(moveDistance);
+
+	//return actualMove;
 }
 
 

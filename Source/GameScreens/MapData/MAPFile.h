@@ -32,6 +32,9 @@ private:
 	vector<SpriteSheet*> spriteSheets;
 	vector<Layer*> layers;
 
+	vector<Layer*> collidable;
+	//vector<GameObject*> 
+
 	bool loadMapDescription();
 	bool loadTileset(ID3D11Device * device);
 	bool loadLayerData();

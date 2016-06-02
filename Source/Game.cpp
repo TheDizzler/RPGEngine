@@ -29,6 +29,7 @@ bool Game::initializeGame(ID3D11Device* dvc, MouseController* ms) {
 		return false;
 
 	PC::pc.reset(new PC());
+	PC::pc->gameObject->name = "PC";
 
 	currentScreen = new MapScreen(docMapLegend);
 	if (!currentScreen->initialize(device, textBoxManager.get()))

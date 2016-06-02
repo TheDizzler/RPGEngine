@@ -3,9 +3,9 @@
 #include <memory>
 #include "GameObject.h"
 
-const float WALK_SPEED = 175;
+const float WALK_SPEED = 135;
 /** A class with a static pointer to an instance of itself because I
-	don't know of a better way to handle this in C++. */
+	don't know of a better way to handle this in C++. Yay for circular references.*/
 class PC {
 public:
 	PC();
@@ -13,6 +13,8 @@ public:
 
 	// map representation of pc
 	unique_ptr<GameObject> gameObject;
+
+	Vector2 getPosition();
 
 	/** Collision detection is done on map level */
 	void update(double deltaTime, Vector2 move);

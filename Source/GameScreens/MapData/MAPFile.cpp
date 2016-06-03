@@ -28,51 +28,143 @@ bool MAPFile::initialize(ID3D11Device* device) {
 #include "../../GameObjects/PC.h"
 void MAPFile::update(double deltaTime, SimpleKeyboard* keys) {
 
+
+	Vector2 distanceToTravel(0, 0);
+	float moveAmount = WALK_SPEED * deltaTime;
+
 	if (keys->keyDown[UP]) {
-	// get max move distance
-	// check for collisions and get distance to collision
-		Vector2 distanceToTravel(0, -WALK_SPEED*deltaTime);
 
-		for each(Layer* layer in collidable) {
+		if (!PC::pc->collided[UP])
+			distanceToTravel.y = -moveAmount;
 
-			layer->checkCollision(PC::pc->gameObject.get(), distanceToTravel);
-
+		if (keys->keyDown[RIGHT]) {
+			if (!PC::pc->collided[RIGHT])
+				distanceToTravel.x = (moveAmount) * XM_PIDIV4;
+			distanceToTravel.y *= XM_PIDIV4;
+		} else if (keys->keyDown[LEFT]) {
+			if (!PC::pc->collided[LEFT])
+				distanceToTravel.x = (-moveAmount) * XM_PIDIV4;
+			distanceToTravel.y *= XM_PIDIV4;
 		}
-		//PC::pc->update(deltaTime, distanceToTravel);
+		RECT overLap;
+		if (checkCollision( &distanceToTravel)) {
+
+			//distanceToTravel.y += (overLap.bottom - overLap.top) + 5;
+			//distanceToTravel = distanceToTravel.Zero;
+			distanceToTravel.y = 0;
+			PC::pc->collided[UP] = true;
+		} else {
+			PC::pc->collided[LEFT] = false;
+			PC::pc->collided[RIGHT] = false;
+			PC::pc->collided[UP] = false;
+			PC::pc->collided[DOWN] = false;
+		}
 
 	} else if (keys->keyDown[DOWN]) {
-		//PC::pc->update(deltaTime, Vector2(0, WALK_SPEED*deltaTime));
-		Vector2 distanceToTravel(0, WALK_SPEED*deltaTime);
 
-		for each(Layer* layer in collidable) {
+		if (!PC::pc->collided[DOWN])
+			distanceToTravel.y = moveAmount;
 
-			layer->checkCollision(PC::pc->gameObject.get(), distanceToTravel);
-
+		if (keys->keyDown[RIGHT]) {
+			if (!PC::pc->collided[RIGHT])
+				distanceToTravel.x = (moveAmount) * XM_PIDIV4;
+			distanceToTravel.y *= XM_PIDIV4;
+		} else if (keys->keyDown[LEFT]) {
+			if (!PC::pc->collided[LEFT])
+				distanceToTravel.x = (-moveAmount) * XM_PIDIV4;
+			distanceToTravel.y *= XM_PIDIV4;
 		}
-	}
-	if (keys->keyDown[LEFT]) {
-		//PC::pc->update(deltaTime, Vector2(-WALK_SPEED*deltaTime, 0));
-		Vector2 distanceToTravel(-WALK_SPEED*deltaTime, 0);
+		RECT overLap;
+		if (checkCollision( &distanceToTravel)) {
 
-		for each(Layer* layer in collidable) {
-
-			layer->checkCollision(PC::pc->gameObject.get(), distanceToTravel);
-
+			//distanceToTravel.y += (overLap.bottom - overLap.top) - 5;
+			distanceToTravel.y = 0;
+			//distanceToTravel = distanceToTravel.Zero;
+			PC::pc->collided[DOWN] = true;
+		} else {
+			PC::pc->collided[LEFT] = false;
+			PC::pc->collided[RIGHT] = false;
+			PC::pc->collided[UP] = false;
+			PC::pc->collided[DOWN] = false;
 		}
+
 	} else if (keys->keyDown[RIGHT]) {
-		//PC::pc->update(deltaTime, Vector2(WALK_SPEED*deltaTime, 0));
-		Vector2 distanceToTravel(WALK_SPEED*deltaTime, 0);
 
-		for each(Layer* layer in collidable) {
+		if (!PC::pc->collided[RIGHT])
+			distanceToTravel.x = moveAmount;
+		RECT overLap;
+		if (checkCollision(&distanceToTravel)) {
 
-			layer->checkCollision(PC::pc->gameObject.get(), distanceToTravel);
-
+			PC::pc->collided[RIGHT] = true;
+			//distanceToTravel.x += (overLap.right - overLap.left) - 5;
+			distanceToTravel.x = 0;
+		} else {
+			PC::pc->collided[LEFT] = false;
+			PC::pc->collided[RIGHT] = false;
+			PC::pc->collided[UP] = false;
+			PC::pc->collided[DOWN] = false;
 		}
+
+	} else if (keys->keyDown[LEFT]) {
+
+		distanceToTravel.x = -moveAmount;
+		RECT* overLap = checkCollision(&distanceToTravel);
+		if (overLap != NULL) {
+			distanceToTravel.x = 0;
+			int adjust = overLap->right - PC::pc->gameObject->rect.left;
+			PC::pc->gameObject->move(Vector2(adjust + 5, 0));
+			delete overLap;
+		}
+
+	//if (!PC::pc->collided[LEFT] && !keys->lastDown[LEFT]) {
+	//	distanceToTravel.x = -moveAmount;
+	//	RECT overLap;
+	//	if (checkCollision(&overLap, &distanceToTravel)) {
+
+	//		distanceToTravel.x = 0;
+	//		//distanceToTravel = distanceToTravel.Zero;
+	//		PC::pc->collided[LEFT] = true;
+	//	} else {
+	//		PC::pc->collided[LEFT] = false;
+	//		PC::pc->collided[RIGHT] = false;
+	//		PC::pc->collided[UP] = false;
+	//		PC::pc->collided[DOWN] = false;
+	//	}
+	//} else {
+	//	PC::pc->collided[LEFT] = false;
+	//	PC::pc->collided[RIGHT] = false;
+	//	PC::pc->collided[UP] = false;
+	//	PC::pc->collided[DOWN] = false;
+	//}
+	} else {
+
+		PC::pc->collided[LEFT] = false;
+		PC::pc->collided[RIGHT] = false;
+		PC::pc->collided[UP] = false;
+		PC::pc->collided[DOWN] = false;
 	}
 
 
+	PC::pc->update(deltaTime, distanceToTravel);
+}
+
+
+RECT* MAPFile::checkCollision(Vector2* distanceToTravel) {
+
+	RECT* overLap;
+	for each(Layer* layer in collidable) {
+
+		overLap = layer->checkCollision(PC::pc->gameObject.get(), distanceToTravel);
+		if (overLap != NULL) {
+			return overLap;
+				//distanceToTravel.y += (overLap.bottom - overLap.top) + 5;
+				//break;
+		}
+	}
+	return NULL;
 
 }
+
 
 void MAPFile::draw(SpriteBatch* batch) {
 
@@ -140,8 +232,8 @@ bool MAPFile::loadLayerData() {
 				//startPos = Vector2(x, y);
 
 					// set PC start position
-				PC::pc->gameObject->x = x;
-				PC::pc->gameObject->y = y;
+				PC::pc->gameObject->position.x = x;
+				PC::pc->gameObject->position.y = y;
 				PC::pc->gameObject->setRect();
 				continue;
 			}

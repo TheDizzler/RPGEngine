@@ -16,7 +16,8 @@ public:
 	/* ID of tile representing this object. */
 	int gid = -1;
 	/* Top-left coordinates of rect. */
-	int x, y;
+	//int x, y;
+	Vector2 position;
 	int width, height;
 
 	RECT rect;

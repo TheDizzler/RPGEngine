@@ -17,6 +17,9 @@ public:
 	bool initialize(ID3D11Device* device);
 
 	void update(double deltaTime, SimpleKeyboard * keys);
+
+	
+	
 	void draw(SpriteBatch* batch);
 
 	
@@ -39,6 +42,7 @@ private:
 	bool loadTileset(ID3D11Device * device);
 	bool loadLayerData();
 
+	RECT* checkCollision(Vector2 * distanceToTravel);
 
 	Vector2 startPos;
 	

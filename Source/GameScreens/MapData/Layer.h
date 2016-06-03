@@ -13,7 +13,8 @@ public:
 	virtual void load(xml_node layerNode) = 0;
 	virtual void draw(SpriteBatch* batch, map<int, SpriteSheet::SpriteFrame*>& spriteDict) = 0;
 
-	virtual void checkCollision(GameObject* movingObject, Vector2 moveDistance) = 0;
+	// Returns true if collision detected
+	virtual RECT* checkCollision(GameObject* movingObject, Vector2* moveDistance) = 0;
 };
 
 class TileLayer : public Layer {
@@ -27,7 +28,7 @@ public:
 	virtual void load(xml_node tileLayerNode) override;
 	virtual void draw(SpriteBatch* batch, map<int, SpriteSheet::SpriteFrame*> & spriteDict) override;
 
-	virtual void checkCollision(GameObject* movingObject, Vector2 moveDistance) override;
+	virtual RECT* checkCollision(GameObject* movingObject, Vector2* moveDistance) override;
 private:
 	vector<int> split(string line);
 };
@@ -41,7 +42,7 @@ public:
 	virtual void load(xml_node objectLayerNode) override;
 	virtual void draw(SpriteBatch* batch, map<int, SpriteSheet::SpriteFrame*>& spriteDict) override;
 
-	virtual void checkCollision(GameObject* movingObject, Vector2 moveDistance) override;
+	virtual RECT* checkCollision(GameObject* movingObject, Vector2* moveDistance) override;
 
 };
 

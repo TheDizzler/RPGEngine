@@ -15,7 +15,7 @@ public:
 	~SimpleKeyboard();
 
 	void getInput(RAWKEYBOARD* rawKey);
-	void getLastInput();
+	
 	UINT getAlphaKey();
 
 
@@ -26,6 +26,6 @@ private:
 	RAWKEYBOARD* rawKey;
 
 	bool shiftPressed = false;
-	
+	void getLastInput();
 
 };

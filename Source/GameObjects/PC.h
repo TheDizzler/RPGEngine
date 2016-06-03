@@ -13,6 +13,8 @@ public:
 
 	// map representation of pc
 	unique_ptr<GameObject> gameObject;
+	bool collided[4] = {false, false, false, false};
+
 
 	Vector2 getPosition();
 

@@ -82,7 +82,7 @@ bool Input::initRawInput(HWND hwnd) {
 
 void Input::setRawInput(RAWINPUT* raw) {
 
-	keys->getLastInput();
+	//keys->getLastInput();
 	if (raw->header.dwType == RIM_TYPEKEYBOARD)
 		keys->getInput(&raw->data.keyboard);
 

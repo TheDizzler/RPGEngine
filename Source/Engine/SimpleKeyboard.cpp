@@ -9,6 +9,8 @@ SimpleKeyboard::~SimpleKeyboard() {
 
 void SimpleKeyboard::getInput(RAWKEYBOARD* rwky) {
 
+	getLastInput();
+
 	rawKey = rwky;
 	bool down;
 

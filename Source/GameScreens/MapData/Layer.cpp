@@ -25,9 +25,9 @@ void ObjectLayer::load(xml_node objectLayerNode) {
 		gameObj->height = objectNode.attribute("height").as_int();
 		int x = objectNode.attribute("x").as_int();
 		int y = objectNode.attribute("y").as_int() - gameObj->height;
-		//gameObj->position = Vector2(x, y);
-		gameObj->x = x;
-		gameObj->y = y;
+		gameObj->position = Vector2(x, y);
+		//gameObj->x = x;
+		//gameObj->y = y;
 		gameObj->setRect();
 		gameObjects.push_back(gameObj);
 	}
@@ -82,7 +82,9 @@ void TileLayer::draw(SpriteBatch * batch, map<int, SpriteSheet::SpriteFrame*>& s
 
 }
 
-void TileLayer::checkCollision(GameObject * movingObject, Vector2 moveDistance) {
+RECT* TileLayer::checkCollision(GameObject * movingObject, Vector2* moveDistance) {
+
+	return NULL;
 }
 
 
@@ -97,7 +99,7 @@ void ObjectLayer::draw(SpriteBatch * batch, map<int, SpriteSheet::SpriteFrame*>&
 		if (!spriteFrame->sheet->texture) // not an object with a visual representation on the map
 			return;
 
-		batch->Draw(spriteFrame->sheet->texture.Get(), Vector2(gameObject->x, gameObject->y),
+		batch->Draw(spriteFrame->sheet->texture.Get(), gameObject->position/*Vector2(gameObject->x, gameObject->y)*/,
 			&spriteFrame->sourceRect, spriteFrame->tint,
 			spriteFrame->rotation, spriteFrame->origin,
 			spriteFrame->scale, SpriteEffects_None,
@@ -106,38 +108,65 @@ void ObjectLayer::draw(SpriteBatch * batch, map<int, SpriteSheet::SpriteFrame*>&
 	}
 }
 
-void ObjectLayer::checkCollision(GameObject* movingObject, Vector2 moveDistance) {
+
+RECT* ObjectLayer::checkCollision(GameObject* movingObject, Vector2* moveDistance) {
 
 	//Vector2 actualMove;
 
+	RECT afterMove = movingObject->rect;
+	afterMove.left += moveDistance->x - 5;
+	afterMove.right += moveDistance->x + 5;
+	afterMove.top += moveDistance->y - 5;
+	afterMove.bottom += moveDistance->y + 5;
 	for each (GameObject* gameObject in gameObjects) {
 
 		if (strcmp(gameObject->name.c_str(), movingObject->name.c_str()) == 0)
 			continue;
 
 
-		RECT overlapRect;
+		RECT* overlapRect = new RECT{-1, -1, -1, -1};
 		// If the rectangles intersect, the return value is nonzero.
 		// If the rectangles do not intersect, the return value is zero.
-		if (IntersectRect(&overlapRect, &movingObject->rect, &gameObject->rect) == 0)
-			continue;
-
-		if (moveDistance.x != 0) {
-			int distanceToFar = overlapRect.right - overlapRect.left;
-			moveDistance.x -= distanceToFar;
-		}
-		if (moveDistance.y != 0) {
-			int distanceToFar = overlapRect.bottom - overlapRect.top;
-			moveDistance.y -= distanceToFar;
-			
-		}
-		break;
+		if (IntersectRect(overlapRect, &afterMove, &gameObject->rect) != 0)
+			return overlapRect;
 	}
 
-	movingObject->move(moveDistance);
+	return NULL;
 
-	//return actualMove;
 }
+
+
+//bool ObjectLayer::checkCollision(GameObject* movingObject, Vector2* moveDistance) {
+//
+//	//Vector2 actualMove;
+//
+//	for each (GameObject* gameObject in gameObjects) {
+//
+//		if (strcmp(gameObject->name.c_str(), movingObject->name.c_str()) == 0)
+//			continue;
+//
+//
+//		RECT overlapRect;
+//		// If the rectangles intersect, the return value is nonzero.
+//		// If the rectangles do not intersect, the return value is zero.
+//		if (IntersectRect(&overlapRect, &movingObject->rect, &gameObject->rect) == 0)
+//			continue;
+//
+//		if (moveDistance->x != 0) {
+//			int distanceToFar = overlapRect.right - overlapRect.left;
+//			moveDistance->x -= distanceToFar;
+//		}
+//		if (moveDistance->y != 0) {
+//			int distanceToFar = overlapRect.bottom - overlapRect.top;
+//			moveDistance->y -= distanceToFar;
+//
+//		}
+//		return true;
+//	}
+//
+//	return false;
+//	//return actualMove;
+//}
 
 
 

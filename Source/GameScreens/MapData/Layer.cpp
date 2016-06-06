@@ -24,11 +24,9 @@ void ObjectLayer::load(xml_node objectLayerNode) {
 		gameObj->width = objectNode.attribute("width").as_int();
 		gameObj->height = objectNode.attribute("height").as_int();
 		int x = objectNode.attribute("x").as_int();
-		int y = objectNode.attribute("y").as_int()/* - gameObj->height*/;
+		int y = objectNode.attribute("y").as_int();
 		gameObj->position = Vector2(x, y);
-		//gameObj->origin = Vector2(0, gameObj->height);
-		//gameObj->x = x;
-		//gameObj->y = y;
+
 		gameObj->setRect();
 		gameObjects.push_back(gameObj);
 	}
@@ -113,7 +111,7 @@ void ObjectLayer::draw(SpriteBatch * batch, map<int, SpriteSheet::SpriteFrame*>&
 RECT* ObjectLayer::checkCollision(GameObject* movingObject, Vector2* moveDistance) {
 
 	RECT afterMove = movingObject->rect;
-	int tolerance = 8;
+	int tolerance = 5;
 	afterMove.left += moveDistance->x - tolerance;
 	afterMove.right += moveDistance->x + tolerance;
 	afterMove.top += moveDistance->y - tolerance;

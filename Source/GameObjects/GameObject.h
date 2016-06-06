@@ -21,7 +21,7 @@ public:
 	Vector2 origin;
 	int width, height;
 
-	bool collided[4] = {false, false, false, false};
+	//bool collided[4] = {false, false, false, false};
 
 	RECT rect;
 	void setRect();

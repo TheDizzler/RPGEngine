@@ -39,8 +39,7 @@ void MAPFile::update(double deltaTime, SimpleKeyboard* keys) {
 	if (keys->keyDown[UP]) {
 		distanceToTravel.y = -moveAmount;
 		if (keys->keyDown[RIGHT]) {
-			if (!PC::pc->gameObject->collided[RIGHT])
-				distanceToTravel.x = (moveAmount) * XM_PIDIV4;
+			distanceToTravel.x = (moveAmount) * XM_PIDIV4;
 			distanceToTravel.y *= XM_PIDIV4;
 
 		} else if (keys->keyDown[LEFT]) {
@@ -71,14 +70,22 @@ void MAPFile::update(double deltaTime, SimpleKeyboard* keys) {
 			distanceToTravel.x = 0;
 		else if (overlapWidth > overlapHeight) // probable coming from top or bottom
 			distanceToTravel.y = 0;
+		else if (overlapWidth == overlapHeight) {
+			/* if they're == then it's at corner. Sometimes gets "Sticky".
+			*	using a tolerance variable in the layer collision method
+			*	seems to alleviate this problem. */
+			if (distanceToTravel.x > 0) // going right
+				PC::pc->gameObject->position.x += overlapWidth;
+			else if (distanceToTravel.x < 0) // going left
+				PC::pc->gameObject->position.x -= overlapWidth;
 
-		/* if they're == then it's at corner. Sometimes gets "Sticky".
-		*	using a tolerance variable in the layer collision method
-		*	seems to alleviate this problem. */
+			if (distanceToTravel.y > 0) // going down
+				PC::pc->gameObject->position.y += overlapWidth;
+			else if (distanceToTravel.y < 0)
+				PC::pc->gameObject->position.y -= overlapWidth;
+		}
 		delete overlap;
-
 	}
-
 
 	PC::pc->update(deltaTime, distanceToTravel);
 }

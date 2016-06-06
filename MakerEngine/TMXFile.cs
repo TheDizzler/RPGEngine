@@ -55,16 +55,18 @@ namespace MakerEngine {
 
 					switch (node.Name) {
 						case "objectgroup":
-							foreach (XmlNode obj in node.ChildNodes) {
+							if (node.Attributes["name"].InnerText == "NPC") {
+								foreach (XmlNode obj in node.ChildNodes) {
 
-								int height = Int32.Parse(obj.Attributes["height"].InnerText);
-								int x = (int)Math.Round(float.Parse(obj.Attributes["x"].InnerText));
-								int y = (int)Math.Round(float.Parse(obj.Attributes["y"].InnerText))
-									 - height; // objects origin is bottom left for some reason...
+									int height = Int32.Parse(obj.Attributes["height"].InnerText);
+									int x = (int)Math.Round(float.Parse(obj.Attributes["x"].InnerText));
+									int y = (int)Math.Round(float.Parse(obj.Attributes["y"].InnerText))
+										 - height; // objects origin is bottom left for some reason...
 
-								// this is to remove floating points that appear sometimes from Tiled
-								obj.Attributes["x"].InnerText = "" + x;
-								obj.Attributes["y"].InnerText = "" + y;
+									// this is to remove floating points that appear sometimes from Tiled
+									obj.Attributes["x"].InnerText = "" + x;
+									obj.Attributes["y"].InnerText = "" + y;
+								}
 							}
 							break;
 					}
@@ -596,8 +598,8 @@ namespace MakerEngine {
 				width = Int32.Parse(objNode.Attributes["width"].InnerText);
 				height = Int32.Parse(objNode.Attributes["height"].InnerText);
 
-				//x = (int)Math.Round(float.Parse(objNode.Attributes["x"].InnerText));
-				//y = (int)Math.Round(float.Parse(objNode.Attributes["y"].InnerText))
+				x = (int)Math.Round(float.Parse(objNode.Attributes["x"].InnerText));
+				y = (int)Math.Round(float.Parse(objNode.Attributes["y"].InnerText));
 				//	 - height; // objects origin is bottom left for some reason...
 
 				//// this is to remove floating points that appear sometimes from Tiled

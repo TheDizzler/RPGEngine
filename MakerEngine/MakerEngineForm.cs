@@ -79,6 +79,13 @@ namespace MakerEngine {
 
 		}
 
+		private void MakerEngineForm_FormClosing(Object sender, FormClosingEventArgs e) {
+			if (pictureBox_Map.Image != null)
+				pictureBox_Map.Image.Dispose();
+			if (mapTMX != null)
+				mapTMX.Dispose();
+		}
+
 
 		private void loadMapFiles() {
 
@@ -848,6 +855,11 @@ namespace MakerEngine {
 				int length = lastIndex - index;
 				String shortnameTMX = tmxFile.Substring(index + 1, length - 1);
 
+				//if (pictureBox_Map.Image != null)
+				//	pictureBox_Map.Image.Dispose();
+				if (mapTMX != null)
+					mapTMX.Dispose();
+
 				TMXFile newMAPFile = convertTMXtoMAP(tmxFile, shortnameTMX);
 				if (newMAPFile == null)
 					return;
@@ -979,6 +991,7 @@ namespace MakerEngine {
 		}
 
 		private TMXFile convertTMXtoMAP(String tmxFile, String shortnameTMX) {
+
 
 			String newMapAbsoluteFile = gameDirectory + mapDir + shortnameTMX + ".map";
 
@@ -1504,8 +1517,9 @@ namespace MakerEngine {
 					sf.AppendChild(importNode);
 
 
-				} catch (IOException ex) {
+				} catch (Exception ex) {
 					// probably already exists
+
 					if (MessageBox.Show(this, tilename + " already exists in. Overwrite?", "Action needed", MessageBoxButtons.YesNo)
 						== DialogResult.Yes) {
 						File.Delete(newLoc);
@@ -1541,6 +1555,6 @@ namespace MakerEngine {
 
 		}
 
-		
+
 	}
 }

@@ -45,7 +45,7 @@ namespace MakerEngine {
 			tmx = new XmlDocument();
 			tmx.Load(file);
 
-
+			
 			name = mapName;
 			if (!converting) {
 				load();
@@ -83,6 +83,11 @@ namespace MakerEngine {
 						break;
 				}
 			}
+
+			// ensure that origin of gameobjects is top left and 
+			// floats are removed from final map file
+			using (XmlWriter writer = XmlWriter.Create(file))
+				tmx.Save(writer);
 		}
 
 		private void loadMapDescription() {
@@ -145,6 +150,12 @@ namespace MakerEngine {
 
 			String outputFileName;
 
+			//String dir = layerImageDir;
+			if (!Directory.Exists(layerImageDir))
+				Directory.CreateDirectory(layerImageDir);
+
+
+
 			foreach (Layer layer in layers) {
 
 
@@ -182,10 +193,9 @@ namespace MakerEngine {
 				}
 
 
-				String dir = layerImageDir;
-				if (!Directory.Exists(dir))
-					Directory.CreateDirectory(dir);
-				outputFileName = dir + layer.getName() + " Layer.png";
+
+
+				outputFileName = layerImageDir + name + "_" + layer.getName() + " Layer.png";
 
 				using (MemoryStream memory = new MemoryStream()) {
 					using (FileStream fs = new FileStream(outputFileName, FileMode.Create, FileAccess.ReadWrite)) {
@@ -222,10 +232,9 @@ namespace MakerEngine {
 				// Offsetting the y pos helps but still not exact.
 			}
 
-			String dir = layerImageDir;
-			if (!Directory.Exists(dir))
-				Directory.CreateDirectory(dir);
-			String outputFileName = dir + layer.getName() + " Layer.png";
+			if (!Directory.Exists(layerImageDir))
+				Directory.CreateDirectory(layerImageDir);
+			String outputFileName = layerImageDir + name + "_" + layer.getName() + " Layer.png";
 
 			using (MemoryStream memory = new MemoryStream()) {
 				using (FileStream fs = new FileStream(outputFileName, FileMode.Create, FileAccess.ReadWrite)) {
@@ -262,7 +271,7 @@ namespace MakerEngine {
 			}
 
 			String dir = layerImageDir;
-			String outputFileName = dir + "final.png";
+			String outputFileName = dir + name + " final.png";
 
 			using (MemoryStream memory = new MemoryStream()) {
 				using (FileStream fs = new FileStream(outputFileName, FileMode.Create, FileAccess.ReadWrite)) {
@@ -284,12 +293,19 @@ namespace MakerEngine {
 
 			foreach (Layer layer in layers) {
 				layer.Dispose();
-				File.Delete(layerImageDir + layer.getName() + " Layer.png");
+				File.Delete(layerImageDir + name + "_" + layer.getName() + " Layer.png");
 			}
 			foreach (KeyValuePair<int, Image> entry in imageDict)
 				imageDict[entry.Key].Dispose();
+			//File.Delete(layerImageDir + name  + " final.png");
+			//if (Directory.Exists(layerImageDir))
+			//	Directory.Delete(layerImageDir, true);
+			
 			//foreach (TileSet set in tilesets)
 			//	set.Dispose(); // Disposing of these crashes the tabControl_ImageViewer when trying to clear it
+
+
+
 		}
 	}
 
@@ -555,10 +571,18 @@ namespace MakerEngine {
 				if (objNode.Attributes["gid"] != null)
 					gid = Int32.Parse(objNode.Attributes["gid"].InnerText);
 
-				x = Int32.Parse(objNode.Attributes["x"].InnerText);
-				y = Int32.Parse(objNode.Attributes["y"].InnerText);
 				width = Int32.Parse(objNode.Attributes["width"].InnerText);
 				height = Int32.Parse(objNode.Attributes["height"].InnerText);
+
+				x = (int)Math.Round(float.Parse(objNode.Attributes["x"].InnerText));
+				y = (int)Math.Round(float.Parse(objNode.Attributes["y"].InnerText))
+					 - height; // objects origin is bottom left for some reason...
+
+				// this is to remove floating points that appear sometimes from Tiled
+				objNode.Attributes["x"].InnerText = "" + x;
+				objNode.Attributes["y"].InnerText = "" + y;
+
+				
 			}
 
 

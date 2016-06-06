@@ -1,1 +1,1 @@
-﻿<?xml version="1.0" encoding="utf-8"?><root game="First RPG" xml="Map Legend"><map name="Second Village" file="assets/text/maps/map2.map" /><map name="Test Village" file="assets/text/maps/Test Village.map" /></root>
+﻿<?xml version="1.0" encoding="utf-8"?><root game="First RPG" xml="Map Legend"><map name="Test Village" file="assets/text/maps/Test Village.map" /><map name="map2" file="assets/text/maps/map2.map" /></root>

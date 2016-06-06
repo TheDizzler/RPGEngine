@@ -8,7 +8,6 @@ GameObject::~GameObject() {
 
 void GameObject::setRect() {
 
-	//rect = {x, y, x + width, y + height};
 	rect = {(long) position.x, (long) position.y,
 		(long) position.x + width, (long) position.y + height};
 }

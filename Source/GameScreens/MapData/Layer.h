@@ -43,6 +43,5 @@ public:
 	virtual void draw(SpriteBatch* batch, map<int, SpriteSheet::SpriteFrame*>& spriteDict) override;
 
 	virtual RECT* checkCollision(GameObject* movingObject, Vector2* moveDistance) override;
-
 };
 

@@ -18,7 +18,10 @@ public:
 	/* Top-left coordinates of rect. */
 	//int x, y;
 	Vector2 position;
+	Vector2 origin;
 	int width, height;
+
+	bool collided[4] = {false, false, false, false};
 
 	RECT rect;
 	void setRect();

@@ -9,12 +9,15 @@ bool SpriteSheet::load(ID3D11Device* device, pugi::xml_node tilesetNode) {
 
 	string source = tilesetNode.first_child().attribute("source").as_string();
 
-	const wchar_t* spriteSheetFile = Globals::convertCharStarToWCharT(tilesetNode.first_child().attribute("source").as_string());
+	const wchar_t* spriteSheetFile =
+		Globals::convertCharStarToWCharT(
+			tilesetNode.first_child().attribute("source").as_string());
 
 
 	if (Globals::reportError(CreateDDSTextureFromFile(device, spriteSheetFile,
 		resource.GetAddressOf(), texture.GetAddressOf()))) {
-		MessageBox(0, Globals::convertCharStarToWCharT(tilesetNode.first_child().attribute("source").as_string()),
+		MessageBox(0, Globals::convertCharStarToWCharT(
+			tilesetNode.first_child().attribute("source").as_string()),
 			L"Error loading sprite sheet", MB_OK);
 		return false;
 	}
@@ -36,7 +39,10 @@ bool SpriteSheet::load(ID3D11Device* device, pugi::xml_node tilesetNode) {
 
 			SpriteFrame* frame = new SpriteFrame();
 			frame->sourceRect = {w * tilewidth, h * tileheight,
-									w * tilewidth + tilewidth, h * tileheight + tileheight};
+									w * tilewidth + tilewidth,
+									h * tileheight + tileheight};
+			// gameobjects seem to be drawn from bottom left
+			// but tiles are drawn from top left
 			frame->origin = Vector2(0, 0);
 			frame->gid = firstGID;
 			frame->sheet = this;
@@ -45,12 +51,3 @@ bool SpriteSheet::load(ID3D11Device* device, pugi::xml_node tilesetNode) {
 	}
 	return true;
 }
-
-//void SpriteSheet::draw(SpriteBatch * batch, int gid, Vector2 pos) {
-//
-//	SpriteFrame* spriteFrame = spriteMap[gid];
-//	batch->Draw(texture.Get(), pos, &spriteFrame->sourceRect, spriteFrame->tint,
-//		spriteFrame->rotation, spriteFrame->origin, spriteFrame->scale, SpriteEffects_None,
-//		spriteFrame->layerDepth);
-//
-//}

@@ -45,12 +45,36 @@ namespace MakerEngine {
 			tmx = new XmlDocument();
 			tmx.Load(file);
 
-			
+
 			name = mapName;
 			if (!converting) {
 				load();
-			}
+			} else {
 
+				foreach (XmlNode node in tmx.GetElementsByTagName("map")[0].ChildNodes) {
+
+					switch (node.Name) {
+						case "objectgroup":
+							foreach (XmlNode obj in node.ChildNodes) {
+
+								int height = Int32.Parse(obj.Attributes["height"].InnerText);
+								int x = (int)Math.Round(float.Parse(obj.Attributes["x"].InnerText));
+								int y = (int)Math.Round(float.Parse(obj.Attributes["y"].InnerText))
+									 - height; // objects origin is bottom left for some reason...
+
+								// this is to remove floating points that appear sometimes from Tiled
+								obj.Attributes["x"].InnerText = "" + x;
+								obj.Attributes["y"].InnerText = "" + y;
+							}
+							break;
+					}
+				}
+
+				// ensure that origin of gameobjects is top left and 
+				// floats are removed from final map file
+				using (XmlWriter writer = XmlWriter.Create(file))
+					tmx.Save(writer);
+			}
 		}
 
 		/// <summary>
@@ -84,10 +108,7 @@ namespace MakerEngine {
 				}
 			}
 
-			// ensure that origin of gameobjects is top left and 
-			// floats are removed from final map file
-			using (XmlWriter writer = XmlWriter.Create(file))
-				tmx.Save(writer);
+
 		}
 
 		private void loadMapDescription() {
@@ -185,10 +206,11 @@ namespace MakerEngine {
 								g.DrawRectangle(Pens.Firebrick, gameObj.getRect());
 							else
 								g.DrawImage(imageDict[gameObj.gid],
-									new Point(gameObj.x, gameObj.y - gameObj.height));
+									new Point(gameObj.x, gameObj.y /*- gameObj.height*/));
 						}
+						/* Should be fixed?
 						// these sprites aren't displaying in proper position.
-						// Offsetting the y pos helps but still not exact.
+						// Offsetting the y pos helps but still not exact.  */
 					}
 				}
 
@@ -297,10 +319,10 @@ namespace MakerEngine {
 			}
 			foreach (KeyValuePair<int, Image> entry in imageDict)
 				imageDict[entry.Key].Dispose();
-			//File.Delete(layerImageDir + name  + " final.png");
+			File.Delete(layerImageDir + name + " final.png");
 			//if (Directory.Exists(layerImageDir))
 			//	Directory.Delete(layerImageDir, true);
-			
+
 			//foreach (TileSet set in tilesets)
 			//	set.Dispose(); // Disposing of these crashes the tabControl_ImageViewer when trying to clear it
 
@@ -574,15 +596,15 @@ namespace MakerEngine {
 				width = Int32.Parse(objNode.Attributes["width"].InnerText);
 				height = Int32.Parse(objNode.Attributes["height"].InnerText);
 
-				x = (int)Math.Round(float.Parse(objNode.Attributes["x"].InnerText));
-				y = (int)Math.Round(float.Parse(objNode.Attributes["y"].InnerText))
-					 - height; // objects origin is bottom left for some reason...
+				//x = (int)Math.Round(float.Parse(objNode.Attributes["x"].InnerText));
+				//y = (int)Math.Round(float.Parse(objNode.Attributes["y"].InnerText))
+				//	 - height; // objects origin is bottom left for some reason...
 
-				// this is to remove floating points that appear sometimes from Tiled
-				objNode.Attributes["x"].InnerText = "" + x;
-				objNode.Attributes["y"].InnerText = "" + y;
+				//// this is to remove floating points that appear sometimes from Tiled
+				//objNode.Attributes["x"].InnerText = "" + x;
+				//objNode.Attributes["y"].InnerText = "" + y;
 
-				
+
 			}
 
 

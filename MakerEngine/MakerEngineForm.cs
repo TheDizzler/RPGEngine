@@ -687,6 +687,8 @@ namespace MakerEngine {
 			if (mapTMX != null) {
 				if (mapTMX == tmxl.tmxFile)
 					return;
+				pictureBox_Map.Image.Dispose();
+				pictureBox_Map.Image = null;
 				mapTMX.Dispose();
 
 			}
@@ -717,7 +719,6 @@ namespace MakerEngine {
 				CheckBox cb = new CheckBox();
 
 				cb.Text = layer.getName();
-				//cb.Name = layer.ToString();
 				cb.Checked = true;
 				cb.CheckedChanged += new System.EventHandler(this.checkBoxLayerSelect_CheckedChanged);
 				this.tableLayoutPanel_LayersGroupBox.Controls.Add(cb, 0, row++);
@@ -745,11 +746,6 @@ namespace MakerEngine {
 			textBox_MapDimensions.Text = mapTMX.mapWidth + ", " + mapTMX.mapHeight;
 			textBox_TileDimensions.Text = mapTMX.tileWidth + ", " + mapTMX.tileHeight;
 
-			//foreach (KeyValuePair<int, Image> entry in mapTMX.imageDict) {
-
-			//	imageTMXList.Images.Add(entry.Value);
-
-			//}
 
 			this.tabControl_ImageViewer.TabPages.Clear();
 			this.tabControl_ImageViewer.Controls.Clear();
@@ -817,12 +813,29 @@ namespace MakerEngine {
 						"\nClick 'No' to only remove this map from the game.",
 						"Action Required", MessageBoxButtons.YesNoCancel)) {
 						case DialogResult.No:
+							if (selectedMapTreeNode.node == selectedMapNode) {
+
+								pictureBox_Map.Image.Dispose();
+								pictureBox_Map.Image = null;
+
+								mapTMX.Dispose();
+								mapTMX = null;
+							}
 							node.ParentNode.RemoveChild(node);
 							treeView_MapLegend.Nodes.Remove(selectedMapTreeNode);
 							needSave(true);
 							return;
 
 						case DialogResult.Yes:
+							if (selectedMapTreeNode.node == selectedMapNode) {
+
+								pictureBox_Map.Image.Dispose();
+								pictureBox_Map.Image = null;
+
+								mapTMX.Dispose();
+								mapTMX = null;
+								
+							}
 							File.Delete(gameDirectory + node.Attributes["file"].InnerText);
 							node.ParentNode.RemoveChild(node);
 							treeView_MapLegend.Nodes.Remove(selectedMapTreeNode);
@@ -855,15 +868,22 @@ namespace MakerEngine {
 				int length = lastIndex - index;
 				String shortnameTMX = tmxFile.Substring(index + 1, length - 1);
 
-				//if (pictureBox_Map.Image != null)
+				//if (selectedMapTreeNode.node == selectedMapNode) {
+
 				//	pictureBox_Map.Image.Dispose();
-				if (mapTMX != null)
-					mapTMX.Dispose();
+				//	pictureBox_Map.Image = null;
+
+				//	mapTMX.Dispose();
+				//	mapTMX = null;
+
+				//}
+				//if (mapTMX != null)
+				//	mapTMX.Dispose();
 
 				TMXFile newMAPFile = convertTMXtoMAP(tmxFile, shortnameTMX);
 				if (newMAPFile == null)
 					return;
-				newMAPFile.load();
+				//newMAPFile.load();
 				String newMapFilepath = mapDir + shortnameTMX + ".map";
 
 				String mapTag = "<map name=\"" + newMAPFile.name + "\" file=\"" + newMapFilepath + "\" ></map>";

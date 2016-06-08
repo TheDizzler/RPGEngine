@@ -3,7 +3,7 @@
 #include "GameObject.h"
 
 
-class EventObject : GameObject {
+class EventObject : public GameObject {
 public:
 	EventObject();
 	~EventObject();

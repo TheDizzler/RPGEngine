@@ -195,20 +195,30 @@ bool MAPFile::loadLayerData() {
 				continue;
 			}
 
-			layer = new ObjectLayer();
+			if (strcmp(layerNode.attribute("name").as_string(), "NPC") == 0) {
 
-			((ObjectLayer*) layer)->load(layerNode, spriteDict);
-			if (strcmp(layer->name.c_str(), "Collision") == 0
-				|| strcmp(layer->name.c_str(), "NPC")) {
+				layer = new CharacterLayer();
+				((CharacterLayer*) layer)->load(layerNode, spriteDict);
 				collidable.push_back(layer);
 
-			}
+			} else if (strcmp(layerNode.attribute("name").as_string(), "Collision") == 0) {
+
+				layer = new CollisionLayer();
+				layer->load(layerNode, spriteDict);
+				collidable.push_back(layer);
+
+			} else if (strcmp(layerNode.attribute("name").as_string(), "Triggered Events") == 0) {
+
+				layer = new TriggerLayer();
+				layer->load(layerNode, spriteDict);
+			} else // missing Search
+				continue;
 
 		} else
 			continue;
 
-		// leaving this here just as a check to see if everything is going right
-		layer->name = layerNode.attribute("name").as_string();
+
+		layer->name = layerNode.attribute("name").as_string(); // leaving this here just as a check to see if everything is going right
 		layers.push_back(layer);
 	}
 

@@ -1,7 +1,7 @@
 #pragma once
 
 #include <memory>
-#include "MapObjects/GameObject.h"
+#include "MapObjects/CharacterObject.h"
 
 const float WALK_SPEED = 135;
 /** A class with a static pointer to an instance of itself because I
@@ -12,7 +12,7 @@ public:
 	~PC();
 
 	// map representation of pc
-	unique_ptr<GameObject> gameObject;
+	unique_ptr<CharacterObject> gameObject;
 	//bool collided[4] = {false, false, false, false};
 
 

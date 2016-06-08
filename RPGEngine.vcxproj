@@ -168,9 +168,12 @@
     <ClCompile Include="Source\GameObjects\GUIObjects\TextBox.cpp" />
     <ClCompile Include="Source\GameObjects\GUIObjects\TextBoxManager.cpp" />
     <ClCompile Include="Source\GameObjects\GUIObjects\TextLabel.cpp" />
+    <ClCompile Include="Source\GameObjects\MapObjects\AnimatedObject.cpp" />
+    <ClCompile Include="Source\GameObjects\MapObjects\CharacterObject.cpp" />
     <ClCompile Include="Source\GameObjects\MapObjects\EventObject.cpp" />
     <ClCompile Include="Source\GameObjects\MapObjects\GameObject.cpp" />
     <ClCompile Include="Source\GameObjects\MapObjects\InteractableObject.cpp" />
+    <ClCompile Include="Source\GameObjects\MapObjects\SpriteObject.cpp" />
     <ClCompile Include="Source\GameObjects\PC.cpp" />
     <ClCompile Include="Source\GameScreens\BattleScreen.cpp" />
     <ClCompile Include="Source\GameScreens\MapData\Layer.cpp" />
@@ -206,9 +209,12 @@
     <ClInclude Include="Source\GameObjects\GUIObjects\TextBox.h" />
     <ClInclude Include="Source\GameObjects\GUIObjects\TextBoxManager.h" />
     <ClInclude Include="Source\GameObjects\GUIObjects\TextLabel.h" />
+    <ClInclude Include="Source\GameObjects\MapObjects\AnimatedObject.h" />
+    <ClInclude Include="Source\GameObjects\MapObjects\CharacterObject.h" />
     <ClInclude Include="Source\GameObjects\MapObjects\EventObject.h" />
     <ClInclude Include="Source\GameObjects\MapObjects\GameObject.h" />
     <ClInclude Include="Source\GameObjects\MapObjects\InteractableObject.h" />
+    <ClInclude Include="Source\GameObjects\MapObjects\SpriteObject.h" />
     <ClInclude Include="Source\GameObjects\PC.h" />
     <ClInclude Include="Source\GameScreens\BattleScreen.h" />
     <ClInclude Include="Source\GameScreens\MapData\Layer.h" />

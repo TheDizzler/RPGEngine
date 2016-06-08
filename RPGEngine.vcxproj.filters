@@ -159,6 +159,15 @@
     <ClCompile Include="Source\GameObjects\BattleObjects\Enemies\Enemy.cpp">
       <Filter>Source Files\BattleObjects</Filter>
     </ClCompile>
+    <ClCompile Include="Source\GameObjects\MapObjects\CharacterObject.cpp">
+      <Filter>Source Files\MapObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameObjects\MapObjects\AnimatedObject.cpp">
+      <Filter>Source Files\MapObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameObjects\MapObjects\SpriteObject.cpp">
+      <Filter>Source Files\MapObjects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Game.h">
@@ -274,6 +283,15 @@
     </ClInclude>
     <ClInclude Include="Source\GameObjects\BattleObjects\Enemies\Enemy.h">
       <Filter>Header Files\BattleObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameObjects\MapObjects\CharacterObject.h">
+      <Filter>Header Files\MapObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameObjects\MapObjects\AnimatedObject.h">
+      <Filter>Header Files\MapObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameObjects\MapObjects\SpriteObject.h">
+      <Filter>Header Files\MapObjects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

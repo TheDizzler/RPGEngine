@@ -10,6 +10,7 @@
 using namespace DirectX::SimpleMath;
 using namespace std;
 
+/** A basic object found on a map, either visible or not. */
 class GameObject {
 public:
 	GameObject();
@@ -17,30 +18,21 @@ public:
 
 	string name;
 	int id = -1;
-	/* ID of tile representing this object. */
+	/* ID of tile representing this object. -1 means not meant to be a visible object.*/
 	int gid = -1;
 	/* Top-left coordinates of rect. */
-	//int x, y;
 	Vector2 position;
-	Vector2 origin;
 	int width, height;
 
-	/* Direction objects (usually a character) is facing/ */
-	int facing = DOWN;
-	/* Time since the animation frame changed. */
-	double timeElapsedSinceFrameSwitch = 0;
-	int currentFrame = 0;
-	int getGID();
+	
 
-	SpriteSheet::SpriteFrame* spriteFrame;
-
-	//bool collided[4] = {false, false, false, false};
-
+	/* Used for collision detection. */
 	RECT rect;
+	/* Set the Hit Rect. */
 	void setRect();
 
 	void move(Vector2 moveAmount);
-	void update(double deltaTime);
+	virtual void update(double deltaTime);
 
 private:
 

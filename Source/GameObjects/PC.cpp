@@ -4,7 +4,7 @@ unique_ptr<PC> PC::pc;
 
 PC::PC() {
 
-	gameObject.reset(new GameObject());
+	gameObject.reset(new CharacterObject());
 	gameObject->gid = 140;
 	gameObject->name = "PC";
 	gameObject->width = 16;

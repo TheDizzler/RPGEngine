@@ -157,7 +157,6 @@
     <ClCompile Include="Source\GameObjects\BattleObjects\BattleCharacter.cpp" />
     <ClCompile Include="Source\GameObjects\BattleObjects\BattleSprite.cpp" />
     <ClCompile Include="Source\GameObjects\BattleObjects\Enemies\Enemy.cpp" />
-    <ClCompile Include="Source\GameObjects\GameObject.cpp" />
     <ClCompile Include="Source\GameObjects\GameVariables.cpp" />
     <ClCompile Include="Source\GameObjects\GUIObjects\AlphaInputBox.cpp" />
     <ClCompile Include="Source\GameObjects\GUIObjects\Button.cpp" />
@@ -169,6 +168,9 @@
     <ClCompile Include="Source\GameObjects\GUIObjects\TextBox.cpp" />
     <ClCompile Include="Source\GameObjects\GUIObjects\TextBoxManager.cpp" />
     <ClCompile Include="Source\GameObjects\GUIObjects\TextLabel.cpp" />
+    <ClCompile Include="Source\GameObjects\MapObjects\EventObject.cpp" />
+    <ClCompile Include="Source\GameObjects\MapObjects\GameObject.cpp" />
+    <ClCompile Include="Source\GameObjects\MapObjects\InteractableObject.cpp" />
     <ClCompile Include="Source\GameObjects\PC.cpp" />
     <ClCompile Include="Source\GameScreens\BattleScreen.cpp" />
     <ClCompile Include="Source\GameScreens\MapData\Layer.cpp" />
@@ -193,7 +195,6 @@
     <ClInclude Include="Source\GameObjects\BattleObjects\BattleCharacter.h" />
     <ClInclude Include="Source\GameObjects\BattleObjects\BattleSprite.h" />
     <ClInclude Include="Source\GameObjects\BattleObjects\Enemies\Enemy.h" />
-    <ClInclude Include="Source\GameObjects\GameObject.h" />
     <ClInclude Include="Source\GameObjects\GameVariables.h" />
     <ClInclude Include="Source\GameObjects\GUIObjects\AlphaInputBox.h" />
     <ClInclude Include="Source\GameObjects\GUIObjects\Button.h" />
@@ -205,6 +206,9 @@
     <ClInclude Include="Source\GameObjects\GUIObjects\TextBox.h" />
     <ClInclude Include="Source\GameObjects\GUIObjects\TextBoxManager.h" />
     <ClInclude Include="Source\GameObjects\GUIObjects\TextLabel.h" />
+    <ClInclude Include="Source\GameObjects\MapObjects\EventObject.h" />
+    <ClInclude Include="Source\GameObjects\MapObjects\GameObject.h" />
+    <ClInclude Include="Source\GameObjects\MapObjects\InteractableObject.h" />
     <ClInclude Include="Source\GameObjects\PC.h" />
     <ClInclude Include="Source\GameScreens\BattleScreen.h" />
     <ClInclude Include="Source\GameScreens\MapData\Layer.h" />

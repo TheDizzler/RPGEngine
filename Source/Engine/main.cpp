@@ -6,7 +6,7 @@
 LPCTSTR wndClassName = L"Nameless RPG";
 HWND hwnd;
 
-GameEngine* gameEngine;
+unique_ptr<GameEngine> gameEngine;
 
 double countsPerSecond = 0.0;
 __int64 counterStart = 0;
@@ -31,8 +31,6 @@ LRESULT CALLBACK wndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
 void releaseResources() {
 
-	if (gameEngine)
-		delete gameEngine;
 }
 
 
@@ -40,7 +38,7 @@ void releaseResources() {
 	@nShowWnd how window should be displayed. Examples: SW_SHOWMAXIMIZED, SW_SHOW, SW_SHOWMINIMIZED. */
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd) {
 
-	gameEngine = new GameEngine();
+	gameEngine.reset(new GameEngine());
 
 	if (!initWindow(hInstance, nShowCmd, Globals::WINDOW_WIDTH, Globals::WINDOW_HEIGHT, true)) {
 		MessageBox(0, TEXT("Window Initialization - Failed"), L"Error", MB_OK);

@@ -4,7 +4,7 @@
 
 
 const enum KEYS {
-	UP, DOWN, LEFT, RIGHT, SELECT, CANCEL, ESC
+	DOWN, LEFT, UP, RIGHT, SELECT, CANCEL, ESC
 };
 
 const int KEYCOUNT = 7;

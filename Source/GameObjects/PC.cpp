@@ -22,5 +22,5 @@ Vector2 PC::getPosition() {
 void PC::update(double deltaTime, Vector2 move) {
 
 	gameObject->move(move);
-	gameObject->update(deltaTime);
+	//gameObject->update(deltaTime);
 }

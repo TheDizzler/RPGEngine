@@ -7,33 +7,58 @@
 
 #include "../../GameObjects/PC.h"
 
-void ObjectLayer::load(xml_node objectLayerNode) {
+ObjectLayer::~ObjectLayer() {
+
+	for each (GameObject* gameObject in gameObjects) {
+		delete gameObject;
+	}
+}
+
+void ObjectLayer::load(xml_node objectLayerNode, map<int, SpriteSheet::SpriteFrame*>& spriteDict) {
 
 	if (strcmp(objectLayerNode.attribute("name").as_string(), "NPC") == 0) {
 	// Add the pc to the npc layer
+		PC::pc->gameObject->spriteFrame = spriteDict[PC::pc->gameObject->gid];
 		gameObjects.push_back(PC::pc->gameObject.get());
 
+		for each (xml_node objectNode in objectLayerNode.children("object")) {
+			GameObject* gameObj = new GameObject();
+
+			gameObj->gid = objectNode.attribute("gid").as_int();
+			gameObj->spriteFrame = spriteDict[gameObj->gid];
+			gameObj->name = objectNode.attribute("name").as_string();
+
+			gameObj->width = objectNode.attribute("width").as_int();
+			gameObj->height = objectNode.attribute("height").as_int();
+			int x = objectNode.attribute("x").as_int();
+			int y = objectNode.attribute("y").as_int();
+			gameObj->position = Vector2(x, y);
+
+			gameObj->setRect();
+			gameObjects.push_back(gameObj);
+
+	} else {
+
+		for each (xml_node objectNode in objectLayerNode.children("object")) {
+			GameObject* gameObj = new GameObject();
+
+			gameObj->gid = objectNode.attribute("gid").as_int();
+			gameObj->spriteFrame = spriteDict[gameObj->gid];
+			gameObj->name = objectNode.attribute("name").as_string();
+
+			gameObj->width = objectNode.attribute("width").as_int();
+			gameObj->height = objectNode.attribute("height").as_int();
+			int x = objectNode.attribute("x").as_int();
+			int y = objectNode.attribute("y").as_int();
+			gameObj->position = Vector2(x, y);
+
+			gameObj->setRect();
+			gameObjects.push_back(gameObj);
+		}
 	}
-
-	for each (xml_node objectNode in objectLayerNode.children("object")) {
-		GameObject* gameObj = new GameObject();
-
-		gameObj->gid = objectNode.attribute("gid").as_int();
-		gameObj->name = objectNode.attribute("name").as_string();
-
-		gameObj->width = objectNode.attribute("width").as_int();
-		gameObj->height = objectNode.attribute("height").as_int();
-		int x = objectNode.attribute("x").as_int();
-		int y = objectNode.attribute("y").as_int();
-		gameObj->position = Vector2(x, y);
-
-		gameObj->setRect();
-		gameObjects.push_back(gameObj);
-	}
-
 }
 
-void TileLayer::load(xml_node tileLayerNode) {
+void TileLayer::load(xml_node tileLayerNode, map<int, SpriteSheet::SpriteFrame*>& spriteDict) {
 
 	mapWidth = tileLayerNode.attribute("width").as_int();
 	mapHeight = tileLayerNode.attribute("height").as_int();
@@ -81,6 +106,10 @@ void TileLayer::draw(SpriteBatch * batch, map<int, SpriteSheet::SpriteFrame*>& s
 
 }
 
+void TileLayer::update(double deltaTime) {
+
+}
+
 RECT* TileLayer::checkCollision(GameObject* movingObject, Vector2* moveDistance) {
 
 	return NULL;
@@ -93,7 +122,8 @@ void ObjectLayer::draw(SpriteBatch * batch, map<int, SpriteSheet::SpriteFrame*>&
 	for each (GameObject* gameObject in gameObjects) {
 		if (gameObject->gid <= 0) // empty tile
 			return;
-		SpriteSheet::SpriteFrame* spriteFrame = spriteDict[gameObject->gid];
+		SpriteSheet::SpriteFrame* spriteFrame
+			= spriteDict[gameObject->getGID()];
 
 		if (!spriteFrame->sheet->texture) // not an object with a visual representation on the map
 			return;
@@ -104,6 +134,13 @@ void ObjectLayer::draw(SpriteBatch * batch, map<int, SpriteSheet::SpriteFrame*>&
 			spriteFrame->scale, SpriteEffects_None,
 			spriteFrame->layerDepth);
 
+	}
+}
+
+void ObjectLayer::update(double deltaTime) {
+
+	for each (GameObject* gameObject in gameObjects) {
+		gameObject->update(deltaTime);
 	}
 }
 

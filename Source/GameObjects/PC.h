@@ -1,7 +1,7 @@
 #pragma once
 
 #include <memory>
-#include "GameObject.h"
+#include "MapObjects/GameObject.h"
 
 const float WALK_SPEED = 135;
 /** A class with a static pointer to an instance of itself because I

@@ -27,11 +27,17 @@ bool MAPFile::initialize(ID3D11Device* device) {
 
 
 
-
-
 #include "../../GameObjects/PC.h"
 void MAPFile::update(double deltaTime, SimpleKeyboard* keys) {
 
+	playerActions(deltaTime, keys);
+
+	for each (Layer* layer in layers)
+		layer->update(deltaTime);
+
+}
+
+void MAPFile::playerActions(double deltaTime, SimpleKeyboard * keys) {
 
 	Vector2 distanceToTravel(0, 0);
 	float moveAmount = WALK_SPEED * deltaTime;
@@ -46,6 +52,7 @@ void MAPFile::update(double deltaTime, SimpleKeyboard* keys) {
 			distanceToTravel.x = (-moveAmount) * XM_PIDIV4;
 			distanceToTravel.y *= XM_PIDIV4;
 		}
+		PC::pc->gameObject->facing = UP;
 	} else if (keys->keyDown[DOWN]) {
 		distanceToTravel.y = moveAmount;
 		if (keys->keyDown[RIGHT]) {
@@ -55,10 +62,13 @@ void MAPFile::update(double deltaTime, SimpleKeyboard* keys) {
 			distanceToTravel.x = (-moveAmount) * XM_PIDIV4;
 			distanceToTravel.y *= XM_PIDIV4;
 		}
+		PC::pc->gameObject->facing = DOWN;
 	} else if (keys->keyDown[RIGHT]) {
 		distanceToTravel.x = moveAmount;
+		PC::pc->gameObject->facing = RIGHT;
 	} else if (keys->keyDown[LEFT]) {
 		distanceToTravel.x = -moveAmount;
+		PC::pc->gameObject->facing = LEFT;
 	}
 
 	RECT* overlap = checkCollision(&distanceToTravel);
@@ -85,6 +95,11 @@ void MAPFile::update(double deltaTime, SimpleKeyboard* keys) {
 				PC::pc->gameObject->position.y -= overlapWidth;
 		}
 		delete overlap;
+	}
+
+	if (keys->keyDown[SELECT]) {
+	// check diretion facing
+	// look in that direction for an object that can be interacted with
 	}
 
 	PC::pc->update(deltaTime, distanceToTravel);
@@ -160,7 +175,7 @@ bool MAPFile::loadLayerData() {
 		if (strcmp(layerNode.name(), "layer") == 0) {
 
 			layer = new TileLayer();
-			layer->load(layerNode);
+			layer->load(layerNode, spriteDict);
 
 		} else if (strcmp(layerNode.name(), "objectgroup") == 0) {
 
@@ -182,7 +197,7 @@ bool MAPFile::loadLayerData() {
 
 			layer = new ObjectLayer();
 
-			((ObjectLayer*) layer)->load(layerNode);
+			((ObjectLayer*) layer)->load(layerNode, spriteDict);
 			if (strcmp(layer->name.c_str(), "Collision") == 0
 				|| strcmp(layer->name.c_str(), "NPC")) {
 				collidable.push_back(layer);

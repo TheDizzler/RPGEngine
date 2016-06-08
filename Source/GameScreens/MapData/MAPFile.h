@@ -17,7 +17,7 @@ public:
 	bool initialize(ID3D11Device* device);
 
 	void update(double deltaTime, SimpleKeyboard * keys);
-
+	void playerActions(double deltaTime, SimpleKeyboard * keys);
 	
 	
 	void draw(SpriteBatch* batch);

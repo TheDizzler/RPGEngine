@@ -43,6 +43,18 @@
     <Filter Include="Source Files\Screens\MapData">
       <UniqueIdentifier>{dc6d6092-606c-4d3f-81c9-abfe1a868613}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\MapObjects">
+      <UniqueIdentifier>{38aeb14c-4698-475a-8647-5ad298da1e17}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\MapObjects">
+      <UniqueIdentifier>{2baa591a-c3ef-4b42-a26a-fae572a466eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\BattleObjects">
+      <UniqueIdentifier>{39d1e908-4855-4405-a0b5-698f35aff8fa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\BattleObjects">
+      <UniqueIdentifier>{f45759cf-6af7-46d4-8992-ad79959c0036}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Game.cpp">
@@ -87,18 +99,6 @@
     <ClCompile Include="Source\Engine\MouseController.cpp">
       <Filter>Source Files\Engine</Filter>
     </ClCompile>
-    <ClCompile Include="Source\GameObjects\BattleObjects\BattleCharacter.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\GameObjects\BattleObjects\BattleSprite.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\GameObjects\BattleObjects\Enemies\Enemy.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\GameObjects\BattleCommand.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Source\GameObjects\GUIObjects\TextBox.cpp">
       <Filter>Source Files\GUI</Filter>
     </ClCompile>
@@ -136,10 +136,28 @@
       <Filter>Source Files\Screens\MapData</Filter>
     </ClCompile>
     <ClCompile Include="Source\GameObjects\PC.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\MapObjects</Filter>
     </ClCompile>
-    <ClCompile Include="Source\GameObjects\GameObject.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="Source\GameObjects\MapObjects\GameObject.cpp">
+      <Filter>Source Files\MapObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameObjects\MapObjects\InteractableObject.cpp">
+      <Filter>Source Files\MapObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameObjects\MapObjects\EventObject.cpp">
+      <Filter>Source Files\MapObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameObjects\BattleObjects\BattleCharacter.cpp">
+      <Filter>Source Files\BattleObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameObjects\BattleCommand.cpp">
+      <Filter>Source Files\BattleObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameObjects\BattleObjects\BattleSprite.cpp">
+      <Filter>Source Files\BattleObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameObjects\BattleObjects\Enemies\Enemy.cpp">
+      <Filter>Source Files\BattleObjects</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -197,18 +215,6 @@
     <ClInclude Include="Source\Engine\MouseController.h">
       <Filter>Header Files\Engine</Filter>
     </ClInclude>
-    <ClInclude Include="Source\GameObjects\BattleObjects\BattleCharacter.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\GameObjects\BattleObjects\BattleSprite.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\GameObjects\BattleObjects\Enemies\Enemy.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\GameObjects\BattleCommand.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Source\GameObjects\GUIObjects\TextBox.h">
       <Filter>Header Files\GUI</Filter>
     </ClInclude>
@@ -246,10 +252,28 @@
       <Filter>Header Files\Screens\MapData</Filter>
     </ClInclude>
     <ClInclude Include="Source\GameObjects\PC.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\MapObjects</Filter>
     </ClInclude>
-    <ClInclude Include="Source\GameObjects\GameObject.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Source\GameObjects\MapObjects\EventObject.h">
+      <Filter>Header Files\MapObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameObjects\MapObjects\GameObject.h">
+      <Filter>Header Files\MapObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameObjects\MapObjects\InteractableObject.h">
+      <Filter>Header Files\MapObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameObjects\BattleObjects\BattleCharacter.h">
+      <Filter>Header Files\BattleObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameObjects\BattleCommand.h">
+      <Filter>Header Files\BattleObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameObjects\BattleObjects\BattleSprite.h">
+      <Filter>Header Files\BattleObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameObjects\BattleObjects\Enemies\Enemy.h">
+      <Filter>Header Files\BattleObjects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -5,7 +5,7 @@
 #include <algorithm>
 
 
-#include "../../GameObjects/PC.h"
+
 
 CharacterLayer::~CharacterLayer() {
 
@@ -249,11 +249,70 @@ RECT* CollisionLayer::checkCollision(GameObject* movingObject, Vector2* moveDist
 	}
 
 	return NULL;
+
 }
 
 RECT* TileLayer::checkCollision(GameObject* movingObject, Vector2* moveDistance) {
 
 	return NULL;
+}
+
+
+InteractableObject* TriggerLayer::checkInteractable(PC* pc) {
+	return nullptr;
+}
+
+InteractableObject* CharacterLayer::checkInteractable(PC* pc) {
+
+	int facing = pc->gameObject->facing; // 0 = DOWN, 1 = LEFT, 2 = UP, 3 RIGHT
+
+	int interactDistance = pc->gameObject->height;
+
+	RECT areaToCheck = pc->gameObject->rect;
+	switch (facing) {
+		case DOWN:
+			areaToCheck.top = areaToCheck.bottom;
+			areaToCheck.bottom += interactDistance;
+			break;
+		case UP:
+			areaToCheck.bottom = areaToCheck.top;
+			areaToCheck.top -= interactDistance;
+			break;
+		case LEFT:
+			areaToCheck.right = areaToCheck.left;
+			areaToCheck.left -= interactDistance;
+			break;
+		case RIGHT:
+			areaToCheck.left = areaToCheck.right;
+			areaToCheck.right += interactDistance;
+			break;
+	}
+
+	
+	for each (CharacterObject* charObj in characterObjects) {
+
+		if (strcmp(charObj->name.c_str(), pc->gameObject->name.c_str()) == 0)
+			continue;
+
+		RECT overlapRect {-1, -1, -1, -1};
+		// If the rectangles intersect, the return value is nonzero.
+		// If the rectangles do not intersect, the return value is zero.
+		if (IntersectRect(&overlapRect, &areaToCheck, &charObj->rect) != 0) {
+			InteractableObject* interacting = charObj;
+			return interacting;
+		}
+	}
+	return NULL;
+}
+
+// Probably will ever use
+InteractableObject* CollisionLayer::checkInteractable(PC* pc) {
+	return nullptr;
+}
+
+// Probably will ever use
+InteractableObject* TileLayer::checkInteractable(PC* pc) {
+	return nullptr;
 }
 
 
@@ -273,3 +332,5 @@ vector<int> TileLayer::split(string line) {
 	return rowdata;
 
 }
+
+

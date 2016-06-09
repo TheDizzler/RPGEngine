@@ -1,7 +1,12 @@
 #pragma once
 
+#include <map>
+
 #include "Screen.h"
 #include "MapData\MAPFile.h"
+//#include "../../GameScreens/MapData/Layer.h"
+#include "../Engine/SimpleKeyboard.h"
+
 
 class Game;
 
@@ -29,5 +34,14 @@ private:
 	xml_node rootLegendNode;
 	unique_ptr<MAPFile> map;
 
-	//void loadMap();
+	
+	/*std::map<int, SpriteSheet::SpriteFrame*> spriteDict;
+	vector<SpriteSheet*> spriteSheets;
+	vector<Layer*> layers;
+	vector<Layer*> collidable;
+	vector<Layer*> interactable;*/
+
+	void playerActions(double deltaTime, SimpleKeyboard * keys);
+	RECT* checkCollision(Vector2* distanceToTravel);
+	InteractableObject* checkInteractable();
 };

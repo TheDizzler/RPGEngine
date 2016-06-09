@@ -27,8 +27,11 @@ bool SpriteSheet::load(ID3D11Device* device, pugi::xml_node tilesetNode) {
 		resource.GetAddressOf(), texture.GetAddressOf()))) {
 		MessageBox(0, spriteSheetFile,
 			L"Error loading sprite sheet", MB_OK);
+			delete spriteSheetFile;
 		return false;
 	}
+
+	delete spriteSheetFile;
 
 	//Assets::getTextureDimensions(resource.Get(), &width, &height);
 	//

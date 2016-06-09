@@ -12,6 +12,6 @@ public:
 
 
 	// Inherited via InteractableObject
-	virtual void interact() override;
+	virtual string interact() override;
 private:
 };

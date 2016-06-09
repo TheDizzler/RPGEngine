@@ -29,6 +29,20 @@ namespace Globals {
 
 	static const int MAX_CHARACTERS = 10;
 
+	/** THIS WILL NOT WORK! Copy paste this code to where it's needed. */
+	inline LPCWSTR convertStringToLPCWSTR(const string text) {
+
+		int len;
+		int slength = (int) text.length() + 1;
+		len = MultiByteToWideChar(CP_ACP, 0, text.c_str(), slength, 0, 0);
+		wchar_t* buf = new wchar_t[len];
+		MultiByteToWideChar(CP_ACP, 0, text.c_str(), slength, buf, len);
+		std::wstring r(buf);
+		delete[] buf;
+		return r.c_str();
+
+	}
+
 
 	inline wchar_t* convertCharStarToWCharT(const char* text) {
 
@@ -39,11 +53,12 @@ namespace Globals {
 		return wc;
 	}
 
-	inline const wchar_t* convertStringToCWCT(std::string text) {
+	/** THIS WILL NOT WORK! Copy paste this code to where it's needed. */
+	inline const wchar_t* convertStringToCWCT(string text) {
 
 		wstring wstr = wstring(text.begin(), text.end());
-
-		return wstr.c_str();
+		const wchar_t* text_t = wstr.c_str();
+		return text_t;
 
 	}
 

@@ -14,6 +14,7 @@ public:
 	~TextBoxManager();
 
 	bool load(ID3D11Device* device);
+	void loadZone(string location);
 
 	//void update(double deltaTime, BYTE keyboardState[256]);
 	void update(double deltaTime, SimpleKeyboard* keys);
@@ -21,6 +22,8 @@ public:
 		(currently 16x16). */
 	void draw(SpriteBatch* batch/*, TextBox* textBox*/);
 
+
+	void getDialog(string speaker);
 	void startDialogTest();
 
 private:
@@ -29,13 +32,17 @@ private:
 
 	xml_document* xmlDoc;
 	xml_node rootNode;
+	xml_node zoneTextNode;
+
+	xml_node eventNode;
+
 
 	unique_ptr<Sprite> indicator;
 	unique_ptr<Sprite> corner;
 	unique_ptr<Sprite> side;
 	unique_ptr<Sprite> bg;
 
-	TextBox* currentBox;
+	TextBox* currentBox = NULL;
 	/** currentBox should always be top box. */
 	vector<TextBox*> textBoxes;
 

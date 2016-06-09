@@ -5,6 +5,7 @@
 
 #include "../../GameObjects/MapObjects/CharacterObject.h"
 #include "../../GameObjects/MapObjects/EventObject.h"
+#include "../../GameObjects/PC.h"
 
 class Layer {
 public:
@@ -15,8 +16,12 @@ public:
 	virtual void update(double deltaTime) = 0;
 	virtual void draw(SpriteBatch* batch, map<int, SpriteSheet::SpriteFrame*>& spriteDict) = 0;
 
-	// Returns true if collision detected
+	/** Returns rect of overlaping area. */
 	virtual RECT* checkCollision(GameObject* movingObject, Vector2* moveDistance) = 0;
+	virtual InteractableObject* checkInteractable(PC* pc) = 0;
+
+//protected:
+	//RECT* checkCollision(vector<GameObject*> objects, GameObject* movingObject, Vector2* moveDistance);
 };
 
 class TileLayer : public Layer {
@@ -33,6 +38,7 @@ public:
 
 
 	virtual RECT* checkCollision(GameObject* movingObject, Vector2* moveDistance) override;
+	virtual InteractableObject* checkInteractable(PC* pc) override;
 private:
 	vector<int> split(string line);
 };
@@ -50,7 +56,7 @@ public:
 
 
 	virtual RECT* checkCollision(GameObject* movingObject, Vector2* moveDistance) override;
-
+	virtual InteractableObject* checkInteractable(PC* pc) override;
 private:
 	vector<CharacterObject*> characterObjects;
 };
@@ -65,7 +71,9 @@ public:
 	virtual void draw(SpriteBatch * batch, map<int, SpriteSheet::SpriteFrame*>& spriteDict) override;
 
 	virtual RECT * checkCollision(GameObject * movingObject, Vector2 * moveDistance) override;
+	virtual InteractableObject* checkInteractable(PC* pc) override;
 
+private:
 	vector<GameObject*> collisionObjects;
 };
 
@@ -80,6 +88,7 @@ public:
 	virtual void draw(SpriteBatch* batch, map<int, SpriteSheet::SpriteFrame*>& spriteDict) override;
 
 	virtual RECT* checkCollision(GameObject* movingObject, Vector2* moveDistance) override;
+	virtual InteractableObject* checkInteractable(PC* pc) override;
 
 private:
 	vector<EventObject*> events;

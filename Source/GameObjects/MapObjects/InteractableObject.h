@@ -1,5 +1,7 @@
 #pragma once
 
+#include <string>
+
 //#include "GameObject.h"
 
 
@@ -9,7 +11,7 @@ public:
 	InteractableObject();
 	~InteractableObject();
 
-	virtual void interact() = 0;
+	virtual std::string interact() = 0;
 
 private:
 

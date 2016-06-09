@@ -29,7 +29,6 @@ void TextBox::loadNode(xml_node nd) {
 
 
 #include "../../Game.h";
-
 void TextBox::parseText(wstring txt) {
 
 	originalText = txt;
@@ -164,9 +163,6 @@ bool TextBox::update(double deltaTime, SimpleKeyboard* keys) {
 
 
 #include <iostream>
-
-
-
 void TextBox::drawText(SpriteBatch * batch) {
 
 

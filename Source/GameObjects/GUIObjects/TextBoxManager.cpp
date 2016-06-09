@@ -6,18 +6,14 @@ TextBoxManager::TextBoxManager(pugi::xml_document* doc) {
 
 	xmlDoc = doc;
 	rootNode = xmlDoc->child("root");
-
-
-
+	eventNode = rootNode.find_child_by_attribute("type", "Zone Text");
 }
 
 TextBoxManager::~TextBoxManager() {
 
 	/*for (int i = textBoxes.size() - 1; i >= 0; --i) {
-
 		delete textBoxes[i];
 	}*/
-
 }
 
 bool TextBoxManager::load(ID3D11Device* device) {
@@ -57,9 +53,18 @@ bool TextBoxManager::load(ID3D11Device* device) {
 }
 
 
+void TextBoxManager::loadZone(string location) {
+
+	zoneTextNode = eventNode
+		.find_child_by_attribute("location", location.c_str());
+
+
+}
+
+
 void TextBoxManager::update(double deltaTime, SimpleKeyboard* keys) {
 
-	if (currentBox && currentBox->update(deltaTime, keys)) {
+	if (currentBox != NULL && currentBox->update(deltaTime, keys)) {
 
 		if (currentBox->isQuery()) // close box
 			textBoxes.pop_back();
@@ -95,7 +100,9 @@ void TextBoxManager::update(double deltaTime, SimpleKeyboard* keys) {
 		} else if (nodeTypes[QUERY] == type_s) {
 
 			vector<xml_node> nodes;
-			for (xml_node child = nextNode.child("answer"); child; child = child.next_sibling("answer"))
+			for (xml_node child = nextNode.child("answer"); child;
+				child = child.next_sibling("answer"))
+
 				nodes.push_back(child);
 
 			commandBox->loadNodes(nextNode, nodes);
@@ -189,10 +196,25 @@ void TextBoxManager::draw(SpriteBatch* batch) {
 
 
 
+void TextBoxManager::getDialog(string speakerName) {
+
+	const char* speaker = speakerName.c_str();
+	dialogBox->loadNode(zoneTextNode
+		.find_child_by_attribute("speaker", speaker)
+		.child("dialogText"));
+
+	currentBox = dialogBox.get();
+	textBoxes.push_back(currentBox);
+}
+
+
+
 void TextBoxManager::startDialogTest() {
 
 
-	dialogBox->loadNode(rootNode.first_child().find_child_by_attribute("speaker", "Name Input").child("dialogText"));
+	dialogBox->loadNode(rootNode
+		.first_child().find_child_by_attribute("speaker", "Name Input")
+		.child("dialogText"));
 
 	currentBox = dialogBox.get();
 	textBoxes.push_back(currentBox);

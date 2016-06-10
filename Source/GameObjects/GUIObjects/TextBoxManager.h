@@ -20,10 +20,10 @@ public:
 	void update(double deltaTime, SimpleKeyboard* keys);
 	/** RECT should be a multiple of border sprite length/height
 		(currently 16x16). */
-	void draw(SpriteBatch* batch/*, TextBox* textBox*/);
+	void draw(SpriteBatch* batch);
 
 
-	void getDialog(string speaker);
+	void getDialog(string speaker, Vector2* speakerPos = NULL);
 
 	bool isTextBoxOpen();
 

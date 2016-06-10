@@ -12,7 +12,8 @@ TextBox::TextBox(int top, int left, int right, int bottom, FontSet* fnt)
 TextBox::~TextBox() {
 }
 
-void TextBox::loadNode(xml_node nd) {
+
+void TextBox::loadNode(xml_node nd, Vector2* spkrPos) {
 
 	node = nd;
 
@@ -25,6 +26,9 @@ void TextBox::loadNode(xml_node nd) {
 	wss << ch_dialog;
 	parseText(wss.str());
 	//MessageBox(0, wss.str().c_str(), L"huh>", MB_OK);
+
+	if (speakerPos == NULL)
+		speakerPos = spkrPos;
 }
 
 
@@ -74,8 +78,17 @@ void TextBox::parseText(wstring txt) {
 }
 
 
+#include "../PC.h"
+bool TextBox::isTooFar() {
+
+	return speakerPos != NULL
+		&& Vector2::Distance(*speakerPos, PC::pc->getPosition())
+		> Globals::MAX_SPEAKING_DISTANCE;
+}
+
 
 bool TextBox::update(double deltaTime, SimpleKeyboard* keys) {
+
 
 	timeSinceLastLetter += deltaTime;
 	if (timeSinceLastLetter >= letterDelay) {
@@ -175,17 +188,15 @@ void TextBox::drawText(SpriteBatch * batch) {
 
 }
 
+
+
 bool TextBox::closing(double deltaTime) {
 
 	rect.bottom -= closeSpeed*deltaTime;
 
-	if (rect.bottom <= rect.top) {
-
-		return true;
-	}
-
-	return false;
+	return rect.bottom <= rect.top;
 }
+
 
 xml_node TextBox::getSelectedNode() {
 

@@ -34,14 +34,9 @@ private:
 	xml_node rootLegendNode;
 	unique_ptr<MAPFile> map;
 
-	
-	/*std::map<int, SpriteSheet::SpriteFrame*> spriteDict;
-	vector<SpriteSheet*> spriteSheets;
-	vector<Layer*> layers;
-	vector<Layer*> collidable;
-	vector<Layer*> interactable;*/
 
 	void playerActions(double deltaTime, SimpleKeyboard * keys);
+	void collisionAlgo(Vector2* distanceToTravel);
 	RECT* checkCollision(Vector2* distanceToTravel);
 	InteractableObject* checkInteractable();
 };

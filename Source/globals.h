@@ -28,6 +28,8 @@ namespace Globals {
 	const float LETTER_DELAY_FAST = .000001;
 
 	static const int MAX_CHARACTERS = 10;
+	/** Max distance PC can move from speaker before textbox auto-closes. */
+	static const int MAX_SPEAKING_DISTANCE = 200;
 
 	/** THIS WILL NOT WORK! Copy paste this code to where it's needed. */
 	inline LPCWSTR convertStringToLPCWSTR(const string text) {

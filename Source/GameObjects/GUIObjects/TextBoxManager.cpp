@@ -57,80 +57,85 @@ void TextBoxManager::loadZone(string location) {
 
 	zoneTextNode = eventNode
 		.find_child_by_attribute("location", location.c_str());
-
-
 }
 
 
 void TextBoxManager::update(double deltaTime, SimpleKeyboard* keys) {
 
-	if (currentBox != NULL && currentBox->update(deltaTime, keys)) {
+	if (currentBox != NULL) {
 
-		if (currentBox->isQuery()) // close box
-			textBoxes.pop_back();
-
-		if (currentBox->isAlphaInput()) {
-			wstring  userInput = ((AlphaInputBox*) currentBox)->getUserInput();
-			textBoxes.pop_back();
-		}
-
-
-		xml_node nextNode = currentBox->getSelectedNode();
-
-		const char_t* type = nextNode.name();
-		string type_s = type;
-		//string node_type_s = nodeTypes[0];
-		/*wstringstream wss;
-		wss << type;
-		MessageBox(0,  wss.str().c_str(), L"Hi", MB_OK);*/
-
-		if (!nextNode) {
-			// Dialog done?
+		if (currentBox->isTooFar()) {
 			textBoxes.pop_back();
 			closingBoxes.push_back(currentBox);
-
 			if (!textBoxes.empty())
 				currentBox = textBoxes.back();
 			else
 				currentBox = NULL;
 
-		} else if (type_s == nodeTypes[DIALOG_TEXT]) {
+		} else if (currentBox->update(deltaTime, keys)) {
 
-			/*dialogBox->loadNode(nextNode);
-			currentBox = dialogBox.get();*/
-			currentBox->loadNode(nextNode);
 
-		} else if (nodeTypes[QUERY] == type_s) {
+			if (currentBox->isQuery()) // close box
+				textBoxes.pop_back();
 
-			vector<xml_node> nodes;
-			for (xml_node child = nextNode.child("answer"); child;
-				child = child.next_sibling("answer"))
+			if (currentBox->isAlphaInput()) {
+				wstring  userInput = ((AlphaInputBox*) currentBox)->getUserInput();
+				textBoxes.pop_back();
+			}
 
-				nodes.push_back(child);
 
-			commandBox->loadNodes(nextNode, nodes);
-			textBoxes.push_back(commandBox.get());
-			currentBox = commandBox.get();
+			xml_node nextNode = currentBox->getSelectedNode();
 
-		} else if (nodeTypes[ALPHA_INPUT]) {
+			const char_t* type = nextNode.name();
+			string type_s = type;
+			//string node_type_s = nodeTypes[0];
+			/*wstringstream wss;
+			wss << type;
+			MessageBox(0,  wss.str().c_str(), L"Hi", MB_OK);*/
 
-			alphaBox->loadNode(nextNode);
-			textBoxes.push_back(alphaBox.get());
-			currentBox = alphaBox.get();
+			if (!nextNode) {
+				// Dialog done?
+				textBoxes.pop_back();
+				closingBoxes.push_back(currentBox);
+
+				if (!textBoxes.empty())
+					currentBox = textBoxes.back();
+				else
+					currentBox = NULL;
+
+			} else if (type_s == nodeTypes[DIALOG_TEXT]) {
+
+				/*dialogBox->loadNode(nextNode);
+				currentBox = dialogBox.get();*/
+				currentBox->loadNode(nextNode/*, currentBox->speakerPos*/);
+
+			} else if (nodeTypes[QUERY] == type_s) {
+
+				vector<xml_node> nodes;
+				for (xml_node child = nextNode.child("answer"); child;
+					child = child.next_sibling("answer"))
+
+					nodes.push_back(child);
+
+				commandBox->loadNodes(nextNode, nodes);
+				textBoxes.push_back(commandBox.get());
+				currentBox = commandBox.get();
+
+			} else if (nodeTypes[ALPHA_INPUT]) {
+
+				alphaBox->loadNode(nextNode);
+				textBoxes.push_back(alphaBox.get());
+				currentBox = alphaBox.get();
+			}
 		}
 	}
 
-	//if (!closingBoxes.empty()) {
 	for (int i = closingBoxes.size() - 1; i >= 0; --i) {
-	//for each (TextBox* textBox in closingBoxes) {
 		if (closingBoxes[i]->closing(deltaTime)) {
-
 			delete closingBoxes[i];
 			closingBoxes.erase(closingBoxes.begin() + i);
-
 		}
 	}
-//}
 }
 
 
@@ -224,10 +229,10 @@ void TextBoxManager::drawBox(TextBox * textBox, SpriteBatch* batch) {
 }
 
 
-void TextBoxManager::getDialog(string speakerName) {
+void TextBoxManager::getDialog(string speakerName, Vector2* speakerPos) {
 
 	const char* speaker = speakerName.c_str();
-	
+
 	/*dialogBox.reset();*/
 
 	/*dialogBox->loadNode(zoneTextNode
@@ -237,9 +242,9 @@ void TextBoxManager::getDialog(string speakerName) {
 
 	currentBox = new TextBox(WINDOW_HEIGHT - DIALOGBOX_HEIGHT, TEXTBOX_MARGIN,
 		DIALOGBOX_WIDTH + TEXTBOX_MARGIN, WINDOW_HEIGHT, guiFont.get());
-		currentBox->loadNode(zoneTextNode
-			.find_child_by_attribute("speaker", speaker)
-			.child("dialogText"));
+	currentBox->loadNode(zoneTextNode
+		.find_child_by_attribute("speaker", speaker)
+		.child("dialogText"), speakerPos);
 	textBoxes.push_back(currentBox);
 }
 

@@ -70,12 +70,12 @@ void MapScreen::playerActions(double deltaTime, SimpleKeyboard * keys) {
 		if (keys->keyDown[RIGHT]) {
 			distanceToTravel.x = (moveAmount) * XM_PIDIV4;
 			distanceToTravel.y *= XM_PIDIV4;
-
 		} else if (keys->keyDown[LEFT]) {
 			distanceToTravel.x = (-moveAmount) * XM_PIDIV4;
 			distanceToTravel.y *= XM_PIDIV4;
 		}
 		PC::pc->gameObject->facing = UP;
+		collisionAlgo(&distanceToTravel);
 	} else if (keys->keyDown[DOWN]) {
 		distanceToTravel.y = moveAmount;
 		if (keys->keyDown[RIGHT]) {
@@ -86,55 +86,24 @@ void MapScreen::playerActions(double deltaTime, SimpleKeyboard * keys) {
 			distanceToTravel.y *= XM_PIDIV4;
 		}
 		PC::pc->gameObject->facing = DOWN;
+		collisionAlgo(&distanceToTravel);
 	} else if (keys->keyDown[RIGHT]) {
 		distanceToTravel.x = moveAmount;
 		PC::pc->gameObject->facing = RIGHT;
+		collisionAlgo(&distanceToTravel);
 	} else if (keys->keyDown[LEFT]) {
 		distanceToTravel.x = -moveAmount;
 		PC::pc->gameObject->facing = LEFT;
+		collisionAlgo(&distanceToTravel);
 	}
 
-	RECT* overlap = checkCollision(&distanceToTravel);
-	if (overlap != NULL) {
-
-		int overlapWidth = overlap->right - overlap->left;
-		int overlapHeight = overlap->bottom - overlap->top;
-		if (overlapWidth < overlapHeight)  // probably coming from right or left
-			distanceToTravel.x = 0;
-		else if (overlapWidth > overlapHeight) // probable coming from top or bottom
-			distanceToTravel.y = 0;
-		else if (overlapWidth == overlapHeight) {
-			/* if they're == then it's at corner. Sometimes gets "Sticky".
-			*	using a tolerance variable in the layer collision method
-			*	seems to alleviate this problem. */
-			if (distanceToTravel.x > 0) // going right
-				PC::pc->gameObject->position.x += overlapWidth;
-			else if (distanceToTravel.x < 0) // going left
-				PC::pc->gameObject->position.x -= overlapWidth;
-
-			if (distanceToTravel.y > 0) // going down
-				PC::pc->gameObject->position.y += overlapWidth;
-			else if (distanceToTravel.y < 0)
-				PC::pc->gameObject->position.y -= overlapWidth;
-		}
-		delete overlap;
-	}
+	
 
 	if (keys->keyDown[SELECT] && !keys->lastDown[SELECT] && !textBoxManager->isTextBoxOpen()) {
 
 		InteractableObject* object = checkInteractable();
 		if (object != NULL) {
-			string name = object->interact();
-			/*int len;
-			int slength = (int) name.length() + 1;
-			len = MultiByteToWideChar(CP_ACP, 0, name.c_str(), slength, 0, 0);
-			wchar_t* buf = new wchar_t[len];
-			MultiByteToWideChar(CP_ACP, 0, name.c_str(), slength, buf, len);
-			std::wstring r(buf);
-			delete[] buf;
-			MessageBox(0, r.c_str(), L"Testing", MB_OK);*/
-
-			textBoxManager->getDialog(name);
+			textBoxManager->getDialog(object->interact(), &((CharacterObject*)object)->position);
 		}
 	}
 
@@ -142,17 +111,33 @@ void MapScreen::playerActions(double deltaTime, SimpleKeyboard * keys) {
 }
 
 
-InteractableObject* MapScreen::checkInteractable() {
+void MapScreen::collisionAlgo(Vector2* distanceToTravel) {
 
-	// check direction facing
-	// look in that direction for an object that can be interacted with
-	for each (Layer* layer in map->interactable) {
-		InteractableObject* object = layer->checkInteractable(PC::pc.get());
-		if (object != NULL)
-			return object;
+	RECT* overlap = checkCollision(distanceToTravel);
+	if (overlap != NULL) {
+
+		int overlapWidth = overlap->right - overlap->left;
+		int overlapHeight = overlap->bottom - overlap->top;
+		if (overlapWidth < overlapHeight)  // probably coming from right or left
+			distanceToTravel->x = 0;
+		else if (overlapWidth > overlapHeight) // probable coming from top or bottom
+			distanceToTravel->y = 0;
+		else if (overlapWidth == overlapHeight) {
+			/* if they're == then it's at corner. Sometimes gets "Sticky".
+			*	using a tolerance variable in the layer collision method
+			*	seems to alleviate this problem. */
+			if (distanceToTravel->x > 0) // going right
+				PC::pc->gameObject->position.x += overlapWidth;
+			else if (distanceToTravel->x < 0) // going left
+				PC::pc->gameObject->position.x -= overlapWidth;
+
+			if (distanceToTravel->y > 0) // going down
+				PC::pc->gameObject->position.y += overlapWidth;
+			else if (distanceToTravel->y < 0)
+				PC::pc->gameObject->position.y -= overlapWidth;
+		}
+		delete overlap;
 	}
-
-	return NULL;
 }
 
 
@@ -172,6 +157,19 @@ RECT* MapScreen::checkCollision(Vector2* distanceToTravel) {
 }
 
 
+InteractableObject* MapScreen::checkInteractable() {
+
+	// check direction facing
+	// look in that direction for an object that can be interacted with
+	for each (Layer* layer in map->interactable) {
+		InteractableObject* object = layer->checkInteractable(PC::pc.get());
+		if (object != NULL)
+			return object;
+	}
+
+	return NULL;
+}
+
 
 void MapScreen::draw(SpriteBatch* batch) {
 
@@ -182,5 +180,4 @@ void MapScreen::draw(SpriteBatch* batch) {
 	}
 
 	textBoxManager->draw(batch);
-
 }

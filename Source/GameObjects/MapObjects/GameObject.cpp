@@ -6,12 +6,6 @@ GameObject::GameObject() {
 GameObject::~GameObject() {
 }
 
-//int GameObject::getGID() {
-//
-//
-//	return gid + facing;
-//}
-
 void GameObject::setRect() {
 
 	rect = {(long) position.x, (long) position.y,
@@ -30,13 +24,4 @@ void GameObject::move(Vector2 moveAmount) {
 
 void GameObject::update(double deltaTime) {
 
-	/*timeElapsedSinceFrameSwitch += deltaTime;
-	if (timeElapsedSinceFrameSwitch >= spriteFrame->animation->duration) {
-		if (++currentFrame >= spriteFrame->animation->tileIDs.size()) {
-			gid = spriteFrame->gid;
-			currentFrame = 0;
-		}
-		gid += spriteFrame->animation->tileIDs[currentFrame];
-		timeElapsedSinceFrameSwitch = 0;
-	}*/
 }

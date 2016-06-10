@@ -2,11 +2,9 @@
 
 #include <string>
 
-//#include "GameObject.h"
-
 
 /** An object on a map that can be used in some way. */
-class InteractableObject/* : GameObject */{
+class InteractableObject {
 public:
 	InteractableObject();
 	~InteractableObject();

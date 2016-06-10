@@ -34,12 +34,13 @@ public:
 	TextBox(int top, int left, int right, int bottom, FontSet* fontSet);
 	~TextBox();
 
-	virtual void loadNode(xml_node node);
+	virtual void loadNode(xml_node node, Vector2* speakerPos = NULL);
 
 
 	virtual bool update(double deltaTime, SimpleKeyboard* keys) override;
 	virtual void drawText(SpriteBatch* batch) override;
 
+	bool isTooFar();
 	virtual bool closing(double deltaTime) override;
 
 	/** Get next node in dialog chain. */
@@ -50,6 +51,7 @@ public:
 	Vector2 indicatorPos;
 	bool indicatorOn = false;
 	float indicatorRot = 0;
+	Vector2* speakerPos = NULL;
 
 
 protected:
@@ -67,9 +69,11 @@ protected:
 	float currentFlashTime = indicatorFlashTime;
 
 	bool lastEnter = true;
-	//bool lastUp = false;
 
 	xml_node node;
+
+
+	
 
 private:
 

@@ -24,8 +24,8 @@ bool TextBoxManager::load(ID3D11Device* device) {
 		return false;
 	guiFont->setTint(DirectX::Colors::White.v);
 
-	dialogBox.reset(new TextBox(WINDOW_HEIGHT - DIALOGBOX_HEIGHT, TEXTBOX_MARGIN,
-		DIALOGBOX_WIDTH + TEXTBOX_MARGIN, WINDOW_HEIGHT, guiFont.get()));
+	/*dialogBox.reset(new TextBox(WINDOW_HEIGHT - DIALOGBOX_HEIGHT, TEXTBOX_MARGIN,
+		DIALOGBOX_WIDTH + TEXTBOX_MARGIN, WINDOW_HEIGHT, guiFont.get()));*/
 
 	commandBox.reset(new CommandBox(TEXTBOX_MARGIN, WINDOW_WIDTH - (LISTBOX_WIDTH + TEXTBOX_MARGIN),
 		WINDOW_WIDTH - TEXTBOX_MARGIN, LISTBOX_HEIGHT + TEXTBOX_MARGIN, guiFont.get()));
@@ -87,6 +87,8 @@ void TextBoxManager::update(double deltaTime, SimpleKeyboard* keys) {
 		if (!nextNode) {
 			// Dialog done?
 			textBoxes.pop_back();
+			closingBoxes.push_back(currentBox);
+
 			if (!textBoxes.empty())
 				currentBox = textBoxes.back();
 			else
@@ -94,8 +96,9 @@ void TextBoxManager::update(double deltaTime, SimpleKeyboard* keys) {
 
 		} else if (type_s == nodeTypes[DIALOG_TEXT]) {
 
-			dialogBox->loadNode(nextNode);
-			currentBox = dialogBox.get();
+			/*dialogBox->loadNode(nextNode);
+			currentBox = dialogBox.get();*/
+			currentBox->loadNode(nextNode);
 
 		} else if (nodeTypes[QUERY] == type_s) {
 
@@ -116,6 +119,18 @@ void TextBoxManager::update(double deltaTime, SimpleKeyboard* keys) {
 			currentBox = alphaBox.get();
 		}
 	}
+
+	//if (!closingBoxes.empty()) {
+	for (int i = closingBoxes.size() - 1; i >= 0; --i) {
+	//for each (TextBox* textBox in closingBoxes) {
+		if (closingBoxes[i]->closing(deltaTime)) {
+
+			delete closingBoxes[i];
+			closingBoxes.erase(closingBoxes.begin() + i);
+
+		}
+	}
+//}
 }
 
 
@@ -123,100 +138,116 @@ void TextBoxManager::update(double deltaTime, SimpleKeyboard* keys) {
 void TextBoxManager::draw(SpriteBatch* batch) {
 
 	for (TextBox* textBox : textBoxes) {
-		RECT* rect = &textBox->rect;
-		int spriteHeight = bg->getSpriteHeight();
-		int spriteWidth = bg->getSpriteWidth();
-
-		int height = rect->bottom - rect->top;
-		int length = rect->right - rect->left;
-
-		// draw colored background
-		for (int i = 0; i <= length; i += spriteWidth) {
-			for (int j = 0; j < height; j += spriteHeight) {
-				bg->setPosition(Vector2(rect->left + i, rect->top + j));
-				bg->draw(batch);
-			}
-		}
-
-	// draw border
-		corner->setPosition(Vector2(rect->left, rect->top));
-		corner->setRotation(0);
-		corner->draw(batch);
-
-		corner->setPosition(Vector2(rect->right, rect->top));
-		corner->setRotation(XM_PI / 2);
-		corner->draw(batch);
-
-		corner->setPosition(Vector2(rect->right, rect->bottom - spriteHeight));
-		corner->setRotation(XM_PI);
-		corner->draw(batch);
-
-		corner->setPosition(Vector2(rect->left, rect->bottom - spriteHeight));
-		corner->setRotation(-XM_PI / 2);
-		corner->draw(batch);
-
-		spriteWidth = corner->getSpriteWidth();
-		length -= spriteWidth;
-		spriteHeight = corner->getSpriteHeight();
-		height -= spriteHeight;
-
-
-		for (int i = spriteHeight; i < height; i += spriteHeight) {
-			int pos = rect->top + i;
-			side->setRotation(0);
-			side->setPosition(Vector2(rect->left, pos));
-			side->draw(batch);
-			side->setRotation(XM_PI);
-			side->setPosition(Vector2(rect->right, pos));
-			side->draw(batch);
-		}
-
-
-		for (int i = spriteWidth; i <= length; i += spriteWidth) {
-			int pos = rect->left + i;
-			side->setRotation(XM_PI / 2);
-			side->setPosition(Vector2(pos, rect->top));
-			side->draw(batch);
-			side->setRotation(-XM_PI / 2);
-			side->setPosition(Vector2(pos, rect->bottom - spriteHeight));
-			side->draw(batch);
-		}
+		drawBox(textBox, batch);
 
 		// print labels
 		textBox->drawText(batch);
 
-
+		// draw indicator
 		if (textBox->indicatorOn) {
 			indicator->setPosition(textBox->indicatorPos);
 			indicator->setRotation(textBox->indicatorRot);
 			indicator->draw(batch);
 		}
 	}
+
+	for (TextBox* textBox : closingBoxes) {
+		drawBox(textBox, batch);
+
+		// print labels
+		textBox->drawText(batch);
+
+	}
 }
 
+
+void TextBoxManager::drawBox(TextBox * textBox, SpriteBatch* batch) {
+
+	RECT* rect = &textBox->rect;
+	int spriteHeight = bg->getSpriteHeight();
+	int spriteWidth = bg->getSpriteWidth();
+
+	int height = rect->bottom - rect->top;
+	int length = rect->right - rect->left;
+
+	// draw colored background
+	for (int i = 0; i <= length; i += spriteWidth) {
+		for (int j = 0; j < height; j += spriteHeight) {
+			bg->setPosition(Vector2(rect->left + i, rect->top + j));
+			bg->draw(batch);
+		}
+	}
+
+	// draw border
+	corner->setPosition(Vector2(rect->left, rect->top));
+	corner->setRotation(0);
+	corner->draw(batch);
+
+	corner->setPosition(Vector2(rect->right, rect->top));
+	corner->setRotation(XM_PI / 2);
+	corner->draw(batch);
+
+	corner->setPosition(Vector2(rect->right, rect->bottom - spriteHeight));
+	corner->setRotation(XM_PI);
+	corner->draw(batch);
+
+	corner->setPosition(Vector2(rect->left, rect->bottom - spriteHeight));
+	corner->setRotation(-XM_PI / 2);
+	corner->draw(batch);
+
+	spriteWidth = corner->getSpriteWidth();
+	length -= spriteWidth;
+	spriteHeight = corner->getSpriteHeight();
+	height -= spriteHeight;
+
+
+	for (int i = spriteHeight; i < height; i += spriteHeight) {
+		int pos = rect->top + i;
+		side->setRotation(0);
+		side->setPosition(Vector2(rect->left, pos));
+		side->draw(batch);
+		side->setRotation(XM_PI);
+		side->setPosition(Vector2(rect->right, pos));
+		side->draw(batch);
+	}
+
+
+	for (int i = spriteWidth; i <= length; i += spriteWidth) {
+		int pos = rect->left + i;
+		side->setRotation(XM_PI / 2);
+		side->setPosition(Vector2(pos, rect->top));
+		side->draw(batch);
+		side->setRotation(-XM_PI / 2);
+		side->setPosition(Vector2(pos, rect->bottom - spriteHeight));
+		side->draw(batch);
+	}
+}
 
 
 void TextBoxManager::getDialog(string speakerName) {
 
 	const char* speaker = speakerName.c_str();
-	dialogBox->loadNode(zoneTextNode
+	
+	/*dialogBox.reset();*/
+
+	/*dialogBox->loadNode(zoneTextNode
 		.find_child_by_attribute("speaker", speaker)
 		.child("dialogText"));
+	currentBox = dialogBox.get();*/
 
-	currentBox = dialogBox.get();
+	currentBox = new TextBox(WINDOW_HEIGHT - DIALOGBOX_HEIGHT, TEXTBOX_MARGIN,
+		DIALOGBOX_WIDTH + TEXTBOX_MARGIN, WINDOW_HEIGHT, guiFont.get());
+		currentBox->loadNode(zoneTextNode
+			.find_child_by_attribute("speaker", speaker)
+			.child("dialogText"));
 	textBoxes.push_back(currentBox);
 }
 
 
-
-void TextBoxManager::startDialogTest() {
-
-
-	dialogBox->loadNode(rootNode
-		.first_child().find_child_by_attribute("speaker", "Name Input")
-		.child("dialogText"));
-
-	currentBox = dialogBox.get();
-	textBoxes.push_back(currentBox);
+bool TextBoxManager::isTextBoxOpen() {
+	return currentBox != NULL || !closingBoxes.empty();
 }
+
+
+
 

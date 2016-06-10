@@ -13,8 +13,13 @@ public:
 	virtual bool update(double deltaTime, SimpleKeyboard* keys) = 0;
 	virtual void drawText(SpriteBatch* batch) = 0;
 
-	RECT rect;
+	virtual bool closing(double deltaTime) = 0;
 
+	RECT rect;
+protected:
 	
+
+	int closeSpeed = 1000;
+
 
 };

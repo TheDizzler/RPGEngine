@@ -120,7 +120,7 @@ void MapScreen::playerActions(double deltaTime, SimpleKeyboard * keys) {
 		delete overlap;
 	}
 
-	if (keys->keyDown[SELECT] && !keys->lastDown[SELECT]) {
+	if (keys->keyDown[SELECT] && !keys->lastDown[SELECT] && !textBoxManager->isTextBoxOpen()) {
 
 		InteractableObject* object = checkInteractable();
 		if (object != NULL) {

@@ -12,7 +12,7 @@ bool MenuTest::initialize(ID3D11Device * device, TextBoxManager* txtBxMng) {
 
 
 	textBoxManager = txtBxMng;
-	textBoxManager->startDialogTest();
+	//textBoxManager->startDialogTest();
 
 
 	return true;

@@ -175,6 +175,18 @@ void TextBox::drawText(SpriteBatch * batch) {
 
 }
 
+bool TextBox::closing(double deltaTime) {
+
+	rect.bottom -= closeSpeed*deltaTime;
+
+	if (rect.bottom <= rect.top) {
+
+		return true;
+	}
+
+	return false;
+}
+
 xml_node TextBox::getSelectedNode() {
 
 	const char_t* att = node.attribute("to").as_string();

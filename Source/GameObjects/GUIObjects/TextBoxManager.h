@@ -24,7 +24,8 @@ public:
 
 
 	void getDialog(string speaker);
-	void startDialogTest();
+
+	bool isTextBoxOpen();
 
 private:
 
@@ -45,15 +46,15 @@ private:
 	TextBox* currentBox = NULL;
 	/** currentBox should always be top box. */
 	vector<TextBox*> textBoxes;
-
+	vector<TextBox*> closingBoxes;
 
 	/** Amount in pixels that one guibox will overlap it's parent box. */
 	const int overlap = 12;
 
-	unique_ptr<TextBox> dialogBox;
+	//unique_ptr<TextBox> dialogBox;
 	unique_ptr<CommandBox> commandBox;
 	unique_ptr<AlphaInputBox> alphaBox;
 
 
-
+	void drawBox(TextBox* textBox, SpriteBatch* batch);
 };

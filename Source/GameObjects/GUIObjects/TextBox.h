@@ -17,9 +17,9 @@ using namespace pugi;
 class Game;
 
 static const enum Nodes {
-	DIALOG_TEXT, QUERY, ALPHA_INPUT
+	DIALOG_TEXT, QUERY, ALPHA_INPUT, EFFECT
 };
-static const char_t* nodeTypes[] = {"dialogText", "query", "alphaInput"};
+static const char_t* nodeTypes[] = {"dialogText", "query", "alphaInput", "effect"};
 
 
 static const enum ATTRIBUTES {

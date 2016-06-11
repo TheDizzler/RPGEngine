@@ -8,7 +8,7 @@ public:
 	EventObject();
 	~EventObject();
 
-
+	bool triggered = false;
 private:
 
 

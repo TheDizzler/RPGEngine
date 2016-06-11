@@ -7,6 +7,7 @@ TextBoxManager::TextBoxManager(pugi::xml_document* doc) {
 	xmlDoc = doc;
 	rootNode = xmlDoc->child("root");
 	eventNode = rootNode.find_child_by_attribute("type", "Zone Text");
+	triggeredNode = rootNode.find_child_by_attribute("type", "Triggered");
 }
 
 TextBoxManager::~TextBoxManager() {
@@ -93,7 +94,7 @@ void TextBoxManager::update(double deltaTime, SimpleKeyboard* keys) {
 			wss << type;
 			MessageBox(0,  wss.str().c_str(), L"Hi", MB_OK);*/
 
-			if (!nextNode) {
+			if (!nextNode || nodeTypes[EFFECT] == type_s) {
 				// Dialog done?
 				textBoxes.pop_back();
 				closingBoxes.push_back(currentBox);
@@ -103,7 +104,7 @@ void TextBoxManager::update(double deltaTime, SimpleKeyboard* keys) {
 				else
 					currentBox = NULL;
 
-			} else if (type_s == nodeTypes[DIALOG_TEXT]) {
+			} else if (nodeTypes[DIALOG_TEXT] == type_s) {
 
 				/*dialogBox->loadNode(nextNode);
 				currentBox = dialogBox.get();*/
@@ -121,7 +122,7 @@ void TextBoxManager::update(double deltaTime, SimpleKeyboard* keys) {
 				textBoxes.push_back(commandBox.get());
 				currentBox = commandBox.get();
 
-			} else if (nodeTypes[ALPHA_INPUT]) {
+			} else if (nodeTypes[ALPHA_INPUT] == type_s) {
 
 				alphaBox->loadNode(nextNode);
 				textBoxes.push_back(alphaBox.get());
@@ -245,6 +246,16 @@ void TextBoxManager::getDialog(string speakerName, Vector2* speakerPos) {
 	currentBox->loadNode(zoneTextNode
 		.find_child_by_attribute("speaker", speaker)
 		.child("dialogText"), speakerPos);
+	textBoxes.push_back(currentBox);
+}
+
+void TextBoxManager::getTriggeredEvent(string eventName) {
+
+
+	currentBox = new TextBox(WINDOW_HEIGHT - DIALOGBOX_HEIGHT, TEXTBOX_MARGIN,
+		DIALOGBOX_WIDTH + TEXTBOX_MARGIN, WINDOW_HEIGHT, guiFont.get());
+	currentBox->loadNode(triggeredNode.find_child_by_attribute("name", eventName.c_str())
+		.child("dialogText"));
 	textBoxes.push_back(currentBox);
 }
 

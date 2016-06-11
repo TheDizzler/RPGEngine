@@ -24,6 +24,8 @@ public:
 
 
 	void getDialog(string speaker, Vector2* speakerPos = NULL);
+	void getTriggeredEvent(string eventName);
+
 
 	bool isTextBoxOpen();
 
@@ -33,9 +35,10 @@ private:
 
 	xml_document* xmlDoc;
 	xml_node rootNode;
-	xml_node zoneTextNode;
-
 	xml_node eventNode;
+	xml_node triggeredNode;
+
+	xml_node zoneTextNode;
 
 
 	unique_ptr<Sprite> indicator;

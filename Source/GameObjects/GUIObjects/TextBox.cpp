@@ -153,7 +153,8 @@ bool TextBox::update(double deltaTime, SimpleKeyboard* keys) {
 			while (currentLineStart + checkPos < text.length()
 				&& !isspace(text[currentLineStart + ++checkPos]));
 
-			Vector2 measure = font->measureString(text.substr(currentLineStart, checkPos).c_str());
+			Vector2 measure = font->measureString(
+				text.substr(currentLineStart, checkPos).c_str());
 
 			if (measure.x > maxLineLength) { // insert new line
 
@@ -187,7 +188,6 @@ void TextBox::drawText(SpriteBatch * batch) {
 
 
 }
-
 
 
 bool TextBox::closing(double deltaTime) {

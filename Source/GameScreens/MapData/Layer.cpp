@@ -191,8 +191,9 @@ void TileLayer::draw(SpriteBatch * batch, map<int, SpriteSheet::SpriteFrame*>& s
 
 
 
+/** Not used */
+RECT* TriggerLayer::checkCollision(GameObject* movingObject, Vector2* na) {
 
-RECT* TriggerLayer::checkCollision(GameObject* movingObject, Vector2* moveDistance) {
 	return nullptr;
 }
 
@@ -252,6 +253,7 @@ RECT* CollisionLayer::checkCollision(GameObject* movingObject, Vector2* moveDist
 
 }
 
+/** Not used */
 RECT* TileLayer::checkCollision(GameObject* movingObject, Vector2* moveDistance) {
 
 	return NULL;
@@ -260,6 +262,23 @@ RECT* TileLayer::checkCollision(GameObject* movingObject, Vector2* moveDistance)
 
 InteractableObject* TriggerLayer::checkInteractable(PC* pc) {
 	return nullptr;
+}
+
+EventObject* TriggerLayer::checkTrigger(GameObject * movingObject) {
+
+	for each (EventObject* event in events) {
+
+		RECT* overlapRect = new RECT{-1, -1, -1, -1};
+		// If the rectangles intersect, the return value is nonzero.
+		// If the rectangles do not intersect, the return value is zero.
+		if (IntersectRect(overlapRect, &movingObject->rect, &event->rect) != 0) {
+			delete overlapRect;
+			return event;
+		}
+		delete overlapRect;
+	}
+
+	return NULL;
 }
 
 InteractableObject* CharacterLayer::checkInteractable(PC* pc) {
@@ -288,13 +307,13 @@ InteractableObject* CharacterLayer::checkInteractable(PC* pc) {
 			break;
 	}
 
-	
+
 	for each (CharacterObject* charObj in characterObjects) {
 
 		if (strcmp(charObj->name.c_str(), pc->gameObject->name.c_str()) == 0)
 			continue;
 
-		RECT overlapRect {-1, -1, -1, -1};
+		RECT overlapRect{-1, -1, -1, -1};
 		// If the rectangles intersect, the return value is nonzero.
 		// If the rectangles do not intersect, the return value is zero.
 		if (IntersectRect(&overlapRect, &areaToCheck, &charObj->rect) != 0) {

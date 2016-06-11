@@ -12,6 +12,8 @@ MAPFile::~MAPFile() {
 		delete sheet;
 	for each (Layer* layer in layers)
 		delete layer;
+	for each (Layer* layer in events)
+		delete layer;
 }
 
 bool MAPFile::initialize(ID3D11Device* device) {
@@ -105,6 +107,8 @@ bool MAPFile::loadLayerData() {
 
 				layer = new TriggerLayer();
 				layer->load(layerNode, spriteDict);
+				events.push_back((TriggerLayer*)layer);
+
 			} else // missing Search
 				continue;
 

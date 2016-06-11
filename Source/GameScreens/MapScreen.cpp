@@ -62,6 +62,15 @@ void MapScreen::update(double deltaTime, SimpleKeyboard* keys) {
 #include "../GameObjects/PC.h"
 void MapScreen::playerActions(double deltaTime, SimpleKeyboard * keys) {
 
+	// check if in triggered event
+	for each (TriggerLayer* layer in map->events) {
+		EventObject* event = layer->checkTrigger(PC::pc->gameObject.get());
+		if (event != NULL && !event->triggered) {
+			event->triggered = true;
+			textBoxManager->getTriggeredEvent(event->name);
+		}
+	}
+
 	Vector2 distanceToTravel(0, 0);
 	float moveAmount = WALK_SPEED * deltaTime;
 
@@ -97,13 +106,13 @@ void MapScreen::playerActions(double deltaTime, SimpleKeyboard * keys) {
 		collisionAlgo(&distanceToTravel);
 	}
 
-	
+
 
 	if (keys->keyDown[SELECT] && !keys->lastDown[SELECT] && !textBoxManager->isTextBoxOpen()) {
 
 		InteractableObject* object = checkInteractable();
 		if (object != NULL) {
-			textBoxManager->getDialog(object->interact(), &((CharacterObject*)object)->position);
+			textBoxManager->getDialog(object->interact(), &((CharacterObject*) object)->position);
 		}
 	}
 

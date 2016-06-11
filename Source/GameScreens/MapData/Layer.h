@@ -90,6 +90,8 @@ public:
 	virtual RECT* checkCollision(GameObject* movingObject, Vector2* moveDistance) override;
 	virtual InteractableObject* checkInteractable(PC* pc) override;
 
+	EventObject* checkTrigger(GameObject* movingObject);
+
 private:
 	vector<EventObject*> events;
 };

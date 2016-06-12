@@ -29,6 +29,8 @@ void TextBox::loadNode(xml_node nd, Vector2* spkrPos) {
 
 	if (speakerPos == NULL)
 		speakerPos = spkrPos;
+
+	modal = node.attribute("modal").as_bool();
 }
 
 

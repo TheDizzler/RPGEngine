@@ -53,7 +53,7 @@ public:
 	float indicatorRot = 0;
 	Vector2* speakerPos = NULL;
 
-
+	bool modal = false;
 protected:
 
 	FontSet* font;
@@ -73,7 +73,7 @@ protected:
 	xml_node node;
 
 
-	
+
 
 private:
 

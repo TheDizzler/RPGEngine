@@ -21,6 +21,8 @@ void CommandBox::loadNodes(xml_node nd, vector<xml_node> nds) {
 	indicatorOn = true;
 	indicatorPos = firstLabelPos + indicatorOffset;
 	itemSelected = 0;
+
+	modal = true;
 }
 
 

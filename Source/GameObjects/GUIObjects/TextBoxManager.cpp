@@ -264,6 +264,11 @@ bool TextBoxManager::isTextBoxOpen() {
 	return currentBox != NULL || !closingBoxes.empty();
 }
 
+bool TextBoxManager::isModal() {
+
+	return currentBox != NULL && currentBox->modal;
+}
+
 
 
 

@@ -29,6 +29,8 @@ public:
 
 	bool isTextBoxOpen();
 
+	bool isModal();
+
 private:
 
 	unique_ptr<FontSet> guiFont;

@@ -11,15 +11,26 @@ using namespace std;
 
 namespace Globals {
 
-	const int WINDOW_WIDTH = 1000;	// in pixels
-	const int WINDOW_HEIGHT = 800;	// in pixels
+	const int WINDOW_WIDTH = 1024;	// in pixels
+	const int WINDOW_HEIGHT = 768;	// in pixels
 
 	const int TEXTBOX_MARGIN = 32;
 	const int LISTBOX_WIDTH = 384; // in pixels
 	const int LISTBOX_HEIGHT = 252; // in pixels
 
-	const int DIALOGBOX_WIDTH = 768; // in pixels
+	const int DIALOGBOX_WIDTH = WINDOW_WIDTH; // in pixels
 	const int DIALOGBOX_HEIGHT = 252;
+
+	const int VIEWPORT_DIALOG_TOP = WINDOW_HEIGHT - DIALOGBOX_HEIGHT;
+	const int VIEWPORT_DIALOG_LEFT = 0;
+	//const int VIEWPORT_DIALOG_BOTTOM = WINDOW_HEIGHT - TEXTBOX_MARGIN;
+	//const int VIEWPORT_DIALOG_RIGHT = DIALOGBOX_WIDTH + TEXTBOX_MARGIN;
+
+
+	const int DIALOG_TOP = TEXTBOX_MARGIN;
+	const int DIALOG_LEFT = TEXTBOX_MARGIN;
+	const int DIALOG_BOTTOM = DIALOGBOX_HEIGHT - TEXTBOX_MARGIN;
+	const int DIALOG_RIGHT = DIALOGBOX_WIDTH - TEXTBOX_MARGIN;
 
 	const int ALPHA_INPUT_WIDTH = 480;
 	const int ALPHA_INPUT_HEIGHT = 126;

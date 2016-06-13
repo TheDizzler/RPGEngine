@@ -36,7 +36,7 @@ bool Game::initializeGame(ID3D11Device* dvc, MouseController* ms) {
 		return false;
 	currentScreen->setGameManager(this);
 
-	
+
 
 	return true;
 }
@@ -55,6 +55,11 @@ void Game::draw(SpriteBatch * batch) {
 
 	currentScreen->draw(batch);
 
+}
+
+void Game::drawTextBoxes(SpriteBatch * batchDialog) {
+
+	textBoxManager->draw(batchDialog);
 }
 
 void Game::loadLevel() {
@@ -142,7 +147,7 @@ bool Game::parseXMLFiles() {
 		return false;
 	}
 
-	
+
 	//MessageBox(0, Globals::convertCharStarToWCharT(Assets::mapLegendFile), L"This is test desu.", MB_OK);
 
 	docSpriteFiles = new pugi::xml_document();

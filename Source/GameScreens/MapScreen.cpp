@@ -191,5 +191,5 @@ void MapScreen::draw(SpriteBatch* batch) {
 
 	}
 
-	textBoxManager->draw(batch);
+	//textBoxManager->draw(batch);
 }

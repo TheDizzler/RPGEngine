@@ -1,12 +1,12 @@
 #include "GraphicsEngine.h"
-#include <SimpleMath.h>
+
 #include <DirectXColors.h>
 
 
 
 
 GraphicsEngine::GraphicsEngine() {
-	
+
 }
 
 
@@ -24,6 +24,8 @@ GraphicsEngine::~GraphicsEngine() {
 	if (device)
 		device->Release();
 
+	/*delete vp;
+	delete vpDialog;*/
 }
 
 
@@ -84,7 +86,7 @@ bool GraphicsEngine::initD3D(HWND hwnd) {
 
 	HRESULT hr;
 
-	
+
 	for (int i = 0; i < numDriverTypes; ++i) {
 
 		hr = D3D11CreateDeviceAndSwapChain(NULL, driverTypes[i], NULL, createDeviceFlags,
@@ -119,22 +121,49 @@ bool GraphicsEngine::initD3D(HWND hwnd) {
 
 
 	/** **** Create Viewport **** **/
-	D3D11_VIEWPORT viewport;
-	ZeroMemory(&viewport, sizeof(D3D11_VIEWPORT));
+	/*D3D11_VIEWPORT viewport[2];*/
+	/*ZeroMemory(&viewport, sizeof(D3D11_VIEWPORT) * 2);
 
-	viewport.TopLeftX = 0;
-	viewport.TopLeftY = 0;
-	viewport.Width = static_cast<float>(Globals::WINDOW_WIDTH);
-	viewport.Height = static_cast<float>(Globals::WINDOW_HEIGHT);
-	viewport.MinDepth = 0.0f;
-	viewport.MaxDepth = 1.0f;
-
-	deviceContext->RSSetViewports(1, &viewport);
+	viewport[0].TopLeftX = 0;
+	viewport[0].TopLeftY = 0;
+	viewport[0].Width = static_cast<float>(Globals::WINDOW_WIDTH);
+	viewport[0].Height = static_cast<float>(Globals::WINDOW_HEIGHT);
+	viewport[0].MinDepth = 0.0f;
+	viewport[0].MaxDepth = 1.0f;*/
 
 
+	/* Secondary viewport. */
+	//ZeroMemory(&viewport, sizeof(D3D11_VIEWPORT));
+
+	/*viewport[1].TopLeftX = static_cast<float>(Globals::DIALOG_LEFT);
+	viewport[1].TopLeftY = static_cast<float>(Globals::DIALOG_TOP);
+	viewport[1].Width = static_cast<float>(Globals::DIALOGBOX_WIDTH);
+	viewport[1].Height = static_cast<float>(Globals::DIALOGBOX_HEIGHT);
+	viewport[1].MinDepth = 0.0f;
+	viewport[1].MaxDepth = 1.0f;
+
+	deviceContext->RSSetViewports(2, viewport);*/
+
+	vp = Viewport(0, 0,
+		Globals::WINDOW_WIDTH, Globals::WINDOW_HEIGHT,
+		0, 1);
+
+	vpDialog = Viewport(
+		Globals::VIEWPORT_DIALOG_LEFT, Globals::VIEWPORT_DIALOG_TOP,
+		Globals::DIALOGBOX_WIDTH, Globals::DIALOGBOX_HEIGHT,
+		0, 1);
+
+	viewports[0] = vp;
+	viewports[1] = vpDialog;
+
+
+	deviceContext->RSSetViewports(1, vp.Get11());
 
 	batch.reset(new SpriteBatch(deviceContext));
+	batch->SetViewport(vp);
 
+	batchDialog.reset(new SpriteBatch(deviceContext));
+	batchDialog->SetViewport(vpDialog);
 
 	return true;
 

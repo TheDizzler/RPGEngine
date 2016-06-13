@@ -97,23 +97,40 @@ void GameEngine::update(double deltaTime) {
 	if (keys->keyDown[ESC])
 		exit();
 
-	//game->update(deltaTime, keyboardState, mouse.get());
 	game->update(deltaTime, keys);
 }
 
-
+float xScale = 2.2;
+float yScale = 2.2;
+XMMATRIX zoomMatrix = {xScale, 0, 0, 0, 0, yScale, 0, 0, 0, 0, 1, 0, -1, 1, 0, 1};
+XMMATRIX matrix = {1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, -1, 1, 0, 1};
 
 void GameEngine::render(double deltaTime) {
 
 
 	deviceContext->ClearRenderTargetView(renderTargetView, Colors::BlueViolet);
 
-	batch->Begin(SpriteSortMode_Deferred);
+
+	//batch->SetViewport(viewports[0]);
+	deviceContext->RSSetViewports(1, vp.Get11());
+	batch->Begin(SpriteSortMode_Deferred, NULL, NULL, NULL, NULL, NULL, zoomMatrix);
 	{
 		game->draw(batch.get());
+
+		//batch->SetViewport(viewports[1]);
+		//game->drawTextBoxes(batch.get());
 		//mouse->draw(batch.get());
 	}
 	batch->End();
+
+	deviceContext->RSSetViewports(1, vpDialog.Get11());
+	//batchDialog->SetViewport(viewports[1]);
+	batchDialog->Begin(SpriteSortMode_Deferred);
+	{
+		game->drawTextBoxes(batchDialog.get());
+
+	}
+	batchDialog->End();
 
 
 	swapChain->Present(0, 0);

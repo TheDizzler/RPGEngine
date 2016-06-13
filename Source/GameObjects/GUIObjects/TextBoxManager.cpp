@@ -167,7 +167,7 @@ void TextBoxManager::draw(SpriteBatch* batch) {
 }
 
 
-void TextBoxManager::drawBox(TextBox * textBox, SpriteBatch* batch) {
+void TextBoxManager::drawBox(TextBox* textBox, SpriteBatch* batch) {
 
 	RECT* rect = &textBox->rect;
 	int spriteHeight = bg->getSpriteHeight();
@@ -241,8 +241,9 @@ void TextBoxManager::getDialog(string speakerName, Vector2* speakerPos) {
 		.child("dialogText"));
 	currentBox = dialogBox.get();*/
 
-	currentBox = new TextBox(WINDOW_HEIGHT - DIALOGBOX_HEIGHT, TEXTBOX_MARGIN,
-		DIALOGBOX_WIDTH + TEXTBOX_MARGIN, WINDOW_HEIGHT, guiFont.get());
+	
+	currentBox = new TextBox(DIALOG_TOP, DIALOG_LEFT,
+		DIALOG_RIGHT, DIALOG_BOTTOM, guiFont.get());
 	currentBox->loadNode(zoneTextNode
 		.find_child_by_attribute("speaker", speaker)
 		.child("dialogText"), speakerPos);
@@ -252,8 +253,8 @@ void TextBoxManager::getDialog(string speakerName, Vector2* speakerPos) {
 void TextBoxManager::getTriggeredEvent(string eventName) {
 
 
-	currentBox = new TextBox(WINDOW_HEIGHT - DIALOGBOX_HEIGHT, TEXTBOX_MARGIN,
-		DIALOGBOX_WIDTH + TEXTBOX_MARGIN, WINDOW_HEIGHT, guiFont.get());
+	currentBox = new TextBox(DIALOG_TOP, DIALOG_LEFT,
+		DIALOG_RIGHT, DIALOG_BOTTOM, guiFont.get());
 	currentBox->loadNode(triggeredNode.find_child_by_attribute("name", eventName.c_str())
 		.child("dialogText"));
 	textBoxes.push_back(currentBox);

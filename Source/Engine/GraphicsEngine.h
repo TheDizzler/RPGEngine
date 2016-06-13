@@ -3,12 +3,15 @@
 
 #include <Windows.h>
 #include <memory>
+#include <SimpleMath.h>
 
 #include "SpriteBatch.h"
 #include "../globals.h"
 
 
 using namespace DirectX;
+using namespace DirectX::SimpleMath;
+
 
 class GraphicsEngine {
 public:
@@ -20,11 +23,12 @@ public:
 
 	virtual void render(double time) = 0;
 
-
+	Viewport vp;
+	Viewport vpDialog;
 protected:
 
 	std::unique_ptr<SpriteBatch> batch;
-
+	std::unique_ptr<SpriteBatch> batchDialog;
 	/* Changes backbuffer to front buffer. */
 	IDXGISwapChain* swapChain = 0;
 	/* GPU object */
@@ -36,7 +40,9 @@ protected:
 
 	D3D_DRIVER_TYPE driverType;
 	D3D_FEATURE_LEVEL featureLevel;
-	D3D11_VIEWPORT viewport;
+	D3D11_VIEWPORT viewports[2];
+
+	
 
 };
 

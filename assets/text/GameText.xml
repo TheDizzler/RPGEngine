@@ -27,7 +27,7 @@
 	<!-- Triggered Events may need their own xml file and schema -->
 	<event type="Triggered">
 		<triggeredEvent name="Poisoned Bush">
-			<dialogText speaker="Disembodied Voice">You have been poisoned</dialogText>
+			<dialogText modal="true" speaker="Disembodied Voice">You have been poisoned</dialogText>
 			<effect>Something here that tells engine what to do</effect>
 		</triggeredEvent>
 	</event>

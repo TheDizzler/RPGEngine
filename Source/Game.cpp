@@ -1,8 +1,10 @@
 #include "Game.h"
 
+#include "Engine/GameEngine.h"
 Game::Game(GameEngine* gmngn) {
 
 	gameEngine = gmngn;
+	camera = gameEngine->camera.get();
 }
 
 Game::~Game() {
@@ -92,7 +94,7 @@ void Game::loadMainMenu() {
 }
 
 
-#include "Engine/GameEngine.h"
+
 
 void Game::exit() {
 

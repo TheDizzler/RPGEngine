@@ -48,6 +48,9 @@ public:
 
 	static void storeVariable(wstring escape, wstring* store);
 	static wstring getStoredVariable(wstring escape);
+
+
+	Camera* camera;
 private:
 
 	
@@ -62,6 +65,7 @@ private:
 
 	unique_ptr<TextBoxManager> textBoxManager;
 
+	
 
 	//xmlDoc* doc;
 	//xmlNode* gameTextRootNode;

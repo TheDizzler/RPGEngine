@@ -6,6 +6,7 @@
 #include <SimpleMath.h>
 
 #include "SpriteBatch.h"
+#include "Camera.h"
 #include "../globals.h"
 
 
@@ -23,8 +24,7 @@ public:
 
 	virtual void render(double time) = 0;
 
-	Viewport vp;
-	Viewport vpDialog;
+	std::unique_ptr<Camera> camera;
 protected:
 
 	std::unique_ptr<SpriteBatch> batch;
@@ -40,8 +40,10 @@ protected:
 
 	D3D_DRIVER_TYPE driverType;
 	D3D_FEATURE_LEVEL featureLevel;
-	D3D11_VIEWPORT viewports[2];
+	//D3D11_VIEWPORT viewports[2];
 
+	Viewport vp;
+	Viewport vpDialog;
 	
 
 };

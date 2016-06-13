@@ -18,7 +18,9 @@ public:
 
 	Vector2 getPosition();
 
-	/** Collision detection is done on map level */
+	/** Move: amount position changed.
+	*	Update of gameObject is updated in mapfile layers by MapScreen.
+	*	Collision detection is done on map level. */
 	void update(double deltaTime, Vector2 move);
 
 	static unique_ptr<PC> pc;

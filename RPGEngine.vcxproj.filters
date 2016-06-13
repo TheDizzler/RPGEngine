@@ -168,6 +168,9 @@
     <ClCompile Include="Source\GameObjects\MapObjects\SpriteObject.cpp">
       <Filter>Source Files\MapObjects</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Engine\Camera.cpp">
+      <Filter>Source Files\Engine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Game.h">
@@ -292,6 +295,9 @@
     </ClInclude>
     <ClInclude Include="Source\GameObjects\MapObjects\SpriteObject.h">
       <Filter>Header Files\MapObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engine\Camera.h">
+      <Filter>Header Files\Engine</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

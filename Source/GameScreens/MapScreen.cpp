@@ -37,9 +37,12 @@ bool MapScreen::initialize(ID3D11Device* device, TextBoxManager* txtBxMng) {
 	return true;
 }
 
+#include "../Game.h"
 void MapScreen::setGameManager(Game* gm) {
 
 	game = gm;
+	game->camera->map = map.get();
+	game->camera->centerOn( map->startPos, true);
 }
 
 
@@ -74,7 +77,7 @@ void MapScreen::playerActions(double deltaTime, SimpleKeyboard * keys) {
 		}
 	}
 
-	Vector2 distanceToTravel(0, 0);
+	Vector2 distanceToTravel = Vector2::Zero;
 	float moveAmount = WALK_SPEED * deltaTime;
 
 	if (keys->keyDown[UP]) {
@@ -120,6 +123,8 @@ void MapScreen::playerActions(double deltaTime, SimpleKeyboard * keys) {
 	}
 
 	PC::pc->update(deltaTime, distanceToTravel);
+	if (distanceToTravel != Vector2::Zero)
+		game->camera->moveCamera(distanceToTravel, true);
 }
 
 

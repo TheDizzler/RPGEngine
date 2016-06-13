@@ -146,6 +146,7 @@
     <ClCompile Include="Source\Engine\BaseGraphics\FontSet.cpp" />
     <ClCompile Include="Source\Engine\BaseGraphics\Sprite.cpp" />
     <ClCompile Include="Source\Engine\BaseGraphics\SpriteSheet.cpp" />
+    <ClCompile Include="Source\Engine\Camera.cpp" />
     <ClCompile Include="Source\Engine\GameEngine.cpp" />
     <ClCompile Include="Source\Engine\GraphicsEngine.cpp" />
     <ClCompile Include="Source\Engine\Input.cpp" />
@@ -188,6 +189,7 @@
     <ClInclude Include="Source\Engine\BaseGraphics\IElement2D.h" />
     <ClInclude Include="Source\Engine\BaseGraphics\Sprite.h" />
     <ClInclude Include="Source\Engine\BaseGraphics\SpriteSheet.h" />
+    <ClInclude Include="Source\Engine\Camera.h" />
     <ClInclude Include="Source\Engine\GameEngine.h" />
     <ClInclude Include="Source\Engine\GraphicsEngine.h" />
     <ClInclude Include="Source\Engine\Input.h" />

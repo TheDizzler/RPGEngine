@@ -80,7 +80,7 @@ bool MAPFile::loadLayerData() {
 					layerNode.child("object").attribute("width").as_int() / 2*/;
 				int y = layerNode.child("object").attribute("y").as_int()/* +
 					layerNode.child("object").attribute("height").as_int() / 2*/;
-				//startPos = Vector2(x, y);
+				startPos = Vector2(x, y);
 
 					// set PC start position
 				PC::pc->gameObject->position.x = x;

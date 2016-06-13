@@ -25,14 +25,15 @@ public:
 
 	bool initialize(ID3D11Device* device);
 
-
-
+	Vector2 startPos;
+	// used in Camera
+	int mapWidth, mapHeight;
+	int tileWidth, tileHeight;
 private:
 
 	xml_node mapRoot;
 
-	int mapWidth, mapHeight;
-	int tileWidth, tileHeight;
+	
 
 
 	bool loadMapDescription();
@@ -40,7 +41,7 @@ private:
 	bool loadLayerData();
 
 
-	Vector2 startPos;
+	
 
 
 };

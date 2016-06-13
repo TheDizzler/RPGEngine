@@ -4,7 +4,7 @@
 
 #include "Screen.h"
 #include "MapData\MAPFile.h"
-//#include "../../GameScreens/MapData/Layer.h"
+#include "../Engine/Camera.h"
 #include "../Engine/SimpleKeyboard.h"
 
 

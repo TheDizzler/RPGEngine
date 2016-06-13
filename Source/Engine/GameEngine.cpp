@@ -30,7 +30,7 @@ bool GameEngine::initEngine(HWND hw, HINSTANCE hInstance) {
 		MessageBox(0, L"Raw Input Init failed", L"Error", MB_OK);
 		return false;
 	}
-	
+
 
 	if (!initStage()) {
 		MessageBox(0, L"Stage Initialization Failed", L"Error", MB_OK);
@@ -111,20 +111,17 @@ void GameEngine::render(double deltaTime) {
 	deviceContext->ClearRenderTargetView(renderTargetView, Colors::BlueViolet);
 
 
-	//batch->SetViewport(viewports[0]);
 	deviceContext->RSSetViewports(1, vp.Get11());
-	batch->Begin(SpriteSortMode_Deferred, NULL, NULL, NULL, NULL, NULL, zoomMatrix);
+	batch->Begin(SpriteSortMode_Deferred,
+		NULL, NULL, NULL, NULL, NULL, camera->translationMatrix());
 	{
 		game->draw(batch.get());
 
-		//batch->SetViewport(viewports[1]);
-		//game->drawTextBoxes(batch.get());
 		//mouse->draw(batch.get());
 	}
 	batch->End();
 
 	deviceContext->RSSetViewports(1, vpDialog.Get11());
-	//batchDialog->SetViewport(viewports[1]);
 	batchDialog->Begin(SpriteSortMode_Deferred);
 	{
 		game->drawTextBoxes(batchDialog.get());

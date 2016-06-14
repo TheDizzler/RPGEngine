@@ -39,4 +39,7 @@ private:
 	void collisionAlgo(Vector2* distanceToTravel);
 	RECT* checkCollision(Vector2* distanceToTravel);
 	InteractableObject* checkInteractable();
+
+	/** Check if player has touched the edge of the map. */
+	bool outsideBounds(Vector2* playerPos);
 };

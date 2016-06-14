@@ -36,6 +36,9 @@ bool MAPFile::loadMapDescription() {
 	tileWidth = mapRoot.attribute("tilewidth").as_int();
 	tileHeight = mapRoot.attribute("tileheight").as_int();
 
+	trueMapWidth = mapWidth*tileWidth;
+	trueMapHeight = mapHeight*tileHeight;
+
 	return true;
 }
 
@@ -101,13 +104,13 @@ bool MAPFile::loadLayerData() {
 				layer = new CollisionLayer();
 				layer->load(layerNode, spriteDict);
 				collidable.push_back(layer);
-				
+
 
 			} else if (strcmp(layerNode.attribute("name").as_string(), "Triggered Events") == 0) {
 
 				layer = new TriggerLayer();
 				layer->load(layerNode, spriteDict);
-				events.push_back((TriggerLayer*)layer);
+				events.push_back((TriggerLayer*) layer);
 
 			} else // missing Search
 				continue;

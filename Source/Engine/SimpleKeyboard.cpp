@@ -65,6 +65,16 @@ void SimpleKeyboard::getInput(RAWKEYBOARD* rwky) {
 			keyDown[ESC] = down;
 			break;
 
+		case 'y':
+		case 'Y':
+			keyDown[ZOOM_IN] = down;
+			break;
+
+		case 't':
+		case 'T':
+			keyDown[ZOOM_OUT] = down;
+			break;
+
 	}
 
 

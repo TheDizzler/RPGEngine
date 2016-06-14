@@ -41,8 +41,8 @@ bool MapScreen::initialize(ID3D11Device* device, TextBoxManager* txtBxMng) {
 void MapScreen::setGameManager(Game* gm) {
 
 	game = gm;
-	game->camera->map = map.get();
-	game->camera->centerOn( map->startPos, true);
+	game->camera->setMap(map.get());
+	game->camera->centerOn(map->startPos, true);
 }
 
 
@@ -123,8 +123,24 @@ void MapScreen::playerActions(double deltaTime, SimpleKeyboard * keys) {
 	}
 
 	PC::pc->update(deltaTime, distanceToTravel);
+	if (outsideBounds(&PC::pc->getPosition()))
+		//exitMap = true;
+		MessageBox(NULL, L"Leaving", L"Leave town", MB_OK);
+
 	if (distanceToTravel != Vector2::Zero)
-		game->camera->moveCamera(distanceToTravel, true);
+		//game->camera->moveCamera(distanceToTravel, true);
+		game->camera->centerOn(PC::pc->getPosition(), true);
+	if (keys->keyDown[ZOOM_IN] && !keys->lastDown[ZOOM_IN])
+		game->camera->adjustZoom(.01);
+	if (keys->keyDown[ZOOM_OUT] && !keys->lastDown[ZOOM_OUT])
+		game->camera->adjustZoom(-.01);
+}
+
+
+bool MapScreen::outsideBounds(Vector2* playerPos) {
+
+	return (playerPos->x < 0 || playerPos->y < 0
+		|| playerPos->x > map->trueMapWidth || playerPos->y > map->trueMapHeight);
 }
 
 

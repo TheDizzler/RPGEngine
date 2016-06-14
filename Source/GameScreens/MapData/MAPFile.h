@@ -29,6 +29,8 @@ public:
 	// used in Camera
 	int mapWidth, mapHeight;
 	int tileWidth, tileHeight;
+
+	int trueMapWidth, trueMapHeight;
 private:
 
 	xml_node mapRoot;

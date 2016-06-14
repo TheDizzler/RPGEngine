@@ -14,7 +14,7 @@ public:
 	Camera(int viewportWidth, int viewportHeight);
 	~Camera();
 
-	MAPFile* map = NULL;
+	
 	Viewport* viewport = NULL;
 	Vector2 position;
 
@@ -25,9 +25,7 @@ public:
 	Vector3 viewportCenter;
 
 
-	//void update(double deltaTime, Vector2* pcMovement);
-
-
+	void setMap(MAPFile* mapFile);
 	void adjustZoom(float amount);
 	/** Move the camera in an X and Y amount based on the cameraMovement param.
 	*	If clampToMap is true the camera will try not to pan outside of the
@@ -42,7 +40,14 @@ public:
 	Matrix translationMatrix();
 private:
 	float zoom;
-	
+	float mapWidth;
+	float mapHeight;
+
+	float viewX = (viewportWidth / zoom / 2);
+	float viewY = (viewportHeight / zoom / 2);
+
+	MAPFile* map = NULL;
+
 
 	void mapClampedPosition(Vector2& position);
 	Vector2* screenToWorld(Vector2 screenPosition);

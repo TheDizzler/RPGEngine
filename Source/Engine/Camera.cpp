@@ -1,6 +1,6 @@
 #include "Camera.h"
 
-Camera::Camera(int vwprtWdth, int vwprtHght/*, MAPFile* mapFile*/) {
+Camera::Camera(int vwprtWdth, int vwprtHght) {
 
 	zoom = 1.0f;
 
@@ -10,26 +10,35 @@ Camera::Camera(int vwprtWdth, int vwprtHght/*, MAPFile* mapFile*/) {
 
 	position = Vector2::Zero;
 
-	//map = mapFile;
+
+
+
 }
 
 Camera::~Camera() {
 }
 
-//void Camera::update(double deltaTime, Vector2* pcMovement) {
-//
-//	Vector2 cameraMovement = Vector2::Zero;
-//
-//	
-//}
+
+void Camera::setMap(MAPFile * mapFile) {
+	map = mapFile;
+
+	mapWidth = map->mapWidth * map->tileWidth;
+	mapHeight = map->mapHeight* map->tileHeight;
+
+	viewX = (viewportWidth / zoom / 2);
+	viewY = (viewportHeight / zoom / 2);
+}
 
 void Camera::adjustZoom(float amount) {
 
 	zoom += amount;
-	if (zoom < 0.25f)
-		zoom = 0.25f;
+	if (zoom < 0.5f)
+		zoom = 0.5f;
 	else if (zoom > 2.5)
 		zoom = 2.5;
+
+	viewX = (viewportWidth / zoom / 2);
+	viewY = (viewportHeight / zoom / 2);
 }
 
 void Camera::moveCamera(Vector2 cameraMovement, bool clampToMap) {
@@ -79,12 +88,19 @@ Vector2* Camera::screenToWorld(Vector2 screenPosition) {
 
 void Camera::mapClampedPosition(Vector2& position) {
 
+
 	Vector2 cameraMax = Vector2(
-		map->mapWidth * map->tileWidth - (viewportWidth / zoom / 2),
-		map->mapHeight*map->tileHeight - (viewportHeight / zoom / 2));
+		mapWidth - viewX,
+		mapHeight - viewY);
 
-	position.Clamp(cameraMax, Vector2(viewportWidth / zoom / 2, viewportHeight / zoom / 2));
-
+	Vector2 cameraMin = Vector2(viewX, viewY);
+	if (cameraMax.x < cameraMin.x)
+		position.Clamp(cameraMax, cameraMin);
+	else
+	/*if (cameraMax.y < cameraMin.y)
+		position.Clamp(cameraMax, cameraMin);
+	else*/
+	position.Clamp(cameraMin, cameraMax);
 }
 
 

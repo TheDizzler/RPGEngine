@@ -190,11 +190,13 @@ namespace MakerEngine {
 
 				}
 
-				TreeXMLNode newNode = new TreeXMLNode(node, treeNodeList.ToArray());
-				if (node.Attributes["type"].InnerText == "Zone Text")
-					zoneTextTreeNode = newNode;
+				if (node.Name != "#comment") {
+					TreeXMLNode newNode = new TreeXMLNode(node, treeNodeList.ToArray());
+					if (node.Attributes["type"].InnerText == "Zone Text")
+						zoneTextTreeNode = newNode;
 
-				treeView_Dialog.Nodes.Add(newNode);
+					treeView_Dialog.Nodes.Add(newNode);
+				}
 			}
 
 			AutoCompleteStringCollection coll = new AutoCompleteStringCollection();
@@ -712,6 +714,8 @@ namespace MakerEngine {
 			this.checkBoxes.Clear();
 			this.tableLayoutPanel_LayersGroupBox.RowCount = mapTMX.layers.Count;
 
+			treeView_GameObjects.Nodes.Clear();
+
 			int row = 0;
 
 			foreach (Layer layer in mapTMX.layers) {
@@ -834,7 +838,7 @@ namespace MakerEngine {
 
 								mapTMX.Dispose();
 								mapTMX = null;
-								
+
 							}
 							File.Delete(gameDirectory + node.Attributes["file"].InnerText);
 							node.ParentNode.RemoveChild(node);
@@ -868,22 +872,12 @@ namespace MakerEngine {
 				int length = lastIndex - index;
 				String shortnameTMX = tmxFile.Substring(index + 1, length - 1);
 
-				//if (selectedMapTreeNode.node == selectedMapNode) {
-
-				//	pictureBox_Map.Image.Dispose();
-				//	pictureBox_Map.Image = null;
-
-				//	mapTMX.Dispose();
-				//	mapTMX = null;
-
-				//}
-				//if (mapTMX != null)
-				//	mapTMX.Dispose();
 
 				TMXFile newMAPFile = convertTMXtoMAP(tmxFile, shortnameTMX);
 				if (newMAPFile == null)
 					return;
-				//newMAPFile.load();
+				
+
 				String newMapFilepath = mapDir + shortnameTMX + ".map";
 
 				String mapTag = "<map name=\"" + newMAPFile.name + "\" file=\"" + newMapFilepath + "\" ></map>";
@@ -931,7 +925,6 @@ namespace MakerEngine {
 									locationTreeNode = (TreeXMLNode)subNode;
 									break;
 								}
-
 							}
 							break;
 						}

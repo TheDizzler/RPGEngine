@@ -321,6 +321,7 @@ namespace MakerEngine {
 			}
 			foreach (KeyValuePair<int, Image> entry in imageDict)
 				imageDict[entry.Key].Dispose();
+			
 			File.Delete(layerImageDir + name + " final.png");
 			//if (Directory.Exists(layerImageDir))
 			//	Directory.Delete(layerImageDir, true);

@@ -38,7 +38,7 @@
 				<dialogText>A new line of dialog.</dialogText>
 				<dialogText from="">dfsdff!!!!!</dialogText>
 			</dialog>
-			<dialog speaker="Princess Ed" >
+			<dialog speaker="Princess Ed">
 				<dialogText from="repeat" modal="true">Does thou love me?</dialogText>
 				<query>
 					<answer to="YES">Yes</answer>
@@ -48,11 +48,11 @@
 				<dialogText from="NO" to="repeat" modal="true">But thou must!</dialogText>
 				<dialogText>This should never display.</dialogText>
 			</dialog>
-			<dialog speaker="VillagerB" >
+			<dialog speaker="VillagerB">
 				<dialogText>Hello, my name is \speaker.</dialogText>
 				<dialogText>Yes, I am real.</dialogText>
 			</dialog>
-			<dialog speaker="VillagerD" >
+			<dialog speaker="VillagerD">
 				<dialogText modal="true">Hello, my name is \speaker.</dialogText>
 				<dialogText>Interesting, isn't it?</dialogText>
 			</dialog>

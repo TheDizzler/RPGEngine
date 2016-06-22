@@ -19,4 +19,7 @@ public:
 		//MouseController* mouse) = 0;
 	virtual void update(double deltaTime, SimpleKeyboard* keys) = 0;
 	virtual void draw(SpriteBatch* batch) = 0;
+
+	TextBoxManager* textBoxManager;
+	Game* game;
 };

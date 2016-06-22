@@ -8,7 +8,7 @@
 #include "../Engine/SimpleKeyboard.h"
 
 
-class Game;
+//class Game;
 
 class MapScreen : public Screen {
 public:
@@ -16,18 +16,18 @@ public:
 	~MapScreen();
 
 	// Inherited via Screen
-	virtual bool initialize(ID3D11Device * device, TextBoxManager * textBoxManager) override;
-	virtual void setGameManager(Game * game) override;
-	virtual void update(double deltaTime, SimpleKeyboard * keys) override;
-	virtual void draw(SpriteBatch * batch) override;
+	virtual bool initialize(ID3D11Device* device, TextBoxManager* textBoxManager) override;
+	virtual void setGameManager(Game* game) override;
+	virtual void update(double deltaTime, SimpleKeyboard* keys) override;
+	virtual void draw(SpriteBatch* batch) override;
 
 
 
 private:
 
-	Game* game;
+	//Game* game;
 
-	TextBoxManager* textBoxManager;
+	//TextBoxManager* textBoxManager;
 
 	unique_ptr<xml_document> docCurrentMap;
 

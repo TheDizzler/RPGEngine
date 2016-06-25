@@ -36,6 +36,7 @@ namespace MakerEngine {
 		XmlNode selectedTextNode;
 		TreeXMLNode selectedTextTreeNode;
 		TreeXMLNode zoneTextTreeNode;
+		TreeXMLNode triggeredEventTreeNode;
 
 		XmlDocument docSpriteFiles;
 		XmlNode selectedSpriteNode;
@@ -49,6 +50,7 @@ namespace MakerEngine {
 		TMXFile mapTMX;
 
 		public List<String> speakerList;
+		public List<String> triggeredList;
 		public List<CheckBox> checkBoxes;
 
 
@@ -166,6 +168,7 @@ namespace MakerEngine {
 			// build tree view from dialog text
 			List<TreeXMLNode> treeNodeList;
 			speakerList = new List<String>();
+			triggeredList = new List<String>();
 
 			foreach (XmlNode node in root.ChildNodes) {
 
@@ -174,29 +177,40 @@ namespace MakerEngine {
 
 				foreach (XmlNode child in node.ChildNodes) {
 
-					if (child.Name == "zone") {
-						List<TreeXMLNode> subNodeList = new List<TreeXMLNode>();
+					List<TreeXMLNode> subNodeList;
+					switch (child.Name) {
+						case "zone":
+							subNodeList = new List<TreeXMLNode>();
 
-						foreach (XmlNode sub in child.ChildNodes) {
-							speakerList.Add(sub.Attributes["speaker"].InnerText);
-							subNodeList.Add(new TreeXMLNode(sub));
-						}
+							foreach (XmlNode sub in child.ChildNodes) {
+								speakerList.Add(sub.Attributes["speaker"].InnerText);
+								subNodeList.Add(new TreeXMLNode(sub));
+							}
 
-						treeNodeList.Add(new TreeXMLNode(child, subNodeList.ToArray()));
+							treeNodeList.Add(new TreeXMLNode(child, subNodeList.ToArray()));
+							break;
 
-					} else
+						case "triggeredEvent":
+							triggeredList.Add(child.Attributes["name"].InnerText);
+							treeNodeList.Add(new TreeXMLNode(child));
+							break;
+						default:
 
-						treeNodeList.Add(new TreeXMLNode(child));
-
+							treeNodeList.Add(new TreeXMLNode(child));
+							break;
+					}
 				}
 
 				if (node.Name != "#comment") {
 					TreeXMLNode newNode = new TreeXMLNode(node, treeNodeList.ToArray());
 					if (node.Attributes["type"].InnerText == "Zone Text")
 						zoneTextTreeNode = newNode;
+					else if (node.Attributes["type"].InnerText == "Triggered")
+						triggeredEventTreeNode = newNode;
 
 					treeView_Dialog.Nodes.Add(newNode);
 				}
+
 			}
 
 			AutoCompleteStringCollection coll = new AutoCompleteStringCollection();
@@ -351,9 +365,7 @@ namespace MakerEngine {
 					needSave(true);
 
 				}
-
 			}
-
 		}
 
 		public void createNewDialogText(XmlNode prevNode, String fromAttribute) {
@@ -442,7 +454,8 @@ namespace MakerEngine {
 
 			rebuildAccordion();
 
-			if (selectedTextNode.Attributes["speaker"] != null) {
+			if (selectedTextNode.Attributes["speaker"] != null
+				|| selectedTextNode.Attributes["name"] != null) {
 
 				textBox_Speaker.Text = selected.Text;
 
@@ -450,6 +463,11 @@ namespace MakerEngine {
 					switch (child.Name) {
 
 						case "dialogText":
+
+							createDialogTextControl(child);
+							break;
+
+						case "effect":
 
 							createDialogTextControl(child);
 							break;
@@ -485,6 +503,7 @@ namespace MakerEngine {
 				}
 
 			}
+
 
 			loading = false;
 		}
@@ -664,14 +683,35 @@ namespace MakerEngine {
 				if (selectedTextTreeNode == null)
 					return;
 
+				Point loc = PointToScreen(e.Location);
+				loc.Y += contextMenuStrip_MapLegend.Size.Height;
+				loc.X += contextMenuStrip_MapLegend.Size.Width / 4;
+
+				contextMenuStrip_ZoneText.Items.Clear();
+
 				switch (selectedTextTreeNode.Text) {
 					case "Zone Text":
-						Point loc = PointToScreen(e.Location);
-						loc.Y += contextMenuStrip_MapLegend.Size.Height;
-						loc.X += contextMenuStrip_MapLegend.Size.Width / 4;
-						contextMenuStrip_ZoneText.Show(loc);
+
+						contextMenuStrip_ZoneText.Items.Add(newLocationToolStripMenuItem);
+						contextMenuStrip_ZoneText.Items.Add(deleteLocationToolStripMenuItem);
+
+						break;
+
+					case "Triggered":
+
+
+						contextMenuStrip_ZoneText.Items.Add(newTriggeredEventToolStripMenuItem);
+						contextMenuStrip_ZoneText.Items.Add(deleteTriggeredEventToolStripMenuItem);
+
+						break;
+
+					case "Intro":
+
+
 						break;
 				}
+
+				contextMenuStrip_ZoneText.Show(loc);
 			}
 		}
 
@@ -876,7 +916,7 @@ namespace MakerEngine {
 				TMXFile newMAPFile = convertTMXtoMAP(tmxFile, shortnameTMX);
 				if (newMAPFile == null)
 					return;
-				
+
 
 				String newMapFilepath = mapDir + shortnameTMX + ".map";
 
@@ -1339,7 +1379,7 @@ namespace MakerEngine {
 
 		private void treeView_Sprites_MouseClick(Object sender, MouseEventArgs e) {
 
-			treeView_Sprites.SelectedNode = (TreeXMLNode)treeView_Dialog.GetNodeAt(e.Location);
+			treeView_Sprites.SelectedNode = (TreeXMLNode)treeView_Sprites.GetNodeAt(e.Location);
 
 		}
 

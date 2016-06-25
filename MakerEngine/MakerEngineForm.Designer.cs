@@ -109,6 +109,8 @@
 			this.contextMenuStrip_SpriteTree = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.newCategoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.convertToDDSToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.newTriggeredEventToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.deleteTriggeredEventToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuStrip1.SuspendLayout();
 			this.tabControl.SuspendLayout();
 			this.tabPage_Dialog.SuspendLayout();
@@ -155,8 +157,8 @@
 			// menuStrip1
 			// 
 			this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fileToolStripMenuItem,
-            this.runGameToolStripMenuItem});
+			this.fileToolStripMenuItem,
+			this.runGameToolStripMenuItem});
 			this.menuStrip1.Location = new System.Drawing.Point(0, 0);
 			this.menuStrip1.Name = "menuStrip1";
 			this.menuStrip1.Size = new System.Drawing.Size(1477, 24);
@@ -166,10 +168,10 @@
 			// fileToolStripMenuItem
 			// 
 			this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.saveToolStripMenuItem,
-            this.saveAsToolStripMenuItem,
-            this.loadToolStripMenuItem,
-            this.newGameToolStripMenuItem});
+			this.saveToolStripMenuItem,
+			this.saveAsToolStripMenuItem,
+			this.loadToolStripMenuItem,
+			this.newGameToolStripMenuItem});
 			this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
 			this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
 			this.fileToolStripMenuItem.Text = "File";
@@ -278,9 +280,9 @@
 			// 
 			// groupBox_AccordionHolder
 			// 
-			this.groupBox_AccordionHolder.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.groupBox_AccordionHolder.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+			| System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.groupBox_AccordionHolder.Controls.Add(this.accordion_Dialog);
 			this.groupBox_AccordionHolder.Location = new System.Drawing.Point(270, 32);
 			this.groupBox_AccordionHolder.Name = "groupBox_AccordionHolder";
@@ -293,11 +295,11 @@
 			// 
 			this.accordion_Dialog.AddResizeBars = false;
 			this.accordion_Dialog.AllowMouseResize = false;
-			this.accordion_Dialog.AnimateCloseEffect = ((Opulos.Core.UI.AnimateWindowFlags)(((Opulos.Core.UI.AnimateWindowFlags.VerticalNegative | Opulos.Core.UI.AnimateWindowFlags.Hide) 
-            | Opulos.Core.UI.AnimateWindowFlags.Slide)));
+			this.accordion_Dialog.AnimateCloseEffect = ((Opulos.Core.UI.AnimateWindowFlags)(((Opulos.Core.UI.AnimateWindowFlags.VerticalNegative | Opulos.Core.UI.AnimateWindowFlags.Hide)
+			| Opulos.Core.UI.AnimateWindowFlags.Slide)));
 			this.accordion_Dialog.AnimateCloseMillis = 300;
-			this.accordion_Dialog.AnimateOpenEffect = ((Opulos.Core.UI.AnimateWindowFlags)(((Opulos.Core.UI.AnimateWindowFlags.VerticalPositive | Opulos.Core.UI.AnimateWindowFlags.Show) 
-            | Opulos.Core.UI.AnimateWindowFlags.Slide)));
+			this.accordion_Dialog.AnimateOpenEffect = ((Opulos.Core.UI.AnimateWindowFlags)(((Opulos.Core.UI.AnimateWindowFlags.VerticalPositive | Opulos.Core.UI.AnimateWindowFlags.Show)
+			| Opulos.Core.UI.AnimateWindowFlags.Slide)));
 			this.accordion_Dialog.AnimateOpenMillis = 300;
 			this.accordion_Dialog.AutoFixDockStyle = true;
 			this.accordion_Dialog.AutoScroll = true;
@@ -371,8 +373,8 @@
 			// 
 			// treeView_Dialog
 			// 
-			this.treeView_Dialog.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
+			this.treeView_Dialog.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+			| System.Windows.Forms.AnchorStyles.Left)));
 			this.treeView_Dialog.Location = new System.Drawing.Point(7, 27);
 			this.treeView_Dialog.Name = "treeView_Dialog";
 			this.treeView_Dialog.Size = new System.Drawing.Size(253, 1143);
@@ -486,8 +488,8 @@
 			// 
 			// treeView_MapLegend
 			// 
-			this.treeView_MapLegend.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.treeView_MapLegend.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.treeView_MapLegend.Location = new System.Drawing.Point(4, 16);
 			this.treeView_MapLegend.Name = "treeView_MapLegend";
 			this.treeView_MapLegend.Size = new System.Drawing.Size(284, 347);
@@ -506,8 +508,8 @@
 			// 
 			// button_ConvertTMX
 			// 
-			this.button_ConvertTMX.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.button_ConvertTMX.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.button_ConvertTMX.Enabled = false;
 			this.button_ConvertTMX.Location = new System.Drawing.Point(4, 369);
 			this.button_ConvertTMX.Name = "button_ConvertTMX";
@@ -771,10 +773,10 @@
 			// 
 			this.toolStrip1.Dock = System.Windows.Forms.DockStyle.None;
 			this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripLabel2,
-            this.toolStripButton_HideLeftPanel,
-            this.toolStripButton_HideTilesetPanel,
-            this.toolStripButton_HideLayerSelect});
+			this.toolStripLabel2,
+			this.toolStripButton_HideLeftPanel,
+			this.toolStripButton_HideTilesetPanel,
+			this.toolStripButton_HideLayerSelect});
 			this.toolStrip1.Location = new System.Drawing.Point(3, 0);
 			this.toolStrip1.Name = "toolStrip1";
 			this.toolStrip1.Size = new System.Drawing.Size(147, 25);
@@ -974,23 +976,25 @@
 			// contextMenuStrip_ZoneText
 			// 
 			this.contextMenuStrip_ZoneText.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.newLocationToolStripMenuItem,
-            this.deleteLocationToolStripMenuItem});
+			this.newLocationToolStripMenuItem,
+			this.deleteLocationToolStripMenuItem,
+			this.newTriggeredEventToolStripMenuItem,
+			this.deleteTriggeredEventToolStripMenuItem});
 			this.contextMenuStrip_ZoneText.Name = "contextMenuStrip_ZoneText";
 			this.contextMenuStrip_ZoneText.ShowImageMargin = false;
-			this.contextMenuStrip_ZoneText.Size = new System.Drawing.Size(123, 48);
+			this.contextMenuStrip_ZoneText.Size = new System.Drawing.Size(168, 114);
 			// 
 			// newLocationToolStripMenuItem
 			// 
 			this.newLocationToolStripMenuItem.Name = "newLocationToolStripMenuItem";
-			this.newLocationToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
+			this.newLocationToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
 			this.newLocationToolStripMenuItem.Text = "New Location";
 			this.newLocationToolStripMenuItem.Click += new System.EventHandler(this.newLocationToolStripMenuItem_Click);
 			// 
 			// deleteLocationToolStripMenuItem
 			// 
 			this.deleteLocationToolStripMenuItem.Name = "deleteLocationToolStripMenuItem";
-			this.deleteLocationToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
+			this.deleteLocationToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
 			this.deleteLocationToolStripMenuItem.Text = "Delete Zone";
 			// 
 			// imageTMXList
@@ -1002,15 +1006,15 @@
 			// openFileDialog_Sprite
 			// 
 			this.openFileDialog_Sprite.Filter = "All Graphics Types|*.bmp;*.jpg;*.jpeg;*.png;*.tif;*.tiff;*.dds|BMP|*.bmp|GIF|*.gi" +
-    "f|JPG|*.jpg;*.jpeg|PNG|*.png|TIFF|*.tif;*.tiff|DDS|*.dds";
+	"f|JPG|*.jpg;*.jpeg|PNG|*.png|TIFF|*.tif;*.tiff|DDS|*.dds";
 			// 
 			// contextMenuStrip_MapLegend
 			// 
 			this.contextMenuStrip_MapLegend.AllowMerge = false;
 			this.contextMenuStrip_MapLegend.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripMenuItem_AddMap,
-            this.toolStripMenuItem_RemoveMap,
-            this.toolStripMenuItem_ChangeMapName});
+			this.toolStripMenuItem_AddMap,
+			this.toolStripMenuItem_RemoveMap,
+			this.toolStripMenuItem_ChangeMapName});
 			this.contextMenuStrip_MapLegend.Name = "contextMenuStrip_MapLegend";
 			this.contextMenuStrip_MapLegend.Size = new System.Drawing.Size(178, 70);
 			// 
@@ -1053,8 +1057,8 @@
 			// contextMenuStrip_SpriteTree
 			// 
 			this.contextMenuStrip_SpriteTree.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.newCategoryToolStripMenuItem,
-            this.convertToDDSToolStripMenuItem});
+			this.newCategoryToolStripMenuItem,
+			this.convertToDDSToolStripMenuItem});
 			this.contextMenuStrip_SpriteTree.Name = "contextMenuStrip_SpriteTree";
 			this.contextMenuStrip_SpriteTree.Size = new System.Drawing.Size(154, 48);
 			// 
@@ -1070,6 +1074,18 @@
 			this.convertToDDSToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
 			this.convertToDDSToolStripMenuItem.Text = "Add Image File";
 			this.convertToDDSToolStripMenuItem.Click += new System.EventHandler(this.addImageFileToolStripMenuItem_Click);
+			// 
+			// newTriggeredEventToolStripMenuItem
+			// 
+			this.newTriggeredEventToolStripMenuItem.Name = "newTriggeredEventToolStripMenuItem";
+			this.newTriggeredEventToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
+			this.newTriggeredEventToolStripMenuItem.Text = "New Triggered Event";
+			// 
+			// deleteTriggeredEventToolStripMenuItem
+			// 
+			this.deleteTriggeredEventToolStripMenuItem.Name = "deleteTriggeredEventToolStripMenuItem";
+			this.deleteTriggeredEventToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
+			this.deleteTriggeredEventToolStripMenuItem.Text = "Delete Triggered Event";
 			// 
 			// MakerEngineForm
 			// 
@@ -1231,6 +1247,8 @@
 		private System.Windows.Forms.Button button_SearchForSpeaker;
 		private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem_ChangeMapName;
 		private System.Windows.Forms.TabPage tabPage_Items;
+		private System.Windows.Forms.ToolStripMenuItem newTriggeredEventToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem deleteTriggeredEventToolStripMenuItem;
 	}
 }
 

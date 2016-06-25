@@ -33,11 +33,24 @@ bool Game::initializeGame(ID3D11Device* dvc, MouseController* ms) {
 	PC::pc.reset(new PC());
 	PC::pc->gameObject->name = "PC";
 
-	currentScreen = new MapScreen(docMapLegend);
-	if (!currentScreen->initialize(device, textBoxManager.get()))
+	mapScreen.reset(new MapScreen(docMapLegend));
+	if (!mapScreen->initialize(device, textBoxManager.get()))
 		return false;
-	currentScreen->setGameManager(this);
+	mapScreen->setGameManager(this);
 
+	battleScreen.reset(new BattleScreen());
+	if (!battleScreen->initialize(device, textBoxManager.get()))
+		return false;
+	battleScreen->setGameManager(this);
+
+	menuScreen.reset(new MenuScreen());
+	if (!menuScreen->initialize(device, textBoxManager.get()))
+		return false;
+	menuScreen->setGameManager(this);
+
+
+
+	currentScreen = menuScreen.get();
 
 
 	return true;

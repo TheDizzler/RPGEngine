@@ -23,6 +23,8 @@ namespace MakerEngine {
 				this.Text = node.Attributes["speaker"].InnerText;
 			else if (node.Attributes["location"] != null)
 				this.Text = node.Attributes["location"].InnerText;
+			else if (node.Attributes["name"] != null)
+				this.Text = node.Attributes["name"].InnerText;
 
 			this.Name = this.Text;
 		}
@@ -31,11 +33,12 @@ namespace MakerEngine {
 
 			node = nd;
 
-			if (nd.Attributes["type"] != null) {
-				this.Text = nd.Attributes["type"].InnerText;
-			} else if (nd.Attributes["location"] != null) {
-				this.Text = nd.Attributes["location"].InnerText;
-				
+			if (node.Attributes["type"] != null) {
+				this.Text = node.Attributes["type"].InnerText;
+			} else if (node.Attributes["location"] != null) {
+				this.Text = node.Attributes["location"].InnerText;
+			} else if (node.Attributes["triggeredEvent"] != null) {
+				this.Text = node.Attributes["triggeredEvent"].InnerText;
 			}
 			this.Name = this.Text;
 		}

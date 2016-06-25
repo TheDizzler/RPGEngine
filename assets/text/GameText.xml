@@ -61,5 +61,6 @@
 				<dialogText>HEEEEEEEEEEEYYY OOOOOOOOOOOO</dialogText>
 			</dialog>
 		</zone>
+		<zone location="Space" />
 	</event>
 </root>

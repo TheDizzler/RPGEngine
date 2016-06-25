@@ -5,6 +5,7 @@
 
 #include "GameScreens/MapScreen.h"
 #include "GameScreens/BattleScreen.h"
+#include "GameScreens\MenuScreen.h"
 #include "GameObjects/GUIObjects/MenuTest.h"
 #include "Engine/MouseController.h"
 //#include "GameObjects/PC.h"
@@ -34,7 +35,6 @@ public:
 	bool initializeGame(ID3D11Device* device, MouseController* mouse);
 
 
-	//void update(double deltaTime, BYTE keyboardState[256], MouseController* mouse);
 	void update(double deltaTime, SimpleKeyboard* keys);
 	void draw(SpriteBatch* batch);
 	void drawTextBoxes(SpriteBatch* batchDialog);
@@ -56,7 +56,9 @@ private:
 	
 
 	Screen* currentScreen;
+	unique_ptr<MenuScreen> menuScreen;
 	unique_ptr<MapScreen> mapScreen;
+	unique_ptr<BattleScreen> battleScreen;
 	Screen* lastScreen = 0;
 
 	GameEngine* gameEngine;

@@ -1,5 +1,11 @@
 #include "MenuScreen.h"
 
+MenuScreen::MenuScreen() {
+}
+
+MenuScreen::~MenuScreen() {
+}
+
 bool MenuScreen::initialize(ID3D11Device* device, TextBoxManager* txtBxMng) {
 
 	textBoxManager = txtBxMng;

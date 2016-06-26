@@ -53,7 +53,7 @@
 			this.textBox_NewLocation.Location = new System.Drawing.Point(12, 28);
 			this.textBox_NewLocation.Name = "textBox_NewLocation";
 			this.textBox_NewLocation.Size = new System.Drawing.Size(199, 20);
-			this.textBox_NewLocation.TabIndex = 2;
+			this.textBox_NewLocation.TabIndex = 0;
 			// 
 			// label1
 			// 

@@ -16,7 +16,8 @@ namespace MakerEngine {
 
 		private void button_Accept_Click(Object sender, EventArgs e) {
 
-			DialogResult = DialogResult.OK;
+			if (textBox_NewLocation.Text.Length >= 1)
+				DialogResult = DialogResult.OK;
 		}
 	}
 }

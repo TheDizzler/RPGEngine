@@ -18,7 +18,6 @@ namespace MakerEngine {
 		public DirectoryInfo workingDirectory;
 
 
-		//public String gameDirectory = "D:/github projects/RPGEngine/";
 		public static String gameDirectory = AppDomain.CurrentDomain.BaseDirectory + "../../../";
 
 		public static String fontDir = "assets/fonts/";
@@ -312,12 +311,41 @@ namespace MakerEngine {
 			}
 		}
 
+		protected override void OnFormClosing(FormClosingEventArgs e) {
+			base.OnFormClosing(e);
+
+			if (changesNeedSaving) {
+				// ask to save before changing nodes
+				DialogResult result = MessageBox.Show(this,
+					"If you don't save all changes will perish!",
+					"Save changes before exiting?", MessageBoxButtons.YesNoCancel);
+				switch (result) {
+					case DialogResult.Cancel:
+						e.Cancel = true;
+						break;
+					case DialogResult.Yes:
+						save();
+						break;
+					case DialogResult.No:
+						break;
+				}
+			}
+		}
+
+		private void exitToolStripMenuItem_Click(Object sender, EventArgs e) {
+
+			Application.Exit();
+		}
+
+
 
 		/** *************************
 		 *	Dialog Text Tab Methods. 
 		 *	*************************/
 
 
+
+		// depracated??
 		private void button_NewEvent_Click(Object sender, EventArgs e) {
 
 			using (NewEventDialog dialog = new NewEventDialog()) {
@@ -345,6 +373,40 @@ namespace MakerEngine {
 			}
 		}
 
+		/// <summary>
+		/// Creates new Triggered Event.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void newTriggeredEventToolStripMenuItem_Click(Object sender, EventArgs e) {
+
+			using (NewTriggeredEventDialog ned = new NewTriggeredEventDialog()) {
+
+				if (ned.ShowDialog() == DialogResult.OK) {
+
+					String eventTag = "<triggeredEvent name=\"\"></triggeredEvent>";
+					XmlDocument newXml = new XmlDocument();
+					newXml.Load(new StringReader(eventTag));
+
+					XmlNode newNode = newXml.DocumentElement;
+
+					newNode.Attributes["name"].InnerText = ned.textBox_NewEvent.Text;
+					XmlNode importNode = docDialogText.ImportNode(newNode, true);
+					triggeredEventTreeNode.node.AppendChild(importNode);
+					triggeredEventTreeNode.Nodes.Add(new TreeXMLNode(newNode));
+
+					loading = false;
+					needSave(true);
+
+				}
+			}
+		}
+
+		/// <summary>
+		/// Creates new Location (zone).
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void newLocationToolStripMenuItem_Click(Object sender, EventArgs e) {
 
 			using (NewLocationDialog nld = new NewLocationDialog()) {
@@ -358,8 +420,8 @@ namespace MakerEngine {
 
 					newNode.Attributes["location"].InnerText = nld.textBox_NewLocation.Text;
 					XmlNode importNode = docDialogText.ImportNode(newNode, true);
-					selectedTextTreeNode.node.AppendChild(importNode);
-					selectedTextTreeNode.Nodes.Add(new TreeXMLNode(newNode, new TreeXMLNode[0]));
+					zoneTextTreeNode.node.AppendChild(importNode);
+					zoneTextTreeNode.Nodes.Add(new TreeXMLNode(newNode, new TreeXMLNode[0]));
 
 					loading = false;
 					needSave(true);
@@ -367,6 +429,40 @@ namespace MakerEngine {
 				}
 			}
 		}
+
+
+		private void deleteLocationToolStripMenuItem_Click(Object sender, EventArgs e) {
+
+			XmlNode node = selectedTextTreeNode.node;
+			switch (MessageBox.Show(this, "Permanently delete this location?"
+				+ "\n\nLocation name: " + node.Attributes["location"].InnerText
+				+ "\nSub nodes: " + node.ChildNodes.Count,
+						"Action Required", MessageBoxButtons.OKCancel)) {
+				case DialogResult.OK:
+
+					node.ParentNode.RemoveChild(node);
+					zoneTextTreeNode.Nodes.Remove(selectedTextTreeNode);
+					needSave(true);
+					break;
+			}
+		}
+
+		private void deleteTriggeredEventToolStripMenuItem_Click(Object sender, EventArgs e) {
+
+			XmlNode node = selectedTextTreeNode.node;
+			switch (MessageBox.Show(this, "Permanently delete this triggered event?"
+				+ "\n\nTriggered Event: " + node.Attributes["name"].InnerText
+				+ "\nSub nodes: " + node.ChildNodes.Count,
+						"Action Required", MessageBoxButtons.OKCancel)) {
+				case DialogResult.OK:
+
+					node.ParentNode.RemoveChild(node);
+					triggeredEventTreeNode.Nodes.Remove(selectedTextTreeNode);
+					needSave(true);
+					break;
+			}
+		}
+
 
 		public void createNewDialogText(XmlNode prevNode, String fromAttribute) {
 
@@ -691,29 +787,47 @@ namespace MakerEngine {
 
 				switch (selectedTextTreeNode.Text) {
 					case "Zone Text":
-
 						contextMenuStrip_ZoneText.Items.Add(newLocationToolStripMenuItem);
-						contextMenuStrip_ZoneText.Items.Add(deleteLocationToolStripMenuItem);
-
 						break;
 
 					case "Triggered":
-
-
 						contextMenuStrip_ZoneText.Items.Add(newTriggeredEventToolStripMenuItem);
-						contextMenuStrip_ZoneText.Items.Add(deleteTriggeredEventToolStripMenuItem);
-
 						break;
 
 					case "Intro":
 
 
 						break;
+
+				}
+				if (selectedTextTreeNode.Parent != null) {
+					switch (selectedTextTreeNode.Parent.Text) {
+						case "Zone Text":
+
+							contextMenuStrip_ZoneText.Items.Add(newLocationToolStripMenuItem);
+							contextMenuStrip_ZoneText.Items.Add(deleteLocationToolStripMenuItem);
+
+							break;
+
+						case "Triggered":
+
+
+							contextMenuStrip_ZoneText.Items.Add(newTriggeredEventToolStripMenuItem);
+							contextMenuStrip_ZoneText.Items.Add(deleteTriggeredEventToolStripMenuItem);
+
+							break;
+
+						case "Intro":
+
+
+							break;
+					}
 				}
 
 				contextMenuStrip_ZoneText.Show(loc);
 			}
 		}
+
 
 
 

@@ -7,9 +7,7 @@
 
 #include "../../globals.h"
 #include "GUIBox.h"
-//#include "../../Engine/BaseGraphics/Sprite.h"
 #include "TextLabel.h"
-//#include "../GameVariables.h"
 
 
 using namespace pugi;
@@ -40,6 +38,7 @@ public:
 	virtual bool update(double deltaTime, SimpleKeyboard* keys) override;
 	virtual void drawText(SpriteBatch* batch) override;
 
+	/** Check if PC has moved too far away from speaker. */
 	bool isTooFar();
 	virtual bool closing(double deltaTime) override;
 

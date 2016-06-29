@@ -25,6 +25,7 @@ bool MapScreen::initialize(ID3D11Device* device, TextBoxManager* txtBxMng) {
 		return false;
 	}
 
+	eventHandler.reset(new EventHandler(textBoxManager));
 
 	map.reset(new MAPFile(docCurrentMap->child("map")));
 
@@ -53,9 +54,12 @@ void MapScreen::setGameManager(Game* gm) {
 
 void MapScreen::update(double deltaTime, SimpleKeyboard* keys) {
 
+	if (!eventPlaying) {
+		if (!textBoxManager->isModal())
+			playerActions(deltaTime, keys);
+	} else
+		eventPlaying = eventHandler->update(deltaTime, keys);
 
-	if (!textBoxManager->isModal())
-		playerActions(deltaTime, keys);
 
 	for each (Layer* layer in map->layers)
 		layer->update(deltaTime);
@@ -73,7 +77,9 @@ void MapScreen::playerActions(double deltaTime, SimpleKeyboard * keys) {
 		EventObject* event = layer->checkTrigger(PC::pc->gameObject.get());
 		if (event != NULL && !event->triggered) {
 			event->triggered = true;
-			textBoxManager->getTriggeredEvent(event->name);
+			eventPlaying = true;
+			//textBoxManager->getTriggeredEvent(event->name);
+			eventHandler->loadEvent(event);
 		}
 	}
 
@@ -211,6 +217,4 @@ void MapScreen::draw(SpriteBatch* batch) {
 		layer->draw(batch, map->spriteDict);
 
 	}
-
-	//textBoxManager->draw(batch);
 }

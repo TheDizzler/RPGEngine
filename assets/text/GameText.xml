@@ -30,7 +30,7 @@
 			<dialogText modal="true" speaker="Disembodied Voice">You have been poisoned</dialogText>
 			<effect>Something here that tells engine what to do</effect>
 		</triggeredEvent>
-		<triggeredEvent name="Test" />
+		<triggeredEvent name="OffMyLawn" />
 	</event>
 	<event type="Zone Text">
 		<zone location="Test Village">
@@ -62,5 +62,6 @@
 				<dialogText>HEEEEEEEEEEEYYY OOOOOOOOOOOO</dialogText>
 			</dialog>
 		</zone>
+		<zone location="dg" />
 	</event>
 </root>

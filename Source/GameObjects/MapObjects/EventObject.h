@@ -9,6 +9,9 @@ public:
 	~EventObject();
 
 	bool triggered = false;
+
+	//xml_node eventNode;
+
 private:
 
 

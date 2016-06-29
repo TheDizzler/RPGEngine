@@ -171,6 +171,7 @@
     <ClCompile Include="Source\GameObjects\GUIObjects\TextLabel.cpp" />
     <ClCompile Include="Source\GameObjects\MapObjects\AnimatedObject.cpp" />
     <ClCompile Include="Source\GameObjects\MapObjects\CharacterObject.cpp" />
+    <ClCompile Include="Source\GameObjects\MapObjects\EventHandler.cpp" />
     <ClCompile Include="Source\GameObjects\MapObjects\EventObject.cpp" />
     <ClCompile Include="Source\GameObjects\MapObjects\GameObject.cpp" />
     <ClCompile Include="Source\GameObjects\MapObjects\InteractableObject.cpp" />
@@ -213,6 +214,7 @@
     <ClInclude Include="Source\GameObjects\GUIObjects\TextLabel.h" />
     <ClInclude Include="Source\GameObjects\MapObjects\AnimatedObject.h" />
     <ClInclude Include="Source\GameObjects\MapObjects\CharacterObject.h" />
+    <ClInclude Include="Source\GameObjects\MapObjects\EventHandler.h" />
     <ClInclude Include="Source\GameObjects\MapObjects\EventObject.h" />
     <ClInclude Include="Source\GameObjects\MapObjects\GameObject.h" />
     <ClInclude Include="Source\GameObjects\MapObjects\InteractableObject.h" />

@@ -264,7 +264,7 @@ InteractableObject* TriggerLayer::checkInteractable(PC* pc) {
 	return nullptr;
 }
 
-EventObject* TriggerLayer::checkTrigger(GameObject * movingObject) {
+EventObject* TriggerLayer::checkTrigger(GameObject* movingObject) {
 
 	for each (EventObject* event in events) {
 

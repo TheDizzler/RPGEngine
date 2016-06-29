@@ -3,9 +3,10 @@
 #include <map>
 
 #include "Screen.h"
-#include "MapData\MAPFile.h"
+#include "MapData/MAPFile.h"
 #include "../Engine/Camera.h"
 #include "../Engine/SimpleKeyboard.h"
+#include "../GameObjects/MapObjects/EventHandler.h"
 
 
 //class Game;
@@ -30,6 +31,7 @@ private:
 	//TextBoxManager* textBoxManager;
 
 	unique_ptr<xml_document> docCurrentMap;
+	unique_ptr<EventHandler> eventHandler;
 
 	xml_node rootLegendNode;
 	unique_ptr<MAPFile> map;
@@ -42,4 +44,6 @@ private:
 
 	/** Check if player has touched the edge of the map. */
 	bool outsideBounds(Vector2* playerPos);
+
+	bool eventPlaying = false;
 };

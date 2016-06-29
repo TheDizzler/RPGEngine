@@ -31,11 +31,16 @@ namespace MakerEngine {
 		String texconv = "\"D:/github projects/RPGEngine/assets/gfx/texconv/texconv.exe\"";
 		//texconv.exe SpriteSheetSample.png -f BC3_UNORM -m 1 -pmalpha
 
+		EscapeCharactersDialog escCharDialog = new EscapeCharactersDialog();
+
 		XmlDocument docDialogText;
 		XmlNode selectedTextNode;
 		TreeXMLNode selectedTextTreeNode;
 		TreeXMLNode zoneTextTreeNode;
 		TreeXMLNode triggeredEventTreeNode;
+
+		TreeNode selectedGameObject;
+		TreeCheckBoxNode selectedGameObjectCheckBox;
 
 		XmlDocument docSpriteFiles;
 		XmlNode selectedSpriteNode;
@@ -101,6 +106,7 @@ namespace MakerEngine {
 				treeNodeList = new List<TreeMapXMLNode>();
 				treeView_MapLegend.Nodes.Add(
 					new TreeMapXMLNode(node.Attributes["name"].InnerText, node));
+
 			}
 		}
 
@@ -315,6 +321,10 @@ namespace MakerEngine {
 			base.OnFormClosing(e);
 
 			if (changesNeedSaving) {
+
+				if (!escCharDialog.hidden)
+					escCharDialog.display();
+
 				// ask to save before changing nodes
 				DialogResult result = MessageBox.Show(this,
 					"If you don't save all changes will perish!",
@@ -335,6 +345,11 @@ namespace MakerEngine {
 		private void exitToolStripMenuItem_Click(Object sender, EventArgs e) {
 
 			Application.Exit();
+		}
+
+		private void showEscapeCharactersToolStripMenuItem_Click(Object sender, EventArgs e) {
+
+			escCharDialog.display();
 		}
 
 
@@ -375,6 +390,7 @@ namespace MakerEngine {
 
 		/// <summary>
 		/// Creates new Triggered Event.
+		/// From right-click context menu.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -404,6 +420,7 @@ namespace MakerEngine {
 
 		/// <summary>
 		/// Creates new Location (zone).
+		/// From right-click context menu.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -430,7 +447,12 @@ namespace MakerEngine {
 			}
 		}
 
-
+		/// <summary>
+		/// Deletes Location (zone).
+		/// From right-click context menu.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void deleteLocationToolStripMenuItem_Click(Object sender, EventArgs e) {
 
 			XmlNode node = selectedTextTreeNode.node;
@@ -447,6 +469,12 @@ namespace MakerEngine {
 			}
 		}
 
+		/// <summary>
+		/// Deletes Triggered Event.
+		/// From right-click context menu.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void deleteTriggeredEventToolStripMenuItem_Click(Object sender, EventArgs e) {
 
 			XmlNode node = selectedTextTreeNode.node;
@@ -462,7 +490,6 @@ namespace MakerEngine {
 					break;
 			}
 		}
-
 
 		public void createNewDialogText(XmlNode prevNode, String fromAttribute) {
 
@@ -779,9 +806,8 @@ namespace MakerEngine {
 				if (selectedTextTreeNode == null)
 					return;
 
-				Point loc = PointToScreen(e.Location);
-				loc.Y += contextMenuStrip_MapLegend.Size.Height;
-				loc.X += contextMenuStrip_MapLegend.Size.Width / 4;
+				Point loc = Cursor.Position;
+				loc.X += 20;
 
 				contextMenuStrip_ZoneText.Items.Clear();
 
@@ -864,6 +890,7 @@ namespace MakerEngine {
 			// load .tmx file
 			mapTMX = new TMXFile(gameDirectory + mapNode.Attributes["file"].InnerText, mapNode.Attributes["name"].InnerText, false);
 
+
 			this.tableLayoutPanel_LayersGroupBox.Controls.Clear();
 			this.checkBoxes.Clear();
 			this.tableLayoutPanel_LayersGroupBox.RowCount = mapTMX.layers.Count;
@@ -943,6 +970,7 @@ namespace MakerEngine {
 			String selectedName = selectedMapTreeNode.node.Attributes["name"].InnerText;
 
 			TextInputDialog dialog = new TextInputDialog();
+			dialog.textBox_NewMapName.Text = selectedName;
 			if (dialog.ShowDialog() == DialogResult.OK) {
 
 				selectedMapTreeNode.node.Attributes["name"].InnerText = dialog.textBox_NewMapName.Text;
@@ -967,7 +995,8 @@ namespace MakerEngine {
 
 			foreach (XmlNode node in root.ChildNodes) {
 				if (node.Attributes["name"].InnerText == selectedName) {
-					switch (MessageBox.Show(this, "Click 'Yes' to permanently delete this map." +
+					switch (MessageBox.Show(this, "Delete " + selectedName + "?" +
+						"\nClick 'Yes' to permanently delete this map." +
 						"\nClick 'No' to only remove this map from the game.",
 						"Action Required", MessageBoxButtons.YesNoCancel)) {
 						case DialogResult.No:
@@ -981,6 +1010,10 @@ namespace MakerEngine {
 							}
 							node.ParentNode.RemoveChild(node);
 							treeView_MapLegend.Nodes.Remove(selectedMapTreeNode);
+							this.tableLayoutPanel_LayersGroupBox.Controls.Clear();
+							this.checkBoxes.Clear();
+							treeView_GameObjects.Nodes.Clear();
+
 							needSave(true);
 							return;
 
@@ -997,6 +1030,10 @@ namespace MakerEngine {
 							File.Delete(gameDirectory + node.Attributes["file"].InnerText);
 							node.ParentNode.RemoveChild(node);
 							treeView_MapLegend.Nodes.Remove(selectedMapTreeNode);
+							this.tableLayoutPanel_LayersGroupBox.Controls.Clear();
+							this.checkBoxes.Clear();
+							treeView_GameObjects.Nodes.Clear();
+
 							save();
 							return;
 
@@ -1223,7 +1260,6 @@ namespace MakerEngine {
 			return newMAP;
 		}
 
-
 		private void checkBoxLayerSelect_CheckedChanged(Object sender, EventArgs e) {
 
 			treeView_GameObjects.AfterCheck -= treeView_GameObjects_AfterCheck;
@@ -1264,10 +1300,14 @@ namespace MakerEngine {
 					if (e.Node.Text == cb.Text)
 						cb.Checked = e.Node.Checked;
 			}
-
-
 		}
 
+		/// <summary>
+		/// GameObject List DoubleClick. Checks dialog lists for gameobject.
+		/// If found go to it immediately.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void treeView_GameObjects_MouseDoubleClick(Object sender, MouseEventArgs e) {
 
 			if (treeView_GameObjects.SelectedNode.GetType() != typeof(TreeCheckBoxNode))
@@ -1282,17 +1322,120 @@ namespace MakerEngine {
 					if (zoneNode.Text == mapTMX.name) {
 						foreach (TreeNode speakerNode in zoneNode.Nodes) {
 							if (speakerNode.Text == name) {
-								//selectedTextTreeNode = (TreeXMLNode) speakerNode;
-								treeView_Dialog.SelectedNode = speakerNode;
+								// if it exists, go to dialog tab and select npc text
 
+								treeView_Dialog.SelectedNode = speakerNode;
 								tabControl.SelectedIndex = 0;
 								treeView_Dialog_MouseDoubleClick(null, e);
-								break;
+								return;
 							}
 						}
 						break;
 					}
 				}
+			} else if (tcbNode.layer.name == "Triggered Events") {
+				String name = tcbNode.Text;
+
+				// find npc name in dialog TreeView
+				foreach (TreeNode eventNode in triggeredEventTreeNode.Nodes) {
+					if (eventNode.Text == name) {
+						// if it exists, go to dialog tab and select npc text
+						treeView_Dialog.SelectedNode = eventNode;
+
+						tabControl.SelectedIndex = 0;
+						treeView_Dialog_MouseDoubleClick(null, e);
+						return;
+					}
+				}
+
+				// didn't find it so create a new one?
+				using (NewTriggeredEventDialog ned = new NewTriggeredEventDialog()) {
+					ned.Text = "Add this event?";
+					ned.textBox_NewEvent.Text = name;
+					if (ned.ShowDialog() == DialogResult.OK) {
+
+						String eventTag = "<triggeredEvent name=\"\"></triggeredEvent>";
+						XmlDocument newXml = new XmlDocument();
+						newXml.Load(new StringReader(eventTag));
+
+						XmlNode newNode = newXml.DocumentElement;
+
+						newNode.Attributes["name"].InnerText = ned.textBox_NewEvent.Text;
+						XmlNode importNode = docDialogText.ImportNode(newNode, true);
+						triggeredEventTreeNode.node.AppendChild(importNode);
+						triggeredEventTreeNode.Nodes.Add(new TreeXMLNode(newNode));
+
+						loading = false;
+						needSave(true);
+
+					}
+				}
+			}
+		}
+
+
+		private void createTriggeredEventToolStripMenuItem_Click(Object sender, EventArgs e) {
+
+
+		}
+
+		private void treeView_GameObjects_MouseUp(Object sender, MouseEventArgs e) {
+
+			if (e.Button == MouseButtons.Right) {
+				Object node = treeView_GameObjects.SelectedNode;
+				if (node == null)
+					return;
+				if (node.GetType() == typeof(TreeCheckBoxNode)) {
+					// it's a sub node
+					selectedGameObjectCheckBox = (TreeCheckBoxNode)node;
+					if (treeView_GameObjects.SelectedNode.Parent.Text == "Triggered Events") {
+						this.createTriggeredEventToolStripMenuItem.Enabled = true;
+					} else {
+						this.createTriggeredEventToolStripMenuItem.Enabled = false;
+
+					}
+
+
+					Point loc = Cursor.Position;
+					loc.X += 20;
+					contextMenuStrip_MapObjects.Show(loc);
+
+				} else { // it's a root node
+					selectedGameObject = (TreeNode)node;
+				}
+			}
+		}
+
+		private void treeView_GameObjects_MouseDown(Object sender, MouseEventArgs e) {
+
+			treeView_GameObjects.SelectedNode = treeView_GameObjects.GetNodeAt(e.Location);
+		}
+
+		/// <summary>
+		/// Right Click Context Menufor Map TreeView.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void treeView_MapLegend_MouseDown(Object sender, MouseEventArgs e) {
+
+			treeView_MapLegend.SelectedNode = treeView_MapLegend.GetNodeAt(e.Location);
+			if (e.Button == MouseButtons.Right) {
+
+				selectedMapTreeNode = (TreeXMLNode)treeView_MapLegend.GetNodeAt(e.Location);
+
+				if (selectedMapTreeNode == null) {
+					this.toolStripMenuItem_AddMap.Enabled = true;
+					this.toolStripMenuItem_RemoveMap.Enabled = false;
+					this.toolStripMenuItem_ChangeMapName.Enabled = false;
+				} else {
+					this.toolStripMenuItem_AddMap.Enabled = false;
+					this.toolStripMenuItem_RemoveMap.Enabled = true;
+					this.toolStripMenuItem_ChangeMapName.Enabled = true;
+				}
+
+				Point loc = Cursor.Position;
+				loc.X += 20;
+				contextMenuStrip_MapLegend.Show(loc);
 			}
 		}
 
@@ -1329,35 +1472,6 @@ namespace MakerEngine {
 					splitContainer_MapTools.Panel1Collapsed = !splitContainer_MapTools.Panel1Collapsed;
 			}
 		}
-
-		/// <summary>
-		/// Right Click Context Menufor Map TreeView.
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void treeView_MapLegend_MouseDown(Object sender, MouseEventArgs e) {
-
-			if (e.Button == MouseButtons.Right) {
-
-				selectedMapTreeNode = (TreeXMLNode)treeView_MapLegend.GetNodeAt(e.Location);
-
-				if (selectedMapTreeNode == null) {
-					this.toolStripMenuItem_AddMap.Enabled = true;
-					this.toolStripMenuItem_RemoveMap.Enabled = false;
-					this.toolStripMenuItem_ChangeMapName.Enabled = false;
-				} else {
-					this.toolStripMenuItem_AddMap.Enabled = false;
-					this.toolStripMenuItem_RemoveMap.Enabled = true;
-					this.toolStripMenuItem_ChangeMapName.Enabled = true;
-				}
-
-				Point loc = PointToScreen(e.Location);
-				loc.Y += contextMenuStrip_MapLegend.Size.Height;
-				loc.X += contextMenuStrip_MapLegend.Size.Width / 4;
-				contextMenuStrip_MapLegend.Show(loc);
-			}
-		}
-
 
 		// Deprecated?
 		private void button_ConvertTMX_Click(Object sender, EventArgs e) {
@@ -1714,14 +1828,13 @@ namespace MakerEngine {
 				//	this.toolStripMenuItem_RemoveMap.Enabled = true;
 				//}
 
-				Point loc = PointToScreen(e.Location);
-				loc.Y += contextMenuStrip_SpriteTree.Size.Height;
-				loc.X += contextMenuStrip_SpriteTree.Size.Width / 4;
+				Point loc = Cursor.Position;
+				loc.X += 20;
 				contextMenuStrip_SpriteTree.Show(loc);
 			}
 
 		}
 
-
+		
 	}
 }

@@ -41,6 +41,7 @@
 			// 
 			// button_Cancel
 			// 
+			this.button_Cancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
 			this.button_Cancel.Location = new System.Drawing.Point(136, 64);
 			this.button_Cancel.Name = "button_Cancel";
 			this.button_Cancel.Size = new System.Drawing.Size(75, 23);
@@ -66,16 +67,24 @@
 			// 
 			// NewLocationDialog
 			// 
+			this.AcceptButton = this.button_Accept;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			this.CancelButton = this.button_Cancel;
 			this.ClientSize = new System.Drawing.Size(225, 99);
 			this.ControlBox = false;
 			this.Controls.Add(this.label1);
 			this.Controls.Add(this.textBox_NewLocation);
 			this.Controls.Add(this.button_Cancel);
 			this.Controls.Add(this.button_Accept);
+			this.MaximizeBox = false;
+			this.MinimizeBox = false;
 			this.Name = "NewLocationDialog";
+			this.ShowIcon = false;
+			this.ShowInTaskbar = false;
+			this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
 			this.Text = "New Location";
+			this.TopMost = true;
 			this.ResumeLayout(false);
 			this.PerformLayout();
 

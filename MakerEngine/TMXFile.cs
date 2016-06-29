@@ -39,6 +39,7 @@ namespace MakerEngine {
 		public String layerImageDir = MakerEngineForm.gameDirectory + MakerEngineForm.mapDir + @"tempimgs\";
 		public String missingNOImg = MakerEngineForm.gameDirectory + MakerEngineForm.gfxDir + "missingNO.dds";
 
+
 		public TMXFile(String mapfile, String mapName, bool converting) {
 
 			file = mapfile;
@@ -55,18 +56,21 @@ namespace MakerEngine {
 
 					switch (node.Name) {
 						case "objectgroup":
-							if (node.Attributes["name"].InnerText == "NPC") {
-								foreach (XmlNode obj in node.ChildNodes) {
+							//if (node.Attributes["name"].InnerText == "NPC") {
+							foreach (XmlNode obj in node.ChildNodes) {
 
-									int height = Int32.Parse(obj.Attributes["height"].InnerText);
-									int x = (int)Math.Round(float.Parse(obj.Attributes["x"].InnerText));
-									int y = (int)Math.Round(float.Parse(obj.Attributes["y"].InnerText))
-										 - height; // objects origin is bottom left for some reason...
+								int width = (int)Math.Round(float.Parse(obj.Attributes["width"].InnerText));
+								int height = (int)Math.Round(float.Parse(obj.Attributes["height"].InnerText));
+								int x = (int)Math.Round(float.Parse(obj.Attributes["x"].InnerText));
+								int y = (int)Math.Round(float.Parse(obj.Attributes["y"].InnerText));
+								if (node.Attributes["name"].InnerText == "NPC")
+									y -= height; // NPCs origin is bottom left for some reason...
 
-									// this is to remove floating points that appear sometimes from Tiled
-									obj.Attributes["x"].InnerText = "" + x;
-									obj.Attributes["y"].InnerText = "" + y;
-								}
+								// this is to remove floating points that appear sometimes from Tiled
+								obj.Attributes["x"].InnerText = "" + x;
+								obj.Attributes["y"].InnerText = "" + y;
+								obj.Attributes["width"].InnerText = "" + width;
+								obj.Attributes["height"].InnerText = "" + height;
 							}
 							break;
 					}
@@ -109,8 +113,6 @@ namespace MakerEngine {
 						break;
 				}
 			}
-
-
 		}
 
 		private void loadMapDescription() {
@@ -250,10 +252,8 @@ namespace MakerEngine {
 						g.DrawRectangle(Pens.Firebrick, gameObj.getRect());
 					else
 						g.DrawImage(imageDict[gameObj.gid],
-							new Point(gameObj.x, gameObj.y - gameObj.height));
+							new Point(gameObj.x, gameObj.y));
 				}
-				// these sprites aren't displaying in proper position.
-				// Offsetting the y pos helps but still not exact.
 			}
 
 			if (!Directory.Exists(layerImageDir))
@@ -321,7 +321,7 @@ namespace MakerEngine {
 			}
 			foreach (KeyValuePair<int, Image> entry in imageDict)
 				imageDict[entry.Key].Dispose();
-			
+
 			File.Delete(layerImageDir + name + " final.png");
 			//if (Directory.Exists(layerImageDir))
 			//	Directory.Delete(layerImageDir, true);
@@ -596,18 +596,18 @@ namespace MakerEngine {
 				if (objNode.Attributes["gid"] != null)
 					gid = Int32.Parse(objNode.Attributes["gid"].InnerText);
 
-				width = Int32.Parse(objNode.Attributes["width"].InnerText);
-				height = Int32.Parse(objNode.Attributes["height"].InnerText);
+				width = (int)Math.Round(float.Parse(objNode.Attributes["width"].InnerText));
+				height = (int)Math.Round(float.Parse(objNode.Attributes["height"].InnerText));
 
 				x = (int)Math.Round(float.Parse(objNode.Attributes["x"].InnerText));
 				y = (int)Math.Round(float.Parse(objNode.Attributes["y"].InnerText));
 				//	 - height; // objects origin is bottom left for some reason...
 
-				//// this is to remove floating points that appear sometimes from Tiled
+				// this is to remove floating points that appear sometimes from Tiled
 				//objNode.Attributes["x"].InnerText = "" + x;
 				//objNode.Attributes["y"].InnerText = "" + y;
-
-
+				//objNode.Attributes["width"].InnerText = "" + width;
+				//objNode.Attributes["height"].InnerText = "" + height;
 			}
 
 

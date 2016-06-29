@@ -79,6 +79,12 @@
       <DependentUpon>AccordionQueryControl.cs</DependentUpon>
     </Compile>
     <Compile Include="DDSImageParser.cs" />
+    <Compile Include="EscapeCharactersDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EscapeCharactersDialog.Designer.cs">
+      <DependentUpon>EscapeCharactersDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="MakerEngineForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -142,6 +148,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="AccordionQueryControl.resx">
       <DependentUpon>AccordionQueryControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EscapeCharactersDialog.resx">
+      <DependentUpon>EscapeCharactersDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MakerEngineForm.resx">
       <DependentUpon>MakerEngineForm.cs</DependentUpon>

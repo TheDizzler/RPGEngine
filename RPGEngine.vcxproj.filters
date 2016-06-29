@@ -171,6 +171,9 @@
     <ClCompile Include="Source\Engine\Camera.cpp">
       <Filter>Source Files\Engine</Filter>
     </ClCompile>
+    <ClCompile Include="Source\GameObjects\MapObjects\EventHandler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Game.h">
@@ -298,6 +301,9 @@
     </ClInclude>
     <ClInclude Include="Source\Engine\Camera.h">
       <Filter>Header Files\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameObjects\MapObjects\EventHandler.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

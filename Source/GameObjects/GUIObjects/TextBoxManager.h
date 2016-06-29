@@ -18,8 +18,9 @@ public:
 
 	//void update(double deltaTime, BYTE keyboardState[256]);
 	void update(double deltaTime, SimpleKeyboard* keys);
-	/** RECT should be a multiple of border sprite length/height
-		(currently 16x16). */
+	/**  Called from Game.cpp.
+	*		RECT should be a multiple of border sprite length/height
+			(currently 16x16). */
 	void draw(SpriteBatch* batch);
 
 
@@ -31,6 +32,8 @@ public:
 
 	bool isModal();
 
+	xml_node triggeredNode;
+
 private:
 
 	unique_ptr<FontSet> guiFont;
@@ -38,7 +41,7 @@ private:
 	xml_document* xmlDoc;
 	xml_node rootNode;
 	xml_node eventNode;
-	xml_node triggeredNode;
+	
 
 	xml_node zoneTextNode;
 

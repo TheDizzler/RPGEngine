@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE map SYSTEM "http://mapeditor.org/dtd/1.0/map.dtd"[]>
-<map version="1.0" orientation="orthogonal" renderorder="left-down" width="20" height="20" tilewidth="32" tileheight="32" nextobjectid="44">
+<map version="1.0" orientation="orthogonal" renderorder="left-down" width="20" height="20" tilewidth="32" tileheight="32" nextobjectid="47">
 	<tileset firstgid="1" name="grass-tiles-2-small" tilewidth="32" tileheight="32" tilecount="72" columns="12">
 		<image source="assets/gfx/tmx/grass-tiles-2-small.dds" width="384" height="192" />
 	</tileset>
@@ -147,6 +147,7 @@
 		<object id="41" name="VillagerC" gid="148" x="624" y="624" width="16" height="16" />
 		<object id="42" name="VillagerD" gid="148" x="0" y="624" width="16" height="16" />
 		<object id="43" name="VillagerB" gid="148" x="624" y="0" width="16" height="16" />
+		<object id="44" name="OldMan" gid="149" x="645" y="173" width="16" height="16" />
 	</objectgroup>
 	<layer name="Top" width="20" height="20">
 		<data encoding="csv">
@@ -181,6 +182,8 @@
 		<object id="26" name="Poisoned Bush" x="258" y="162" width="29" height="29" />
 		<object id="27" name="Poisoned Bush" x="354" y="129" width="26" height="28" />
 		<object id="28" name="Poisoned Bush" x="354" y="196" width="27" height="26" />
+		<object id="45" name="OffMyLawn" x="386" y="162" width="31" height="35" />
+		<object id="46" name="OffMyLawn" x="321" y="162" width="30" height="33" />
 	</objectgroup>
 	<objectgroup name="Search">
 		<object id="30" name="Hidden Item" x="354" y="161" width="28" height="28" />

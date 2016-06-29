@@ -31,12 +31,12 @@
 			this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.loadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.newGameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.runGameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.newGameFileDialog = new System.Windows.Forms.SaveFileDialog();
 			this.tabControl = new System.Windows.Forms.TabControl();
 			this.tabPage_Dialog = new System.Windows.Forms.TabPage();
 			this.button_SearchForSpeaker = new System.Windows.Forms.Button();
-			this.button_NewEvent = new System.Windows.Forms.Button();
 			this.label1 = new System.Windows.Forms.Label();
 			this.groupBox_AccordionHolder = new System.Windows.Forms.GroupBox();
 			this.label_Speaker = new System.Windows.Forms.Label();
@@ -110,8 +110,11 @@
 			this.contextMenuStrip_SpriteTree = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.newCategoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.convertToDDSToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.contextMenuStrip_MapObjects = new System.Windows.Forms.ContextMenuStrip(this.components);
+			this.createTriggeredEventToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.accordion_Dialog = new Opulos.Core.UI.Accordion();
-			this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.showEscapeCharactersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuStrip1.SuspendLayout();
 			this.tabControl.SuspendLayout();
 			this.tabPage_Dialog.SuspendLayout();
@@ -153,13 +156,15 @@
 			this.contextMenuStrip_MapLegend.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox_NeedSave)).BeginInit();
 			this.contextMenuStrip_SpriteTree.SuspendLayout();
+			this.contextMenuStrip_MapObjects.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// menuStrip1
 			// 
 			this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
-            this.runGameToolStripMenuItem});
+            this.runGameToolStripMenuItem,
+            this.viewToolStripMenuItem});
 			this.menuStrip1.Location = new System.Drawing.Point(0, 0);
 			this.menuStrip1.Name = "menuStrip1";
 			this.menuStrip1.Size = new System.Drawing.Size(1477, 24);
@@ -183,29 +188,36 @@
 			this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
 			this.saveToolStripMenuItem.ShortcutKeyDisplayString = "ctrl+s";
 			this.saveToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-			this.saveToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.saveToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
 			this.saveToolStripMenuItem.Text = "Save";
 			this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
 			// 
 			// saveAsToolStripMenuItem
 			// 
 			this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
-			this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
 			this.saveAsToolStripMenuItem.Text = "Save As";
 			// 
 			// loadToolStripMenuItem
 			// 
 			this.loadToolStripMenuItem.Name = "loadToolStripMenuItem";
-			this.loadToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.loadToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
 			this.loadToolStripMenuItem.Text = "Load Game";
 			this.loadToolStripMenuItem.Click += new System.EventHandler(this.loadToolStripMenuItem_Click);
 			// 
 			// newGameToolStripMenuItem
 			// 
 			this.newGameToolStripMenuItem.Name = "newGameToolStripMenuItem";
-			this.newGameToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.newGameToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
 			this.newGameToolStripMenuItem.Text = "New Game";
 			this.newGameToolStripMenuItem.Click += new System.EventHandler(this.newGameToolStripMenuItem_Click);
+			// 
+			// exitToolStripMenuItem
+			// 
+			this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+			this.exitToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
+			this.exitToolStripMenuItem.Text = "Exit";
+			this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
 			// 
 			// runGameToolStripMenuItem
 			// 
@@ -236,7 +248,6 @@
 			// tabPage_Dialog
 			// 
 			this.tabPage_Dialog.Controls.Add(this.button_SearchForSpeaker);
-			this.tabPage_Dialog.Controls.Add(this.button_NewEvent);
 			this.tabPage_Dialog.Controls.Add(this.label1);
 			this.tabPage_Dialog.Controls.Add(this.groupBox_AccordionHolder);
 			this.tabPage_Dialog.Controls.Add(this.label_Speaker);
@@ -259,17 +270,6 @@
 			this.button_SearchForSpeaker.TabIndex = 9;
 			this.button_SearchForSpeaker.Text = "Search";
 			this.button_SearchForSpeaker.UseVisualStyleBackColor = true;
-			// 
-			// button_NewEvent
-			// 
-			this.button_NewEvent.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.button_NewEvent.Location = new System.Drawing.Point(7, 1189);
-			this.button_NewEvent.Name = "button_NewEvent";
-			this.button_NewEvent.Size = new System.Drawing.Size(85, 23);
-			this.button_NewEvent.TabIndex = 1;
-			this.button_NewEvent.Text = "New Event";
-			this.button_NewEvent.UseVisualStyleBackColor = true;
-			this.button_NewEvent.Click += new System.EventHandler(this.button_NewEvent_Click);
 			// 
 			// label1
 			// 
@@ -687,6 +687,8 @@
 			this.treeView_GameObjects.TabIndex = 0;
 			this.treeView_GameObjects.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.treeView_GameObjects_AfterCheck);
 			this.treeView_GameObjects.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.treeView_GameObjects_MouseDoubleClick);
+			this.treeView_GameObjects.MouseDown += new System.Windows.Forms.MouseEventHandler(this.treeView_GameObjects_MouseDown);
+			this.treeView_GameObjects.MouseUp += new System.Windows.Forms.MouseEventHandler(this.treeView_GameObjects_MouseUp);
 			// 
 			// tabControl_ImageViewer
 			// 
@@ -1029,6 +1031,20 @@
 			this.convertToDDSToolStripMenuItem.Text = "Add Image File";
 			this.convertToDDSToolStripMenuItem.Click += new System.EventHandler(this.addImageFileToolStripMenuItem_Click);
 			// 
+			// contextMenuStrip_MapObjects
+			// 
+			this.contextMenuStrip_MapObjects.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.createTriggeredEventToolStripMenuItem});
+			this.contextMenuStrip_MapObjects.Name = "contextMenuStrip_MapObjects";
+			this.contextMenuStrip_MapObjects.Size = new System.Drawing.Size(194, 26);
+			// 
+			// createTriggeredEventToolStripMenuItem
+			// 
+			this.createTriggeredEventToolStripMenuItem.Name = "createTriggeredEventToolStripMenuItem";
+			this.createTriggeredEventToolStripMenuItem.Size = new System.Drawing.Size(193, 22);
+			this.createTriggeredEventToolStripMenuItem.Text = "Create Triggered Event";
+			this.createTriggeredEventToolStripMenuItem.Click += new System.EventHandler(this.createTriggeredEventToolStripMenuItem_Click);
+			// 
 			// accordion_Dialog
 			// 
 			this.accordion_Dialog.AddResizeBars = false;
@@ -1092,12 +1108,20 @@
 			this.accordion_Dialog.TabIndex = 0;
 			this.accordion_Dialog.UpArrow = null;
 			// 
-			// exitToolStripMenuItem
+			// viewToolStripMenuItem
 			// 
-			this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-			this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-			this.exitToolStripMenuItem.Text = "Exit";
-			this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
+			this.viewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.showEscapeCharactersToolStripMenuItem});
+			this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
+			this.viewToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+			this.viewToolStripMenuItem.Text = "View";
+			// 
+			// showEscapeCharactersToolStripMenuItem
+			// 
+			this.showEscapeCharactersToolStripMenuItem.Name = "showEscapeCharactersToolStripMenuItem";
+			this.showEscapeCharactersToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
+			this.showEscapeCharactersToolStripMenuItem.Text = "Show Escape Characters";
+			this.showEscapeCharactersToolStripMenuItem.Click += new System.EventHandler(this.showEscapeCharactersToolStripMenuItem_Click);
 			// 
 			// MakerEngineForm
 			// 
@@ -1168,6 +1192,7 @@
 			this.contextMenuStrip_MapLegend.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox_NeedSave)).EndInit();
 			this.contextMenuStrip_SpriteTree.ResumeLayout(false);
+			this.contextMenuStrip_MapObjects.ResumeLayout(false);
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -1191,7 +1216,7 @@
 		private Opulos.Core.UI.Accordion accordion_Dialog;
 		private System.Windows.Forms.GroupBox groupBox_AccordionHolder;
 		private System.Windows.Forms.Label label1;
-		private System.Windows.Forms.Button button_NewEvent;
+		//private System.Windows.Forms.Button button_NewEvent;
 		private System.Windows.Forms.PictureBox pictureBox_NeedSave;
 		private System.Windows.Forms.Label label_ChangesMade;
 		private System.Windows.Forms.ToolStripMenuItem runGameToolStripMenuItem;
@@ -1262,6 +1287,10 @@
 		private System.Windows.Forms.ToolStripMenuItem newTriggeredEventToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem deleteTriggeredEventToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
+		private System.Windows.Forms.ContextMenuStrip contextMenuStrip_MapObjects;
+		private System.Windows.Forms.ToolStripMenuItem createTriggeredEventToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem viewToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem showEscapeCharactersToolStripMenuItem;
 	}
 }
 

@@ -27,7 +27,7 @@
 	<!-- Triggered Events may need their own xml file and schema -->
 	<event type="Triggered">
 		<triggeredEvent name="Poisoned Bush">
-			<dialogText modal="true" speaker="Disembodied Voice">You have been [some script here]poisoned!</dialogText>
+			<dialogText modal="true" speaker="Disembodied Voice">You have been [\pc \moveby -30,0]poisoned!</dialogText>
 			<effect>Something here that tells engine what to do</effect>
 		</triggeredEvent>
 		<triggeredEvent name="OffMyLawn" />
@@ -37,7 +37,8 @@
 			<dialog speaker="VillagerA">
 				<dialogText>Hello, my name is \speaker.</dialogText>
 				<dialogText>A new line of dialog.</dialogText>
-				<dialogText from="">Your name is \hero!</dialogText>
+				<dialogText from="">Your name is \hero! How do you do?</dialogText>
+				<dialogText>\hero! \hero! \hero!\hero!\hero!\hero!</dialogText>
 			</dialog>
 			<dialog speaker="Princess Ed">
 				<dialogText from="repeat" modal="true">Does thou love me?</dialogText>

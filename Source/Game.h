@@ -15,10 +15,10 @@ enum GameState {
 };
 
 static const enum EscapeStrings {
-	HERO, SPEAKER_ESC, MOVE_TO, MOVE_BY, TEMP1, TEMP2
+	HERO, PC_ESC, SPEAKER_ESC, MOVE_TO, MOVE_BY, TEMP1, TEMP2
 };
 static const wstring escapeStrings[] = {
-		L"hero", L"speaker", L"moveto", L"moveby", L"temp1", L"temp2"
+		L"hero", L"PC", L"speaker", L"moveto", L"moveby", L"temp1", L"temp2"
 };
 
 

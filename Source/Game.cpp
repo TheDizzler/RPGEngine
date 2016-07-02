@@ -33,7 +33,7 @@ bool Game::initializeGame(ID3D11Device* dvc, MouseController* ms) {
 	PC::pc.reset(new PC());
 	PC::pc->gameObject->name = "PC";
 
-	
+
 
 	battleScreen.reset(new BattleScreen());
 	if (!battleScreen->initialize(device, textBoxManager.get()))
@@ -133,10 +133,30 @@ wstring Game::getStoredVariable(wstring escape) {
 	return storedVariables[escape];
 }
 
+
 void Game::runScript(wstring script) {
 
-	MessageBox(0, script.c_str(), L"Script Test", MB_OK);
+	script = script.substr(1, script.length() - 2);
+	//MessageBox(0, script.c_str(), L"Script Test", MB_OK);
+
+	// parse commands
+	for (int i = 1; i < script.length(); ++i) {
+
+		wchar_t ch = script[i];
+		while (isalpha(ch)) {
+			ch = script[++i];
+		}
+
+		wstring command = script.substr(1, i);
+		//MessageBox(0, command.c_str(), L"Script Test", MB_OK);
+		if (command == escapeStrings[PC_ESC]) {
+
+
+		}
+		break;
+	}
 }
+
 
 bool Game::parseXMLFiles() {
 

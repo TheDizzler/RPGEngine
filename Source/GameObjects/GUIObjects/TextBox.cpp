@@ -41,33 +41,75 @@ void TextBox::parseText(wstring txt) {
 	text = originalText;
 
 	// replace variable escape characters
-	size_t replaceAt = text.find_first_of(L"\\");
-	while (replaceAt != wstring::npos) {
 
-		int i = 1;
-		wchar_t ch = text[replaceAt + i];
-		while (isalpha(ch)) {
+	for (int i = 0; i < text.length(); ++i) {
 
-			ch = text[replaceAt + (++i)];
+		wchar_t ch = text[i];
+
+		switch (ch) {
+			case '[': // found open script
+				while (ch != ']') {// look for close script
+					ch = text[++i];
+				}
+				break;
+			case '\\':
+				ch = text[++i];
+				int start = i;
+				while (isalpha(ch)) {
+					ch = text[++i];
+				}
+
+
+				wstring replaceWith;
+				wstring escapeWS = text.substr(start, i - start);
+				const char* escapChar = _bstr_t(escapeWS.c_str());
+
+				if (escapeWS == escapeStrings[SPEAKER_ESC]) {
+					wstringstream wss;
+					wss << node.parent().attribute("speaker").as_string();
+					replaceWith = wss.str();
+				} else {
+
+					replaceWith = Game::getStoredVariable(escapeWS);
+				}
+
+				text = text.replace(start - 1, escapeWS.length() + 1, replaceWith.c_str());
+				break;
+
 		}
 
-
-		wstring replaceWith;
-		wstring escapeWS = text.substr(replaceAt + 1, i - 1);
-		const char* escapChar = _bstr_t(escapeWS.c_str());
-
-		if (escapeWS == escapeStrings[SPEAKER_ESC]) {
-			wstringstream wss;
-			wss << node.parent().attribute("speaker").as_string();
-			replaceWith = wss.str();
-		} else {
-
-			replaceWith = Game::getStoredVariable(escapeWS);
-		}
-	//MessageBox(0, escape.c_str(), L"teset", MB_OK);
-		text = text.replace(replaceAt, i, replaceWith.c_str());
-		replaceAt = text.find_first_of(L"\\");
 	}
+	//size_t replaceAt = text.find_first_of(L"\\");
+	//while (replaceAt != wstring::npos) {
+
+	//	int i = 1;
+	//	wchar_t ch = text[replaceAt + i];
+	//	while (isalpha(ch)) {
+
+	//		ch = text[replaceAt + (++i)];
+	//	}
+
+
+	//	wstring replaceWith;
+	//	wstring escapeWS = text.substr(replaceAt + 1, i - 1);
+	//	const char* escapChar = _bstr_t(escapeWS.c_str());
+
+	//	if (escapeWS == escapeStrings[SPEAKER_ESC]) {
+	//		wstringstream wss;
+	//		wss << node.parent().attribute("speaker").as_string();
+	//		replaceWith = wss.str();
+	//	} else {
+
+	//		replaceWith = Game::getStoredVariable(escapeWS);
+	//	}
+	////MessageBox(0, escape.c_str(), L"teset", MB_OK);
+	//	//if (replaceWith != L"_")
+	//		text = text.replace(replaceAt, i, replaceWith.c_str());
+	//		//else
+
+	//	replaceAt = text.find_first_of(L"\\");
+
+	//}
 
 
 	maxLineLength = (rect.right - marginOffset) - (rect.left + marginOffset);
@@ -86,7 +128,7 @@ bool TextBox::isTooFar() {
 
 	return speakerPos != NULL
 		&& Vector2::Distance(*speakerPos, PC::pc->getPosition())
-		> Globals::MAX_SPEAKING_DISTANCE;
+	> Globals::MAX_SPEAKING_DISTANCE;
 }
 
 
@@ -170,7 +212,7 @@ bool TextBox::update(double deltaTime, SimpleKeyboard* keys) {
 
 			//textPos = scriptStart + charCount + 1;
 			c = text[currentLineStart + checkPos + 1];
-			
+
 		}
 
 		if (isspace(c)) {

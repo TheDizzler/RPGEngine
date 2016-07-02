@@ -54,15 +54,17 @@ void MapScreen::setGameManager(Game* gm) {
 
 void MapScreen::update(double deltaTime, SimpleKeyboard* keys) {
 
+	for each (Layer* layer in map->layers)
+		layer->update(deltaTime);
+
 	if (!eventPlaying) {
 		if (!textBoxManager->isModal())
 			playerActions(deltaTime, keys);
+		
+		/*textBoxManager->update(deltaTime, keys);*/
 	} else
 		eventPlaying = eventHandler->update(deltaTime, keys);
 
-
-	for each (Layer* layer in map->layers)
-		layer->update(deltaTime);
 
 	textBoxManager->update(deltaTime, keys);
 }
@@ -74,7 +76,9 @@ void MapScreen::playerActions(double deltaTime, SimpleKeyboard * keys) {
 
 	// check if in triggered event
 	for each (TriggerLayer* layer in map->events) {
+
 		EventObject* event = layer->checkTrigger(PC::pc->gameObject.get());
+
 		if (event != NULL && !event->triggered) {
 			event->triggered = true;
 			eventPlaying = true;

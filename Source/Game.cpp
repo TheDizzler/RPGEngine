@@ -33,10 +33,7 @@ bool Game::initializeGame(ID3D11Device* dvc, MouseController* ms) {
 	PC::pc.reset(new PC());
 	PC::pc->gameObject->name = "PC";
 
-	mapScreen.reset(new MapScreen(docMapLegend));
-	if (!mapScreen->initialize(device, textBoxManager.get()))
-		return false;
-	mapScreen->setGameManager(this);
+	
 
 	battleScreen.reset(new BattleScreen());
 	if (!battleScreen->initialize(device, textBoxManager.get()))
@@ -48,9 +45,15 @@ bool Game::initializeGame(ID3D11Device* dvc, MouseController* ms) {
 		return false;
 	menuScreen->setGameManager(this);
 
+	mapScreen.reset(new MapScreen(docMapLegend));
+	if (!mapScreen->initialize(device, textBoxManager.get()))
+		return false;
+	mapScreen->setGameManager(this);
 
+	currentScreen = mapScreen.get();
 
-	currentScreen = menuScreen.get();
+	wstring name = L"Pharty Bolz";
+	storeVariable(L"hero", &name);
 
 
 	return true;
@@ -111,40 +114,28 @@ void Game::loadMainMenu() {
 
 void Game::exit() {
 
-
-	//dialogs.push_back(exitDialog.get());
-
 	gameEngine->exit();
 }
 
 map<wstring, wstring> Game::storedVariables;
 
 
-void Game::storeVariable(wstring escape, wstring * store) {
+void Game::storeVariable(wstring escape, wstring* toStore) {
 
-	//if (escape == escapeStrings[hero])
-
-	storedVariables[escape] = *store;
-
-
-/*storedVariables[escapeStrings[temp1]] = L"Temp 1!";
-storedVariables[escapeStrings[temp2]] = L"Temp 2!";
-MessageBox(0, storedVariables[escapeStrings[hero]].c_str(), escapeStrings[hero].c_str(), MB_OK);
-MessageBox(0, storedVariables[escapeStrings[temp1]].c_str(), escapeStrings[temp1].c_str(), MB_OK);
-MessageBox(0, storedVariables[escapeStrings[temp2]].c_str(), escapeStrings[temp2].c_str(), MB_OK);*/
+	storedVariables[escape] = *toStore;
 }
 
 wstring Game::getStoredVariable(wstring escape) {
 
-	/*MessageBox(0, storedVariables[escapeStrings[hero]].c_str(), escapeStrings[hero].c_str(), MB_OK);
-	MessageBox(0, storedVariables[escapeStrings[temp1]].c_str(), escapeStrings[temp1].c_str(), MB_OK);
-	MessageBox(0, storedVariables[escapeStrings[temp2]].c_str(), escapeStrings[temp2].c_str(), MB_OK);*/
-
-	//if (escape == escapeStrings[hero])
 	if (storedVariables.find(escape) == storedVariables.end())
 		return L"NOTHING FOUND!";
 
 	return storedVariables[escape];
+}
+
+void Game::runScript(wstring script) {
+
+	MessageBox(0, script.c_str(), L"Script Test", MB_OK);
 }
 
 bool Game::parseXMLFiles() {

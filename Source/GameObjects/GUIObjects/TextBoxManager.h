@@ -16,7 +16,7 @@ public:
 	bool load(ID3D11Device* device);
 	void loadZone(string location);
 
-	//void update(double deltaTime, BYTE keyboardState[256]);
+	
 	void update(double deltaTime, SimpleKeyboard* keys);
 	/**  Called from Game.cpp.
 	*		RECT should be a multiple of border sprite length/height
@@ -27,11 +27,13 @@ public:
 	void getDialog(string speaker, Vector2* speakerPos = NULL);
 	void getTriggeredEvent(string eventName);
 
-
+	/** Returns TRUE if no more dialog boxes left in this dialog chain. */
+	bool isDialogChainDone();
 	bool isTextBoxOpen();
 
 	bool isModal();
 
+	void setDialog(xml_node dialogTextNode);
 	xml_node triggeredNode;
 
 private:

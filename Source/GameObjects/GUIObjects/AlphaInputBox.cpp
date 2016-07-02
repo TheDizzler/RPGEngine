@@ -38,7 +38,7 @@ bool AlphaInputBox::update(double deltaTime, SimpleKeyboard* keys) {
 	if (keyChar == -1) {
 		lastChar = false;
 		lastBackspace = false;
-		lastEnter = false;
+		//lastEnter = false;
 		return false;
 	}
 
@@ -56,8 +56,8 @@ bool AlphaInputBox::update(double deltaTime, SimpleKeyboard* keys) {
 		return false;
 	}
 
-	if (keyChar == VK_RETURN && !lastEnter) {
-		lastEnter = true;
+	if (keyChar == VK_RETURN && !keys->lastDown[SELECT]) {
+		//lastEnter = true;
 		if (userInput.length() <= 0)
 			return false;
 

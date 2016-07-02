@@ -15,10 +15,11 @@ enum GameState {
 };
 
 static const enum EscapeStrings {
-	hero, temp1, temp2
+	HERO, SPEAKER_ESC, MOVE_TO, MOVE_BY, TEMP1, TEMP2
 };
-
-static const wstring escapeStrings[3] = {L"hero", L"temp1", L"temp2"};
+static const wstring escapeStrings[] = {
+		L"hero", L"speaker", L"moveto", L"moveby", L"temp1", L"temp2"
+};
 
 
 //class PC;
@@ -48,12 +49,12 @@ public:
 
 	static void storeVariable(wstring escape, wstring* store);
 	static wstring getStoredVariable(wstring escape);
-
+	static void runScript(wstring script);
 
 	Camera* camera;
 private:
 
-	
+
 
 	Screen* currentScreen;
 	unique_ptr<MenuScreen> menuScreen;
@@ -67,7 +68,7 @@ private:
 
 	unique_ptr<TextBoxManager> textBoxManager;
 
-	
+
 
 	//xmlDoc* doc;
 	//xmlNode* gameTextRootNode;

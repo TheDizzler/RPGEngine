@@ -21,10 +21,9 @@ static const char_t* nodeTypes[] = {"dialogText", "query", "alphaInput", "effect
 
 
 static const enum ATTRIBUTES {
-	SPEAKER, TO, FROM, DEFAULT
+	SPEAKER_ATT, TO, FROM, DEFAULT
 };
 static const char_t* attributeTypes[] = {"speaker", "to", "from", "default"};
-
 
 
 class TextBox : public GUIBox {
@@ -34,7 +33,7 @@ public:
 
 	virtual void loadNode(xml_node node, Vector2* speakerPos = NULL);
 
-
+	/** Returns TRUE when text is completely finished printing. */
 	virtual bool update(double deltaTime, SimpleKeyboard* keys) override;
 	virtual void drawText(SpriteBatch* batch) override;
 
@@ -67,7 +66,7 @@ protected:
 	const float indicatorFlashTime = 1;
 	float currentFlashTime = indicatorFlashTime;
 
-	bool lastEnter = true;
+	//bool lastEnter = true;
 
 	xml_node node;
 

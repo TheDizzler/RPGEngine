@@ -72,7 +72,7 @@ bool CommandBox::update(double deltaTime, SimpleKeyboard * keys) {
 		lastUp = false;
 	}
 
-	if (keys->keyDown[SELECT] && !lastEnter) { // perform action for selected node
+	if (keys->keyDown[SELECT] && !keys->lastDown[SELECT]) { // perform action for selected node
 
 		nodeSelected = true;
 
@@ -89,9 +89,9 @@ bool CommandBox::update(double deltaTime, SimpleKeyboard * keys) {
 
 
 
-	if (!keys->keyDown[SELECT]) {
+	/*if (!keys->keyDown[SELECT]) {
 		lastEnter = false;
-	}
+	}*/
 
 	return false;
 }
@@ -100,7 +100,7 @@ bool CommandBox::update(double deltaTime, SimpleKeyboard * keys) {
 xml_node CommandBox::getSelectedNode() {
 
 	nodeSelected = false;
-	lastEnter = true;
+	//lastEnter = true;
 
 	// read to attribute of selected
 	const char_t* reply = nodeList[itemSelected].attribute("to").as_string();

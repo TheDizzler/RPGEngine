@@ -16,7 +16,7 @@ namespace GameVariables {
 	};
 
 	static const wchar_t* heroStoredName = L"0123456789";
-	static wstring escapeStrings[3] = {L"hero", L"temp1", L"temp2"};
+	//static wstring escapeStrings[3] = {L"hero", L"temp1", L"temp2"};
 	//static const wchar_t* storedVariables[3] = {heroStoredName, L"0123456789", L"0123456789"};
 
 	namespace {
@@ -26,28 +26,28 @@ namespace GameVariables {
 	}
 	static wstring getStoredVariable(wstring escape) {
 
-		MessageBox(0, storedVariables[escapeStrings[hero]].c_str(), escapeStrings[hero].c_str(), MB_OK);
+		/*MessageBox(0, storedVariables[escapeStrings[hero]].c_str(), escapeStrings[hero].c_str(), MB_OK);
 		MessageBox(0, storedVariables[escapeStrings[temp1]].c_str(), escapeStrings[temp1].c_str(), MB_OK);
 		MessageBox(0, storedVariables[escapeStrings[temp2]].c_str(), escapeStrings[temp2].c_str(), MB_OK);
 
 		if (escape == escapeStrings[hero])
-			return storedVariables[escape];
+			return storedVariables[escape];*/
 	}
 
 
-	static void storeVariable(wstring escape, wstring* store) {
+	//static void storeVariable(wstring escape, wstring* store) {
 
-		//MessageBox(0, store->c_str(), escape.c_str(), MB_OK);
-		if (escape == escapeStrings[hero])
-			storedVariables[escape] = *store;
+	//	//MessageBox(0, store->c_str(), escape.c_str(), MB_OK);
+	//	if (escape == escapeStrings[hero])
+	//		storedVariables[escape] = *store;
 
-		
-		storedVariables[escapeStrings[temp1]] = tempA;
-		storedVariables[escapeStrings[temp2]] = tempB;
-		MessageBox(0, storedVariables[escapeStrings[hero]].c_str(), escapeStrings[hero].c_str(), MB_OK);
-		MessageBox(0, storedVariables[escapeStrings[temp1]].c_str(), escapeStrings[temp1].c_str(), MB_OK);
-		MessageBox(0, storedVariables[escapeStrings[temp2]].c_str(), escapeStrings[temp2].c_str(), MB_OK);
-	}
+	//	
+	//	storedVariables[escapeStrings[temp1]] = tempA;
+	//	storedVariables[escapeStrings[temp2]] = tempB;
+	//	MessageBox(0, storedVariables[escapeStrings[hero]].c_str(), escapeStrings[hero].c_str(), MB_OK);
+	//	MessageBox(0, storedVariables[escapeStrings[temp1]].c_str(), escapeStrings[temp1].c_str(), MB_OK);
+	//	MessageBox(0, storedVariables[escapeStrings[temp2]].c_str(), escapeStrings[temp2].c_str(), MB_OK);
+	//}
 
 
 

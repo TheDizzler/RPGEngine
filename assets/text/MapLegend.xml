@@ -1,1 +1,6 @@
-﻿<?xml version="1.0" encoding="utf-8"?><root game="First RPG" xml="Map Legend"><map name="Over World Test" file="assets/text/maps/Over World Test.map" /><map name="Test Village" file="assets/text/maps/Test Village.map" /><map name="map2" file="assets/text/maps/map2.map" /></root>
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root game="First RPG" xml="Map Legend">
+	<map name="Over World Test" file="assets/text/maps/Over World Test.map" />
+	<map name="Test Village" file="assets/text/maps/Test Village.map" />
+	<map name="map2" file="assets/text/maps/map2.map" />
+</root>

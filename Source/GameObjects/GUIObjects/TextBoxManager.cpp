@@ -58,6 +58,7 @@ void TextBoxManager::loadZone(string location) {
 
 	zoneTextNode = eventNode
 		.find_child_by_attribute("location", location.c_str());
+
 }
 
 
@@ -65,7 +66,9 @@ void TextBoxManager::update(double deltaTime, SimpleKeyboard* keys) {
 
 	if (currentBox != NULL) {
 
+		// If player has gone to far from speaker, close box
 		if (currentBox->isTooFar()) {
+		
 			textBoxes.pop_back();
 			closingBoxes.push_back(currentBox);
 			if (!textBoxes.empty())
@@ -106,9 +109,7 @@ void TextBoxManager::update(double deltaTime, SimpleKeyboard* keys) {
 
 			} else if (nodeTypes[DIALOG_TEXT] == type_s) {
 
-				/*dialogBox->loadNode(nextNode);
-				currentBox = dialogBox.get();*/
-				currentBox->loadNode(nextNode/*, currentBox->speakerPos*/);
+				currentBox->loadNode(nextNode);
 
 			} else if (nodeTypes[QUERY] == type_s) {
 
@@ -234,20 +235,14 @@ void TextBoxManager::getDialog(string speakerName, Vector2* speakerPos) {
 
 	const char* speaker = speakerName.c_str();
 
-	/*dialogBox.reset();*/
 
-	/*dialogBox->loadNode(zoneTextNode
-		.find_child_by_attribute("speaker", speaker)
-		.child("dialogText"));
-	currentBox = dialogBox.get();*/
-
-	
 	currentBox = new TextBox(DIALOG_TOP, DIALOG_LEFT,
 		DIALOG_RIGHT, DIALOG_BOTTOM, guiFont.get());
 	currentBox->loadNode(zoneTextNode
 		.find_child_by_attribute("speaker", speaker)
 		.child("dialogText"), speakerPos);
 	textBoxes.push_back(currentBox);
+
 }
 
 void TextBoxManager::getTriggeredEvent(string eventName) {
@@ -261,6 +256,19 @@ void TextBoxManager::getTriggeredEvent(string eventName) {
 }
 
 
+void TextBoxManager::setDialog(xml_node dialogTextNode) {
+
+	currentBox = new TextBox(DIALOG_TOP, DIALOG_LEFT,
+		DIALOG_RIGHT, DIALOG_BOTTOM, guiFont.get());
+	currentBox->loadNode(dialogTextNode);
+	textBoxes.push_back(currentBox);
+}
+
+
+bool TextBoxManager::isDialogChainDone() {
+	return currentBox == NULL;
+}
+
 bool TextBoxManager::isTextBoxOpen() {
 	return currentBox != NULL || !closingBoxes.empty();
 }
@@ -269,6 +277,8 @@ bool TextBoxManager::isModal() {
 
 	return currentBox != NULL && currentBox->modal;
 }
+
+
 
 
 

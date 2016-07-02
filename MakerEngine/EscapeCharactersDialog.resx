@@ -117,4 +117,17 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="richTextBox_EscapeCharacters.Text" xml:space="preserve">
+    <value>Special Characters:
+\hero 				for player's name
+\speaker 				for speakers name
+\moveto X,Y		moves speaker to location
+\moveby XY			moves speaker by vector (in pixels)
+\animation AnimationName		plays animation
+
+examples:
+[\hero \moveto 200,300]
+[\speaker \moveby -30, 0]
+[\speaker \animation wave]</value>
+  </data>
 </root>

@@ -53,15 +53,16 @@ void TextBox::parseText(wstring txt) {
 
 
 		wstring replaceWith;
-		wstring escape = text.substr(replaceAt + 1, i - 1);
-		wstring speaker = L"speaker";
-		if (escape == speaker) {
+		wstring escapeWS = text.substr(replaceAt + 1, i - 1);
+		const char* escapChar = _bstr_t(escapeWS.c_str());
+
+		if (escapeWS == escapeStrings[SPEAKER_ESC]) {
 			wstringstream wss;
 			wss << node.parent().attribute("speaker").as_string();
 			replaceWith = wss.str();
 		} else {
-			//MessageBox(0, escape.c_str(), L"teset", MB_OK);
-			replaceWith = Game::getStoredVariable(escape);
+
+			replaceWith = Game::getStoredVariable(escapeWS);
 		}
 	//MessageBox(0, escape.c_str(), L"teset", MB_OK);
 		text = text.replace(replaceAt, i, replaceWith.c_str());
@@ -99,8 +100,8 @@ bool TextBox::update(double deltaTime, SimpleKeyboard* keys) {
 	}
 
 
-	if (keys->keyDown[SELECT] && !lastEnter) {
-		lastEnter = true;
+	if (keys->keyDown[SELECT] && !keys->lastDown[SELECT]) {
+		//lastEnter = true;
 		if (!writingDone) { // speed through rest of text
 			letterDelay = Globals::LETTER_DELAY_FAST;
 
@@ -120,9 +121,9 @@ bool TextBox::update(double deltaTime, SimpleKeyboard* keys) {
 
 	}
 
-	if (!keys->keyDown[SELECT]) {
+	/*if (!keys->keyDown[SELECT]) {
 		lastEnter = false;
-	}
+	}*/
 
 
 	if (writingDone) {
@@ -150,6 +151,28 @@ bool TextBox::update(double deltaTime, SimpleKeyboard* keys) {
 
 		int checkPos = textPos;
 		char c = text[currentLineStart + checkPos];
+
+		if (c == '[') { // parse script
+
+			int scriptStart = currentLineStart + checkPos;
+			int charCount = 0;
+			for (int i = scriptStart; i < text.length(); ++i) {
+				++charCount;
+				if (text[i] == ']')
+					break;
+			}
+
+			wstring script = text.substr(scriptStart, charCount); // includes [ + ] and everything in between
+			//MessageBox(0, script.c_str(), L"Script Test", MB_OK);
+			Game::runScript(script);
+
+			text.replace(text.find(script), script.size(), L"");
+
+			//textPos = scriptStart + charCount + 1;
+			c = text[currentLineStart + checkPos + 1];
+			
+		}
+
 		if (isspace(c)) {
 
 			while (currentLineStart + checkPos < text.length()

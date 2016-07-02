@@ -23,6 +23,7 @@
 		/// the contents of this method with the code editor.
 		/// </summary>
 		private void InitializeComponent() {
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EscapeCharactersDialog));
 			this.richTextBox_EscapeCharacters = new System.Windows.Forms.RichTextBox();
 			this.SuspendLayout();
 			// 
@@ -36,9 +37,7 @@
 			this.richTextBox_EscapeCharacters.Size = new System.Drawing.Size(507, 253);
 			this.richTextBox_EscapeCharacters.TabIndex = 4;
 			this.richTextBox_EscapeCharacters.TabStop = false;
-			this.richTextBox_EscapeCharacters.Text = "Special Characters:\n\\hero \t\t\t\tfor player\'s name\n\\speaker \t\t\t\tfor speakers name\n\\m" +
-    "oveto LOCATION\t\tmoves speaker to location\n\\moveby X,Y\t\t\tmoves speaker by vector " +
-    "(in pixels)";
+			this.richTextBox_EscapeCharacters.Text = resources.GetString("richTextBox_EscapeCharacters.Text");
 			this.richTextBox_EscapeCharacters.TextChanged += new System.EventHandler(this.richTextBox_EscapeCharacters_TextChanged);
 			// 
 			// EscapeCharactersDialog

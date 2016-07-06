@@ -13,5 +13,5 @@ void CharacterObject::update(double deltaTime) {
 
 string CharacterObject::interact() {
 
-	return name;
+	return name_string;
 }

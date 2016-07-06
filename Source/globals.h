@@ -42,6 +42,8 @@ namespace Globals {
 	/** Max distance PC can move from speaker before textbox auto-closes. */
 	static const int MAX_SPEAKING_DISTANCE = 200;
 
+
+
 	/** THIS WILL NOT WORK! Copy paste this code to where it's needed. */
 	inline LPCWSTR convertStringToLPCWSTR(const string text) {
 
@@ -53,7 +55,6 @@ namespace Globals {
 		std::wstring r(buf);
 		delete[] buf;
 		return r.c_str();
-
 	}
 
 

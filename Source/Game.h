@@ -15,14 +15,14 @@ enum GameState {
 };
 
 static const enum EscapeStrings {
-	HERO, PC_ESC, SPEAKER_ESC, MOVE_TO, MOVE_BY, TEMP1, TEMP2
+	HERO, PC_ESC, SPEAKER_ESC, MOVE_TO, MOVE_BY
 };
 static const wstring escapeStrings[] = {
-		L"hero", L"PC", L"speaker", L"moveto", L"moveby", L"temp1", L"temp2"
+		L"hero", L"pc", L"speaker", L"moveto", L"moveby"
 };
 
 
-//class PC;
+
 class GameEngine;
 
 /** The lowest level of class where game code should be included.
@@ -58,7 +58,7 @@ private:
 
 	Screen* currentScreen;
 	unique_ptr<MenuScreen> menuScreen;
-	unique_ptr<MapScreen> mapScreen;
+	static unique_ptr<MapScreen> mapScreen;
 	unique_ptr<BattleScreen> battleScreen;
 	Screen* lastScreen = 0;
 
@@ -69,25 +69,13 @@ private:
 	unique_ptr<TextBoxManager> textBoxManager;
 
 
-
-	//xmlDoc* doc;
-	//xmlNode* gameTextRootNode;
 	pugi::xml_document* docDialogText;
-	/*pugi::xml_document* docMapText;*/
 	pugi::xml_document* docMapLegend;
 	pugi::xml_document* docSpriteFiles;
 
-	//pugi::xml_parse_result result;
 	bool parseXMLFiles();
 
 
 	static map<wstring, wstring> storedVariables;
-	//static const wchar_t* storedVariables[3] = {heroStoredName, L"0123456789", L"0123456789"};
-
-
-	/*wstring tempA = L"Temp 1!";
-	wstring tempB = L"Temp 2!";*/
-
-
 
 };

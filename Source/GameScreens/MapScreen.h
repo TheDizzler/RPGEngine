@@ -23,6 +23,8 @@ public:
 	virtual void draw(SpriteBatch* batch) override;
 
 
+	GameObject* getGameObject(wstring objectName);
+
 
 private:
 

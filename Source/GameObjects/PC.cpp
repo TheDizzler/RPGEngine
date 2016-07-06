@@ -6,7 +6,8 @@ PC::PC() {
 
 	gameObject.reset(new CharacterObject());
 	gameObject->gid = 140;
-	gameObject->name = "PC";
+	gameObject->name_string = "pc";
+	gameObject->name_wstring = L"pc";
 	gameObject->width = 16;
 	gameObject->height = 16;
 }

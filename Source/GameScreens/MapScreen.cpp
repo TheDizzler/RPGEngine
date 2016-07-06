@@ -60,7 +60,7 @@ void MapScreen::update(double deltaTime, SimpleKeyboard* keys) {
 	if (!eventPlaying) {
 		if (!textBoxManager->isModal())
 			playerActions(deltaTime, keys);
-		
+
 		/*textBoxManager->update(deltaTime, keys);*/
 	} else
 		eventPlaying = eventHandler->update(deltaTime, keys);
@@ -128,14 +128,17 @@ void MapScreen::playerActions(double deltaTime, SimpleKeyboard * keys) {
 
 		InteractableObject* object = checkInteractable();
 		if (object != NULL) {
+			
 			textBoxManager->getDialog(object->interact(), &((CharacterObject*) object)->position);
 		}
 	}
 
 	PC::pc->update(deltaTime, distanceToTravel);
-	if (outsideBounds(&PC::pc->getPosition()))
+	if (outsideBounds(&PC::pc->getPosition())) {
 		//exitMap = true;
 		MessageBox(NULL, L"Leaving", L"Leave town", MB_OK);
+		game->exit();
+	}
 
 	if (distanceToTravel != Vector2::Zero)
 		//game->camera->moveCamera(distanceToTravel, true);
@@ -149,7 +152,7 @@ void MapScreen::playerActions(double deltaTime, SimpleKeyboard * keys) {
 
 bool MapScreen::outsideBounds(Vector2* playerPos) {
 
-	return (playerPos->x < 0 || playerPos->y < 0
+	return (playerPos->x  < -16 || playerPos->y < -16
 		|| playerPos->x > map->trueMapWidth || playerPos->y > map->trueMapHeight);
 }
 
@@ -221,4 +224,18 @@ void MapScreen::draw(SpriteBatch* batch) {
 		layer->draw(batch, map->spriteDict);
 
 	}
+}
+
+
+GameObject* MapScreen::getGameObject(wstring objectName) {
+
+	for each(CharacterLayer* layer in map->interactable) {
+		for each (CharacterObject* charObj in layer->characterObjects) {
+
+			if (charObj->name_wstring == objectName)
+
+				return charObj;
+		}
+	}
+	return nullptr;
 }

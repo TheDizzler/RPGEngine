@@ -35,7 +35,8 @@ void TriggerLayer::load(xml_node layerNode, map<int, SpriteSheet::SpriteFrame*>&
 
 		//gameObj->gid = objectNode.attribute("gid").as_int();
 		//gameObj->spriteFrame = spriteDict[gameObj->gid];
-		eventObj->name = objectNode.attribute("name").as_string();
+		
+		eventObj->setName(objectNode.attribute("name").as_string());
 
 		eventObj->width = objectNode.attribute("width").as_int();
 		eventObj->height = objectNode.attribute("height").as_int();
@@ -60,7 +61,8 @@ void CharacterLayer::load(xml_node objectLayerNode, map<int, SpriteSheet::Sprite
 
 		charObj->gid = objectNode.attribute("gid").as_int();
 		charObj->spriteFrame = spriteDict[charObj->gid];
-		charObj->name = objectNode.attribute("name").as_string();
+
+		charObj->setName(objectNode.attribute("name").as_string());
 
 		charObj->width = objectNode.attribute("width").as_int();
 		charObj->height = objectNode.attribute("height").as_int();
@@ -80,7 +82,8 @@ void CollisionLayer::load(xml_node layerNode, map<int, SpriteSheet::SpriteFrame*
 
 		//gameObj->gid = objectNode.attribute("gid").as_int();
 		//gameObj->spriteFrame = spriteDict[gameObj->gid];
-		gameObj->name = objectNode.attribute("name").as_string();
+
+		gameObj->setName(objectNode.attribute("name").as_string());
 
 		gameObj->width = objectNode.attribute("width").as_int();
 		gameObj->height = objectNode.attribute("height").as_int();
@@ -208,7 +211,8 @@ RECT* CharacterLayer::checkCollision(GameObject* movingObject, Vector2* moveDist
 
 	for each (GameObject* gameObject in characterObjects) {
 
-		if (strcmp(gameObject->name.c_str(), movingObject->name.c_str()) == 0)
+		//if (strcmp(gameObject->name.c_str(), movingObject->name.c_str()) == 0)
+		if (gameObject->name_wstring == movingObject->name_wstring)
 			continue;
 
 
@@ -236,7 +240,7 @@ RECT* CollisionLayer::checkCollision(GameObject* movingObject, Vector2* moveDist
 
 	for each (GameObject* gameObject in collisionObjects) {
 
-		if (strcmp(gameObject->name.c_str(), movingObject->name.c_str()) == 0)
+		if (gameObject->name_wstring == movingObject->name_wstring)
 			continue;
 
 
@@ -310,7 +314,7 @@ InteractableObject* CharacterLayer::checkInteractable(PC* pc) {
 
 	for each (CharacterObject* charObj in characterObjects) {
 
-		if (strcmp(charObj->name.c_str(), pc->gameObject->name.c_str()) == 0)
+		if (charObj->name_wstring ==  pc->gameObject->name_wstring)
 			continue;
 
 		RECT overlapRect{-1, -1, -1, -1};

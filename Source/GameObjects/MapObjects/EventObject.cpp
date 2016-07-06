@@ -2,3 +2,6 @@
 
 EventObject::EventObject() : GameObject() {
 }
+
+EventObject::~EventObject() {
+}

@@ -1,5 +1,8 @@
 #include "Game.h"
 
+unique_ptr<MapScreen> Game::mapScreen;
+
+
 #include "Engine/GameEngine.h"
 Game::Game(GameEngine* gmngn) {
 
@@ -31,7 +34,6 @@ bool Game::initializeGame(ID3D11Device* dvc, MouseController* ms) {
 		return false;
 
 	PC::pc.reset(new PC());
-	PC::pc->gameObject->name = "PC";
 
 
 
@@ -147,11 +149,50 @@ void Game::runScript(wstring script) {
 			ch = script[++i];
 		}
 
-		wstring command = script.substr(1, i);
-		//MessageBox(0, command.c_str(), L"Script Test", MB_OK);
-		if (command == escapeStrings[PC_ESC]) {
+		wstring object = script.substr(1, --i);
 
+		GameObject* gameObject = mapScreen->getGameObject(object);
 
+		//MessageBox(0, gameObject->name_wstring.c_str(), L"Script Test", MB_OK);
+		if (gameObject == NULL) {
+			MessageBox(0, L"No object found!", L"Fatal Error?", MB_OK);
+			return;
+		}
+
+		if (object == escapeStrings[PC_ESC]) {
+			// parse actions to take
+			i += 3;
+			int start = i;
+			ch = script[i];
+			while (isalpha(ch)) {
+				ch = script[++i];
+			}
+			wstring command = script.substr(start, i - start);
+			//MessageBox(0, command.c_str(), L"Script Test", MB_OK);
+			if (command == escapeStrings[MOVE_BY]) {
+
+				i += 1;
+				start = i;
+				ch = script[i];
+				while (isdigit(ch) || ch == '-') {
+					ch = script[++i];
+				}
+				wstring x = script.substr(start, i - start);
+
+				i += 1;
+				start = i;
+				ch = script[i];
+				while (isdigit(ch) || ch == '-') {
+					ch = script[++i];
+				}
+				wstring y = script.substr(start, i - start);
+				//MessageBox(0, y.c_str(), L"Script Test", MB_OK);
+
+				Vector2 moveby(stoi(x), stoi(y));
+
+				gameObject->move(moveby);
+
+			}
 		}
 		break;
 	}

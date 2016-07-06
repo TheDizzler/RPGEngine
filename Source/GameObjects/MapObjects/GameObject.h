@@ -16,7 +16,11 @@ public:
 	GameObject();
 	~GameObject();
 
-	string name;
+	void setName(string name);
+	wstring name_wstring;
+	string name_string;
+
+
 	int id = -1;
 	/* ID of tile representing this object. -1 means not meant to be a visible object.*/
 	int gid = -1;
@@ -36,5 +40,5 @@ public:
 
 private:
 
-
+	
 };

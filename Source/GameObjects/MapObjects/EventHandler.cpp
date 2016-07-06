@@ -12,7 +12,7 @@ EventHandler::~EventHandler() {
 void EventHandler::loadEvent(EventObject* event) {
 
 	currentEvent = event;
-	eventNode = rootEventNode.find_child_by_attribute("name", currentEvent->name.c_str());
+	eventNode = rootEventNode.find_child_by_attribute("name", currentEvent->name_string.c_str());
 
 	eventList = eventNode.children().begin();
 }

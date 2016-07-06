@@ -57,8 +57,10 @@ public:
 
 	virtual RECT* checkCollision(GameObject* movingObject, Vector2* moveDistance) override;
 	virtual InteractableObject* checkInteractable(PC* pc) override;
-private:
+
+
 	vector<CharacterObject*> characterObjects;
+
 };
 
 

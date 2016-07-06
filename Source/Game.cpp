@@ -190,7 +190,7 @@ void Game::runScript(wstring script) {
 
 				Vector2 moveby(stoi(x), stoi(y));
 
-				gameObject->move(moveby);
+				gameObject->setMovement(moveby);
 
 			}
 		}

@@ -12,6 +12,8 @@ int AnimatedObject::getGID() {
 
 void AnimatedObject::update(double deltaTime) {
 
+	SpriteObject::update(deltaTime);
+
 	timeElapsedSinceFrameSwitch += deltaTime;
 	if (timeElapsedSinceFrameSwitch >= spriteFrame->animation->duration) {
 		if (++currentFrame >= spriteFrame->animation->tileIDs.size()) {
